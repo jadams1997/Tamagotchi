@@ -15,13 +15,13 @@
       <itemPath>config.asm</itemPath>
       <itemPath>LCD.asm</itemPath>
       <itemPath>Tamagotchi.asm</itemPath>
-      <itemPath>output.asm</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>screen_output.asm</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>

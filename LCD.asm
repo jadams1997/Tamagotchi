@@ -1,6 +1,6 @@
 #include p18f87k22.inc
 
-    global  LCD_Setup, LCD_output
+    global  LCD_Setup, LCD_Write_Message, LCD_Send_Byte_D
 
 acs0    udata_acs   ; named variables in access ram
 LCD_cnt_l   res 1   ; reserve 1 byte for variable LCD_cnt_l
@@ -10,7 +10,7 @@ LCD_tmp	    res 1   ; reserve 1 byte for temporary use
 LCD_counter res 1   ; reserve 1 byte for counting through nessage
 	constant    LCD_E=5	; LCD enable bit
     	constant    LCD_RS=4	; LCD register select bit
-counter res 1 
+
  
 LCD	code
     
@@ -32,7 +32,7 @@ LCD_Setup
 	call	LCD_Send_Byte_I
 	movlw	.10		; wait 40us
 	call	LCD_delay_x4us
-	movlw	b'00001000'	; display on, cursor on, blinking on
+	movlw	b'00001100'	; display on, cursor on, blinking on
 	call	LCD_Send_Byte_I
 	movlw	.10		; wait 40us
 	call	LCD_delay_x4us  ;movlw	b'00000001'	; display clear
@@ -48,7 +48,7 @@ LCD_Setup
 LCD_Write_Message	    ; Message stored at FSR2, length stored in W
 	movwf   LCD_counter
     LCD_Loop_message
-	movf    POSTINC2, W
+	movf    POSTINC0, W
 	call    LCD_Send_Byte_D
 	decfsz  LCD_counter
 	bra	LCD_Loop_message
@@ -142,30 +142,6 @@ LCD_shift_to_bottom_line
 	;call   LCD_shift 
 	;movlw	.10		; wait 40us
 	;call	LCD_delay_x4us
-	
-
-LCD_output	
-setup   bcf	EECON1, CFGS	; point to Flash program memory  
-	bsf	EECON1, EEPGD 	; access Flash program memory
-	goto	start
-
-start 	movlw	upper(myTable)	; address of data in PM
-	movwf	TBLPTRU		; load upper bits to TBLPTRU
-	movlw	high(myTable)	; address of data in PM
-	movwf	TBLPTRH		; load high byte to TBLPTRH
-	movlw	low(myTable)	; address of data in PM
-	movwf	TBLPTRL		; load low byte to TBLPTRL
-	movlw	myTable_l	; bytes to read
-	movwf 	counter		; our counter register
-loop 	tblrd*+			; one byte from PM to TABLAT, increment TBLPRT
-	movf    TABLAT, w
-	call    LCD_Send_Byte_D
-	decfsz	counter		; count down to zero
-	bra	loop		; keep going until finished
-	return 
-
-
-	
 	
 	
 	end
