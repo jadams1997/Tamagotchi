@@ -1,6 +1,6 @@
 #include p18f87k22.inc
 
-    global  LCD_Setup, LCD_Write_Message, LCD_Send_Byte_D
+    global  LCD_Setup, LCD_output
 
 acs0    udata_acs   ; named variables in access ram
 LCD_cnt_l   res 1   ; reserve 1 byte for variable LCD_cnt_l
@@ -8,10 +8,10 @@ LCD_cnt_h   res 1   ; reserve 1 byte for variable LCD_cnt_h
 LCD_cnt_ms  res 1   ; reserve 1 byte for ms counter
 LCD_tmp	    res 1   ; reserve 1 byte for temporary use
 LCD_counter res 1   ; reserve 1 byte for counting through nessage
-
 	constant    LCD_E=5	; LCD enable bit
     	constant    LCD_RS=4	; LCD register select bit
-
+counter res 1 
+ 
 LCD	code
     
 LCD_Setup
@@ -32,16 +32,13 @@ LCD_Setup
 	call	LCD_Send_Byte_I
 	movlw	.10		; wait 40us
 	call	LCD_delay_x4us
-	movlw	b'00001111'	; display on, cursor on, blinking on
+	movlw	b'00001000'	; display on, cursor on, blinking on
 	call	LCD_Send_Byte_I
 	movlw	.10		; wait 40us
 	call	LCD_delay_x4us  ;movlw	b'00000001'	; display clear
 	call	LCD_clear ;call	LCD_Send_Byte_I
 	movlw	.2		; wait 2ms
 	call	LCD_delay_ms
-	;call   LCD_shift 
-	;movlw	.10		; wait 40us
-	;call	LCD_delay_x4us
 	movlw	b'00000110'	; entry mode incr by 1 no shift
 	call	LCD_Send_Byte_I
 	movlw	.10		; wait 40us
@@ -107,7 +104,6 @@ LCD_Enable	    ; pulse enable bit LCD_E for 500ns
 	bcf	    LATB, LCD_E	    ; Writes data to LCD
 	return
     
-; ** a few delay routines below here as LCD timing can be quite critical ****
 LCD_delay_ms		    ; delay given in ms in W
 	movwf	LCD_cnt_ms
 lcdlp2	movlw	.250	    ; 1 ms delay
@@ -139,11 +135,40 @@ LCD_clear
 	call	LCD_Send_Byte_I
 	return
 	
-LCD_shift 
+LCD_shift_to_bottom_line
 	movlw b'11000000'
 	call LCD_Send_Byte_I
 	return 
-    end
+	;call   LCD_shift 
+	;movlw	.10		; wait 40us
+	;call	LCD_delay_x4us
+	
+
+LCD_output	
+setup   bcf	EECON1, CFGS	; point to Flash program memory  
+	bsf	EECON1, EEPGD 	; access Flash program memory
+	goto	start
+
+start 	movlw	upper(myTable)	; address of data in PM
+	movwf	TBLPTRU		; load upper bits to TBLPTRU
+	movlw	high(myTable)	; address of data in PM
+	movwf	TBLPTRH		; load high byte to TBLPTRH
+	movlw	low(myTable)	; address of data in PM
+	movwf	TBLPTRL		; load low byte to TBLPTRL
+	movlw	myTable_l	; bytes to read
+	movwf 	counter		; our counter register
+loop 	tblrd*+			; one byte from PM to TABLAT, increment TBLPRT
+	movf    TABLAT, w
+	call    LCD_Send_Byte_D
+	decfsz	counter		; count down to zero
+	bra	loop		; keep going until finished
+	return 
+
+
+	
+	
+	
+	end
 
 
 
