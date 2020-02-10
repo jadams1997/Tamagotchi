@@ -1,4 +1,4 @@
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE  1
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -57,7 +57,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000042 EC?? F???      00041         call    LCD_delay_ms
 000046 0E06           00042         movlw   b'00000110'     ; entry mode incr by 1 no shift
 000048 EC?? F???      00043         call    LCD_Send_Byte_I
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE  2
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -116,7 +116,7 @@ Warning[207]: Found label after column 1. (LCD_Loop_message)
 0000AA 0000           00093         nop
 0000AC 0000           00094         nop
 0000AE 0000           00095         nop
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE  3
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -175,7 +175,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00146 
 000100                00147 LCD_output      
 000100 9C7F           00148 setup   bcf     EECON1, CFGS    ; point to Flash program memory  
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE  4
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -208,7 +208,7 @@ Error[113]  : Symbol not previously defined (myTable_l)
                       00169         
                       00170         
                       00171         end
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE  5
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE  5
 
 
 SYMBOL TABLE
@@ -267,7 +267,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE  6
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE  6
 
 
 SYMBOL TABLE
@@ -326,7 +326,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE  7
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE  7
 
 
 SYMBOL TABLE
@@ -385,7 +385,7 @@ C1TSEL0                           00000000
 C1TSEL1                           00000001
 C1TSEL2                           00000002
 C2INA                             00000004
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE  8
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE  8
 
 
 SYMBOL TABLE
@@ -444,7 +444,7 @@ CCP1IP                            00000001
 CCP1M0                            00000000
 CCP1M1                            00000001
 CCP1M2                            00000002
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE  9
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE  9
 
 
 SYMBOL TABLE
@@ -503,7 +503,7 @@ CCP5M0                            00000000
 CCP5M1                            00000001
 CCP5M2                            00000002
 CCP5M3                            00000003
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 10
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 10
 
 
 SYMBOL TABLE
@@ -562,7 +562,7 @@ CCP9IP                            00000006
 CCP9M0                            00000000
 CCP9M1                            00000001
 CCP9M2                            00000002
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 11
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 11
 
 
 SYMBOL TABLE
@@ -621,7 +621,7 @@ CHSN1                             00000001
 CHSN2                             00000002
 CK1                               00000006
 CK2                               00000001
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 12
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 12
 
 
 SYMBOL TABLE
@@ -680,7 +680,7 @@ CTMUIE                            00000003
 CTMUIF                            00000003
 CTMUIP                            00000003
 CTMUMD                            00000006
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 13
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 13
 
 
 SYMBOL TABLE
@@ -739,7 +739,7 @@ ECCP1AS1                          00000005
 ECCP1AS2                          00000006
 ECCP1ASE                          00000007
 ECCP1CON                          00000FBB
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 14
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 14
 
 
 SYMBOL TABLE
@@ -798,7 +798,7 @@ FSR2H                             00000FDA
 FSR2L                             00000FD9
 GCEN                              00000007
 GIE                               00000007
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 15
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 15
 
 
 SYMBOL TABLE
@@ -857,7 +857,7 @@ INT3F                             00000002
 INT3IE                            00000005
 INT3IF                            00000002
 INT3IP                            00000001
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 16
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 16
 
 
 SYMBOL TABLE
@@ -916,7 +916,7 @@ LATB7                             00000007
 LATC                              00000F8B
 LATC0                             00000000
 LATC1                             00000001
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 17
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 17
 
 
 SYMBOL TABLE
@@ -975,7 +975,7 @@ LATJ1                             00000001
 LATJ2                             00000002
 LATJ3                             00000003
 LATJ4                             00000004
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 18
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 18
 
 
 SYMBOL TABLE
@@ -1034,7 +1034,7 @@ NOT_RI                            00000004
 NOT_SS2                           00000007
 NOT_T1DONE                        00000003
 NOT_T1SYNC                        00000002
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 19
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 19
 
 
 SYMBOL TABLE
@@ -1093,7 +1093,7 @@ P2DC1                             00000001
 P2DC2                             00000002
 P2DC3                             00000003
 P2DC4                             00000004
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 20
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 20
 
 
 SYMBOL TABLE
@@ -1152,7 +1152,7 @@ PLUSW0                            00000FEB
 PLUSW1                            00000FE3
 PLUSW2                            00000FDB
 PMD0                              00000F19
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 21
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 21
 
 
 SYMBOL TABLE
@@ -1211,7 +1211,7 @@ PSS1BD1                           00000001
 PSS2AC0                           00000002
 PSS2AC1                           00000003
 PSS2BD0                           00000000
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 22
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 22
 
 
 SYMBOL TABLE
@@ -1270,7 +1270,7 @@ RCIDL                             00000006
 RCIE                              00000005
 RCIF                              00000005
 RCIP                              00000005
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 23
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 23
 
 
 SYMBOL TABLE
@@ -1329,7 +1329,7 @@ RH5                               00000005
 RH6                               00000006
 RH7                               00000007
 RI                                00000004
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 24
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 24
 
 
 SYMBOL TABLE
@@ -1388,7 +1388,7 @@ SCK2                              00000006
 SCKLI                             00000000
 SCL1                              00000003
 SCL2                              00000006
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 25
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 25
 
 
 SYMBOL TABLE
@@ -1447,7 +1447,7 @@ SSP2BUF                           00000F6A
 SSP2CON1                          00000F67
 SSP2CON2                          00000F66
 SSP2IE                            00000005
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 26
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 26
 
 
 SYMBOL TABLE
@@ -1506,7 +1506,7 @@ T10OUTPS1                         00000004
 T10OUTPS2                         00000005
 T10OUTPS3                         00000006
 T12CKPS0                          00000000
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 27
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 27
 
 
 SYMBOL TABLE
@@ -1565,7 +1565,7 @@ T5CKPS0                           00000004
 T5CKPS1                           00000005
 T5CON                             00000F7B
 T5G                               00000004
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 28
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 28
 
 
 SYMBOL TABLE
@@ -1624,7 +1624,7 @@ TMR0ON                            00000007
 TMR1                              00000FCE
 TMR10                             00000F35
 TMR10IE                           00000005
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 29
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 29
 
 
 SYMBOL TABLE
@@ -1683,7 +1683,7 @@ TMR5                              00000F7C
 TMR5CS0                           00000006
 TMR5CS1                           00000007
 TMR5GE                            00000007
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 30
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 30
 
 
 SYMBOL TABLE
@@ -1742,7 +1742,7 @@ TRISA5                            00000005
 TRISA6                            00000006
 TRISA7                            00000007
 TRISB                             00000F93
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 31
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 31
 
 
 SYMBOL TABLE
@@ -1801,7 +1801,7 @@ TRISH                             00000F99
 TRISH0                            00000000
 TRISH1                            00000001
 TRISH2                            00000002
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 32
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 32
 
 
 SYMBOL TABLE
@@ -1860,7 +1860,7 @@ TXSTA                             00000FAC
 TXSTA1                            00000FAC
 TXSTA2                            00000F21
 U1OD                              00000006
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 33
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 33
 
 
 SYMBOL TABLE
@@ -1919,7 +1919,7 @@ _BW_8_3L                          000000BF
 _CCP2MX_PORTBE_3H                 000000FE
 _CCP2MX_PORTC_3H                  000000FF
 _CONFIG1H                         00300001
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 34
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 34
 
 
 SYMBOL TABLE
@@ -1978,7 +1978,7 @@ _EBRT5_ON_7L                      000000DF
 _EBRT6_OFF_7L                     000000FF
 _EBRT6_ON_7L                      000000BF
 _EBRT7_OFF_7L                     000000FF
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 35
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 35
 
 
 SYMBOL TABLE
@@ -2037,7 +2037,7 @@ _STVREN_ON_4L                     000000FF
 _WAIT_OFF_3L                      000000FF
 _WAIT_ON_3L                       0000007F
 _WDTEN_NOSLP_2H                   000000FD
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 36
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 36
 
 
 SYMBOL TABLE
@@ -2096,7 +2096,7 @@ counter                           00000005
 lcdlp1                            000000E8
 lcdlp2                            000000C6
 loop                              00000118
-MPASM 5.81                           LCD.ASM   2-10-2020  15:33:11         PAGE 37
+MPASM 5.81                           LCD.ASM   2-10-2020  15:33:36         PAGE 37
 
 
 SYMBOL TABLE
