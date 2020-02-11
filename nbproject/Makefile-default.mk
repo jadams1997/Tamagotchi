@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=config.asm LCD.asm Tamagotchi.asm screen_output.asm
+SOURCEFILES_QUOTED_IF_SPACED=config.asm LCD.asm Tamagotchi.asm
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o ${OBJECTDIR}/screen_output.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/config.o.d ${OBJECTDIR}/LCD.o.d ${OBJECTDIR}/Tamagotchi.o.d ${OBJECTDIR}/screen_output.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/config.o.d ${OBJECTDIR}/LCD.o.d ${OBJECTDIR}/Tamagotchi.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o ${OBJECTDIR}/screen_output.o
+OBJECTFILES=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o
 
 # Source Files
-SOURCEFILES=config.asm LCD.asm Tamagotchi.asm screen_output.asm
+SOURCEFILES=config.asm LCD.asm Tamagotchi.asm
 
 
 CFLAGS=
@@ -118,14 +118,6 @@ ${OBJECTDIR}/Tamagotchi.o: Tamagotchi.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${DEP_GEN} -d "${OBJECTDIR}/Tamagotchi.o"
 	@${FIXDEPS} "${OBJECTDIR}/Tamagotchi.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
-${OBJECTDIR}/screen_output.o: screen_output.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/screen_output.o.d 
-	@${RM} ${OBJECTDIR}/screen_output.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/screen_output.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_ICD3=1 -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/screen_output.lst\" -e\"${OBJECTDIR}/screen_output.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/screen_output.o\" \"screen_output.asm\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/screen_output.o"
-	@${FIXDEPS} "${OBJECTDIR}/screen_output.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
 else
 ${OBJECTDIR}/config.o: config.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -150,14 +142,6 @@ ${OBJECTDIR}/Tamagotchi.o: Tamagotchi.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/Tamagotchi.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/Tamagotchi.lst\" -e\"${OBJECTDIR}/Tamagotchi.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/Tamagotchi.o\" \"Tamagotchi.asm\" 
 	@${DEP_GEN} -d "${OBJECTDIR}/Tamagotchi.o"
 	@${FIXDEPS} "${OBJECTDIR}/Tamagotchi.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
-${OBJECTDIR}/screen_output.o: screen_output.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/screen_output.o.d 
-	@${RM} ${OBJECTDIR}/screen_output.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/screen_output.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/screen_output.lst\" -e\"${OBJECTDIR}/screen_output.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/screen_output.o\" \"screen_output.asm\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/screen_output.o"
-	@${FIXDEPS} "${OBJECTDIR}/screen_output.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 endif
 
