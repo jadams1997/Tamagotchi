@@ -1,0 +1,5 @@
+Warning[207] H:\TAMAGOTCHI\TAMAGOTCHI.X\TAMAGOTCHI.ASM 43 : Found label after column 1. (#set)
+Error[122]   H:\TAMAGOTCHI\TAMAGOTCHI.X\TAMAGOTCHI.ASM 43 : Illegal opcode (Line)
+Error[113]   H:\TAMAGOTCHI\TAMAGOTCHI.X\TAMAGOTCHI.ASM 80 : Symbol not previously defined (Line)
+Error[113]   H:\TAMAGOTCHI\TAMAGOTCHI.X\TAMAGOTCHI.ASM 82 : Symbol not previously defined (Line)
+Error[113]   H:\TAMAGOTCHI\TAMAGOTCHI.X\TAMAGOTCHI.ASM 84 : Symbol not previously defined (Line)
