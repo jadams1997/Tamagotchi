@@ -20,9 +20,6 @@ Line_1	data "ABC111DEF100"
         variable Line_Bytes_1 = .12
 
 
-   
-	
-	
 tamagotchi code
  
 	org 0x0
