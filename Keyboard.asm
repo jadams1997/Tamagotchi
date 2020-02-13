@@ -24,6 +24,7 @@ Keyboard_Setup
     movlw 0xFF
     movwf 0x20
     call delay
+    return 
     
     
 Keyboard
@@ -32,6 +33,7 @@ Keyboard
 column
     call setup_column
     bra read_column
+    
     
 setup_row 
     movlw 0xF0
@@ -115,23 +117,28 @@ decode
     cpfseq counter_row
     bra row_1
     bra column_11
+    return 
 column_11
     movlw 0x04
     cpfseq counter_column
     bra column_12
     movlw '1'
+    return 
 column_12
     movlw 0x05
     cpfseq counter_column
     bra column_13
     movlw '2'
+    return 
 column_13
     movlw 0x06
     cpfseq counter_column
     bra column_14
     movlw '3'
+    return 
 column_14
     movlw 'F'
+    return 
 row_1 
     movlw 0x01
     cpfseq counter_row
@@ -142,18 +149,22 @@ column_21
     cpfseq counter_column
     bra column_22
     movlw '4'
+    return 
 column_22
     movlw 0x05
     cpfseq counter_column
     bra column_23
     movlw '5'
+    return 
 column_23
     movlw 0x06
     cpfseq counter_column
     bra column_24
     movlw '6'
+    return 
 column_24
     movlw 'E'
+    return 
 row_2
     movlw 0x02
     cpfseq counter_row
@@ -164,18 +175,22 @@ column_31
     cpfseq counter_column
     bra column_32
     movlw '7'
+    return 
 column_32
     movlw 0x05
     cpfseq counter_column
     bra column_33
     movlw '8'
+    return 
 column_33
     movlw 0x06
     cpfseq counter_column
     bra column_34
     movlw '9'
+    return 
 column_34
     movlw 'D'
+    return 
 row_3
     bra column_41
 column_41
@@ -183,18 +198,22 @@ column_41
     cpfseq counter_column
     bra column_42
     movlw 'A'
+    return 
 column_42
     movlw 0x05
     cpfseq counter_column
     bra column_43
     movlw '0'
+    return 
 column_43
     movlw 0x06
     cpfseq counter_column
     bra column_44
     movlw 'B'
+    return 
 column_44
     movlw 'C'
+    return 
     
     
     end

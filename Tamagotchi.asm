@@ -16,7 +16,7 @@ myArray res 0x80
 Key_Pressed res 0x20
  
 pdata code
-Line_0  data "PRESS A TO START"
+Line_0  data "PRESS A TO HATCH"
 	variable Line_Bytes_0= .16
 	
 Line_1	data "ABC111DEF100"
@@ -37,17 +37,23 @@ setup	bcf	EECON1, CFGS	; point to Flash program memory
 
 
 main    
-	call    output_PRESS_A_TO_START
-	call    Keyboard 
-PRESS_A_TO_START
+	call    output_PRESS_A_TO_HATCH
+PRESS_A_TO_HATCH
+	movlw   0x00
 	movwf   Key_Pressed
-	movlw   'A'
+	call    Keyboard 
+	movwf   Key_Pressed
+	movlw   0x41
 	cpfseq  Key_Pressed 
-	bra     PRESS_A_TO_START
+	bra     PRESS_A_TO_HATCH
 	call    output_starting_screen
+HATCH_SEQUENCE
+	
+	
+	
 	bra     finished
 	
-output_PRESS_A_TO_START
+output_PRESS_A_TO_HATCH
 	movlw	upper(Line_0)	; address of data in PM
 	movwf	TBLPTRU		; load upper bits to TBLPTRU
 	movlw	high(Line_0)	; address of data in PM
@@ -65,6 +71,7 @@ loop_0 	tblrd*+			; one byte from PM to TABLAT, increment TBLPRT
 
 	
 output_starting_screen
+	call    LCD_clear
 	movlw	upper(Line_1)	; address of data in PM
 	movwf	TBLPTRU		; load upper bits to TBLPTRU
 	movlw	high(Line_1)	; address of data in PM
@@ -94,7 +101,7 @@ check_2
 	movlw   0x03
 	cpfseq  counter_output 
 	bra     check_3
-	call    shift_3
+	call    shift_3_and_egg
 check_3
 	bra     loop_1
 shift_1	
@@ -105,7 +112,11 @@ shift_2
 	movlw   b'11000000'
 	call    LCD_shift 
 	return 
-shift_3
+shift_3_and_egg
+	movlw   b'11001000'
+	call    LCD_shift
+	movlw   0x4F
+	call    LCD_Send_Byte_D
 	movlw   b'11001101'
 	call    LCD_shift 
 	return 

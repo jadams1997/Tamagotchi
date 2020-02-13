@@ -37,8 +37,6 @@ LCD_Setup
 	movlw	.10		; wait 40us
 	call	LCD_delay_x4us  ;movlw	b'00000001'	; display clear
 	call	LCD_clear ;call	LCD_Send_Byte_I
-	movlw	.2		; wait 2ms
-	call	LCD_delay_ms
 	movlw	b'00000110'	; entry mode incr by 1 no shift
 	call	LCD_Send_Byte_I
 	movlw	.10		; wait 40us
@@ -133,6 +131,8 @@ lcdlp1	decf 	LCD_cnt_l,F	; no carry when 0x00 -> 0xff
 LCD_clear
 	movlw	b'00000001'	; display clear
 	call	LCD_Send_Byte_I
+	movlw	.2		; wait 2ms
+	call	LCD_delay_ms
 	return
 	
 LCD_shift
