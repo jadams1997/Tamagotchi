@@ -40,8 +40,6 @@ main
 	call output_starting_screen
 	bra finished
 	
-	
-
 output_starting_screen
 	movlw	upper(Line_1)	; address of data in PM
 	movwf	TBLPTRU		; load upper bits to TBLPTRU
@@ -53,33 +51,42 @@ output_starting_screen
 	movwf 	counter_output	; our counter register
 loop 	tblrd*+			; one byte from PM to TABLAT, increment TBLPRT
 	movf    TABLAT, w
-	
-	movlw .10
+        call    LCD_Send_Byte_D
+	decfsz	counter_output	; count down to zero
+	bra     shift_checks
+	return 
+shift_checks
+	movlw   0x09
 	cpfseq  counter_output
-	bra     send 
-	movlw   b'10001000'
+	bra     check_1
+	call    shift_1
+check_1 
+	movlw   0x06
+	cpfseq  counter_output
+	bra     check_2
+	call    shift_2
+check_2
+	movlw   0x03
+	cpfseq  counter_output 
+	bra     check_3
+	call    shift_3
+check_3
+	bra     loop
+	
+	
+shift_1	
+	movlw   b'10001101'
 	call    LCD_shift 
-	bra     send 
-	
-	movlw .7
-	cpfseq  counter_output
-	bra     send 
+	return
+shift_2
 	movlw   b'11000000'
 	call    LCD_shift 
-	bra     send 
-	
-	movlw .4
-	cpfseq  counter_output
-	bra     send 
-	movlw   b'11001000'
+	return 
+shift_3
+	movlw   b'11001101'
 	call    LCD_shift 
-	bra     send 
-	
-	
-send    call    LCD_Send_Byte_D
-	decfsz	counter_output	; count down to zero
-	bra	loop		; keep going until finished
-	return  		; goto current line in code
+	return 
+
 	
 delay
 	movlw 0xFF
