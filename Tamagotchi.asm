@@ -16,10 +16,10 @@ myArray res 0x80
  
 pdata code
 
-Line1	data "ABC"
-        variable Line_Bytes = .3
-Line2   data "DEF" 
-Line3   data 0x30
+Line_1	data "ABC111DEF100"
+        variable Line_Bytes_1 = .12
+
+
    
 	
 	
@@ -40,54 +40,46 @@ setup	bcf	EECON1, CFGS	; point to Flash program memory
 
 
 main    
-	# Line = Line1
-	call output
-	;#undefine Line
-	;movlw b'11000000'
-	;call LCD_shift
-	;#define Line Line2
-	;call output
-	;movlw 0x00
-	;movwf Line
-	;#undefine Line
-	;movlw b'11001000'
-	;call LCD_shift
-	;movlw 0x30
-	;call LCD_Send_Byte_D
-	;movlw b'10001101'
-	;call LCD_shift
-	;movlw 0x30
-	;call LCD_Send_Byte_D
-	;movlw 0x30
-	;call LCD_Send_Byte_D
-	;movlw 0x30
-	;call LCD_Send_Byte_D
-	;movlw b'11001101'
-	;call LCD_shift
-	;movlw 0x30
-	;call LCD_Send_Byte_D
-	;movlw 0x30
-	;call LCD_Send_Byte_D
-	;movlw 0x30
-	;call LCD_Send_Byte_D
-	;;#define Line b'11100010'
-	;#define Line_Bytes .1
-	;bra output
+	call output_starting_screen
 	bra finished
 	
 	
 
-output  movlw	upper(Line)	; address of data in PM
+output_starting_screen
+	movlw	upper(Line_1)	; address of data in PM
 	movwf	TBLPTRU		; load upper bits to TBLPTRU
-	movlw	high(Line)	; address of data in PM
+	movlw	high(Line_1)	; address of data in PM
 	movwf	TBLPTRH		; load high byte to TBLPTRH
-	movlw	low(Line)	; address of data in PM
+	movlw	low(Line_1)	; address of data in PM
 	movwf	TBLPTRL		; load low byte to TBLPTRL
-	movlw	Line_Bytes	; bytes to read
+	movlw	Line_Bytes_1	; bytes to read
 	movwf 	counter_output	; our counter register
 loop 	tblrd*+			; one byte from PM to TABLAT, increment TBLPRT
 	movf    TABLAT, w
-	call    LCD_Send_Byte_D
+	
+	movlw .10
+	cpfseq  counter_output
+	bra     send 
+	movlw   b'10001000'
+	call    LCD_shift 
+	bra     send 
+	
+	movlw .7
+	cpfseq  counter_output
+	bra     send 
+	movlw   b'11000000'
+	call    LCD_shift 
+	bra     send 
+	
+	movlw .4
+	cpfseq  counter_output
+	bra     send 
+	movlw   b'11001000'
+	call    LCD_shift 
+	bra     send 
+	
+	
+send    call    LCD_Send_Byte_D
 	decfsz	counter_output	; count down to zero
 	bra	loop		; keep going until finished
 	return  		; goto current line in code
