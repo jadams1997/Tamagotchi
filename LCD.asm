@@ -142,7 +142,7 @@ LCD_shift
 	call	LCD_delay_x4us
 	return 
 	
-	
+
 	
 	end
 
