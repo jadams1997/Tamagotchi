@@ -18,9 +18,6 @@ Key_Pressed res 0x20
 pdata code
 Line_0  data "PRESS A TO HATCH"
 	variable Line_Bytes_0= .16
-	
-Line_1	data "ABC111DEF100"
-        variable Line_Bytes_1 = .12
 
 
 tamagotchi code
@@ -34,26 +31,25 @@ setup	bcf	EECON1, CFGS	; point to Flash program memory
 	call	LCD_Setup	; setup LCD
 	call    Keyboard_Setup
 	goto    main
-
-
+	
 main    
+	nop
+	nop
 	call    output_PRESS_A_TO_HATCH
 PRESS_A_TO_HATCH
 	movlw   0x00
 	movwf   Key_Pressed
-	call    Keyboard 
+        call    Keyboard 
 	movwf   Key_Pressed
 	movlw   0x41
 	cpfseq  Key_Pressed 
-	bra     PRESS_A_TO_HATCH
+	bra     main
 	call    output_starting_screen
 HATCH_SEQUENCE
-	
-	
-	
 	bra     finished
 	
 output_PRESS_A_TO_HATCH
+	call    LCD_clear 
 	movlw	upper(Line_0)	; address of data in PM
 	movwf	TBLPTRU		; load upper bits to TBLPTRU
 	movlw	high(Line_0)	; address of data in PM
@@ -72,53 +68,22 @@ loop_0 	tblrd*+			; one byte from PM to TABLAT, increment TBLPRT
 	
 output_starting_screen
 	call    LCD_clear
-	movlw	upper(Line_1)	; address of data in PM
-	movwf	TBLPTRU		; load upper bits to TBLPTRU
-	movlw	high(Line_1)	; address of data in PM
-	movwf	TBLPTRH		; load high byte to TBLPTRH
-	movlw	low(Line_1)	; address of data in PM
-	movwf	TBLPTRL		; load low byte to TBLPTRL
-	movlw	Line_Bytes_1	; bytes to read
-	movwf 	counter_output	; our counter register
-	bra     loop_1 
-loop_1 	tblrd*+			; one byte from PM to TABLAT, increment TBLPRT
-	movf    TABLAT, w
-        call    LCD_Send_Byte_D
-	decfsz	counter_output	; count down to zero
-	bra     shift_checks
-	return 
-shift_checks
-	movlw   0x09
-	cpfseq  counter_output
-	bra     check_1
-	call    shift_1
-check_1 
-	movlw   0x06
-	cpfseq  counter_output
-	bra     check_2
-	call    shift_2
-check_2
-	movlw   0x03
-	cpfseq  counter_output 
-	bra     check_3
-	call    shift_3_and_egg
-check_3
-	bra     loop_1
-shift_1	
-	movlw   b'10001101'
-	call    LCD_shift 
-	return
-shift_2
+	movlw   0x01
+	call    LCD_Send_Byte_D
+	movlw   0x01
+	call    LCD_Send_Byte_D
+	movlw   0x01
+	call    LCD_Send_Byte_D
 	movlw   b'11000000'
 	call    LCD_shift 
-	return 
-shift_3_and_egg
-	movlw   b'11001000'
-	call    LCD_shift
-	movlw   0x4F
+	movlw   0x05
 	call    LCD_Send_Byte_D
-	movlw   b'11001101'
+	movlw   0x23
+	call    LCD_Send_Byte_D
+	movlw   b'11001000'
 	call    LCD_shift 
+	movlw   0x00
+	call    LCD_Send_Byte_D
 	return 
 
 	
