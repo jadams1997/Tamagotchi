@@ -1,6 +1,6 @@
 #include p18f87k22.inc
 
-    global  LCD_Setup, LCD_Write_Message, LCD_Send_Byte_D, LCD_shift, LCD_clear
+    global  LCD_Setup, LCD_Write_Message, LCD_Send_Byte_D, LCD_shift, LCD_clear, GHOST 
 
 acs0    udata_acs   ; named variables in access ram
 LCD_cnt_l   res 1   ; reserve 1 byte for variable LCD_cnt_l
@@ -564,6 +564,9 @@ SAD
 LCD_custom_character_set_2   ;GHOST 0X00,  HEART 0X01,  SMALL_RABBIT 0X02, MEDIUM_RABBIT 0X03, LARGE_RABBIT 0X04, SMILEY 0X05, NEUTRAL 0X06, SAD 0X07
 	
 GHOST
+	
+	
+return 
 	
 	
 	end
