@@ -47,6 +47,8 @@ LCD_Setup
 	call    MEDIUM_RABBIT
 	call    LARGE_RABBIT 
 	call    SMILEY 
+	call    NEUTRAL 
+	call    SAD 
 	return
 
 LCD_Write_Message	    ; Message stored at FSR2, length stored in W
@@ -147,7 +149,7 @@ LCD_shift
 	call	LCD_delay_x4us
 	return 
 	
-LCD_custom_character_set_1 
+LCD_custom_character_set_1   ;EGG 0X00,  HEART 0X01,  SMALL_RABBIT 0X02, MEDIUM_RABBIT 0X03, LARGE_RABBIT 0X04, SMILEY 0X05, NEUTRAL 0X06, SAD 0X07
 	
 EGG 
 	movlw b'0001000000'   ;setting CGRAM address of first line 
@@ -550,6 +552,18 @@ SMILEY
         movlw	.10		
 	call	LCD_delay_x4us
 	return 
+	
+	
+NEUTRAL   
+	
+	
+	
+SAD 
+	
+	
+LCD_custom_character_set_2   ;GHOST 0X00,  HEART 0X01,  SMALL_RABBIT 0X02, MEDIUM_RABBIT 0X03, LARGE_RABBIT 0X04, SMILEY 0X05, NEUTRAL 0X06, SAD 0X07
+	
+GHOST
 	
 	
 	end

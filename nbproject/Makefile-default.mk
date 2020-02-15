@@ -30,12 +30,12 @@ ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 IMAGE_TYPE=debug
 OUTPUT_SUFFIX=cof
 DEBUGGABLE_SUFFIX=cof
-FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 else
 IMAGE_TYPE=production
 OUTPUT_SUFFIX=hex
 DEBUGGABLE_SUFFIX=cof
-FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 endif
 
 ifeq ($(COMPARE_BUILD), true)
@@ -57,17 +57,18 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=config.asm LCD.asm Tamagotchi.asm Keyboard.asm
+SOURCEFILES_QUOTED_IF_SPACED=config.asm LCD.asm Tamagotchi.asm Keyboard.asm ball_game.asm sleepy.asm dance.asm learn.asm food.asm
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o ${OBJECTDIR}/Keyboard.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/config.o.d ${OBJECTDIR}/LCD.o.d ${OBJECTDIR}/Tamagotchi.o.d ${OBJECTDIR}/Keyboard.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o ${OBJECTDIR}/Keyboard.o ${OBJECTDIR}/ball_game.o ${OBJECTDIR}/sleepy.o ${OBJECTDIR}/dance.o ${OBJECTDIR}/learn.o ${OBJECTDIR}/food.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/config.o.d ${OBJECTDIR}/LCD.o.d ${OBJECTDIR}/Tamagotchi.o.d ${OBJECTDIR}/Keyboard.o.d ${OBJECTDIR}/ball_game.o.d ${OBJECTDIR}/sleepy.o.d ${OBJECTDIR}/dance.o.d ${OBJECTDIR}/learn.o.d ${OBJECTDIR}/food.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o ${OBJECTDIR}/Keyboard.o
+OBJECTFILES=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o ${OBJECTDIR}/Keyboard.o ${OBJECTDIR}/ball_game.o ${OBJECTDIR}/sleepy.o ${OBJECTDIR}/dance.o ${OBJECTDIR}/learn.o ${OBJECTDIR}/food.o
 
 # Source Files
-SOURCEFILES=config.asm LCD.asm Tamagotchi.asm Keyboard.asm
+SOURCEFILES=config.asm LCD.asm Tamagotchi.asm Keyboard.asm ball_game.asm sleepy.asm dance.asm learn.asm food.asm
+
 
 
 CFLAGS=
@@ -87,7 +88,7 @@ FIXDEPS=fixDeps
 ifneq ($(INFORMATION_MESSAGE), )
 	@echo $(INFORMATION_MESSAGE)
 endif
-	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 
 MP_PROCESSOR_OPTION=18f87k22
 MP_LINKER_DEBUG_OPTION= 
@@ -126,6 +127,46 @@ ${OBJECTDIR}/Keyboard.o: Keyboard.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${DEP_GEN} -d "${OBJECTDIR}/Keyboard.o"
 	@${FIXDEPS} "${OBJECTDIR}/Keyboard.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
+${OBJECTDIR}/ball_game.o: ball_game.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/ball_game.o.d 
+	@${RM} ${OBJECTDIR}/ball_game.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/ball_game.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_ICD3=1 -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/ball_game.lst\" -e\"${OBJECTDIR}/ball_game.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/ball_game.o\" \"ball_game.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/ball_game.o"
+	@${FIXDEPS} "${OBJECTDIR}/ball_game.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/sleepy.o: sleepy.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/sleepy.o.d 
+	@${RM} ${OBJECTDIR}/sleepy.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/sleepy.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_ICD3=1 -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/sleepy.lst\" -e\"${OBJECTDIR}/sleepy.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/sleepy.o\" \"sleepy.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/sleepy.o"
+	@${FIXDEPS} "${OBJECTDIR}/sleepy.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/dance.o: dance.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/dance.o.d 
+	@${RM} ${OBJECTDIR}/dance.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/dance.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_ICD3=1 -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/dance.lst\" -e\"${OBJECTDIR}/dance.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/dance.o\" \"dance.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/dance.o"
+	@${FIXDEPS} "${OBJECTDIR}/dance.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/learn.o: learn.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/learn.o.d 
+	@${RM} ${OBJECTDIR}/learn.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/learn.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_ICD3=1 -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/learn.lst\" -e\"${OBJECTDIR}/learn.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/learn.o\" \"learn.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/learn.o"
+	@${FIXDEPS} "${OBJECTDIR}/learn.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/food.o: food.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/food.o.d 
+	@${RM} ${OBJECTDIR}/food.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/food.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_ICD3=1 -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/food.lst\" -e\"${OBJECTDIR}/food.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/food.o\" \"food.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/food.o"
+	@${FIXDEPS} "${OBJECTDIR}/food.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
 else
 ${OBJECTDIR}/config.o: config.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -159,18 +200,58 @@ ${OBJECTDIR}/Keyboard.o: Keyboard.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${DEP_GEN} -d "${OBJECTDIR}/Keyboard.o"
 	@${FIXDEPS} "${OBJECTDIR}/Keyboard.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
+${OBJECTDIR}/ball_game.o: ball_game.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/ball_game.o.d 
+	@${RM} ${OBJECTDIR}/ball_game.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/ball_game.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/ball_game.lst\" -e\"${OBJECTDIR}/ball_game.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/ball_game.o\" \"ball_game.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/ball_game.o"
+	@${FIXDEPS} "${OBJECTDIR}/ball_game.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/sleepy.o: sleepy.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/sleepy.o.d 
+	@${RM} ${OBJECTDIR}/sleepy.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/sleepy.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/sleepy.lst\" -e\"${OBJECTDIR}/sleepy.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/sleepy.o\" \"sleepy.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/sleepy.o"
+	@${FIXDEPS} "${OBJECTDIR}/sleepy.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/dance.o: dance.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/dance.o.d 
+	@${RM} ${OBJECTDIR}/dance.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/dance.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/dance.lst\" -e\"${OBJECTDIR}/dance.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/dance.o\" \"dance.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/dance.o"
+	@${FIXDEPS} "${OBJECTDIR}/dance.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/learn.o: learn.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/learn.o.d 
+	@${RM} ${OBJECTDIR}/learn.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/learn.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/learn.lst\" -e\"${OBJECTDIR}/learn.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/learn.o\" \"learn.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/learn.o"
+	@${FIXDEPS} "${OBJECTDIR}/learn.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/food.o: food.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/food.o.d 
+	@${RM} ${OBJECTDIR}/food.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/food.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/food.lst\" -e\"${OBJECTDIR}/food.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/food.o\" \"food.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/food.o"
+	@${FIXDEPS} "${OBJECTDIR}/food.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
 endif
 
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: link
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-dist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
+dist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_LD} $(MP_EXTRA_LD_PRE)   -p$(MP_PROCESSOR_OPTION)  -w -x -u_DEBUG -z__ICD2RAM=1 -m"${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"   -z__MPLAB_BUILD=1  -z__MPLAB_DEBUG=1 -z__MPLAB_DEBUGGER_ICD3=1 $(MP_LINKER_DEBUG_OPTION) -odist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
+	${MP_LD} $(MP_EXTRA_LD_PRE)   -p$(MP_PROCESSOR_OPTION)  -w -x -u_DEBUG -z__ICD2RAM=1 -m"${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"   -z__MPLAB_BUILD=1  -z__MPLAB_DEBUG=1 -z__MPLAB_DEBUGGER_ICD3=1 $(MP_LINKER_DEBUG_OPTION) -odist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.${IMAGE_TYPE}.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
 else
-dist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
+dist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_LD} $(MP_EXTRA_LD_PRE)   -p$(MP_PROCESSOR_OPTION)  -w  -m"${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"   -z__MPLAB_BUILD=1  -odist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
+	${MP_LD} $(MP_EXTRA_LD_PRE)   -p$(MP_PROCESSOR_OPTION)  -w  -m"${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"   -z__MPLAB_BUILD=1  -odist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
 endif
 
 
