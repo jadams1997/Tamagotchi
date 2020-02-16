@@ -70,7 +70,6 @@ OBJECTFILES=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o $
 SOURCEFILES=config.asm LCD.asm Tamagotchi.asm Keyboard.asm ball_game.asm sleepy.asm dance.asm learn.asm food.asm
 
 
-
 CFLAGS=
 ASFLAGS=
 LDLIBSOPTIONS=

@@ -1,13 +1,14 @@
 #include p18f87k22.inc
 
-    extern LCD_Setup, LCD_Send_Byte_D,LCD_shift, LCD_clear, Keyboard_Setup, GHOST, Keyboard, FOOD, LEARN, DANCE, SLEEPY, BALL_GAME
+    extern LCD_Setup, LCD_Send_Byte_D, LCD_shift, LCD_clear, LCD_custom_character_set_2, LCD_custom_character_set_3, LCD_custom_character_set_4, Keyboard_Setup, GHOST, Keyboard, FOOD, LEARN, DANCE, SLEEPY, BALL_GAME
 	
 acs0                             udata_acs
 counter_happiness                res 1 
 counter_happiness_decrement      res 1
 life_mode                        res 1
 counter_life                     res 1
-counter_output	                 res 1   
+counter_output	                 res 1  
+food_counter			 res 1
 delay_count_1                    res 1
 delay_count_2                    res 1
 delay_count_3                    res 1
@@ -46,17 +47,20 @@ PRESS_A_TO_HATCH
 	bra     MAIN          ;if not, got back to start
 	call    output_starting_screen   ;if A is pressed, output starting screen 
 	call    output_hatching_sequence ;carry out hatching sequence 
+	call    LCD_custom_character_set_2
 	movlw   0xFF
 	movwf   counter_happiness_decrement ;set the counter_happiness_decrement to 255
 	movlw   0x64
 	movwf   counter_happiness  ;counter_happiness to 100
 	movlw   0x03          
 	movwf   counter_life ;counter_life to 3
+	movlw	0x01
+	movwf   life_mode ;initialise the life mode at 1 for baby rabbit 
 GAME_MODE
 	movlw   0x00
 	movwf   Key_Pressed    ;reset Key_Pressed variable 
 	call    Keyboard     ;wait for keyboard input 
-	movwf   KeyPressed 
+	movwf   Key_Pressed 
 CHECK_A_PRESSED
 	movlw   0x41      ;is the key pressed A?
 	cpfseq  Key_Pressed 
@@ -92,6 +96,7 @@ CHECK_F_PRESSED
 	bra     dch     ;if no key is pressed, decrement the happiness counter
 	bra     fm      ; if F is pressed, go to FOOD
 fm	movf    life_mode, W
+	
 	call    FOOD
 dch	decfsz  counter_happiness_decrement
 	bra     GAME_MODE
@@ -199,6 +204,7 @@ output_starting_screen
 	movlw   0x00   
 	call    LCD_Send_Byte_D   ;output egg in middle of bottom line
 	return 
+
 output_hatching_sequence
 	call    delay
 	movlw   0x0F
