@@ -4,9 +4,9 @@
     global output_starting_screen, output_hatching sequence, output_PRESS_A_TO_HATCH
 
 acs0		    udata_acs   
-delay_counter_1	    res 1   
-delay_counter_2	    res 1   
-delay_counter_3	    res 1   
+delay_counter_h1    res 1   
+delay_counter_h2    res 1   
+delay_counter_h3    res 1   
 counter_output	    res 1  
 
 pdata code
@@ -119,17 +119,17 @@ crack   movlw   b'11001001'
 
 hatch_delay
 	movlw   0xFF
-	movwf   delay_counter_1
+	movwf   delay_counter_h1
 	movlw   0xFF
-	movwf   delay_counter_2
+	movwf   delay_counter_h2
 	movlw   0xFF
-	movwf   delay_counter_3
-lb1     decfsz  delay_counter_1
-	bra     lb1
-lb2     decfsz  delay_counter_2
-	bra     lb2
-lb3     decfsz  delay_counter_3
-	bra     lb3
+	movwf   delay_counter_h3
+lb1h    decfsz  delay_counter_h1
+	bra     lb1h
+lb2h    decfsz  delay_counter_h2
+	bra     lb2h
+lb3h    decfsz  delay_counter_h3
+	bra     lb3h
 	return
   
 	end

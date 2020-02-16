@@ -106,13 +106,27 @@ CHECK_F_PRESSED
 	addwf   counter_food
 	movlw   0x10
 	cpfseq  counter_food
+	bra     CHECK_Medium
+	movf	life_mode, W   
 	call    GROWTH
+	movlw   0x01
+	addwf	life_mode, 1
+CHECK_Medium	
 	movlw   0x25
 	cpfseq  counter_food
+	bra	CHECK_Large
+	movf	life_mode, W
 	call    GROWTH
+	movlw   0x01
+	addwf	life_mode, 1
+CHECK_Large
 	movlw   0x50
 	cpfseq  counter_food
+	bra	GAME_MODE
+	movf	life_mode, W 
 	call    GROWTH
+	movlw   0x01
+	addwf	life_mode, 1
 	bra     GAME_MODE
 dch	decfsz  counter_happiness_decrement
 	bra     GAME_MODE
