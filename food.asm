@@ -143,6 +143,7 @@ GROWTH
 	call  LCD_Send_Byte_D
 	
 	;alternate flashes to go here followed by change of rabbit character
+	
    
    
    return
