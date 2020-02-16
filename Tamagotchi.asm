@@ -96,7 +96,6 @@ CHECK_F_PRESSED
 	bra     dch     ;if no key is pressed, decrement the happiness counter
 	bra     fm      ; if F is pressed, go to FOOD
 fm	movf    life_mode, W
-	
 	call    FOOD
 dch	decfsz  counter_happiness_decrement
 	bra     GAME_MODE
