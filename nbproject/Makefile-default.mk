@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=config.asm LCD.asm Tamagotchi.asm Keyboard.asm ball_game.asm sleepy.asm dance.asm learn.asm food.asm
+SOURCEFILES_QUOTED_IF_SPACED=config.asm LCD.asm Tamagotchi.asm Keyboard.asm ball_game.asm sleepy.asm dance.asm learn.asm food.asm hatch.asm
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o ${OBJECTDIR}/Keyboard.o ${OBJECTDIR}/ball_game.o ${OBJECTDIR}/sleepy.o ${OBJECTDIR}/dance.o ${OBJECTDIR}/learn.o ${OBJECTDIR}/food.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/config.o.d ${OBJECTDIR}/LCD.o.d ${OBJECTDIR}/Tamagotchi.o.d ${OBJECTDIR}/Keyboard.o.d ${OBJECTDIR}/ball_game.o.d ${OBJECTDIR}/sleepy.o.d ${OBJECTDIR}/dance.o.d ${OBJECTDIR}/learn.o.d ${OBJECTDIR}/food.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o ${OBJECTDIR}/Keyboard.o ${OBJECTDIR}/ball_game.o ${OBJECTDIR}/sleepy.o ${OBJECTDIR}/dance.o ${OBJECTDIR}/learn.o ${OBJECTDIR}/food.o ${OBJECTDIR}/hatch.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/config.o.d ${OBJECTDIR}/LCD.o.d ${OBJECTDIR}/Tamagotchi.o.d ${OBJECTDIR}/Keyboard.o.d ${OBJECTDIR}/ball_game.o.d ${OBJECTDIR}/sleepy.o.d ${OBJECTDIR}/dance.o.d ${OBJECTDIR}/learn.o.d ${OBJECTDIR}/food.o.d ${OBJECTDIR}/hatch.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o ${OBJECTDIR}/Keyboard.o ${OBJECTDIR}/ball_game.o ${OBJECTDIR}/sleepy.o ${OBJECTDIR}/dance.o ${OBJECTDIR}/learn.o ${OBJECTDIR}/food.o
+OBJECTFILES=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o ${OBJECTDIR}/Keyboard.o ${OBJECTDIR}/ball_game.o ${OBJECTDIR}/sleepy.o ${OBJECTDIR}/dance.o ${OBJECTDIR}/learn.o ${OBJECTDIR}/food.o ${OBJECTDIR}/hatch.o
 
 # Source Files
-SOURCEFILES=config.asm LCD.asm Tamagotchi.asm Keyboard.asm ball_game.asm sleepy.asm dance.asm learn.asm food.asm
+SOURCEFILES=config.asm LCD.asm Tamagotchi.asm Keyboard.asm ball_game.asm sleepy.asm dance.asm learn.asm food.asm hatch.asm
 
 
 CFLAGS=
@@ -166,6 +166,14 @@ ${OBJECTDIR}/food.o: food.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${DEP_GEN} -d "${OBJECTDIR}/food.o"
 	@${FIXDEPS} "${OBJECTDIR}/food.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
+${OBJECTDIR}/hatch.o: hatch.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/hatch.o.d 
+	@${RM} ${OBJECTDIR}/hatch.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/hatch.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_ICD3=1 -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/hatch.lst\" -e\"${OBJECTDIR}/hatch.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/hatch.o\" \"hatch.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/hatch.o"
+	@${FIXDEPS} "${OBJECTDIR}/hatch.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
 else
 ${OBJECTDIR}/config.o: config.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -238,6 +246,14 @@ ${OBJECTDIR}/food.o: food.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/food.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/food.lst\" -e\"${OBJECTDIR}/food.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/food.o\" \"food.asm\" 
 	@${DEP_GEN} -d "${OBJECTDIR}/food.o"
 	@${FIXDEPS} "${OBJECTDIR}/food.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/hatch.o: hatch.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/hatch.o.d 
+	@${RM} ${OBJECTDIR}/hatch.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/hatch.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/hatch.lst\" -e\"${OBJECTDIR}/hatch.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/hatch.o\" \"hatch.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/hatch.o"
+	@${FIXDEPS} "${OBJECTDIR}/hatch.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 endif
 

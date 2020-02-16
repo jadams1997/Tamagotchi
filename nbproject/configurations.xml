@@ -21,6 +21,7 @@
       <itemPath>dance.asm</itemPath>
       <itemPath>learn.asm</itemPath>
       <itemPath>food.asm</itemPath>
+      <itemPath>hatch.asm</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
