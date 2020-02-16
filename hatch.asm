@@ -46,7 +46,8 @@ output_starting_screen
 	call    LCD_Send_Byte_D  ;display smiley face for starting happiness 
 	movlw   0x41
 	call    LCD_Send_Byte_D  ;display an A to show in hatching mode 
-	movlw   b'11001000'
+	movlw   0x03
+	movlw   b'11001001'
 	call    LCD_shift 
 	movlw   0x00   
 	call    LCD_Send_Byte_D   ;output egg in middle of bottom line
@@ -56,20 +57,20 @@ output_hatching_sequence
 	call    hatch_delay
 	movlw   0x0F
 	movwf   0x20  ; register to hold the number of times the egg will vibrate 
-dynamic	movlw   b'11000111'     ;dynamic sequence shows the egg vibrating before it hatches 
+dynamic	movlw   b'11001000'     ;dynamic sequence shows the egg vibrating before it hatches 
 	call    LCD_shift 
 	movlw   0xDE   ;move bracket " to left of egg
 	call    LCD_Send_Byte_D
-	movlw   b'11001001'
+	movlw   b'11001010'
 	call    LCD_shift 
 	movlw   0xDE   ;move bracket " to right of egg
 	call    LCD_Send_Byte_D 
 	call    hatch_delay 
-	movlw   b'11000111'
+	movlw   b'11001000'
 	call    LCD_shift 
 	movlw   ' ' 
 	call    LCD_Send_Byte_D
-	movlw   b'110010001'
+	movlw   b'11001010'
 	call    LCD_shift 
 	movlw   ' '    ;make brackets disappear again
 	call    LCD_Send_Byte_D 
@@ -79,36 +80,38 @@ dynamic	movlw   b'11000111'     ;dynamic sequence shows the egg vibrating before
 	movlw   0x05
 	movwf   0x20     ; register to hold the number of times the egg will blink in and out 
 egg_blink
-	movlw   b'11001000'
+	movlw   b'11001001'
 	call    LCD_shift 
 	movlw   0x00   
 	call    LCD_Send_Byte_D 
 	call    hatch_delay
-	movlw   b'11001000'
+	movlw   b'11001001'
 	call    LCD_shift 
 	movlw   ' '
 	call    LCD_Send_Byte_D 
 	call    hatch_delay 
 	decfsz  0x20
 	bra     egg_blink 
-crack   movlw   0xA1   
+crack   movlw   b'11001001'
+	call    LCD_shift 
+	movlw   0x2E   ; dot / tiny rabbit
 	call    LCD_Send_Byte_D   ;Output 
-	movlw   b'11000111'
+	movlw   b'11001000'
 	call    LCD_shift 
 	movlw   0x18  ;(
 	call    LCD_Send_Byte_D
-	movlw   b'11001001'
+	movlw   b'11001010'
 	call    LCD_shift 
 	movlw   0x19  ;)
 	call    LCD_Send_Byte_D 
 	call    hatch_delay 
 	call    hatch_delay 
 	call    hatch_delay 
-	movlw   b'11000111'
+	movlw   b'11001000'
 	call    LCD_shift 
 	movlw   ' '
 	call    LCD_Send_Byte_D
-	movlw   b'11001001'
+	movlw   b'11001010'
 	call    LCD_shift 
 	movlw   ' '
 	call    LCD_Send_Byte_D 

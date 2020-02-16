@@ -1,6 +1,6 @@
 #include p18f87k22.inc
 
-    extern LCD_Setup, LCD_Send_Byte_D, LCD_shift, LCD_clear, LCD_custom_character_set_2, LCD_custom_character_set_3, LCD_custom_character_set_4, Keyboard_Setup, GHOST, Keyboard, FOOD, LEARN, DANCE, SLEEPY, BALL_GAME, output_starting_screen, output_hatching_sequence, output_PRESS_A_TO_HATCH
+    extern LCD_Setup, LCD_Send_Byte_D, LCD_shift, LCD_clear, LCD_custom_character_set_2, LCD_custom_character_set_3, LCD_custom_character_set_4, Keyboard_Setup, GHOST, Keyboard, FOOD, GROWTH, LEARN, DANCE, SLEEPY, BALL_GAME, output_starting_screen, output_hatching_sequence, output_PRESS_A_TO_HATCH
 	
 acs0                             udata_acs
 counter_happiness                res 1 
@@ -54,7 +54,7 @@ PRESS_A_TO_HATCH
 	movlw	0x01
 	movwf   life_mode ;initialise the life mode at 1 for baby rabbit
 	movlw	0x00
-	movwf   food_counter ;food counter initialised at 0
+	movwf   counter_food ;food counter initialised at 0
 GAME_MODE
 	movlw   0x00
 	movwf   Key_Pressed    ;reset Key_Pressed variable 
@@ -71,30 +71,49 @@ CHECK_B_PRESSED
 	bra     CHECK_C_PRESSED
 	movf    life_mode, W    ;save the life_mode for the game to use
 	call    BALL_GAME
+	bra     GAME_MODE
 CHECK_C_PRESSED
 	movlw   0x43
 	cpfseq  Key_Pressed 
 	bra     CHECK_D_PRESSED 
 	movf    life_mode, W
 	call    SLEEPY
+	bra     GAME_MODE
 CHECK_D_PRESSED
 	movlw   0x44
 	cpfseq  Key_Pressed 
 	bra     CHECK_E_PRESSED
 	movf    life_mode, W
 	call    DANCE
+	bra     GAME_MODE
 CHECK_E_PRESSED
 	movlw   0x45
 	cpfseq  Key_Pressed 
 	bra     CHECK_F_PRESSED
 	movf    life_mode, W
 	call    LEARN	
+	bra     GAME_MODE
 CHECK_F_PRESSED 
 	movlw   0x46
 	cpfseq  Key_Pressed 
 	bra     dch     ;if no key is pressed, decrement the happiness counter
 	movf    life_mode, W
 	call    FOOD  ; if F is pressed, go to FOOD
+	call	delay
+	call    delay
+	call    delay
+	movlw   0x01
+	addwf   counter_food
+	movlw   0x10
+	cpfseq  counter_food
+	call    GROWTH
+	movlw   0x25
+	cpfseq  counter_food
+	call    GROWTH
+	movlw   0x50
+	cpfseq  counter_food
+	call    GROWTH
+	bra     GAME_MODE
 dch	decfsz  counter_happiness_decrement
 	bra     GAME_MODE
 	movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter happiness by 1
