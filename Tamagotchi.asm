@@ -1,6 +1,6 @@
 #include p18f87k22.inc
 
-    extern LCD_Setup, LCD_Send_Byte_D, LCD_shift, LCD_clear, LCD_custom_character_set_2, LCD_custom_character_set_3, LCD_custom_character_set_4, Keyboard_Setup, GHOST, Keyboard, FOOD, LEARN, DANCE, SLEEPY, BALL_GAME, output_starting_screen, output_hatching_sequence
+    extern LCD_Setup, LCD_Send_Byte_D, LCD_shift, LCD_clear, LCD_custom_character_set_2, LCD_custom_character_set_3, LCD_custom_character_set_4, Keyboard_Setup, GHOST, Keyboard, FOOD, LEARN, DANCE, SLEEPY, BALL_GAME, output_starting_screen, output_hatching_sequence, output_PRESS_A_TO_HATCH
 	
 acs0                             udata_acs
 counter_happiness                res 1 

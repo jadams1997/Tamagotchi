@@ -1,7 +1,7 @@
 #include p18f87k22.inc
 
     extern LCD_clear, LCD_Send_Byte_D, LCD_shift
-    global output_starting_screen, output_hatching sequence
+    global output_starting_screen, output_hatching sequence, output_PRESS_A_TO_HATCH
 
 acs0		    udata_acs   
 delay_counter_1	    res 1   
