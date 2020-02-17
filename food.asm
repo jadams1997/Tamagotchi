@@ -1,6 +1,8 @@
 #include p18f87k22.inc
 
-    extern LCD_Send_Byte_D, LCD_shift, LCD_clear, LCD_custom_character_set_BABY, LCD_custom_character_set_SMALL, LCD_custom_character_set_MEDIUM, LCD_custom_character_set_LARGE
+    extern LCD_Send_Byte_D, LCD_shift, LCD_clear, LCD_custom_character_set_BABY
+    extern LCD_custom_character_set_SMALL, LCD_custom_character_set_MEDIUM
+    extern LCD_custom_character_set_LARGE
     global FOOD, FOOD_Setup
 
 
@@ -93,24 +95,20 @@ FOOD_ANIMATE
 	movlw   0x27
 	call    LCD_Send_Byte_D
 	call    food_delay
-	call    food_delay
 	movlw   0x05
 	call    LCD_shift
 	movlw   0x2C
 	call    LCD_Send_Byte_D
-	call    food_delay
 	call    food_delay
 	movlw   0x45
 	call    LCD_shift 
 	movlw   0x27
 	call    LCD_Send_Byte_D
 	call    food_delay
-	call    food_delay
 	movlw   0x45
 	call    LCD_shift
 	movlw   0x2C
 	call    LCD_Send_Byte_D
-	call    food_delay
 	call    food_delay  ;food dropped
 	movlw   0x49
 	call    LCD_shift 
@@ -120,7 +118,6 @@ FOOD_ANIMATE
 	call    LCD_shift 
 	movlw   0x02
 	call    LCD_Send_Byte_D
-	call    food_delay
 	call    food_delay 
 	movlw   ' '
 	call    LCD_Send_Byte_D
@@ -128,7 +125,6 @@ FOOD_ANIMATE
 	call    LCD_shift 
 	movlw   0x02
 	call    LCD_Send_Byte_D
-	call    food_delay
 	call    food_delay 
 	movlw   ' '
 	call    LCD_Send_Byte_D
@@ -136,7 +132,6 @@ FOOD_ANIMATE
 	call    LCD_shift 
 	movlw   0x02
 	call    LCD_Send_Byte_D
-	call    food_delay
 	call    food_delay 
 	movlw   ' '
 	call    LCD_Send_Byte_D
@@ -150,7 +145,6 @@ FOOD_ANIMATE
 	call    LCD_Send_Byte_D
 	movlw   0x02
 	call    LCD_Send_Byte_D
-	call    food_delay
 	call    food_delay 
 	movlw   0x46
 	call    LCD_shift 
@@ -158,7 +152,6 @@ FOOD_ANIMATE
 	call    LCD_Send_Byte_D
 	movlw   0x02
 	call    LCD_Send_Byte_D
-	call    food_delay
 	call    food_delay 
 	movlw   0x47
 	call    LCD_shift 
@@ -166,7 +159,6 @@ FOOD_ANIMATE
 	call    LCD_Send_Byte_D
 	movlw   0x02
 	call    LCD_Send_Byte_D
-	call    food_delay
 	call    food_delay 
 	movlw   0x48
 	call    LCD_shift 

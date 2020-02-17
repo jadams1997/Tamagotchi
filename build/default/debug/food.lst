@@ -1,4 +1,4 @@
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE  1
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -16,476 +16,461 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00009 
                       02986         LIST
                       00002 
-  0000                00003     extern LCD_Send_Byte_D, LCD_shift, LCD_clear, LCD_custom_character_set_BABY, LCD_custom_character_se
-                            t_SMALL, LCD_custom_character_set_MEDIUM, LCD_custom_character_set_LARGE
-  0000                00004     global FOOD, FOOD_Setup
-                      00005 
-                      00006 
-                      00007 acs0                udata_acs
-000000                00008 lifemode_food       res 1
-000001                00009 delay_counter_f1    res 1
-000002                00010 delay_counter_f2    res 1
-000003                00011 delay_counter_f3    res 1
-000004                00012 flash_counter       res 1
-000005                00013 counter_flash_1     res 1
-000006                00014 counter_flash_2     res 1
-000007                00015 counter_blank       res 1 
-000008                00016 food_counter        res 1
-                      00017     
-                      00018 fdata code
-                      00019  
-000000 202A 202A 202A 00020 flash_line_1    data        "* * * * * * *"
+  0000                00003     extern LCD_Send_Byte_D, LCD_shift, LCD_clear, LCD_custom_character_set_BABY
+  0000                00004     extern LCD_custom_character_set_SMALL, LCD_custom_character_set_MEDIUM
+  0000                00005     extern LCD_custom_character_set_LARGE
+  0000                00006     global FOOD, FOOD_Setup
+                      00007 
+                      00008 
+                      00009 acs0                udata_acs
+000000                00010 lifemode_food       res 1
+000001                00011 delay_counter_f1    res 1
+000002                00012 delay_counter_f2    res 1
+000003                00013 delay_counter_f3    res 1
+000004                00014 flash_counter       res 1
+000005                00015 counter_flash_1     res 1
+000006                00016 counter_flash_2     res 1
+000007                00017 counter_blank       res 1 
+000008                00018 food_counter        res 1
+                      00019     
+                      00020 fdata code
+                      00021  
+000000 202A 202A 202A 00022 flash_line_1    data        "* * * * * * *"
        202A 202A 202A 
        002A 
-  000D                00021                 constant    flash_bytes_l=.13   
-00000E 2A20 2A20 2A20 00022 flash_line_2    data        " * * * * * * "
+  000D                00023                 constant    flash_bytes_l=.13   
+00000E 2A20 2A20 2A20 00024 flash_line_2    data        " * * * * * * "
        2A20 2A20 2A20 
        0020 
-  000D                00023                 constant    flash_bytes_2=.13
-00001C 2020 2020 2020 00024 blank_line      data        "             "
+  000D                00025                 constant    flash_bytes_2=.13
+00001C 2020 2020 2020 00026 blank_line      data        "             "
        2020 2020 2020 
        0020 
-  000D                00025                 constant    blank_bytes= .13
-                      00026         
-                      00027 Food code
-                      00028 
-000000                00029 FOOD_Setup 
-000000 0E00           00030         movlw   0x00
-000002 6E??           00031         movwf   food_counter
-000004 0012           00032         return
-                      00033 
-000006                00034 output_flash_1
-000006 0E??           00035         movlw   upper(flash_line_1)     ; address of data in PM
-000008 6EF8           00036         movwf   TBLPTRU         ; load upper bits to TBLPTRU
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE  2
+  000D                00027                 constant    blank_bytes= .13
+                      00028         
+                      00029 Food code
+                      00030 
+000000                00031 FOOD_Setup 
+000000 0E00           00032         movlw   0x00
+000002 6E??           00033         movwf   food_counter
+000004 0012           00034         return
+                      00035 
+000006                00036 output_flash_1
+000006 0E??           00037         movlw   upper(flash_line_1)     ; address of data in PM
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00000A 0E??           00037         movlw   high(flash_line_1)      ; address of data in PM
-00000C 6EF7           00038         movwf   TBLPTRH         ; load high byte to TBLPTRH
-00000E 0E??           00039         movlw   low(flash_line_1)       ; address of data in PM
-000010 6EF6           00040         movwf   TBLPTRL         ; load low byte to TBLPTRL
-000012 0E0D           00041         movlw   flash_bytes_l   ; bytes to read
-000014 6E??           00042         movwf   counter_flash_1 ; our counter register
-000016 0009           00043 loopf1  tblrd*+                 ; one byte from PM to TABLAT, increment TBLPRT
-000018 50F5           00044         movf    TABLAT, w
-00001A EC?? F???      00045         call    LCD_Send_Byte_D
-00001E 2E??           00046         decfsz  counter_flash_1 ; count down to zero
-000020 D???           00047         bra     loopf1
-000022 0012           00048         return  
-                      00049         
-000024                00050 output_flash_2
-000024 0E??           00051         movlw   upper(flash_line_2)     ; address of data in PM
-000026 6EF8           00052         movwf   TBLPTRU         ; load upper bits to TBLPTRU
-000028 0E??           00053         movlw   high(flash_line_2)      ; address of data in PM
-00002A 6EF7           00054         movwf   TBLPTRH         ; load high byte to TBLPTRH
-00002C 0E??           00055         movlw   low(flash_line_2)       ; address of data in PM
-00002E 6EF6           00056         movwf   TBLPTRL         ; load low byte to TBLPTRL
-000030 0E0D           00057         movlw   flash_bytes_2   ; bytes to read
-000032 6E??           00058         movwf   counter_flash_2  ; our counter register
-000034 0009           00059 loopf2  tblrd*+                 ; one byte from PM to TABLAT, increment TBLPRT
-000036 50F5           00060         movf    TABLAT, w
-000038 EC?? F???      00061         call    LCD_Send_Byte_D
-00003C 2E??           00062         decfsz  counter_flash_2 ; count down to zero
-00003E D???           00063         bra     loopf2
-000040 0012           00064         return  
-                      00065  
-000042                00066 output_blank
-000042 0E??           00067         movlw   upper(blank_line)       ; address of data in PM
-000044 6EF8           00068         movwf   TBLPTRU         ; load upper bits to TBLPTRU
-000046 0E??           00069         movlw   high(blank_line)        ; address of data in PM
-000048 6EF7           00070         movwf   TBLPTRH         ; load high byte to TBLPTRH
-00004A 0E??           00071         movlw   low(blank_line) ; address of data in PM
-00004C 6EF6           00072         movwf   TBLPTRL         ; load low byte to TBLPTRL
-00004E 0E0D           00073         movlw   blank_bytes     ; bytes to read
-000050 6E??           00074         movwf   counter_blank   ; our counter register
-000052 0009           00075 loopb   tblrd*+                 ; one byte from PM to TABLAT, increment TBLPRT
-000054 50F5           00076         movf    TABLAT, w
-000056 EC?? F???      00077         call    LCD_Send_Byte_D
-00005A 2E??           00078         decfsz  counter_blank   ; count down to zero
-00005C D???           00079         bra     loopb
-00005E 0012           00080         return  
-                      00081         
-                      00082         
+000008 6EF8           00038         movwf   TBLPTRU         ; load upper bits to TBLPTRU
+00000A 0E??           00039         movlw   high(flash_line_1)      ; address of data in PM
+00000C 6EF7           00040         movwf   TBLPTRH         ; load high byte to TBLPTRH
+00000E 0E??           00041         movlw   low(flash_line_1)       ; address of data in PM
+000010 6EF6           00042         movwf   TBLPTRL         ; load low byte to TBLPTRL
+000012 0E0D           00043         movlw   flash_bytes_l   ; bytes to read
+000014 6E??           00044         movwf   counter_flash_1 ; our counter register
+000016 0009           00045 loopf1  tblrd*+                 ; one byte from PM to TABLAT, increment TBLPRT
+000018 50F5           00046         movf    TABLAT, w
+00001A EC?? F???      00047         call    LCD_Send_Byte_D
+00001E 2E??           00048         decfsz  counter_flash_1 ; count down to zero
+000020 D???           00049         bra     loopf1
+000022 0012           00050         return  
+                      00051         
+000024                00052 output_flash_2
+000024 0E??           00053         movlw   upper(flash_line_2)     ; address of data in PM
+000026 6EF8           00054         movwf   TBLPTRU         ; load upper bits to TBLPTRU
+000028 0E??           00055         movlw   high(flash_line_2)      ; address of data in PM
+00002A 6EF7           00056         movwf   TBLPTRH         ; load high byte to TBLPTRH
+00002C 0E??           00057         movlw   low(flash_line_2)       ; address of data in PM
+00002E 6EF6           00058         movwf   TBLPTRL         ; load low byte to TBLPTRL
+000030 0E0D           00059         movlw   flash_bytes_2   ; bytes to read
+000032 6E??           00060         movwf   counter_flash_2  ; our counter register
+000034 0009           00061 loopf2  tblrd*+                 ; one byte from PM to TABLAT, increment TBLPRT
+000036 50F5           00062         movf    TABLAT, w
+000038 EC?? F???      00063         call    LCD_Send_Byte_D
+00003C 2E??           00064         decfsz  counter_flash_2 ; count down to zero
+00003E D???           00065         bra     loopf2
+000040 0012           00066         return  
+                      00067  
+000042                00068 output_blank
+000042 0E??           00069         movlw   upper(blank_line)       ; address of data in PM
+000044 6EF8           00070         movwf   TBLPTRU         ; load upper bits to TBLPTRU
+000046 0E??           00071         movlw   high(blank_line)        ; address of data in PM
+000048 6EF7           00072         movwf   TBLPTRH         ; load high byte to TBLPTRH
+00004A 0E??           00073         movlw   low(blank_line) ; address of data in PM
+00004C 6EF6           00074         movwf   TBLPTRL         ; load low byte to TBLPTRL
+00004E 0E0D           00075         movlw   blank_bytes     ; bytes to read
+000050 6E??           00076         movwf   counter_blank   ; our counter register
+000052 0009           00077 loopb   tblrd*+                 ; one byte from PM to TABLAT, increment TBLPRT
+000054 50F5           00078         movf    TABLAT, w
+000056 EC?? F???      00079         call    LCD_Send_Byte_D
+00005A 2E??           00080         decfsz  counter_blank   ; count down to zero
+00005C D???           00081         bra     loopb
+00005E 0012           00082         return  
                       00083         
                       00084         
                       00085         
-000060                00086 FOOD 
-000060 6E??           00087         movwf   lifemode_food
-000062 0E01           00088         movlw   0x01
-000064 2600           00089         addwf   food_counter, 1
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE  3
+                      00086         
+                      00087         
+000060                00088 FOOD 
+000060 6E??           00089         movwf   lifemode_food
+000062 0E01           00090         movlw   0x01
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000066                00090 FOOD_ANIMATE
-000066 0E05           00091         movlw   0x05
-000068 EC?? F???      00092         call    LCD_shift 
-00006C 0E27           00093         movlw   0x27
-00006E EC?? F???      00094         call    LCD_Send_Byte_D
-000072 EC?? F???      00095         call    food_delay
-000076 EC?? F???      00096         call    food_delay
-00007A 0E05           00097         movlw   0x05
-00007C EC?? F???      00098         call    LCD_shift
-000080 0E2C           00099         movlw   0x2C
-000082 EC?? F???      00100         call    LCD_Send_Byte_D
-000086 EC?? F???      00101         call    food_delay
-00008A EC?? F???      00102         call    food_delay
-00008E 0E45           00103         movlw   0x45
-000090 EC?? F???      00104         call    LCD_shift 
-000094 0E27           00105         movlw   0x27
-000096 EC?? F???      00106         call    LCD_Send_Byte_D
-00009A EC?? F???      00107         call    food_delay
-00009E EC?? F???      00108         call    food_delay
-0000A2 0E45           00109         movlw   0x45
-0000A4 EC?? F???      00110         call    LCD_shift
-0000A8 0E2C           00111         movlw   0x2C
-0000AA EC?? F???      00112         call    LCD_Send_Byte_D
-0000AE EC?? F???      00113         call    food_delay
-0000B2 EC?? F???      00114         call    food_delay  ;food dropped
-0000B6 0E49           00115         movlw   0x49
-0000B8 EC?? F???      00116         call    LCD_shift 
-0000BC 0E20           00117         movlw   ' '
-0000BE EC?? F???      00118         call    LCD_Send_Byte_D
-0000C2 0E48           00119         movlw   0x48
-0000C4 EC?? F???      00120         call    LCD_shift 
-0000C8 0E02           00121         movlw   0x02
-0000CA EC?? F???      00122         call    LCD_Send_Byte_D
-0000CE EC?? F???      00123         call    food_delay
-0000D2 EC?? F???      00124         call    food_delay 
-0000D6 0E20           00125         movlw   ' '
-0000D8 EC?? F???      00126         call    LCD_Send_Byte_D
-0000DC 0E47           00127         movlw   0x47
-0000DE EC?? F???      00128         call    LCD_shift 
-0000E2 0E02           00129         movlw   0x02
-0000E4 EC?? F???      00130         call    LCD_Send_Byte_D
-0000E8 EC?? F???      00131         call    food_delay
-0000EC EC?? F???      00132         call    food_delay 
-0000F0 0E20           00133         movlw   ' '
-0000F2 EC?? F???      00134         call    LCD_Send_Byte_D
-0000F6 0E46           00135         movlw   0x46
-0000F8 EC?? F???      00136         call    LCD_shift 
-0000FC 0E02           00137         movlw   0x02
-0000FE EC?? F???      00138         call    LCD_Send_Byte_D
-000102 EC?? F???      00139         call    food_delay
-000106 EC?? F???      00140         call    food_delay 
-00010A 0E20           00141         movlw   ' '
-00010C EC?? F???      00142         call    LCD_Send_Byte_D
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE  4
+000064 2600           00091         addwf   food_counter, 1
+000066                00092 FOOD_ANIMATE
+000066 0E05           00093         movlw   0x05
+000068 EC?? F???      00094         call    LCD_shift 
+00006C 0E27           00095         movlw   0x27
+00006E EC?? F???      00096         call    LCD_Send_Byte_D
+000072 EC?? F???      00097         call    food_delay
+000076 0E05           00098         movlw   0x05
+000078 EC?? F???      00099         call    LCD_shift
+00007C 0E2C           00100         movlw   0x2C
+00007E EC?? F???      00101         call    LCD_Send_Byte_D
+000082 EC?? F???      00102         call    food_delay
+000086 0E45           00103         movlw   0x45
+000088 EC?? F???      00104         call    LCD_shift 
+00008C 0E27           00105         movlw   0x27
+00008E EC?? F???      00106         call    LCD_Send_Byte_D
+000092 EC?? F???      00107         call    food_delay
+000096 0E45           00108         movlw   0x45
+000098 EC?? F???      00109         call    LCD_shift
+00009C 0E2C           00110         movlw   0x2C
+00009E EC?? F???      00111         call    LCD_Send_Byte_D
+0000A2 EC?? F???      00112         call    food_delay  ;food dropped
+0000A6 0E49           00113         movlw   0x49
+0000A8 EC?? F???      00114         call    LCD_shift 
+0000AC 0E20           00115         movlw   ' '
+0000AE EC?? F???      00116         call    LCD_Send_Byte_D
+0000B2 0E48           00117         movlw   0x48
+0000B4 EC?? F???      00118         call    LCD_shift 
+0000B8 0E02           00119         movlw   0x02
+0000BA EC?? F???      00120         call    LCD_Send_Byte_D
+0000BE EC?? F???      00121         call    food_delay 
+0000C2 0E20           00122         movlw   ' '
+0000C4 EC?? F???      00123         call    LCD_Send_Byte_D
+0000C8 0E47           00124         movlw   0x47
+0000CA EC?? F???      00125         call    LCD_shift 
+0000CE 0E02           00126         movlw   0x02
+0000D0 EC?? F???      00127         call    LCD_Send_Byte_D
+0000D4 EC?? F???      00128         call    food_delay 
+0000D8 0E20           00129         movlw   ' '
+0000DA EC?? F???      00130         call    LCD_Send_Byte_D
+0000DE 0E46           00131         movlw   0x46
+0000E0 EC?? F???      00132         call    LCD_shift 
+0000E4 0E02           00133         movlw   0x02
+0000E6 EC?? F???      00134         call    LCD_Send_Byte_D
+0000EA EC?? F???      00135         call    food_delay 
+0000EE 0E20           00136         movlw   ' '
+0000F0 EC?? F???      00137         call    LCD_Send_Byte_D
+0000F4 0E45           00138         movlw   0x45
+0000F6 EC?? F???      00139         call    LCD_shift 
+0000FA 0E02           00140         movlw   0x02
+0000FC EC?? F???      00141         call    LCD_Send_Byte_D ;eaten
+000100 0E45           00142         movlw   0x45
+000102 EC?? F???      00143         call    LCD_shift 
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000110 0E45           00143         movlw   0x45
-000112 EC?? F???      00144         call    LCD_shift 
-000116 0E02           00145         movlw   0x02
-000118 EC?? F???      00146         call    LCD_Send_Byte_D ;eaten
-00011C 0E45           00147         movlw   0x45
-00011E EC?? F???      00148         call    LCD_shift 
-000122 0E20           00149         movlw   ' '
-000124 EC?? F???      00150         call    LCD_Send_Byte_D
-000128 0E02           00151         movlw   0x02
-00012A EC?? F???      00152         call    LCD_Send_Byte_D
-00012E EC?? F???      00153         call    food_delay
-000132 EC?? F???      00154         call    food_delay 
-000136 0E46           00155         movlw   0x46
-000138 EC?? F???      00156         call    LCD_shift 
-00013C 0E20           00157         movlw   ' '
-00013E EC?? F???      00158         call    LCD_Send_Byte_D
-000142 0E02           00159         movlw   0x02
-000144 EC?? F???      00160         call    LCD_Send_Byte_D
-000148 EC?? F???      00161         call    food_delay
-00014C EC?? F???      00162         call    food_delay 
-000150 0E47           00163         movlw   0x47
-000152 EC?? F???      00164         call    LCD_shift 
-000156 0E20           00165         movlw   ' '
-000158 EC?? F???      00166         call    LCD_Send_Byte_D
-00015C 0E02           00167         movlw   0x02
-00015E EC?? F???      00168         call    LCD_Send_Byte_D
-000162 EC?? F???      00169         call    food_delay
-000166 EC?? F???      00170         call    food_delay 
-00016A 0E48           00171         movlw   0x48
-00016C EC?? F???      00172         call    LCD_shift 
-000170 0E20           00173         movlw   ' '
-000172 EC?? F???      00174         call    LCD_Send_Byte_D
-000176 0E02           00175         movlw   0x02
-000178 EC?? F???      00176         call    LCD_Send_Byte_D ;back at centre
-00017C                00177 CHECK_GROWTH
-00017C                00178 check_10
-00017C 0E0A           00179         movlw   0x0A
-00017E 62??           00180         cpfseq  food_counter 
-000180 D???           00181         bra     check_25
-000182 D???           00182         bra     GROWTH
-000184                00183 check_25 
-000184 0E19           00184         movlw   0x19
-000186 62??           00185         cpfseq  food_counter 
-000188 D???           00186         bra     check_50
-00018A D???           00187         bra     GROWTH
-00018C                00188 check_50
-00018C 0E32           00189         movlw   0x32
-00018E 62??           00190         cpfseq  food_counter
-000190 0012           00191         return 
-000192 EC?? F???      00192         call    GROWTH
-                      00193         
-000196 0012           00194         return
-                      00195         
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE  5
+000106 0E20           00144         movlw   ' '
+000108 EC?? F???      00145         call    LCD_Send_Byte_D
+00010C 0E02           00146         movlw   0x02
+00010E EC?? F???      00147         call    LCD_Send_Byte_D
+000112 EC?? F???      00148         call    food_delay 
+000116 0E46           00149         movlw   0x46
+000118 EC?? F???      00150         call    LCD_shift 
+00011C 0E20           00151         movlw   ' '
+00011E EC?? F???      00152         call    LCD_Send_Byte_D
+000122 0E02           00153         movlw   0x02
+000124 EC?? F???      00154         call    LCD_Send_Byte_D
+000128 EC?? F???      00155         call    food_delay 
+00012C 0E47           00156         movlw   0x47
+00012E EC?? F???      00157         call    LCD_shift 
+000132 0E20           00158         movlw   ' '
+000134 EC?? F???      00159         call    LCD_Send_Byte_D
+000138 0E02           00160         movlw   0x02
+00013A EC?? F???      00161         call    LCD_Send_Byte_D
+00013E EC?? F???      00162         call    food_delay 
+000142 0E48           00163         movlw   0x48
+000144 EC?? F???      00164         call    LCD_shift 
+000148 0E20           00165         movlw   ' '
+00014A EC?? F???      00166         call    LCD_Send_Byte_D
+00014E 0E02           00167         movlw   0x02
+000150 EC?? F???      00168         call    LCD_Send_Byte_D ;back at centre
+000154                00169 CHECK_GROWTH
+000154                00170 check_10
+000154 0E0A           00171         movlw   0x0A
+000156 62??           00172         cpfseq  food_counter 
+000158 D???           00173         bra     check_25
+00015A D???           00174         bra     GROWTH
+00015C                00175 check_25 
+00015C 0E19           00176         movlw   0x19
+00015E 62??           00177         cpfseq  food_counter 
+000160 D???           00178         bra     check_50
+000162 D???           00179         bra     GROWTH
+000164                00180 check_50
+000164 0E32           00181         movlw   0x32
+000166 62??           00182         cpfseq  food_counter
+000168 0012           00183         return 
+00016A EC?? F???      00184         call    GROWTH
+                      00185         
+00016E 0012           00186         return
+                      00187         
+                      00188         
+000170                00189 GROWTH
+000170 0E01           00190         movlw   0x01
+000172 2600           00191         addwf   lifemode_food, 1
+000174                00192 GROWTH_ANIMATE
+000174 0E49           00193         movlw   0x49   ;position
+000176 EC?? F???      00194         call    LCD_shift 
+00017A 0E2A           00195         movlw   0x2A  ;star
+00017C EC?? F???      00196         call    LCD_Send_Byte_D
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00196         
-000198                00197 GROWTH
-000198 0E01           00198         movlw   0x01
-00019A 2600           00199         addwf   lifemode_food, 1
-00019C                00200 GROWTH_ANIMATE
-00019C 0E49           00201         movlw   0x49   ;position
-00019E EC?? F???      00202         call    LCD_shift 
-0001A2 0E2A           00203         movlw   0x2A  ;star
-0001A4 EC?? F???      00204         call    LCD_Send_Byte_D
-0001A8 EC?? F???      00205         call    food_delay
-0001AC EC?? F???      00206         call    food_delay
-0001B0 EC?? F???      00207         call    food_delay
-0001B4 0E4A           00208         movlw   0x4A 
-0001B6 EC?? F???      00209         call    LCD_shift 
-0001BA 0E2A           00210         movlw   0x2A
-0001BC EC?? F???      00211         call    LCD_Send_Byte_D
-0001C0 0E09           00212         movlw   0x09
-0001C2 EC?? F???      00213         call    LCD_shift 
-0001C6 0E2A           00214         movlw   0x2A
-0001C8 EC?? F???      00215         call    LCD_Send_Byte_D
-0001CC 0E48           00216         movlw   0x48
-0001CE EC?? F???      00217         call    LCD_shift 
-0001D2 0E2A           00218         movlw   0x2A
-0001D4 EC?? F???      00219         call    LCD_Send_Byte_D
-0001D8 EC?? F???      00220         call    food_delay
-0001DC EC?? F???      00221         call    food_delay
-0001E0 EC?? F???      00222         call    food_delay
-0001E4 0E4B           00223         movlw   0x4B
-0001E6 EC?? F???      00224         call    LCD_shift 
-0001EA 0E2A           00225         movlw   0x2A
-0001EC EC?? F???      00226         call    LCD_Send_Byte_D
-0001F0 0E0A           00227         movlw   0x0A
-0001F2 EC?? F???      00228         call    LCD_shift 
-0001F6 0E2A           00229         movlw   0x2A
-0001F8 EC?? F???      00230         call    LCD_Send_Byte_D
-0001FC 0E08           00231         movlw   0x08
-0001FE EC?? F???      00232         call    LCD_shift 
-000202 0E2A           00233         movlw   0x2A
-000204 EC?? F???      00234         call    LCD_Send_Byte_D
-000208 0E47           00235         movlw   0x47
-00020A EC?? F???      00236         call    LCD_shift 
-00020E 0E2A           00237         movlw   0x2A
-000210 EC?? F???      00238         call    LCD_Send_Byte_D
-000214 EC?? F???      00239         call    food_delay
-000218 EC?? F???      00240         call    food_delay
-00021C EC?? F???      00241         call    food_delay
-000220 0E4C           00242         movlw   0x4C
-000222 EC?? F???      00243         call    LCD_shift 
-000226 0E2A           00244         movlw   0x2A
-000228 EC?? F???      00245         call    LCD_Send_Byte_D
-00022C 0E0B           00246         movlw   0x0B
-00022E EC?? F???      00247         call    LCD_shift 
-000232 0E2A           00248         movlw   0x2A
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE  6
+000180 EC?? F???      00197         call    food_delay
+000184 EC?? F???      00198         call    food_delay
+000188 EC?? F???      00199         call    food_delay
+00018C 0E4A           00200         movlw   0x4A 
+00018E EC?? F???      00201         call    LCD_shift 
+000192 0E2A           00202         movlw   0x2A
+000194 EC?? F???      00203         call    LCD_Send_Byte_D
+000198 0E09           00204         movlw   0x09
+00019A EC?? F???      00205         call    LCD_shift 
+00019E 0E2A           00206         movlw   0x2A
+0001A0 EC?? F???      00207         call    LCD_Send_Byte_D
+0001A4 0E48           00208         movlw   0x48
+0001A6 EC?? F???      00209         call    LCD_shift 
+0001AA 0E2A           00210         movlw   0x2A
+0001AC EC?? F???      00211         call    LCD_Send_Byte_D
+0001B0 EC?? F???      00212         call    food_delay
+0001B4 EC?? F???      00213         call    food_delay
+0001B8 EC?? F???      00214         call    food_delay
+0001BC 0E4B           00215         movlw   0x4B
+0001BE EC?? F???      00216         call    LCD_shift 
+0001C2 0E2A           00217         movlw   0x2A
+0001C4 EC?? F???      00218         call    LCD_Send_Byte_D
+0001C8 0E0A           00219         movlw   0x0A
+0001CA EC?? F???      00220         call    LCD_shift 
+0001CE 0E2A           00221         movlw   0x2A
+0001D0 EC?? F???      00222         call    LCD_Send_Byte_D
+0001D4 0E08           00223         movlw   0x08
+0001D6 EC?? F???      00224         call    LCD_shift 
+0001DA 0E2A           00225         movlw   0x2A
+0001DC EC?? F???      00226         call    LCD_Send_Byte_D
+0001E0 0E47           00227         movlw   0x47
+0001E2 EC?? F???      00228         call    LCD_shift 
+0001E6 0E2A           00229         movlw   0x2A
+0001E8 EC?? F???      00230         call    LCD_Send_Byte_D
+0001EC EC?? F???      00231         call    food_delay
+0001F0 EC?? F???      00232         call    food_delay
+0001F4 EC?? F???      00233         call    food_delay
+0001F8 0E4C           00234         movlw   0x4C
+0001FA EC?? F???      00235         call    LCD_shift 
+0001FE 0E2A           00236         movlw   0x2A
+000200 EC?? F???      00237         call    LCD_Send_Byte_D
+000204 0E0B           00238         movlw   0x0B
+000206 EC?? F???      00239         call    LCD_shift 
+00020A 0E2A           00240         movlw   0x2A
+00020C EC?? F???      00241         call    LCD_Send_Byte_D
+000210 0E07           00242         movlw   0x07
+000212 EC?? F???      00243         call    LCD_shift 
+000216 0E2A           00244         movlw   0x2A
+000218 EC?? F???      00245         call    LCD_Send_Byte_D
+00021C 0E46           00246         movlw   0x46
+00021E EC?? F???      00247         call    LCD_shift 
+000222 0E2A           00248         movlw   0x2A
+000224 EC?? F???      00249         call    LCD_Send_Byte_D
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000234 EC?? F???      00249         call    LCD_Send_Byte_D
-000238 0E07           00250         movlw   0x07
-00023A EC?? F???      00251         call    LCD_shift 
-00023E 0E2A           00252         movlw   0x2A
-000240 EC?? F???      00253         call    LCD_Send_Byte_D
-000244 0E46           00254         movlw   0x46
-000246 EC?? F???      00255         call    LCD_shift 
-00024A 0E2A           00256         movlw   0x2A
-00024C EC?? F???      00257         call    LCD_Send_Byte_D
-000250 EC?? F???      00258         call    food_delay
-000254 EC?? F???      00259         call    food_delay
-000258 EC?? F???      00260         call    food_delay
-00025C 0E4D           00261         movlw   0x4D
-00025E EC?? F???      00262         call    LCD_shift 
-000262 0E2A           00263         movlw   0x2A
-000264 EC?? F???      00264         call    LCD_Send_Byte_D
-000268 0E0C           00265         movlw   0x0C
-00026A EC?? F???      00266         call    LCD_shift 
-00026E 0E2A           00267         movlw   0x2A
-000270 EC?? F???      00268         call    LCD_Send_Byte_D
-000274 0E06           00269         movlw   0x06
-000276 EC?? F???      00270         call    LCD_shift 
-00027A 0E2A           00271         movlw   0x2A
-00027C EC?? F???      00272         call    LCD_Send_Byte_D
-000280 0E45           00273         movlw   0x45
-000282 EC?? F???      00274         call    LCD_shift 
-000286 0E2A           00275         movlw   0x2A
-000288 EC?? F???      00276         call    LCD_Send_Byte_D
-00028C EC?? F???      00277         call    food_delay
-000290 EC?? F???      00278         call    food_delay
-000294 EC?? F???      00279         call    food_delay
-000298 0E4E           00280         movlw   0x4E
-00029A EC?? F???      00281         call    LCD_shift 
-00029E 0E2A           00282         movlw   0x2A
-0002A0 EC?? F???      00283         call    LCD_Send_Byte_D
-0002A4 0E0D           00284         movlw   0x0D
-0002A6 EC?? F???      00285         call    LCD_shift 
-0002AA 0E2A           00286         movlw   0x2A
-0002AC EC?? F???      00287         call    LCD_Send_Byte_D
-0002B0 0E05           00288         movlw   0x05
-0002B2 EC?? F???      00289         call    LCD_shift 
-0002B6 0E2A           00290         movlw   0x2A
-0002B8 EC?? F???      00291         call    LCD_Send_Byte_D
-0002BC 0E44           00292         movlw   0x44
-0002BE EC?? F???      00293         call    LCD_shift 
-0002C2 0E2A           00294         movlw   0x2A
-0002C4 EC?? F???      00295         call    LCD_Send_Byte_D
-0002C8 EC?? F???      00296         call    food_delay
-0002CC EC?? F???      00297         call    food_delay
-0002D0 EC?? F???      00298         call    food_delay
-0002D4 0E4F           00299         movlw   0x4F
-0002D6 EC?? F???      00300         call    LCD_shift 
-0002DA 0E2A           00301         movlw   0x2A
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE  7
+000228 EC?? F???      00250         call    food_delay
+00022C EC?? F???      00251         call    food_delay
+000230 EC?? F???      00252         call    food_delay
+000234 0E4D           00253         movlw   0x4D
+000236 EC?? F???      00254         call    LCD_shift 
+00023A 0E2A           00255         movlw   0x2A
+00023C EC?? F???      00256         call    LCD_Send_Byte_D
+000240 0E0C           00257         movlw   0x0C
+000242 EC?? F???      00258         call    LCD_shift 
+000246 0E2A           00259         movlw   0x2A
+000248 EC?? F???      00260         call    LCD_Send_Byte_D
+00024C 0E06           00261         movlw   0x06
+00024E EC?? F???      00262         call    LCD_shift 
+000252 0E2A           00263         movlw   0x2A
+000254 EC?? F???      00264         call    LCD_Send_Byte_D
+000258 0E45           00265         movlw   0x45
+00025A EC?? F???      00266         call    LCD_shift 
+00025E 0E2A           00267         movlw   0x2A
+000260 EC?? F???      00268         call    LCD_Send_Byte_D
+000264 EC?? F???      00269         call    food_delay
+000268 EC?? F???      00270         call    food_delay
+00026C EC?? F???      00271         call    food_delay
+000270 0E4E           00272         movlw   0x4E
+000272 EC?? F???      00273         call    LCD_shift 
+000276 0E2A           00274         movlw   0x2A
+000278 EC?? F???      00275         call    LCD_Send_Byte_D
+00027C 0E0D           00276         movlw   0x0D
+00027E EC?? F???      00277         call    LCD_shift 
+000282 0E2A           00278         movlw   0x2A
+000284 EC?? F???      00279         call    LCD_Send_Byte_D
+000288 0E05           00280         movlw   0x05
+00028A EC?? F???      00281         call    LCD_shift 
+00028E 0E2A           00282         movlw   0x2A
+000290 EC?? F???      00283         call    LCD_Send_Byte_D
+000294 0E44           00284         movlw   0x44
+000296 EC?? F???      00285         call    LCD_shift 
+00029A 0E2A           00286         movlw   0x2A
+00029C EC?? F???      00287         call    LCD_Send_Byte_D
+0002A0 EC?? F???      00288         call    food_delay
+0002A4 EC?? F???      00289         call    food_delay
+0002A8 EC?? F???      00290         call    food_delay
+0002AC 0E4F           00291         movlw   0x4F
+0002AE EC?? F???      00292         call    LCD_shift 
+0002B2 0E2A           00293         movlw   0x2A
+0002B4 EC?? F???      00294         call    LCD_Send_Byte_D
+0002B8 0E0E           00295         movlw   0x0E
+0002BA EC?? F???      00296         call    LCD_shift 
+0002BE 0E2A           00297         movlw   0x2A
+0002C0 EC?? F???      00298         call    LCD_Send_Byte_D
+0002C4 0E04           00299         movlw   0x04
+0002C6 EC?? F???      00300         call    LCD_shift 
+0002CA 0E2A           00301         movlw   0x2A
+0002CC EC?? F???      00302         call    LCD_Send_Byte_D
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE  7
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0002DC EC?? F???      00302         call    LCD_Send_Byte_D
-0002E0 0E0E           00303         movlw   0x0E
-0002E2 EC?? F???      00304         call    LCD_shift 
-0002E6 0E2A           00305         movlw   0x2A
-0002E8 EC?? F???      00306         call    LCD_Send_Byte_D
-0002EC 0E04           00307         movlw   0x04
-0002EE EC?? F???      00308         call    LCD_shift 
-0002F2 0E2A           00309         movlw   0x2A
-0002F4 EC?? F???      00310         call    LCD_Send_Byte_D
-0002F8 0E43           00311         movlw   0x43
-0002FA EC?? F???      00312         call    LCD_shift 
-0002FE 0E2A           00313         movlw   0x2A
-000300 EC?? F???      00314         call    LCD_Send_Byte_D
-000304 EC?? F???      00315         call    food_delay
-000308 EC?? F???      00316         call    food_delay
-00030C EC?? F???      00317         call    food_delay
-000310 0E0F           00318         movlw   0x0F
-000312 EC?? F???      00319         call    LCD_shift 
-000316 0E2A           00320         movlw   0x2A
-000318 EC?? F???      00321         call    LCD_Send_Byte_D
-00031C 0E03           00322         movlw   0x03
-00031E EC?? F???      00323         call    LCD_shift 
-000322 0E2A           00324         movlw   0x2A
-000324 EC?? F???      00325         call    LCD_Send_Byte_D
-000328 0E05           00326         movlw   0x05
-00032A 6E??           00327         movwf   flash_counter
-00032C                00328 flashes 
-00032C EC?? F???      00329         call    food_delay
-000330 EC?? F???      00330         call    food_delay
-000334 EC?? F???      00331         call    food_delay
-000338 0E03           00332         movlw   0x03
-00033A EC?? F???      00333         call    LCD_shift 
-00033E EC?? F???      00334         call    output_flash_1
-000342 0E43           00335         movlw   0x43
-000344 EC?? F???      00336         call    LCD_shift 
-000348 EC?? F???      00337         call    output_flash_2
-00034C EC?? F???      00338         call    food_delay
-000350 EC?? F???      00339         call    food_delay
-000354 EC?? F???      00340         call    food_delay
-000358 0E03           00341         movlw   0x03
-00035A EC?? F???      00342         call    LCD_shift 
-00035E EC?? F???      00343         call    output_flash_2
-000362 0E43           00344         movlw   0x43
-000364 EC?? F???      00345         call    LCD_shift 
-000368 EC?? F???      00346         call    output_flash_1
-00036C 2E??           00347         decfsz  flash_counter
-00036E D???           00348         bra     flashes
-000370 0E03           00349         movlw   0x03
-000372 EC?? F???      00350         call    LCD_shift 
-000376 EC?? F???      00351         call    output_blank
-00037A 0E43           00352         movlw   0x43
-00037C EC?? F???      00353         call    LCD_shift 
-000380 EC?? F???      00354         call    output_blank
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE  8
+0002D0 0E43           00303         movlw   0x43
+0002D2 EC?? F???      00304         call    LCD_shift 
+0002D6 0E2A           00305         movlw   0x2A
+0002D8 EC?? F???      00306         call    LCD_Send_Byte_D
+0002DC EC?? F???      00307         call    food_delay
+0002E0 EC?? F???      00308         call    food_delay
+0002E4 EC?? F???      00309         call    food_delay
+0002E8 0E0F           00310         movlw   0x0F
+0002EA EC?? F???      00311         call    LCD_shift 
+0002EE 0E2A           00312         movlw   0x2A
+0002F0 EC?? F???      00313         call    LCD_Send_Byte_D
+0002F4 0E03           00314         movlw   0x03
+0002F6 EC?? F???      00315         call    LCD_shift 
+0002FA 0E2A           00316         movlw   0x2A
+0002FC EC?? F???      00317         call    LCD_Send_Byte_D
+000300 0E05           00318         movlw   0x05
+000302 6E??           00319         movwf   flash_counter
+000304                00320 flashes 
+000304 EC?? F???      00321         call    food_delay
+000308 EC?? F???      00322         call    food_delay
+00030C EC?? F???      00323         call    food_delay
+000310 0E03           00324         movlw   0x03
+000312 EC?? F???      00325         call    LCD_shift 
+000316 EC?? F???      00326         call    output_flash_1
+00031A 0E43           00327         movlw   0x43
+00031C EC?? F???      00328         call    LCD_shift 
+000320 EC?? F???      00329         call    output_flash_2
+000324 EC?? F???      00330         call    food_delay
+000328 EC?? F???      00331         call    food_delay
+00032C EC?? F???      00332         call    food_delay
+000330 0E03           00333         movlw   0x03
+000332 EC?? F???      00334         call    LCD_shift 
+000336 EC?? F???      00335         call    output_flash_2
+00033A 0E43           00336         movlw   0x43
+00033C EC?? F???      00337         call    LCD_shift 
+000340 EC?? F???      00338         call    output_flash_1
+000344 2E??           00339         decfsz  flash_counter
+000346 D???           00340         bra     flashes
+000348 0E03           00341         movlw   0x03
+00034A EC?? F???      00342         call    LCD_shift 
+00034E EC?? F???      00343         call    output_blank
+000352 0E43           00344         movlw   0x43
+000354 EC?? F???      00345         call    LCD_shift 
+000358 EC?? F???      00346         call    output_blank
+00035C                00347 NEW_FORM
+00035C 0E01           00348         movlw   0x01
+00035E 62??           00349         cpfseq  lifemode_food
+000360 D???           00350         bra     check_medium
+000362 D???           00351         bra     small
+000364                00352 check_medium
+000364 0E02           00353         movlw   0x02
+000366 62??           00354         cpfseq  lifemode_food
+000368 D???           00355         bra     large 
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE  8
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000384                00355 NEW_FORM
-000384 0E01           00356         movlw   0x01
-000386 62??           00357         cpfseq  lifemode_food
-000388 D???           00358         bra     check_medium
-00038A D???           00359         bra     small
-00038C                00360 check_medium
-00038C 0E02           00361         movlw   0x02
-00038E 62??           00362         cpfseq  lifemode_food
-000390 D???           00363         bra     large 
-000392 D???           00364         bra     medium
-000394                00365 small 
-000394 EC?? F???      00366         call    LCD_custom_character_set_SMALL
-000398 0E49           00367         movlw   0x49
-00039A EC?? F???      00368         call    LCD_shift
-00039E 0E02           00369         movlw   0x02
-0003A0 EC?? F???      00370         call    LCD_Send_Byte_D   ;small rabbit created from baby 
-0003A4 50??           00371         movf    lifemode_food, W
-0003A6 0012           00372         return 
-0003A8                00373 medium 
-0003A8 EC?? F???      00374         call    LCD_custom_character_set_MEDIUM
-0003AC 0E49           00375         movlw   0x49
-0003AE EC?? F???      00376         call    LCD_shift
-0003B2 0E02           00377         movlw   0x02
-0003B4 EC?? F???      00378         call    LCD_Send_Byte_D
-0003B8 50??           00379         movf    lifemode_food, W
-0003BA 0012           00380         return 
-0003BC                00381 large 
-0003BC EC?? F???      00382         call    LCD_custom_character_set_LARGE
-0003C0 0E49           00383         movlw   0x49
-0003C2 EC?? F???      00384         call    LCD_shift
-0003C6 0E02           00385         movlw   0x02
-0003C8 EC?? F???      00386         call    LCD_Send_Byte_D
-0003CC 50??           00387         movf    lifemode_food, W
-0003CE 0012           00388         return 
-                      00389         ;alternate flashes to go here followed by change of rabbit character
-                      00390 
-                      00391 
-0003D0                00392 food_delay
-0003D0 0E40           00393         movlw   0x40
-0003D2 6E??           00394         movwf   delay_counter_f1
-0003D4                00395 delay_1       
-0003D4 2E??           00396         decfsz  delay_counter_f1
-0003D6 D???           00397         bra     nested_2
-0003D8 0012           00398         return
-                      00399         
-0003DA                00400 nested_2
-0003DA 0E40           00401         movlw   0x40
-0003DC 6E??           00402         movwf   delay_counter_f2
-0003DE 2E??           00403 delay_2 decfsz  delay_counter_f2
-0003E0 D???           00404         bra     nested_3
-0003E2 D???           00405         bra     delay_1
-                      00406 
-0003E4                00407 nested_3
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE  9
-
-
-LOC  OBJECT CODE     LINE SOURCE TEXT
-  VALUE
-
-0003E4 0E40           00408         movlw   0x40
-0003E6 6E??           00409         movwf   delay_counter_f3
-0003E8                00410 delay_3
-0003E8 2E??           00411         decfsz  delay_counter_f3
-0003EA D???           00412         bra     delay_3
-0003EC D???           00413         bra     delay_2
-                      00414      
-                      00415     
-                      00416     end 
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 10
+00036A D???           00356         bra     medium
+00036C                00357 small 
+00036C EC?? F???      00358         call    LCD_custom_character_set_SMALL
+000370 0E49           00359         movlw   0x49
+000372 EC?? F???      00360         call    LCD_shift
+000376 0E02           00361         movlw   0x02
+000378 EC?? F???      00362         call    LCD_Send_Byte_D   ;small rabbit created from baby 
+00037C 50??           00363         movf    lifemode_food, W
+00037E 0012           00364         return 
+000380                00365 medium 
+000380 EC?? F???      00366         call    LCD_custom_character_set_MEDIUM
+000384 0E49           00367         movlw   0x49
+000386 EC?? F???      00368         call    LCD_shift
+00038A 0E02           00369         movlw   0x02
+00038C EC?? F???      00370         call    LCD_Send_Byte_D
+000390 50??           00371         movf    lifemode_food, W
+000392 0012           00372         return 
+000394                00373 large 
+000394 EC?? F???      00374         call    LCD_custom_character_set_LARGE
+000398 0E49           00375         movlw   0x49
+00039A EC?? F???      00376         call    LCD_shift
+00039E 0E02           00377         movlw   0x02
+0003A0 EC?? F???      00378         call    LCD_Send_Byte_D
+0003A4 50??           00379         movf    lifemode_food, W
+0003A6 0012           00380         return 
+                      00381         ;alternate flashes to go here followed by change of rabbit character
+                      00382 
+                      00383 
+0003A8                00384 food_delay
+0003A8 0E40           00385         movlw   0x40
+0003AA 6E??           00386         movwf   delay_counter_f1
+0003AC                00387 delay_1       
+0003AC 2E??           00388         decfsz  delay_counter_f1
+0003AE D???           00389         bra     nested_2
+0003B0 0012           00390         return
+                      00391         
+0003B2                00392 nested_2
+0003B2 0E40           00393         movlw   0x40
+0003B4 6E??           00394         movwf   delay_counter_f2
+0003B6 2E??           00395 delay_2 decfsz  delay_counter_f2
+0003B8 D???           00396         bra     nested_3
+0003BA D???           00397         bra     delay_1
+                      00398 
+0003BC                00399 nested_3
+0003BC 0E40           00400         movlw   0x40
+0003BE 6E??           00401         movwf   delay_counter_f3
+0003C0                00402 delay_3
+0003C0 2E??           00403         decfsz  delay_counter_f3
+0003C2 D???           00404         bra     delay_3
+0003C4 D???           00405         bra     delay_2
+                      00406      
+                      00407     
+                      00408     end 
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE  9
 
 
 SYMBOL TABLE
@@ -544,7 +529,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 11
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 10
 
 
 SYMBOL TABLE
@@ -603,7 +588,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 12
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 11
 
 
 SYMBOL TABLE
@@ -662,7 +647,7 @@ C1TSEL0                           00000000
 C1TSEL1                           00000001
 C1TSEL2                           00000002
 C2INA                             00000004
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 13
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 12
 
 
 SYMBOL TABLE
@@ -721,7 +706,7 @@ CCP1IP                            00000001
 CCP1M0                            00000000
 CCP1M1                            00000001
 CCP1M2                            00000002
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 14
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 13
 
 
 SYMBOL TABLE
@@ -780,7 +765,7 @@ CCP5M0                            00000000
 CCP5M1                            00000001
 CCP5M2                            00000002
 CCP5M3                            00000003
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 15
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 14
 
 
 SYMBOL TABLE
@@ -839,7 +824,7 @@ CCP9IP                            00000006
 CCP9M0                            00000000
 CCP9M1                            00000001
 CCP9M2                            00000002
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 16
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 15
 
 
 SYMBOL TABLE
@@ -887,7 +872,7 @@ CCPTMRS1                          00000F2C
 CCPTMRS2                          00000F2B
 CE                                00000005
 CFGS                              00000006
-CHECK_GROWTH                      0000017C
+CHECK_GROWTH                      00000154
 CHIME                             00000006
 CHS0                              00000002
 CHS1                              00000003
@@ -898,7 +883,7 @@ CHSN0                             00000000
 CHSN1                             00000001
 CHSN2                             00000002
 CK1                               00000006
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 17
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 16
 
 
 SYMBOL TABLE
@@ -957,7 +942,7 @@ CTMUICON                          00000F55
 CTMUIE                            00000003
 CTMUIF                            00000003
 CTMUIP                            00000003
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 18
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 17
 
 
 SYMBOL TABLE
@@ -1016,7 +1001,7 @@ ECCP1AS0                          00000004
 ECCP1AS1                          00000005
 ECCP1AS2                          00000006
 ECCP1ASE                          00000007
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 19
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 18
 
 
 SYMBOL TABLE
@@ -1075,7 +1060,7 @@ FSR1                              00000001
 FSR1H                             00000FE2
 FSR1L                             00000FE1
 FSR2                              00000002
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 20
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 19
 
 
 SYMBOL TABLE
@@ -1090,8 +1075,8 @@ GIEL                              00000006
 GIE_GIEH                          00000007
 GO                                00000001
 GO_NOT_DONE                       00000001
-GROWTH                            00000198
-GROWTH_ANIMATE                    0000019C
+GROWTH                            00000170
+GROWTH_ANIMATE                    00000174
 HALFSEC                           00000003
 HFIOFS                            00000002
 HLVDCON                           00000FA8
@@ -1134,7 +1119,7 @@ INT2IE                            00000004
 INT2IF                            00000001
 INT2IP                            00000007
 INT2P                             00000007
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 21
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 20
 
 
 SYMBOL TABLE
@@ -1193,7 +1178,7 @@ LATB1                             00000001
 LATB2                             00000002
 LATB3                             00000003
 LATB4                             00000004
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 22
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 21
 
 
 SYMBOL TABLE
@@ -1252,7 +1237,7 @@ LATH4                             00000004
 LATH5                             00000005
 LATH6                             00000006
 LATH7                             00000007
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 23
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 22
 
 
 SYMBOL TABLE
@@ -1290,7 +1275,7 @@ MSK5                              00000005
 MSK6                              00000006
 MSK7                              00000007
 N                                 00000004
-NEW_FORM                          00000384
+NEW_FORM                          0000035C
 NOT_A                             00000005
 NOT_ADDRESS                       00000005
 NOT_BOR                           00000000
@@ -1311,7 +1296,7 @@ NOT_T3SYNC                        00000002
 NOT_T5DONE                        00000003
 NOT_T5SYNC                        00000002
 NOT_T7DONE                        00000003
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 24
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 23
 
 
 SYMBOL TABLE
@@ -1370,7 +1355,7 @@ P2DC6                             00000006
 P2M0                              00000006
 P2M1                              00000007
 P2RSEN                            00000007
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 25
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 24
 
 
 SYMBOL TABLE
@@ -1429,7 +1414,7 @@ PMD2                              00000F17
 PMD3                              00000F16
 POR                               00000001
 PORTA                             00000F80
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 26
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 25
 
 
 SYMBOL TABLE
@@ -1488,7 +1473,7 @@ PSS3AC0                           00000002
 PSS3AC1                           00000003
 PSS3BD0                           00000000
 PSS3BD1                           00000001
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 27
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 26
 
 
 SYMBOL TABLE
@@ -1547,7 +1532,7 @@ RCREG                             00000FAE
 RCREG1                            00000FAE
 RCREG2                            00000F1D
 RCSTA                             00000FAB
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 28
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 27
 
 
 SYMBOL TABLE
@@ -1606,7 +1591,7 @@ RJ1                               00000001
 RJ2                               00000002
 RJ3                               00000003
 RJ4                               00000004
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 29
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 28
 
 
 SYMBOL TABLE
@@ -1665,7 +1650,7 @@ SCS1                              00000001
 SDA1                              00000004
 SDA2                              00000005
 SDI1                              00000004
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 30
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 29
 
 
 SYMBOL TABLE
@@ -1724,7 +1709,7 @@ SSP2IP                            00000005
 SSP2MD                            00000002
 SSP2MSK                           00000F69
 SSP2STAT                          00000F68
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 31
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 30
 
 
 SYMBOL TABLE
@@ -1783,7 +1768,7 @@ T12CON                            00000F30
 T12OUTPS0                         00000003
 T12OUTPS1                         00000004
 T12OUTPS2                         00000005
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 32
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 31
 
 
 SYMBOL TABLE
@@ -1842,7 +1827,7 @@ T5GGO                             00000003
 T5GGO_NOT_T5DONE                  00000003
 T5GPOL                            00000006
 T5GSPM                            00000004
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 33
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 32
 
 
 SYMBOL TABLE
@@ -1901,7 +1886,7 @@ TMR10IP                           00000005
 TMR10MD                           00000007
 TMR10ON                           00000002
 TMR12                             00000F32
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 34
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 33
 
 
 SYMBOL TABLE
@@ -1960,7 +1945,7 @@ TMR5GIF                           00000007
 TMR5GIP                           00000007
 TMR5H                             00000F7D
 TMR5IE                            00000001
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 35
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 34
 
 
 SYMBOL TABLE
@@ -2019,7 +2004,7 @@ TRISB1                            00000001
 TRISB2                            00000002
 TRISB3                            00000003
 TRISB4                            00000004
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 36
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 35
 
 
 SYMBOL TABLE
@@ -2078,7 +2063,7 @@ TRISH4                            00000004
 TRISH5                            00000005
 TRISH6                            00000006
 TRISH7                            00000007
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 37
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 36
 
 
 SYMBOL TABLE
@@ -2137,7 +2122,7 @@ UA                                00000001
 UART1MD                           00000003
 UART2MD                           00000004
 UB                                00000007
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 38
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 37
 
 
 SYMBOL TABLE
@@ -2196,7 +2181,7 @@ _CONFIG2H                         00300003
 _CONFIG2L                         00300002
 _CONFIG3H                         00300005
 _CONFIG3L                         00300004
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 39
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 38
 
 
 SYMBOL TABLE
@@ -2255,7 +2240,7 @@ _EBRTB_OFF_7H                     000000FF
 _EBRTB_ON_7H                      000000BF
 _ECCPMX_PORTE_3H                  000000FF
 _ECCPMX_PORTH_3H                  000000FD
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 40
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 39
 
 
 SYMBOL TABLE
@@ -2314,7 +2299,7 @@ _WDTEN_ON_2H                      000000FE
 _WDTEN_SWDTDIS_2H                 000000FF
 _WDTPS_1024_2H                    000000AB
 _WDTPS_1048576_2H                 000000FF
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 41
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 40
 
 
 SYMBOL TABLE
@@ -2368,12 +2353,12 @@ __DEBUG
 __MPLAB_DEBUGGER_ICD3             1
 blank_bytes                       0000000D
 blank_line                        0000001C
-check_10                          0000017C
-check_25                          00000184
-check_50                          0000018C
-check_medium                      0000038C
+check_10                          00000154
+check_25                          0000015C
+check_50                          00000164
+check_medium                      00000364
 counter_blank                     00000007
-MPASM 5.81                          FOOD.ASM   2-17-2020  14:46:08         PAGE 42
+MPASM 5.81                          FOOD.ASM   2-17-2020  15:09:42         PAGE 41
 
 
 SYMBOL TABLE
@@ -2381,9 +2366,9 @@ SYMBOL TABLE
 
 counter_flash_1                   00000005
 counter_flash_2                   00000006
-delay_1                           000003D4
-delay_2                           000003DE
-delay_3                           000003E8
+delay_1                           000003AC
+delay_2                           000003B6
+delay_3                           000003C0
 delay_counter_f1                  00000001
 delay_counter_f2                  00000002
 delay_counter_f3                  00000003
@@ -2392,21 +2377,21 @@ flash_bytes_l                     0000000D
 flash_counter                     00000004
 flash_line_1                      00000000
 flash_line_2                      0000000E
-flashes                           0000032C
+flashes                           00000304
 food_counter                      00000008
-food_delay                        000003D0
-large                             000003BC
+food_delay                        000003A8
+large                             00000394
 lifemode_food                     00000000
 loopb                             00000052
 loopf1                            00000016
 loopf2                            00000034
-medium                            000003A8
-nested_2                          000003DA
-nested_3                          000003E4
+medium                            00000380
+nested_2                          000003B2
+nested_3                          000003BC
 output_blank                      00000042
 output_flash_1                    00000006
 output_flash_2                    00000024
-small                             00000394
+small                             0000036C
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed
