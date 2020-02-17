@@ -90,228 +90,237 @@ FOOD
 	movlw   0x01
 	addwf   food_counter, 1
 FOOD_ANIMATE
-	movlw   0x05
+	movlw   b'10000101'
 	call    LCD_shift 
 	movlw   0x27
 	call    LCD_Send_Byte_D
 	call    food_delay
-	movlw   0x05
+	movlw   b'10000101'
 	call    LCD_shift
 	movlw   0x2C
 	call    LCD_Send_Byte_D
 	call    food_delay
-	movlw   0x45
+	movlw   b'10000101'
+	call    LCD_shift
+	movlw   ' '
+	call    LCD_Send_Byte_D
+	movlw   b'11000101'
 	call    LCD_shift 
 	movlw   0x27
 	call    LCD_Send_Byte_D
 	call    food_delay
-	movlw   0x45
+	movlw   b'11000101'
 	call    LCD_shift
 	movlw   0x2C
 	call    LCD_Send_Byte_D
 	call    food_delay  ;food dropped
-	movlw   0x49
+	movlw   b'11001001'
 	call    LCD_shift 
 	movlw   ' '
 	call    LCD_Send_Byte_D
-	movlw   0x48
-	call    LCD_shift 
-	movlw   0x02
-	call    LCD_Send_Byte_D
-	call    food_delay 
-	movlw   ' '
-	call    LCD_Send_Byte_D
-	movlw   0x47
+	movlw   b'11001000'
 	call    LCD_shift 
 	movlw   0x02
 	call    LCD_Send_Byte_D
 	call    food_delay 
+	movlw   b'11001000'
+	call    LCD_shift 
 	movlw   ' '
 	call    LCD_Send_Byte_D
-	movlw   0x46
+	movlw   b'11000111'
 	call    LCD_shift 
 	movlw   0x02
 	call    LCD_Send_Byte_D
 	call    food_delay 
+	movlw   b'11000111'
+	call    LCD_shift 
 	movlw   ' '
 	call    LCD_Send_Byte_D
-	movlw   0x45
+	movlw   b'11000110' ;46
+	call    LCD_shift 
+	movlw   0x02
+	call    LCD_Send_Byte_D
+	call    food_delay 
+	movlw   b'11000110' ;46
+	call    LCD_shift
+	movlw   ' '
+	call    LCD_Send_Byte_D
+	movlw   b'11000101'  ;45
 	call    LCD_shift 
 	movlw   0x02
 	call    LCD_Send_Byte_D ;eaten
-	movlw   0x45
+	call    food_delay
+	movlw   b'11000101'  ;45
 	call    LCD_shift 
 	movlw   ' '
 	call    LCD_Send_Byte_D
 	movlw   0x02
 	call    LCD_Send_Byte_D
 	call    food_delay 
-	movlw   0x46
+	movlw   b'11000110'
 	call    LCD_shift 
 	movlw   ' '
 	call    LCD_Send_Byte_D
 	movlw   0x02
 	call    LCD_Send_Byte_D
 	call    food_delay 
-	movlw   0x47
+	movlw   b'11000111'
 	call    LCD_shift 
 	movlw   ' '
 	call    LCD_Send_Byte_D
 	movlw   0x02
 	call    LCD_Send_Byte_D
 	call    food_delay 
-	movlw   0x48
+	movlw   b'11001000'
 	call    LCD_shift 
 	movlw   ' '
 	call    LCD_Send_Byte_D
 	movlw   0x02
 	call    LCD_Send_Byte_D ;back at centre
 CHECK_GROWTH
-check_10
-	movlw   0x0A
+check_2
+	movlw   0x02
 	cpfseq  food_counter 
-	bra     check_25
+	bra     check_4
 	bra     GROWTH
-check_25 
-	movlw   0x19
+check_4
+	movlw   0x4
 	cpfseq  food_counter 
-	bra     check_50
+	bra     check_6
 	bra     GROWTH
-check_50
-	movlw   0x32
+check_6
+	movlw   0x6
 	cpfseq  food_counter
 	return 
-	call    GROWTH
-	
-	return
+	bra     GROWTH
 	
 	
 GROWTH
 	movlw   0x01
 	addwf   lifemode_food, 1
 GROWTH_ANIMATE
-	movlw   0x49   ;position
+	movlw   b'11001001' ;0x49   ;position
 	call    LCD_shift 
 	movlw   0x2A  ;star
 	call    LCD_Send_Byte_D
 	call    food_delay
 	call    food_delay
 	call    food_delay
-	movlw   0x4A 
+	movlw   b'11001010';0x4A
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
-	movlw   0x09
+	movlw   b'10001001';0x09
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
-	movlw   0x48
-	call    LCD_shift 
-	movlw   0x2A
-	call    LCD_Send_Byte_D
-	call    food_delay
-	call    food_delay
-	call    food_delay
-	movlw   0x4B
-	call    LCD_shift 
-	movlw   0x2A
-	call    LCD_Send_Byte_D
-	movlw   0x0A
-	call    LCD_shift 
-	movlw   0x2A
-	call    LCD_Send_Byte_D
-	movlw   0x08
-	call    LCD_shift 
-	movlw   0x2A
-	call    LCD_Send_Byte_D
-	movlw   0x47
+	movlw   b'11001000';0x48
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
 	call    food_delay
 	call    food_delay
 	call    food_delay
-	movlw   0x4C
+	movlw   b'11001011';0x4B
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
-	movlw   0x0B
+	movlw   b'10001010';0x0A
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
-	movlw   0x07
+	movlw   b'10001000';0x08
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
-	movlw   0x46
-	call    LCD_shift 
-	movlw   0x2A
-	call    LCD_Send_Byte_D
-	call    food_delay
-	call    food_delay
-	call    food_delay
-	movlw   0x4D
-	call    LCD_shift 
-	movlw   0x2A
-	call    LCD_Send_Byte_D
-	movlw   0x0C
-	call    LCD_shift 
-	movlw   0x2A
-	call    LCD_Send_Byte_D
-	movlw   0x06
-	call    LCD_shift 
-	movlw   0x2A
-	call    LCD_Send_Byte_D
-	movlw   0x45
+	movlw   b'11000111';0x47
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
 	call    food_delay
 	call    food_delay
 	call    food_delay
-	movlw   0x4E
+	movlw   b'11001100';0x4C
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
-	movlw   0x0D
+	movlw   b'10001000';0x0B
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
-	movlw   0x05
+	movlw   b'10000111';0x07
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
-	movlw   0x44
-	call    LCD_shift 
-	movlw   0x2A
-	call    LCD_Send_Byte_D
-	call    food_delay
-	call    food_delay
-	call    food_delay
-	movlw   0x4F
-	call    LCD_shift 
-	movlw   0x2A
-	call    LCD_Send_Byte_D
-	movlw   0x0E
-	call    LCD_shift 
-	movlw   0x2A
-	call    LCD_Send_Byte_D
-	movlw   0x04
-	call    LCD_shift 
-	movlw   0x2A
-	call    LCD_Send_Byte_D
-	movlw   0x43
+	movlw   b'11000110';0x46
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
 	call    food_delay
 	call    food_delay
 	call    food_delay
-	movlw   0x0F
+	movlw   b'11001011';0x4D
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
-	movlw   0x03
+	movlw   b'10001100';0x0C
+	call    LCD_shift 
+	movlw   0x2A
+	call    LCD_Send_Byte_D
+	movlw   b'10000110';0x06
+	call    LCD_shift 
+	movlw   0x2A
+	call    LCD_Send_Byte_D
+	movlw   b'11000101';0x45
+	call    LCD_shift 
+	movlw   0x2A
+	call    LCD_Send_Byte_D
+	call    food_delay
+	call    food_delay
+	call    food_delay
+	movlw   b'11001110';0x4E
+	call    LCD_shift 
+	movlw   0x2A
+	call    LCD_Send_Byte_D
+	movlw   b'10001101';0x0D
+	call    LCD_shift 
+	movlw   0x2A
+	call    LCD_Send_Byte_D
+	movlw   b'10000011';0x05
+	call    LCD_shift 
+	movlw   0x2A
+	call    LCD_Send_Byte_D
+	movlw   b'11000100';0x44
+	call    LCD_shift 
+	movlw   0x2A
+	call    LCD_Send_Byte_D
+	call    food_delay
+	call    food_delay
+	call    food_delay
+	movlw   b'11001111';0x4F
+	call    LCD_shift 
+	movlw   0x2A
+	call    LCD_Send_Byte_D
+	movlw   b'10001110';0x0E
+	call    LCD_shift 
+	movlw   0x2A
+	call    LCD_Send_Byte_D
+	movlw   b'10000100';0x04
+	call    LCD_shift 
+	movlw   0x2A
+	call    LCD_Send_Byte_D
+	movlw   b'11000011';0x43
+	call    LCD_shift 
+	movlw   0x2A
+	call    LCD_Send_Byte_D
+	call    food_delay
+	call    food_delay
+	call    food_delay
+	movlw   b'10001111';0x0F
+	call    LCD_shift 
+	movlw   0x2A
+	call    LCD_Send_Byte_D
+	movlw   b'10000011';0x03
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
@@ -321,27 +330,27 @@ flashes
 	call    food_delay
 	call    food_delay
 	call    food_delay
-	movlw	0x03
+	movlw	b'10000011';0x03
 	call	LCD_shift 
 	call	output_flash_1
-	movlw	0x43
+	movlw	b'11000011';0x43
 	call	LCD_shift 
 	call    output_flash_2
 	call	food_delay
 	call	food_delay
 	call	food_delay
-	movlw	0x03
+	movlw	b'10000011'
 	call	LCD_shift 
 	call    output_flash_2
-	movlw	0x43
+	movlw	b'11000011'
 	call	LCD_shift 
 	call    output_flash_1
 	decfsz  flash_counter
 	bra	flashes
-	movlw	0x03
+	movlw	b'10000011'
 	call	LCD_shift 
 	call    output_blank
-	movlw	0x43
+	movlw	b'11000011'
 	call	LCD_shift 
 	call    output_blank
 NEW_FORM
@@ -356,7 +365,7 @@ check_medium
 	bra     medium
 small 
 	call    LCD_custom_character_set_SMALL
-	movlw   0x49
+	movlw   b'11001001';0x49
 	call    LCD_shift
 	movlw   0x02
 	call    LCD_Send_Byte_D   ;small rabbit created from baby 
@@ -364,7 +373,7 @@ small
 	return 
 medium 
 	call    LCD_custom_character_set_MEDIUM
-	movlw   0x49
+	movlw   b'11001001'
 	call    LCD_shift
 	movlw   0x02
 	call    LCD_Send_Byte_D
@@ -372,7 +381,7 @@ medium
 	return 
 large 
 	call    LCD_custom_character_set_LARGE
-	movlw   0x49
+	movlw   b'11001001'
 	call    LCD_shift
 	movlw   0x02
 	call    LCD_Send_Byte_D
@@ -382,7 +391,7 @@ large
 
 
 food_delay
-	movlw   0x40
+	movlw   0x90
 	movwf   delay_counter_f1
 delay_1       
 	decfsz  delay_counter_f1
@@ -390,14 +399,14 @@ delay_1
 	return
 	
 nested_2
-	movlw   0x40
+	movlw   0x90
 	movwf   delay_counter_f2
 delay_2	decfsz  delay_counter_f2
 	bra     nested_3
 	bra     delay_1
 
 nested_3
-	movlw   0x40
+	movlw   0x90
 	movwf   delay_counter_f3
 delay_3
 	decfsz  delay_counter_f3

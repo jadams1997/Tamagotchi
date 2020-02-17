@@ -1,4 +1,4 @@
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE  1
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -16,224 +16,26 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00009 
                       02986         LIST
                       00002 
-  0000                00003     extern LCD_Setup, LCD_Send_Byte_D, LCD_shift, LCD_clear, LCD_custom_character_set_BABY
-  0000                00004     extern Keyboard_Setup, Keyboard, FOOD, LEARN, DANCE, SLEEPY, BALL_GAME, output_starting_screen
-  0000                00005     extern output_hatching_sequence, output_PRESS_A_TO_HATCH, FOOD_Setup
-                      00006         
-                      00007 acs0                             udata_acs
-000000                00008 counter_happiness                res 1 
-000001                00009 counter_happiness_decrement      res 1
-000002                00010 life_mode                        res 1
-000003                00011 counter_life                     res 1
-000004                00012 delay_count_1                    res 1
-000005                00013 delay_count_2                    res 1
-000006                00014 delay_count_3                    res 1
-                      00015 tables                           udata 0x400    
-000400                00016 myArray                          res 0x80 
-000480                00017 Key_Pressed                      res 0x40
-                      00018  
-                      00019 
-                      00020 tamagotchi code
-                      00021  
-                      00022         org     0x0
-000000 EF?? F???      00023         goto    setup
-                      00024         org     0x100
-                      00025  
-000100 9C7F           00026 setup   bcf     EECON1, CFGS    ; point to Flash program memory  
-000102 8E7F           00027         bsf     EECON1, EEPGD   ; access Flash program memory
-000104 EC?? F???      00028         call    LCD_Setup       ; setup LCD
-000108 EC?? F???      00029         call    Keyboard_Setup  ; setup keyboard 
-00010C EC?? F???      00030         call    FOOD_Setup 
-000110 EF?? F???      00031         goto    MAIN
-                      00032         
-000114                00033 MAIN 
-000114 0000           00034         nop
-000116 0000           00035         nop
-000118 0000           00036         nop
-00011A EC?? F???      00037         call    output_PRESS_A_TO_HATCH   ;output "PRESS_A_TO_HATCH"
-00011E                00038 PRESS_A_TO_HATCH
-00011E 0E00           00039         movlw   0x00
-000120 6E??           00040         movwf   Key_Pressed   ;Reset the key pressed variable
-000122 EC?? F???      00041         call    Keyboard      ;call keyboard for an input
-000126 6E??           00042         movwf   Key_Pressed   ;waits for input
-000128 0E41           00043         movlw   0x41          
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE  2
-
-
-LOC  OBJECT CODE     LINE SOURCE TEXT
-  VALUE
-
-00012A 62??           00044         cpfseq  Key_Pressed   ;is the key pressed A?
-00012C D???           00045         bra     MAIN          ;if not, got back to start
-00012E EC?? F???      00046         call    output_starting_screen   ;if A is pressed, output starting screen 
-000132 EC?? F???      00047         call    delay
-000136 EC?? F???      00048         call    delay
-00013A EC?? F???      00049         call    output_hatching_sequence ;carry out hatching sequence 
-00013E EC?? F???      00050         call    LCD_custom_character_set_BABY
-000142 0EFF           00051         movlw   0xFF
-000144 6E??           00052         movwf   counter_happiness_decrement ;set the counter_happiness_decrement to 255
-000146 0E64           00053         movlw   0x64
-000148 6E??           00054         movwf   counter_happiness  ;counter_happiness to 100
-00014A 0E03           00055         movlw   0x03          
-00014C 6E??           00056         movwf   counter_life ;counter_life to 3
-00014E 0E00           00057         movlw   0x00
-000150 6E??           00058         movwf   life_mode ;initialise the life mode at 0 for baby rabbit
-000152                00059 GAME_MODE
-000152 0E00           00060         movlw   0x00
-000154 6E??           00061         movwf   Key_Pressed    ;reset Key_Pressed variable 
-000156 EC?? F???      00062         call    Keyboard     ;wait for keyboard input 
-00015A 6E??           00063         movwf   Key_Pressed 
-00015C                00064 CHECK_A_PRESSED
-00015C 0E41           00065         movlw   0x41      ;is the key pressed A?
-00015E 62??           00066         cpfseq  Key_Pressed 
-000160 D???           00067         bra     CHECK_B_PRESSED   
-000162 D???           00068         bra     GAME_MODE
-000164                00069 CHECK_B_PRESSED
-000164 0E42           00070         movlw   0x42       ;is the key pressed B?
-000166 62??           00071         cpfseq  Key_Pressed 
-000168 D???           00072         bra     CHECK_C_PRESSED
-00016A 50??           00073         movf    life_mode, W    ;save the life_mode for the game to use
-00016C EC?? F???      00074         call    BALL_GAME
-000170 D???           00075         bra     GAME_MODE
-000172                00076 CHECK_C_PRESSED
-000172 0E43           00077         movlw   0x43
-000174 62??           00078         cpfseq  Key_Pressed 
-000176 D???           00079         bra     CHECK_D_PRESSED 
-000178 50??           00080         movf    life_mode, W
-00017A EC?? F???      00081         call    SLEEPY
-00017E D???           00082         bra     GAME_MODE
-000180                00083 CHECK_D_PRESSED
-000180 0E44           00084         movlw   0x44
-000182 62??           00085         cpfseq  Key_Pressed 
-000184 D???           00086         bra     CHECK_E_PRESSED
-000186 50??           00087         movf    life_mode, W
-000188 EC?? F???      00088         call    DANCE
-00018C D???           00089         bra     GAME_MODE
-00018E                00090 CHECK_E_PRESSED
-00018E 0E45           00091         movlw   0x45
-000190 62??           00092         cpfseq  Key_Pressed 
-000192 D???           00093         bra     CHECK_F_PRESSED
-000194 50??           00094         movf    life_mode, W
-000196 EC?? F???      00095         call    LEARN   
-00019A D???           00096         bra     GAME_MODE
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE  3
-
-
-LOC  OBJECT CODE     LINE SOURCE TEXT
-  VALUE
-
-00019C                00097 CHECK_F_PRESSED 
-00019C 0E46           00098         movlw   0x46
-00019E 62??           00099         cpfseq  Key_Pressed 
-0001A0 D???           00100         bra     dch     ;if no key is pressed, decrement the happiness counter
-0001A2 50??           00101         movf    life_mode, W
-0001A4 EC?? F???      00102         call    FOOD; if F is pressed, go to FOOD.  Food returns new life_mode
-0001A8 6E??           00103         movwf   life_mode 
-0001AA D???           00104         bra     GAME_MODE
-0001AC 2E??           00105 dch     decfsz  counter_happiness_decrement
-0001AE D???           00106         bra     GAME_MODE
-0001B0 0E01           00107         movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter happiness by 1
-0001B2 5E00           00108         subwf   counter_happiness, 1
-0001B4 EC?? F???      00109         call    HAPPINESS  ;call happiness, to update smiley, keep track of happiness, lives and death 
-0001B8 0E64           00110         movlw   0x64
-0001BA 6E??           00111         movwf   counter_happiness_decrement ;reset counter_happiness_decrement to 100
-0001BC D???           00112         bra     GAME_MODE
-                      00113         
-                      00114 
-                      00115         
-0001BE                00116 HAPPINESS       
-0001BE 0E00           00117         movlw   0x00
-0001C0 64??           00118         cpfsgt  counter_happiness
-0001C2 D???           00119         bra     LIFE  ;if counter_happiness is zero, go to decrease a life 
-0001C4 0EC0           00120         movlw   b'11000000'
-0001C6 EC?? F???      00121         call    LCD_shift   ;shifting where the LCD writes to ammend happiness character
-0001CA 0E32           00122         movlw   0x32
-0001CC 60??           00123         cpfslt  counter_happiness 
-0001CE D???           00124         bra     HAPPY
-0001D0 0E19           00125         movlw   0x19
-0001D2 60??           00126         cpfslt  counter_happiness
-0001D4 D???           00127         bra     NEUTRAL
-0001D6 D???           00128         bra     SAD
-0001D8                00129 HAPPY   ;update the happiness marker 
-0001D8 0E05           00130         movlw   0x05    ;happy face location
-0001DA EC?? F???      00131         call    LCD_Send_Byte_D
-0001DE                00132 NEUTRAL
-0001DE 0E06           00133         movlw   0x06    ;neutral face location
-0001E0 EC?? F???      00134         call    LCD_Send_Byte_D
-0001E4                00135 SAD 
-0001E4 0E07           00136         movlw   0x07    ;sad face location 
-0001E6 EC?? F???      00137         call    LCD_Send_Byte_D
-0001EA 0012           00138         return 
-                      00139         
-                      00140         
-0001EC                00141 LIFE    ;evaluate the life counter and adjust hearts
-0001EC 0E01           00142         movlw   0x01
-0001EE 5E??           00143         subwf   counter_life 
-0001F0 0E02           00144         movlw   0x02
-0001F2 62??           00145         cpfseq  counter_life 
-0001F4 D???           00146         bra     CHECK_LAST_LIFE
-0001F6 D???           00147         bra     TWO_LIVES_LEFT
-0001F8                00148 CHECK_LAST_LIFE    
-0001F8 0E01           00149         movlw   0x01 
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE  4
-
-
-LOC  OBJECT CODE     LINE SOURCE TEXT
-  VALUE
-
-0001FA 62??           00150         cpfseq  counter_life
-0001FC D???           00151         bra     DEATH
-0001FE D???           00152         bra     ONE_LIFE_LEFT
-000200                00153 TWO_LIVES_LEFT
-000200 0E82           00154         movlw   b'10000010'
-000202 EC?? F???      00155         call    LCD_shift
-000206 0E20           00156         movlw   ' '
-000208 EC?? F???      00157         call    LCD_Send_Byte_D
-00020C                00158 ONE_LIFE_LEFT
-00020C 0E81           00159         movlw   b'10000001'
-00020E EC?? F???      00160         call    LCD_shift
-000212 0E20           00161         movlw   ' '
-000214 EC?? F???      00162         call    LCD_Send_Byte_D
-000218                00163 DEATH   ;for death, clear the LCD, send ghost 
-000218 EC?? F???      00164         call    LCD_clear 
-00021C 0EC8           00165         movlw   b'11001000'
-00021E EC?? F???      00166         call    LCD_shift 
-000222 0E00           00167         movlw   0x00   ; DDRAM location of ghost
-000224 EC?? F???      00168         call    LCD_Send_Byte_D
-000228 EC?? F???      00169         call    delay 
-00022C EC?? F???      00170         call    delay 
-000230 EC?? F???      00171         call    delay 
-000234 EC?? F???      00172         call    delay 
-000238 D???           00173         bra     finished 
-                      00174 
-                      00175 
-00023A                00176 delay
-00023A 0EFF           00177         movlw   0xff
-00023C 6E??           00178         movwf   delay_count_1
-00023E                00179 delay_1       
-00023E 2E??           00180         decfsz  delay_count_1
-000240 D???           00181         bra     nested_2
-000242 0012           00182         return
-                      00183         
-000244                00184 nested_2
-000244 0EFF           00185         movlw   0xff
-000246 6E??           00186         movwf   delay_count_2
-000248 2E??           00187 delay_2 decfsz  delay_count_2
-00024A D???           00188         bra     nested_3
-00024C D???           00189         bra     delay_1
-                      00190 
-00024E                00191 nested_3
-00024E 0EFF           00192         movlw   0xff
-000250 6E??           00193         movwf   delay_count_3
-000252                00194 delay_3
-000252 2E??           00195         decfsz  delay_count_3
-000254 D???           00196         bra     delay_3
-000256 D???           00197         bra     delay_2
-                      00198 
-000258                00199 finished
-                      00200         
-                      00201         end
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE  5
+  0000                00003     extern LCD_Send_Byte_D,LCD_shift, LCD_clear
+  0000                00004     global BALL_GAME
+                      00005 
+                      00006  
+                      00007 ball code
+                      00008     
+                      00009     
+000000                00010 BALL_GAME
+000000 0012           00011     return
+                      00012     
+                      00013     
+                      00014     
+                      00015     
+                      00016     
+                      00017     
+                      00018     
+                      00019     
+                      00020     
+                      00021     end 
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE  2
 
 
 SYMBOL TABLE
@@ -292,7 +94,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE  6
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE  3
 
 
 SYMBOL TABLE
@@ -351,7 +153,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE  7
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE  4
 
 
 SYMBOL TABLE
@@ -410,7 +212,7 @@ C1OUT                             00000002
 C1TSEL0                           00000000
 C1TSEL1                           00000001
 C1TSEL2                           00000002
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE  8
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE  5
 
 
 SYMBOL TABLE
@@ -469,7 +271,7 @@ CCP1IF                            00000001
 CCP1IP                            00000001
 CCP1M0                            00000000
 CCP1M1                            00000001
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE  9
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE  6
 
 
 SYMBOL TABLE
@@ -528,7 +330,7 @@ CCP5IP                            00000002
 CCP5M0                            00000000
 CCP5M1                            00000001
 CCP5M2                            00000002
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 10
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE  7
 
 
 SYMBOL TABLE
@@ -587,7 +389,7 @@ CCP9IF                            00000006
 CCP9IP                            00000006
 CCP9M0                            00000000
 CCP9M1                            00000001
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 11
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE  8
 
 
 SYMBOL TABLE
@@ -636,22 +438,9 @@ CCPTMRS1                          00000F2C
 CCPTMRS2                          00000F2B
 CE                                00000005
 CFGS                              00000006
-CHECK_A_PRESSED                   0000015C
-CHECK_B_PRESSED                   00000164
-CHECK_C_PRESSED                   00000172
-CHECK_D_PRESSED                   00000180
-CHECK_E_PRESSED                   0000018E
-CHECK_F_PRESSED                   0000019C
-CHECK_LAST_LIFE                   000001F8
 CHIME                             00000006
 CHS0                              00000002
 CHS1                              00000003
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 12
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 CHS2                              00000004
 CHS3                              00000005
 CHS4                              00000006
@@ -659,6 +448,12 @@ CHSN0                             00000000
 CHSN1                             00000001
 CHSN2                             00000002
 CK1                               00000006
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE  9
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 CK2                               00000001
 CKE                               00000006
 CKP                               00000004
@@ -705,12 +500,6 @@ CTED1                             00000002
 CTED2                             00000003
 CTMUCONH                          00000F57
 CTMUCONL                          00000F56
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 13
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 CTMUDS                            00000000
 CTMUEN                            00000007
 CTMUI                             00000003
@@ -718,6 +507,12 @@ CTMUICON                          00000F55
 CTMUIE                            00000003
 CTMUIF                            00000003
 CTMUIP                            00000003
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 10
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 CTMUMD                            00000006
 CTMUSIDL                          00000005
 CTPLS                             00000000
@@ -733,7 +528,6 @@ CVREN                             00000007
 CVROE                             00000006
 CVRSS                             00000005
 D                                 00000005
-DANCE                             00000000
 DATA_ADDRESS                      00000005
 DC                                00000001
 DC10B0                            00000004
@@ -761,15 +555,8 @@ DDRB                              TRISB
 DDRC                              TRISC
 DDRD                              TRISD
 DDRE                              TRISE
-DEATH                             00000218
 DONE                              00000001
 DT1                               00000007
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 14
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 DT2                               00000002
 D_A                               00000005
 D_NOT_A                           00000005
@@ -779,6 +566,12 @@ ECCP1AS0                          00000004
 ECCP1AS1                          00000005
 ECCP1AS2                          00000006
 ECCP1ASE                          00000007
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 11
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 ECCP1CON                          00000FBB
 ECCP1DEL                          00000FBE
 ECCP2AS                           00000F52
@@ -821,14 +614,6 @@ FERR                              00000002
 FERR1                             00000002
 FERR2                             00000002
 FLT0                              00000000
-FOOD                              00000000
-FOOD_Setup                        00000000
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 15
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 FREE                              00000004
 FSR0                              00000000
 FSR0H                             00000FEA
@@ -839,8 +624,13 @@ FSR1L                             00000FE1
 FSR2                              00000002
 FSR2H                             00000FDA
 FSR2L                             00000FD9
-GAME_MODE                         00000152
 GCEN                              00000007
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 12
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 GIE                               00000007
 GIEH                              00000007
 GIEL                              00000006
@@ -848,8 +638,6 @@ GIE_GIEH                          00000007
 GO                                00000001
 GO_NOT_DONE                       00000001
 HALFSEC                           00000003
-HAPPINESS                         000001BE
-HAPPY                             000001D8
 HFIOFS                            00000002
 HLVDCON                           00000FA8
 HLVDEN                            00000004
@@ -882,12 +670,6 @@ INT1E                             00000003
 INT1F                             00000000
 INT1IE                            00000003
 INT1IF                            00000000
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 16
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 INT1IP                            00000006
 INT1P                             00000006
 INT2                              00000002
@@ -902,6 +684,12 @@ INT3E                             00000005
 INT3F                             00000002
 INT3IE                            00000005
 INT3IF                            00000002
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 13
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 INT3IP                            00000001
 INT3P                             00000001
 INTCON                            00000FF2
@@ -935,18 +723,9 @@ KBI0                              00000004
 KBI1                              00000005
 KBI2                              00000006
 KBI3                              00000007
-Key_Pressed                       00000480
-Keyboard                          00000000
-Keyboard_Setup                    00000000
 LATA                              00000F89
 LATA0                             00000000
 LATA1                             00000001
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 17
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 LATA2                             00000002
 LATA3                             00000003
 LATA4                             00000004
@@ -964,6 +743,12 @@ LATB6                             00000006
 LATB7                             00000007
 LATC                              00000F8B
 LATC0                             00000000
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 14
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 LATC1                             00000001
 LATC2                             00000002
 LATC3                             00000003
@@ -1000,12 +785,6 @@ LATF7                             00000007
 LATG                              00000F8F
 LATG0                             00000000
 LATG1                             00000001
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 18
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 LATG2                             00000002
 LATG3                             00000003
 LATG4                             00000004
@@ -1023,22 +802,23 @@ LATJ0                             00000000
 LATJ1                             00000001
 LATJ2                             00000002
 LATJ3                             00000003
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 15
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 LATJ4                             00000004
 LATJ5                             00000005
 LATJ6                             00000006
 LATJ7                             00000007
 LB                                00000006
 LCD_Send_Byte_D                   00000000
-LCD_Setup                         00000000
 LCD_clear                         00000000
-LCD_custom_character_set_BABY     00000000
 LCD_shift                         00000000
-LEARN                             00000000
-LIFE                              000001EC
 LVDIE                             00000002
 LVDIF                             00000002
 LVDIP                             00000002
-MAIN                              00000114
 MEMCON                            00000F26
 MFIOFS                            00000001
 MFIOSEL                           00000000
@@ -1051,7 +831,6 @@ MSK5                              00000005
 MSK6                              00000006
 MSK7                              00000007
 N                                 00000004
-NEUTRAL                           000001DE
 NOT_A                             00000005
 NOT_ADDRESS                       00000005
 NOT_BOR                           00000000
@@ -1059,12 +838,6 @@ NOT_CM                            00000005
 NOT_CS                            00000002
 NOT_DONE                          00000001
 NOT_PD                            00000002
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 19
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 NOT_POR                           00000001
 NOT_RBPU                          00000007
 NOT_RC8                           00000006
@@ -1088,11 +861,16 @@ OBF                               00000006
 ODCON1                            00000F29
 ODCON2                            00000F28
 ODCON3                            00000F27
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 16
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 OE                                00000001
 OERR                              00000001
 OERR1                             00000001
 OERR2                             00000001
-ONE_LIFE_LEFT                     0000020C
 OSC1                              00000007
 OSC2                              00000006
 OSCCON                            00000FD3
@@ -1118,12 +896,6 @@ P1M0                              00000006
 P1M1                              00000007
 P1RSEN                            00000007
 P2A_PORTC                         00000001
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 20
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 P2A_PORTE                         00000007
 P2B                               00000002
 P2C                               00000001
@@ -1148,6 +920,12 @@ P3DC4                             00000004
 P3DC5                             00000005
 P3DC6                             00000006
 P3M0                              00000006
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 17
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 P3M1                              00000007
 P3RSEN                            00000007
 PA3                               00000000
@@ -1177,12 +955,6 @@ PIE5                              00000FB9
 PIE6                              00000F60
 PIR1                              00000F9E
 PIR2                              00000FA1
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 21
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 PIR3                              00000FA4
 PIR4                              00000FB7
 PIR5                              00000FBA
@@ -1207,6 +979,12 @@ PORTH                             00000F87
 PORTJ                             00000F88
 POSTDEC0                          00000FED
 POSTDEC1                          00000FE5
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 18
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 POSTDEC2                          00000FDD
 POSTINC0                          00000FEE
 POSTINC1                          00000FE6
@@ -1220,7 +998,6 @@ PR8                               00000F37
 PREINC0                           00000FEC
 PREINC1                           00000FE4
 PREINC2                           00000FDC
-PRESS_A_TO_HATCH                  0000011E
 PROD                              00000FF3
 PRODH                             00000FF4
 PRODL                             00000FF3
@@ -1236,12 +1013,6 @@ PSP7                              00000007
 PSPCON                            00000FA7
 PSPIE                             00000007
 PSPIF                             00000007
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 22
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 PSPIP                             00000007
 PSPMD                             00000007
 PSPMODE                           00000004
@@ -1267,6 +1038,12 @@ RA0                               00000000
 RA1                               00000001
 RA2                               00000002
 RA3                               00000003
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 19
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 RA4                               00000004
 RA5                               00000005
 RA6                               00000006
@@ -1295,12 +1072,6 @@ RC2IP                             00000005
 RC3                               00000003
 RC4                               00000004
 RC5                               00000005
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 23
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 RC6                               00000006
 RC7                               00000007
 RC8_9                             00000006
@@ -1326,6 +1097,12 @@ RD2                               00000002
 RD3                               00000003
 RD4                               00000004
 RD5                               00000005
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 20
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 RD6                               00000006
 RD7                               00000007
 RDPU                              00000007
@@ -1354,12 +1131,6 @@ RG1                               00000001
 RG2                               00000002
 RG3                               00000003
 RG4                               00000004
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 24
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 RG5                               00000005
 RH0                               00000000
 RH1                               00000001
@@ -1385,6 +1156,12 @@ RODIV2                            00000002
 RODIV3                            00000003
 ROON                              00000007
 ROSEL                             00000004
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 21
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 ROSSLP                            00000005
 RSEN                              00000001
 RTCC                              00000004
@@ -1413,17 +1190,10 @@ RX92                              00000006
 RX9D                              00000000
 RX9D1                             00000000
 RX9D2                             00000000
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 25
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 RXDTP                             00000005
 R_NOT_W                           00000002
 R_W                               00000002
 S                                 00000003
-SAD                               000001E4
 SBOREN                            00000006
 SCK1                              00000003
 SCK2                              00000006
@@ -1442,10 +1212,15 @@ SEN                               00000000
 SENDB                             00000003
 SENDB1                            00000003
 SENDB2                            00000003
-SLEEPY                            00000000
 SMP                               00000007
 SOSCEN                            00000003
 SOSCGO                            00000003
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 22
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 SOSCI                             00000001
 SOSCO                             00000000
 SOSCRUN                           00000006
@@ -1472,12 +1247,6 @@ SS1                               00000007
 SSP1ADD                           00000FC8
 SSP1BUF                           00000FC9
 SSP1CON1                          00000FC6
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 26
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 SSP1CON2                          00000FC5
 SSP1IE                            00000003
 SSP1IF                            00000003
@@ -1505,6 +1274,12 @@ SSPIF                             00000003
 SSPIP                             00000003
 SSPM0                             00000000
 SSPM1                             00000001
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 23
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 SSPM2                             00000002
 SSPM3                             00000003
 SSPOV                             00000006
@@ -1531,12 +1306,6 @@ T0CS                              00000005
 T0IE                              00000005
 T0IF                              00000002
 T0IP                              00000002
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 27
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 T0PS0                             00000000
 T0PS1                             00000001
 T0PS2                             00000002
@@ -1564,6 +1333,12 @@ T1GCON                            00000FAA
 T1GGO                             00000003
 T1GGO_NOT_T1DONE                  00000003
 T1GPOL                            00000006
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 24
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 T1GSPM                            00000004
 T1GSS0                            00000000
 T1GSS1                            00000001
@@ -1590,12 +1365,6 @@ T3GSS0                            00000000
 T3GSS1                            00000001
 T3GTM                             00000005
 T3GVAL                            00000002
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 28
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 T4CKPS0                           00000000
 T4CKPS1                           00000001
 T4CON                             00000F6B
@@ -1623,6 +1392,12 @@ T6CON                             00000F39
 T6OUTPS0                          00000003
 T6OUTPS1                          00000004
 T6OUTPS2                          00000005
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 25
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 T6OUTPS3                          00000006
 T7CKI                             00000004
 T7CKPS0                           00000004
@@ -1649,12 +1424,6 @@ TABLAT                            00000FF5
 TBLPTR                            00000FF6
 TBLPTRH                           00000FF7
 TBLPTRL                           00000FF6
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 29
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TBLPTRU                           00000FF8
 TGEN                              00000004
 TMR0                              00000FD6
@@ -1682,6 +1451,12 @@ TMR1CS1                           00000007
 TMR1GE                            00000007
 TMR1GIE                           00000002
 TMR1GIF                           00000002
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 26
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TMR1GIP                           00000002
 TMR1H                             00000FCF
 TMR1IE                            00000000
@@ -1708,12 +1483,6 @@ TMR3IE                            00000001
 TMR3IF                            00000001
 TMR3IP                            00000001
 TMR3L                             00000FB2
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 30
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TMR3MD                            00000003
 TMR3ON                            00000000
 TMR4                              00000F6D
@@ -1741,6 +1510,12 @@ TMR6IE                            00000002
 TMR6IF                            00000002
 TMR6IP                            00000002
 TMR6MD                            00000004
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 27
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TMR6ON                            00000002
 TMR7                              00000F3E
 TMR7CS0                           00000006
@@ -1767,12 +1542,6 @@ TOS                               00000FFD
 TOSH                              00000FFE
 TOSL                              00000FFD
 TOSU                              00000FFF
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 31
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TRIGSEL0                          00000006
 TRIGSEL1                          00000007
 TRISA                             00000F92
@@ -1800,6 +1569,12 @@ TRISC2                            00000002
 TRISC3                            00000003
 TRISC4                            00000004
 TRISC5                            00000005
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 28
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TRISC6                            00000006
 TRISC7                            00000007
 TRISD                             00000F95
@@ -1826,12 +1601,6 @@ TRISF2                            00000002
 TRISF3                            00000003
 TRISF4                            00000004
 TRISF5                            00000005
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 32
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TRISF6                            00000006
 TRISF7                            00000007
 TRISG                             00000F98
@@ -1859,6 +1628,12 @@ TRISJ5                            00000005
 TRISJ6                            00000006
 TRISJ7                            00000007
 TRMT                              00000001
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 29
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TRMT1                             00000001
 TRMT2                             00000001
 TUN0                              00000000
@@ -1867,7 +1642,6 @@ TUN2                              00000002
 TUN3                              00000003
 TUN4                              00000004
 TUN5                              00000005
-TWO_LIVES_LEFT                    00000200
 TX1                               00000006
 TX1IE                             00000004
 TX1IF                             00000004
@@ -1885,12 +1659,6 @@ TX9D1                             00000000
 TX9D2                             00000000
 TXCKP                             00000004
 TXD8                              00000000
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 33
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TXEN                              00000005
 TXEN1                             00000005
 TXEN2                             00000005
@@ -1919,6 +1687,12 @@ VDIRMAG                           00000007
 VNCFG                             00000003
 VREF_MINUS                        00000002
 VREF_PLUS                         00000003
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 30
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 W                                 00000000
 WAIT0                             00000004
 WAIT1                             00000005
@@ -1944,12 +1718,6 @@ _BOREN_NOSLP_2L                   000000FD
 _BOREN_OFF_2L                     000000F9
 _BOREN_ON_2L                      000000FB
 _BOREN_SBORDIS_2L                 000000FF
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 34
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 _BORPWR_HIGH_2L                   000000DF
 _BORPWR_LOW_2L                    0000009F
 _BORPWR_MEDIUM_2L                 000000BF
@@ -1978,6 +1746,12 @@ _CONFIG7L                         0030000C
 _CP0_OFF_5L                       000000FF
 _CP0_ON_5L                        000000FE
 _CP1_OFF_5L                       000000FF
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 31
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 _CP1_ON_5L                        000000FD
 _CP2_OFF_5L                       000000FF
 _CP2_ON_5L                        000000FB
@@ -2003,12 +1777,6 @@ _EASHFT_OFF_3L                    000000F7
 _EASHFT_ON_3L                     000000FF
 _EBRT0_OFF_7L                     000000FF
 _EBRT0_ON_7L                      000000FE
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 35
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 _EBRT1_OFF_7L                     000000FF
 _EBRT1_ON_7L                      000000FD
 _EBRT2_OFF_7L                     000000FF
@@ -2037,6 +1805,12 @@ _FOSC_EC3IO_1H                    000000F4
 _FOSC_EC3_1H                      000000F5
 _FOSC_HS1_1H                      000000F3
 _FOSC_HS2_1H                      000000F2
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 32
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 _FOSC_INTIO1_1H                   000000F9
 _FOSC_INTIO2_1H                   000000F8
 _FOSC_LP_1H                       000000F0
@@ -2062,12 +1836,6 @@ _MSSPMSK_MSK7_3H                  000000FF
 _PLLCFG_OFF_1H                    000000EF
 _PLLCFG_ON_1H                     000000FF
 _PWRTEN_OFF_2L                    000000FF
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 36
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 _PWRTEN_ON_2L                     000000FE
 _RETEN_OFF_1L                     000000FE
 _RETEN_ON_1L                      000000FF
@@ -2096,6 +1864,12 @@ _WDTPS_256_2H                     000000A3
 _WDTPS_262144_2H                  000000CB
 _WDTPS_2_2H                       00000087
 _WDTPS_32768_2H                   000000BF
+MPASM 5.81                      BALLGAME.ASM   2-17-2020  16:38:09         PAGE 33
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 _WDTPS_32_2H                      00000097
 _WDTPS_4096_2H                    000000B3
 _WDTPS_4_2H                       0000008B
@@ -2121,12 +1895,6 @@ _WRT6_OFF_6L                      000000FF
 _WRT6_ON_6L                       000000BF
 _WRT7_OFF_6L                      000000FF
 _WRT7_ON_6L                       0000007F
-MPASM 5.81                    TAMAGOTCHI.ASM   2-17-2020  17:39:34         PAGE 37
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 _WRTB_OFF_6H                      000000FF
 _WRTB_ON_6H                       000000BF
 _WRTC_OFF_6H                      000000FF
@@ -2136,28 +1904,6 @@ _WRTD_ON_6H                       0000007F
 _XINST_OFF_1L                     000000BF
 _XINST_ON_1L                      000000FF
 __18F87K22                        00000001
-__DEBUG                           
-__MPLAB_DEBUGGER_ICD3             1
-counter_happiness                 00000000
-counter_happiness_decrement       00000001
-counter_life                      00000003
-dch                               000001AC
-delay                             0000023A
-delay_1                           0000023E
-delay_2                           00000248
-delay_3                           00000252
-delay_count_1                     00000004
-delay_count_2                     00000005
-delay_count_3                     00000006
-finished                          00000258
-life_mode                         00000002
-myArray                           00000400
-nested_2                          00000244
-nested_3                          0000024E
-output_PRESS_A_TO_HATCH           00000000
-output_hatching_sequence          00000000
-output_starting_screen            00000000
-setup                             00000100
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed

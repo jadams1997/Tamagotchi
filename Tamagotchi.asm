@@ -1,8 +1,9 @@
 #include p18f87k22.inc
 
-    extern LCD_Setup, LCD_Send_Byte_D, LCD_shift, LCD_clear, LCD_custom_character_set_BABY
+    extern LCD_Setup, LCD_Send_Byte_D, LCD_shift, LCD_clear, LCD_custom_character_set_EGG
     extern Keyboard_Setup, Keyboard, FOOD, LEARN, DANCE, SLEEPY, BALL_GAME, output_starting_screen
     extern output_hatching_sequence, output_PRESS_A_TO_HATCH, FOOD_Setup
+    extern LCD_custom_character_set_MEDIUM
 	
 acs0                             udata_acs
 counter_happiness                res 1 
@@ -46,10 +47,7 @@ PRESS_A_TO_HATCH
 	call    output_starting_screen   ;if A is pressed, output starting screen 
 	call    delay
 	call    delay
-	call    output_hatching_sequence ;carry out hatching sequence 
-	call    delay
-	call    delay 
-	call    LCD_custom_character_set_BABY
+	call    output_hatching_sequence ;carry out hatching sequence 	
 	movlw   0xFF
 	movwf   counter_happiness_decrement ;set the counter_happiness_decrement to 255
 	movlw   0x64
@@ -59,7 +57,6 @@ PRESS_A_TO_HATCH
 	movlw	0x00
 	movwf   life_mode ;initialise the life mode at 0 for baby rabbit
 GAME_MODE
-	call    delay
 	movlw   0x00
 	movwf   Key_Pressed    ;reset Key_Pressed variable 
 	call    Keyboard     ;wait for keyboard input 
@@ -104,6 +101,7 @@ CHECK_F_PRESSED
 	movf    life_mode, W
 	call    FOOD; if F is pressed, go to FOOD.  Food returns new life_mode
 	movwf   life_mode 
+	bra     GAME_MODE
 dch	decfsz  counter_happiness_decrement
 	bra     GAME_MODE
 	movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter happiness by 1

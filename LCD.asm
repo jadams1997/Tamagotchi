@@ -3,6 +3,7 @@
     global  LCD_Setup, LCD_Write_Message, LCD_Send_Byte_D, LCD_shift, LCD_clear
     global  LCD_custom_character_set_BABY, LCD_custom_character_set_SMALL
     global  LCD_custom_character_set_MEDIUM, LCD_custom_character_set_LARGE
+    global  LCD_custom_character_set_EGG
 
 acs0    udata_acs   ; named variables in access ram
 LCD_cnt_l   res 1   ; reserve 1 byte for variable LCD_cnt_l

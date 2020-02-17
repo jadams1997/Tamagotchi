@@ -117,7 +117,7 @@ crack   movlw   b'11001001'
 	return 
 
 hatch_delay
-	movlw   0x99
+	movlw   0x20
 	movwf   delay_counter_h1
 delay_1       
 	decfsz  delay_counter_h1
@@ -125,14 +125,14 @@ delay_1
 	return
 	
 nested_2
-	movlw   0x99
+	movlw   0x20
 	movwf   delay_counter_h2
 delay_2	decfsz  delay_counter_h2
 	bra     nested_3
 	bra     delay_1
 
 nested_3
-	movlw   0x99
+	movlw   0x20
 	movwf   delay_counter_h3
 delay_3
 	decfsz  delay_counter_h3

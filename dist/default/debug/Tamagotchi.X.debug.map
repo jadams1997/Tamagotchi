@@ -1,5 +1,5 @@
 MPLINK 5.09, LINKER
-Linker Map File - Created Mon Feb 17 15:09:46 2020
+Linker Map File - Created Mon Feb 17 17:39:36 2020
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
@@ -13,11 +13,11 @@ Linker Map File - Created Mon Feb 17 15:09:46 2020
                     learn       code   0x000044    program   0x000002
                     dance       code   0x000046    program   0x000002
                      ball       code   0x000048    program   0x000002
-                   .org_1       code   0x000100    program   0x000162
-                      LCD       code   0x000262    program   0x000a12
-                     Food       code   0x000c74    program   0x0003c6
-                     main       code   0x00103a    program   0x00013a
-                    Hatch       code   0x001174    program   0x00012c
+                   .org_1       code   0x000100    program   0x000158
+                      LCD       code   0x000258    program   0x000a12
+                     Food       code   0x000c6a    program   0x0003e8
+                     main       code   0x001052    program   0x00013a
+                    Hatch       code   0x00118c    program   0x00012c
 .config_300000_BUILD/DEFAULT/DEBUG/CONFIG.O    romdata   0x300000    program   0x000001
 .config_300001_BUILD/DEFAULT/DEBUG/CONFIG.O    romdata   0x300001    program   0x000001
 .config_300002_BUILD/DEFAULT/DEBUG/CONFIG.O    romdata   0x300002    program   0x000001
@@ -40,156 +40,156 @@ Linker Map File - Created Mon Feb 17 15:09:46 2020
                                Start         End      
                            ---------   ---------      
                             0x000000    0x000049      
-                            0x000100    0x00129f      
+                            0x000100    0x0012b7      
                             0x300000    0x300006      
                             0x300008    0x30000d      
-            4599 out of 132120 program addresses used, program memory utilization is 3%
+            4623 out of 132120 program addresses used, program memory utilization is 3%
 
 
 
                               Symbols - Sorted by Name
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
-                     BABY   0x0004ea    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                     BABY   0x0004e0    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
                 BALL_GAME   0x000048    program     extern H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-          CHECK_A_PRESSED   0x000168    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-          CHECK_B_PRESSED   0x000170    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-          CHECK_C_PRESSED   0x00017e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-          CHECK_D_PRESSED   0x00018c    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-          CHECK_E_PRESSED   0x00019a    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-          CHECK_F_PRESSED   0x0001a8    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-             CHECK_GROWTH   0x000dc8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-          CHECK_LAST_LIFE   0x000202    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+          CHECK_A_PRESSED   0x00015c    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+          CHECK_B_PRESSED   0x000164    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+          CHECK_C_PRESSED   0x000172    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+          CHECK_D_PRESSED   0x000180    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+          CHECK_E_PRESSED   0x00018e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+          CHECK_F_PRESSED   0x00019c    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+             CHECK_GROWTH   0x000de0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+          CHECK_LAST_LIFE   0x0001f8    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
                     DANCE   0x000046    program     extern H:\Tamagotchi\Tamagotchi.X\dance.asm
-                    DEATH   0x000222    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                      EGG   0x00036a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                     FOOD   0x000cd4    program     extern H:\Tamagotchi\Tamagotchi.X\food.asm
-             FOOD_ANIMATE   0x000cda    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-               FOOD_Setup   0x000c74    program     extern H:\Tamagotchi\Tamagotchi.X\food.asm
-                GAME_MODE   0x00015a    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                    GHOST   0x00096c    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                   GROWTH   0x000de4    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-           GROWTH_ANIMATE   0x000de8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                HAPPINESS   0x0001c8    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                    HAPPY   0x0001e2    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                    HEART   0x00042a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                 Keyboard   0x001046    program     extern H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-           Keyboard_Setup   0x00103a    program     extern H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-             LARGE_RABBIT   0x000bb2    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-               LCD_Enable   0x000300    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-         LCD_Loop_message   0x0002b6    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-          LCD_Send_Byte_D   0x0002de    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-          LCD_Send_Byte_I   0x0002c2    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                LCD_Setup   0x000262    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-        LCD_Write_Message   0x0002b4    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                LCD_clear   0x000350    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-LCD_custom_character_set_BABY   0x00096c    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-LCD_custom_character_set_EGG   0x00036a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-LCD_custom_character_set_LARGE   0x000bb2    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-LCD_custom_character_set_MEDIUM   0x000af0    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-LCD_custom_character_set_SMALL   0x000a2e    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                LCD_delay   0x000346    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-             LCD_delay_ms   0x000324    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-           LCD_delay_x4us   0x000332    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                LCD_shift   0x00035e    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                    DEATH   0x000218    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                      EGG   0x000360    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                     FOOD   0x000cca    program     extern H:\Tamagotchi\Tamagotchi.X\food.asm
+             FOOD_ANIMATE   0x000cd0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+               FOOD_Setup   0x000c6a    program     extern H:\Tamagotchi\Tamagotchi.X\food.asm
+                GAME_MODE   0x000152    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                    GHOST   0x000962    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                   GROWTH   0x000dfc    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+           GROWTH_ANIMATE   0x000e00    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                HAPPINESS   0x0001be    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                    HAPPY   0x0001d8    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                    HEART   0x000420    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                 Keyboard   0x00105e    program     extern H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+           Keyboard_Setup   0x001052    program     extern H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+             LARGE_RABBIT   0x000ba8    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+               LCD_Enable   0x0002f6    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+         LCD_Loop_message   0x0002ac    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+          LCD_Send_Byte_D   0x0002d4    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+          LCD_Send_Byte_I   0x0002b8    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                LCD_Setup   0x000258    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+        LCD_Write_Message   0x0002aa    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                LCD_clear   0x000346    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+LCD_custom_character_set_BABY   0x000962    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+LCD_custom_character_set_EGG   0x000360    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+LCD_custom_character_set_LARGE   0x000ba8    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+LCD_custom_character_set_MEDIUM   0x000ae6    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+LCD_custom_character_set_SMALL   0x000a24    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                LCD_delay   0x00033c    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+             LCD_delay_ms   0x00031a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+           LCD_delay_x4us   0x000328    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                LCD_shift   0x000354    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
                     LEARN   0x000044    program     extern H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     LIFE   0x0001f6    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                     LIFE   0x0001ec    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
                    Line_0   0x000030    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
                      MAIN   0x000114    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-            MEDIUM_RABBIT   0x000af0    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                     MOON   0x00066a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                  NEUTRAL   0x0001e8    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  NEUTRAL   0x0007ea    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                 NEW_FORM   0x000fd0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-            ONE_LIFE_LEFT   0x000216    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+            MEDIUM_RABBIT   0x000ae6    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                     MOON   0x000660    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                  NEUTRAL   0x0001de    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  NEUTRAL   0x0007e0    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                 NEW_FORM   0x000fe8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+            ONE_LIFE_LEFT   0x00020c    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
          PRESS_A_TO_HATCH   0x00011e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                      SAD   0x0001ee    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                      SAD   0x0008aa    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                      SAD   0x0001e4    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                      SAD   0x0008a0    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
                    SLEEPY   0x000040    program     extern H:\Tamagotchi\Tamagotchi.X\sleepy.asm
-             SMALL_RABBIT   0x000a2e    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                   SMILEY   0x00072a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                      SUN   0x0005aa    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-           TWO_LIVES_LEFT   0x00020a    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+             SMALL_RABBIT   0x000a24    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                   SMILEY   0x000720    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                      SUN   0x0005a0    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+           TWO_LIVES_LEFT   0x000200    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
                blank_line   0x000022    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  check_1   0x001070    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                 check_10   0x000dc8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  check_2   0x00107a    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                 check_25   0x000dd0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  check_3   0x001084    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                  check_5   0x0010ac    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                 check_50   0x000dd8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  check_6   0x0010b6    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                  check_7   0x0010c0    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-             check_medium   0x000fd8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                   column   0x00104c    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_11   0x0010da    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_12   0x0010e4    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_13   0x0010ee    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_14   0x0010f8    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_21   0x001104    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_22   0x00110e    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_23   0x001118    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_24   0x001122    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_31   0x00112e    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_32   0x001138    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_33   0x001142    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_34   0x00114c    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_41   0x001152    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_42   0x00115c    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_43   0x001166    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_44   0x001170    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                    crack   0x001238    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                      dch   0x0001b6    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                   decode   0x0010d0    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                    delay   0x0010ca    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                    delay   0x000244    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  delay_1   0x001020    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  delay_1   0x000248    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  delay_1   0x001286    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                  delay_2   0x001290    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                  delay_2   0x00102a    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  delay_2   0x000252    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  delay_3   0x001034    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  delay_3   0x00025c    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  delay_3   0x00129a    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                  dynamic   0x0011d4    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                egg_blink   0x001214    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                 finished   0x000262    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  check_1   0x001088    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                  check_2   0x001092    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                  check_2   0x000de0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  check_3   0x00109c    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                  check_4   0x000de8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  check_5   0x0010c4    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                  check_6   0x000df0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  check_6   0x0010ce    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                  check_7   0x0010d8    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+             check_medium   0x000ff0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                   column   0x001064    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_11   0x0010f2    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_12   0x0010fc    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_13   0x001106    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_14   0x001110    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_21   0x00111c    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_22   0x001126    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_23   0x001130    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_24   0x00113a    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_31   0x001146    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_32   0x001150    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_33   0x00115a    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_34   0x001164    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_41   0x00116a    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_42   0x001174    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_43   0x00117e    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_44   0x001188    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                    crack   0x001250    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                      dch   0x0001ac    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                   decode   0x0010e8    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                    delay   0x0010e2    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                    delay   0x00023a    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  delay_1   0x001038    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  delay_1   0x00023e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  delay_1   0x00129e    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                  delay_2   0x0012a8    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                  delay_2   0x001042    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  delay_2   0x000248    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  delay_3   0x00104c    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  delay_3   0x000252    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  delay_3   0x0012b2    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                  dynamic   0x0011ec    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                egg_blink   0x00122c    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                 finished   0x000258    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
              flash_line_1   0x000006    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
              flash_line_2   0x000014    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  flashes   0x000f78    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-               food_delay   0x00101c    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-              hatch_delay   0x001282    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                    large   0x001008    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                   lcdlp1   0x000348    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                   lcdlp2   0x000326    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                     loop   0x001188    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                    loopb   0x000cc6    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                   loopf1   0x000c8a    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                   loopf2   0x000ca8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                   medium   0x000ff4    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                 nested_2   0x001026    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                 nested_2   0x00128c    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                 nested_2   0x00024e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                 nested_3   0x000258    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                 nested_3   0x001030    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                 nested_3   0x001296    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-  output_PRESS_A_TO_HATCH   0x001174    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
-             output_blank   0x000cb6    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-           output_flash_1   0x000c7a    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-           output_flash_2   0x000c98    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
- output_hatching_sequence   0x0011cc    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
-   output_starting_screen   0x001196    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
-              read_column   0x0010a2    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                 read_row   0x001066    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                    row_1   0x0010fc    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                    row_2   0x001126    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                    row_3   0x001150    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                  flashes   0x000f90    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+               food_delay   0x001034    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+              hatch_delay   0x00129a    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                    large   0x001020    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                   lcdlp1   0x00033e    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                   lcdlp2   0x00031c    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                     loop   0x0011a0    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                    loopb   0x000cbc    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                   loopf1   0x000c80    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                   loopf2   0x000c9e    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                   medium   0x00100c    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                 nested_2   0x00103e    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                 nested_2   0x0012a4    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                 nested_2   0x000244    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                 nested_3   0x00024e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                 nested_3   0x001048    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                 nested_3   0x0012ae    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+  output_PRESS_A_TO_HATCH   0x00118c    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
+             output_blank   0x000cac    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+           output_flash_1   0x000c70    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+           output_flash_2   0x000c8e    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+ output_hatching_sequence   0x0011e4    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
+   output_starting_screen   0x0011ae    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
+              read_column   0x0010ba    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                 read_row   0x00107e    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                    row_1   0x001114    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                    row_2   0x00113e    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                    row_3   0x001168    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
                     setup   0x000100    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-             setup_column   0x00108e    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                setup_row   0x001052    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                    small   0x000fe0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                    start   0x00103a    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+             setup_column   0x0010a6    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                setup_row   0x00106a    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                    small   0x000ff8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                    start   0x001052    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
                    symbol   0x000042    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
               Key_Pressed   0x000480       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
                 LCD_cnt_h   0x000001       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
@@ -238,135 +238,135 @@ counter_happiness_decrement   0x000006       data     static H:\Tamagotchi\Tamag
                     setup   0x000100    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
                      MAIN   0x000114    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
          PRESS_A_TO_HATCH   0x00011e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                GAME_MODE   0x00015a    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-          CHECK_A_PRESSED   0x000168    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-          CHECK_B_PRESSED   0x000170    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-          CHECK_C_PRESSED   0x00017e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-          CHECK_D_PRESSED   0x00018c    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-          CHECK_E_PRESSED   0x00019a    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-          CHECK_F_PRESSED   0x0001a8    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                      dch   0x0001b6    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                HAPPINESS   0x0001c8    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                    HAPPY   0x0001e2    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  NEUTRAL   0x0001e8    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                      SAD   0x0001ee    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                     LIFE   0x0001f6    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-          CHECK_LAST_LIFE   0x000202    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-           TWO_LIVES_LEFT   0x00020a    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-            ONE_LIFE_LEFT   0x000216    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                    DEATH   0x000222    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                    delay   0x000244    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  delay_1   0x000248    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                 nested_2   0x00024e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  delay_2   0x000252    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                 nested_3   0x000258    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  delay_3   0x00025c    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                LCD_Setup   0x000262    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                 finished   0x000262    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-        LCD_Write_Message   0x0002b4    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-         LCD_Loop_message   0x0002b6    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-          LCD_Send_Byte_I   0x0002c2    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-          LCD_Send_Byte_D   0x0002de    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-               LCD_Enable   0x000300    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-             LCD_delay_ms   0x000324    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                   lcdlp2   0x000326    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-           LCD_delay_x4us   0x000332    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                LCD_delay   0x000346    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                   lcdlp1   0x000348    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                LCD_clear   0x000350    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                LCD_shift   0x00035e    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-LCD_custom_character_set_EGG   0x00036a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                      EGG   0x00036a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                    HEART   0x00042a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                     BABY   0x0004ea    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                      SUN   0x0005aa    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                     MOON   0x00066a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                   SMILEY   0x00072a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                  NEUTRAL   0x0007ea    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                      SAD   0x0008aa    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-LCD_custom_character_set_BABY   0x00096c    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                    GHOST   0x00096c    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-             SMALL_RABBIT   0x000a2e    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-LCD_custom_character_set_SMALL   0x000a2e    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-LCD_custom_character_set_MEDIUM   0x000af0    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-            MEDIUM_RABBIT   0x000af0    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-LCD_custom_character_set_LARGE   0x000bb2    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-             LARGE_RABBIT   0x000bb2    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-               FOOD_Setup   0x000c74    program     extern H:\Tamagotchi\Tamagotchi.X\food.asm
-           output_flash_1   0x000c7a    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                   loopf1   0x000c8a    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-           output_flash_2   0x000c98    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                   loopf2   0x000ca8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-             output_blank   0x000cb6    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                    loopb   0x000cc6    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                     FOOD   0x000cd4    program     extern H:\Tamagotchi\Tamagotchi.X\food.asm
-             FOOD_ANIMATE   0x000cda    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                 check_10   0x000dc8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-             CHECK_GROWTH   0x000dc8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                 check_25   0x000dd0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                 check_50   0x000dd8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                   GROWTH   0x000de4    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-           GROWTH_ANIMATE   0x000de8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  flashes   0x000f78    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                 NEW_FORM   0x000fd0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-             check_medium   0x000fd8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                    small   0x000fe0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                   medium   0x000ff4    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                    large   0x001008    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-               food_delay   0x00101c    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  delay_1   0x001020    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                 nested_2   0x001026    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  delay_2   0x00102a    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                 nested_3   0x001030    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  delay_3   0x001034    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                    start   0x00103a    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-           Keyboard_Setup   0x00103a    program     extern H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                 Keyboard   0x001046    program     extern H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                   column   0x00104c    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                setup_row   0x001052    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                 read_row   0x001066    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                  check_1   0x001070    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                  check_2   0x00107a    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                  check_3   0x001084    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-             setup_column   0x00108e    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-              read_column   0x0010a2    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                  check_5   0x0010ac    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                  check_6   0x0010b6    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                  check_7   0x0010c0    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                    delay   0x0010ca    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                   decode   0x0010d0    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_11   0x0010da    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_12   0x0010e4    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_13   0x0010ee    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_14   0x0010f8    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                    row_1   0x0010fc    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_21   0x001104    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_22   0x00110e    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_23   0x001118    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_24   0x001122    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                    row_2   0x001126    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_31   0x00112e    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_32   0x001138    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_33   0x001142    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_34   0x00114c    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                    row_3   0x001150    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_41   0x001152    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_42   0x00115c    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_43   0x001166    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-                column_44   0x001170    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
-  output_PRESS_A_TO_HATCH   0x001174    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                     loop   0x001188    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-   output_starting_screen   0x001196    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
- output_hatching_sequence   0x0011cc    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                  dynamic   0x0011d4    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                egg_blink   0x001214    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                    crack   0x001238    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-              hatch_delay   0x001282    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                  delay_1   0x001286    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                 nested_2   0x00128c    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                  delay_2   0x001290    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                 nested_3   0x001296    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                  delay_3   0x00129a    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                GAME_MODE   0x000152    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+          CHECK_A_PRESSED   0x00015c    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+          CHECK_B_PRESSED   0x000164    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+          CHECK_C_PRESSED   0x000172    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+          CHECK_D_PRESSED   0x000180    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+          CHECK_E_PRESSED   0x00018e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+          CHECK_F_PRESSED   0x00019c    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                      dch   0x0001ac    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                HAPPINESS   0x0001be    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                    HAPPY   0x0001d8    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  NEUTRAL   0x0001de    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                      SAD   0x0001e4    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                     LIFE   0x0001ec    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+          CHECK_LAST_LIFE   0x0001f8    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+           TWO_LIVES_LEFT   0x000200    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+            ONE_LIFE_LEFT   0x00020c    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                    DEATH   0x000218    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                    delay   0x00023a    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  delay_1   0x00023e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                 nested_2   0x000244    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  delay_2   0x000248    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                 nested_3   0x00024e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  delay_3   0x000252    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                LCD_Setup   0x000258    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                 finished   0x000258    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+        LCD_Write_Message   0x0002aa    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+         LCD_Loop_message   0x0002ac    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+          LCD_Send_Byte_I   0x0002b8    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+          LCD_Send_Byte_D   0x0002d4    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+               LCD_Enable   0x0002f6    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+             LCD_delay_ms   0x00031a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                   lcdlp2   0x00031c    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+           LCD_delay_x4us   0x000328    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                LCD_delay   0x00033c    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                   lcdlp1   0x00033e    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                LCD_clear   0x000346    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                LCD_shift   0x000354    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+LCD_custom_character_set_EGG   0x000360    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                      EGG   0x000360    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                    HEART   0x000420    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                     BABY   0x0004e0    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                      SUN   0x0005a0    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                     MOON   0x000660    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                   SMILEY   0x000720    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                  NEUTRAL   0x0007e0    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                      SAD   0x0008a0    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+LCD_custom_character_set_BABY   0x000962    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                    GHOST   0x000962    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+             SMALL_RABBIT   0x000a24    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+LCD_custom_character_set_SMALL   0x000a24    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+LCD_custom_character_set_MEDIUM   0x000ae6    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+            MEDIUM_RABBIT   0x000ae6    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+LCD_custom_character_set_LARGE   0x000ba8    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+             LARGE_RABBIT   0x000ba8    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+               FOOD_Setup   0x000c6a    program     extern H:\Tamagotchi\Tamagotchi.X\food.asm
+           output_flash_1   0x000c70    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                   loopf1   0x000c80    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+           output_flash_2   0x000c8e    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                   loopf2   0x000c9e    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+             output_blank   0x000cac    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                    loopb   0x000cbc    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                     FOOD   0x000cca    program     extern H:\Tamagotchi\Tamagotchi.X\food.asm
+             FOOD_ANIMATE   0x000cd0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+             CHECK_GROWTH   0x000de0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  check_2   0x000de0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  check_4   0x000de8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  check_6   0x000df0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                   GROWTH   0x000dfc    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+           GROWTH_ANIMATE   0x000e00    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  flashes   0x000f90    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                 NEW_FORM   0x000fe8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+             check_medium   0x000ff0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                    small   0x000ff8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                   medium   0x00100c    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                    large   0x001020    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+               food_delay   0x001034    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  delay_1   0x001038    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                 nested_2   0x00103e    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  delay_2   0x001042    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                 nested_3   0x001048    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  delay_3   0x00104c    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                    start   0x001052    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+           Keyboard_Setup   0x001052    program     extern H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                 Keyboard   0x00105e    program     extern H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                   column   0x001064    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                setup_row   0x00106a    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                 read_row   0x00107e    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                  check_1   0x001088    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                  check_2   0x001092    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                  check_3   0x00109c    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+             setup_column   0x0010a6    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+              read_column   0x0010ba    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                  check_5   0x0010c4    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                  check_6   0x0010ce    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                  check_7   0x0010d8    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                    delay   0x0010e2    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                   decode   0x0010e8    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_11   0x0010f2    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_12   0x0010fc    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_13   0x001106    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_14   0x001110    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                    row_1   0x001114    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_21   0x00111c    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_22   0x001126    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_23   0x001130    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_24   0x00113a    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                    row_2   0x00113e    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_31   0x001146    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_32   0x001150    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_33   0x00115a    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_34   0x001164    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                    row_3   0x001168    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_41   0x00116a    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_42   0x001174    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_43   0x00117e    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+                column_44   0x001188    program     static H:\Tamagotchi\Tamagotchi.X\Keyboard.asm
+  output_PRESS_A_TO_HATCH   0x00118c    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                     loop   0x0011a0    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+   output_starting_screen   0x0011ae    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
+ output_hatching_sequence   0x0011e4    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                  dynamic   0x0011ec    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                egg_blink   0x00122c    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                    crack   0x001250    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+              hatch_delay   0x00129a    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                  delay_1   0x00129e    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                 nested_2   0x0012a4    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                  delay_2   0x0012a8    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                 nested_3   0x0012ae    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                  delay_3   0x0012b2    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
                 LCD_cnt_l   0x000000       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
                 LCD_cnt_h   0x000001       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
                LCD_cnt_ms   0x000002       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm

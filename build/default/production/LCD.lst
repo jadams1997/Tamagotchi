@@ -1,4 +1,4 @@
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE  1
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -16,478 +16,1086 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00009 
                       02986         LIST
                       00002 
-  0000                00003     extern LCD_Send_Byte_D, LCD_shift, LCD_clear, LCD_custom_character_set_BABY
-  0000                00004     extern LCD_custom_character_set_SMALL, LCD_custom_character_set_MEDIUM
-  0000                00005     extern LCD_custom_character_set_LARGE
-  0000                00006     global FOOD, FOOD_Setup
+  0000                00003     global  LCD_Setup, LCD_Write_Message, LCD_Send_Byte_D, LCD_shift, LCD_clear
+  0000                00004     global  LCD_custom_character_set_BABY, LCD_custom_character_set_SMALL
+  0000                00005     global  LCD_custom_character_set_MEDIUM, LCD_custom_character_set_LARGE
+  0000                00006     global  LCD_custom_character_set_EGG
                       00007 
-                      00008 
-                      00009 acs0                udata_acs
-000000                00010 lifemode_food       res 1
-000001                00011 delay_counter_f1    res 1
-000002                00012 delay_counter_f2    res 1
-000003                00013 delay_counter_f3    res 1
-000004                00014 flash_counter       res 1
-000005                00015 counter_flash_1     res 1
-000006                00016 counter_flash_2     res 1
-000007                00017 counter_blank       res 1 
-000008                00018 food_counter        res 1
+                      00008 acs0    udata_acs   ; named variables in access ram
+000000                00009 LCD_cnt_l   res 1   ; reserve 1 byte for variable LCD_cnt_l
+000001                00010 LCD_cnt_h   res 1   ; reserve 1 byte for variable LCD_cnt_h
+000002                00011 LCD_cnt_ms  res 1   ; reserve 1 byte for ms counter
+000003                00012 LCD_tmp     res 1   ; reserve 1 byte for temporary use
+000004                00013 LCD_counter res 1   ; reserve 1 byte for counting through nessage
+  0005                00014         constant    LCD_E=5     ; LCD enable bit
+  0004                00015         constant    LCD_RS=4    ; LCD register select bit
+                      00016 
+                      00017  
+                      00018 LCD     code
                       00019     
-                      00020 fdata code
-                      00021  
-000000 202A 202A 202A 00022 flash_line_1    data        "* * * * * * *"
-       202A 202A 202A 
-       002A 
-  000D                00023                 constant    flash_bytes_l=.13   
-00000E 2A20 2A20 2A20 00024 flash_line_2    data        " * * * * * * "
-       2A20 2A20 2A20 
-       0020 
-  000D                00025                 constant    flash_bytes_2=.13
-00001C 2020 2020 2020 00026 blank_line      data        "             "
-       2020 2020 2020 
-       0020 
-  000D                00027                 constant    blank_bytes= .13
-                      00028         
-                      00029 Food code
-                      00030 
-000000                00031 FOOD_Setup 
-000000 0E00           00032         movlw   0x00
-000002 6E??           00033         movwf   food_counter
-000004 0012           00034         return
-                      00035 
-000006                00036 output_flash_1
-000006 0E??           00037         movlw   upper(flash_line_1)     ; address of data in PM
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE  2
+000000                00020 LCD_Setup
+000000 6A8A           00021         clrf    LATB
+000002 0EC0           00022         movlw   b'11000000'         ; RB0:5 all outputs
+000004 6E93           00023         movwf   TRISB
+000006 0E28           00024         movlw   .40
+000008 EC?? F???      00025         call    LCD_delay_ms    ; wait 40ms for LCD to start up properly
+00000C 0E30           00026         movlw   b'00110000'     ; Function set 4-bit
+00000E EC?? F???      00027         call    LCD_Send_Byte_I
+000012 0E0A           00028         movlw   .10             ; wait 40us
+000014 EC?? F???      00029         call    LCD_delay_x4us
+000018 0E28           00030         movlw   b'00101000'     ; 2 line display 5x8 dot characters
+00001A EC?? F???      00031         call    LCD_Send_Byte_I
+00001E 0E0A           00032         movlw   .10             ; wait 40us
+000020 EC?? F???      00033         call    LCD_delay_x4us
+000024 0E28           00034         movlw   b'00101000'     ; repeat, 2 line display 5x8 dot characters
+000026 EC?? F???      00035         call    LCD_Send_Byte_I
+00002A 0E0A           00036         movlw   .10             ; wait 40us
+00002C EC?? F???      00037         call    LCD_delay_x4us
+000030 0E0C           00038         movlw   b'00001100'     ; display on, cursor on, blinking on
+000032 EC?? F???      00039         call    LCD_Send_Byte_I
+000036 0E0A           00040         movlw   .10             ; wait 40us
+000038 EC?? F???      00041         call    LCD_delay_x4us  ;movlw  b'00000001'     ; display clear
+00003C EC?? F???      00042         call    LCD_clear ;call LCD_Send_Byte_I
+000040 0E06           00043         movlw   b'00000110'     ; entry mode incr by 1 no shift
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000008 6EF8           00038         movwf   TBLPTRU         ; load upper bits to TBLPTRU
-00000A 0E??           00039         movlw   high(flash_line_1)      ; address of data in PM
-00000C 6EF7           00040         movwf   TBLPTRH         ; load high byte to TBLPTRH
-00000E 0E??           00041         movlw   low(flash_line_1)       ; address of data in PM
-000010 6EF6           00042         movwf   TBLPTRL         ; load low byte to TBLPTRL
-000012 0E0D           00043         movlw   flash_bytes_l   ; bytes to read
-000014 6E??           00044         movwf   counter_flash_1 ; our counter register
-000016 0009           00045 loopf1  tblrd*+                 ; one byte from PM to TABLAT, increment TBLPRT
-000018 50F5           00046         movf    TABLAT, w
-00001A EC?? F???      00047         call    LCD_Send_Byte_D
-00001E 2E??           00048         decfsz  counter_flash_1 ; count down to zero
-000020 D???           00049         bra     loopf1
-000022 0012           00050         return  
-                      00051         
-000024                00052 output_flash_2
-000024 0E??           00053         movlw   upper(flash_line_2)     ; address of data in PM
-000026 6EF8           00054         movwf   TBLPTRU         ; load upper bits to TBLPTRU
-000028 0E??           00055         movlw   high(flash_line_2)      ; address of data in PM
-00002A 6EF7           00056         movwf   TBLPTRH         ; load high byte to TBLPTRH
-00002C 0E??           00057         movlw   low(flash_line_2)       ; address of data in PM
-00002E 6EF6           00058         movwf   TBLPTRL         ; load low byte to TBLPTRL
-000030 0E0D           00059         movlw   flash_bytes_2   ; bytes to read
-000032 6E??           00060         movwf   counter_flash_2  ; our counter register
-000034 0009           00061 loopf2  tblrd*+                 ; one byte from PM to TABLAT, increment TBLPRT
-000036 50F5           00062         movf    TABLAT, w
-000038 EC?? F???      00063         call    LCD_Send_Byte_D
-00003C 2E??           00064         decfsz  counter_flash_2 ; count down to zero
-00003E D???           00065         bra     loopf2
-000040 0012           00066         return  
-                      00067  
-000042                00068 output_blank
-000042 0E??           00069         movlw   upper(blank_line)       ; address of data in PM
-000044 6EF8           00070         movwf   TBLPTRU         ; load upper bits to TBLPTRU
-000046 0E??           00071         movlw   high(blank_line)        ; address of data in PM
-000048 6EF7           00072         movwf   TBLPTRH         ; load high byte to TBLPTRH
-00004A 0E??           00073         movlw   low(blank_line) ; address of data in PM
-00004C 6EF6           00074         movwf   TBLPTRL         ; load low byte to TBLPTRL
-00004E 0E0D           00075         movlw   blank_bytes     ; bytes to read
-000050 6E??           00076         movwf   counter_blank   ; our counter register
-000052 0009           00077 loopb   tblrd*+                 ; one byte from PM to TABLAT, increment TBLPRT
-000054 50F5           00078         movf    TABLAT, w
-000056 EC?? F???      00079         call    LCD_Send_Byte_D
-00005A 2E??           00080         decfsz  counter_blank   ; count down to zero
-00005C D???           00081         bra     loopb
-00005E 0012           00082         return  
-                      00083         
-                      00084         
-                      00085         
-                      00086         
-                      00087         
-000060                00088 FOOD 
-000060 6E??           00089         movwf   lifemode_food
-000062 0E01           00090         movlw   0x01
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE  3
+000042 EC?? F???      00044         call    LCD_Send_Byte_I
+000046 0E0A           00045         movlw   .10             ; wait 40us
+000048 EC?? F???      00046         call    LCD_delay_x4us
+00004C EC?? F???      00047         call    LCD_custom_character_set_EGG
+000050 0012           00048         return
+                      00049 
+000052                00050 LCD_Write_Message           ; Message stored at FSR2, length stored in W
+000052 6E??           00051         movwf   LCD_counter
+000054                00052 LCD_Loop_message
+000054 50EE           00053         movf    POSTINC0, W
+000056 EC?? F???      00054         call    LCD_Send_Byte_D
+00005A 2E??           00055         decfsz  LCD_counter
+00005C D???           00056         bra     LCD_Loop_message
+00005E 0012           00057         return
+                      00058 
+000060                00059 LCD_Send_Byte_I             ; Transmits byte stored in W to instruction reg
+000060 6E??           00060         movwf   LCD_tmp
+000062 38??           00061         swapf   LCD_tmp,W   ; swap nibbles, high nibble goes first
+000064 0B0F           00062         andlw   0x0f        ; select just low nibble
+000066 6E8A           00063         movwf   LATB        ; output data bits to LCD
+000068 988A           00064         bcf     LATB, LCD_RS    ; Instruction write clear RS bit
+00006A EC?? F???      00065         call    LCD_Enable  ; Pulse enable Bit 
+00006E 50??           00066         movf    LCD_tmp,W   ; swap nibbles, now do low nibble
+000070 0B0F           00067         andlw   0x0f        ; select just low nibble
+000072 6E8A           00068         movwf   LATB        ; output data bits to LCD
+000074 988A           00069         bcf     LATB, LCD_RS    ; Instruction write clear RS bit
+000076 EC?? F???      00070         call    LCD_Enable  ; Pulse enable Bit 
+00007A 0012           00071         return
+                      00072 
+00007C                00073 LCD_Send_Byte_D             ; Transmits byte stored in W to data reg
+00007C 6E??           00074         movwf   LCD_tmp
+00007E 38??           00075         swapf   LCD_tmp,W   ; swap nibbles, high nibble goes first
+000080 0B0F           00076         andlw   0x0f        ; select just low nibble
+000082 6E8A           00077         movwf   LATB        ; output data bits to LCD
+000084 888A           00078         bsf     LATB, LCD_RS    ; Data write set RS bit
+000086 EC?? F???      00079         call    LCD_Enable  ; Pulse enable Bit 
+00008A 50??           00080         movf    LCD_tmp,W   ; swap nibbles, now do low nibble
+00008C 0B0F           00081         andlw   0x0f        ; select just low nibble
+00008E 6E8A           00082         movwf   LATB        ; output data bits to LCD
+000090 888A           00083         bsf     LATB, LCD_RS    ; Data write set RS bit     
+000092 EC?? F???      00084         call    LCD_Enable  ; Pulse enable Bit 
+000096 0E0A           00085         movlw   .10         ; delay 40us
+000098 EC?? F???      00086         call    LCD_delay_x4us
+00009C 0012           00087         return
+                      00088 
+00009E                00089 LCD_Enable          ; pulse enable bit LCD_E for 500ns
+00009E 0000           00090         nop
+0000A0 0000           00091         nop
+0000A2 0000           00092         nop
+0000A4 0000           00093         nop
+0000A6 0000           00094         nop
+0000A8 0000           00095         nop
+0000AA 0000           00096         nop
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000064 2600           00091         addwf   food_counter, 1
-000066                00092 FOOD_ANIMATE
-000066 0E85           00093         movlw   b'10000101'
-000068 EC?? F???      00094         call    LCD_shift 
-00006C 0E27           00095         movlw   0x27
-00006E EC?? F???      00096         call    LCD_Send_Byte_D
-000072 EC?? F???      00097         call    food_delay
-000076 0E85           00098         movlw   b'10000101'
-000078 EC?? F???      00099         call    LCD_shift
-00007C 0E2C           00100         movlw   0x2C
-00007E EC?? F???      00101         call    LCD_Send_Byte_D
-000082 EC?? F???      00102         call    food_delay
-000086 0E85           00103         movlw   b'10000101'
-000088 EC?? F???      00104         call    LCD_shift
-00008C 0E20           00105         movlw   ' '
-00008E EC?? F???      00106         call    LCD_Send_Byte_D
-000092 0EC5           00107         movlw   b'11000101'
-000094 EC?? F???      00108         call    LCD_shift 
-000098 0E27           00109         movlw   0x27
-00009A EC?? F???      00110         call    LCD_Send_Byte_D
-00009E EC?? F???      00111         call    food_delay
-0000A2 0EC5           00112         movlw   b'11000101'
-0000A4 EC?? F???      00113         call    LCD_shift
-0000A8 0E2C           00114         movlw   0x2C
-0000AA EC?? F???      00115         call    LCD_Send_Byte_D
-0000AE EC?? F???      00116         call    food_delay  ;food dropped
-0000B2 0EC9           00117         movlw   b'11001001'
-0000B4 EC?? F???      00118         call    LCD_shift 
-0000B8 0E20           00119         movlw   ' '
-0000BA EC?? F???      00120         call    LCD_Send_Byte_D
-0000BE 0EC8           00121         movlw   b'11001000'
-0000C0 EC?? F???      00122         call    LCD_shift 
-0000C4 0E02           00123         movlw   0x02
-0000C6 EC?? F???      00124         call    LCD_Send_Byte_D
-0000CA EC?? F???      00125         call    food_delay 
-0000CE 0EC8           00126         movlw   b'11001000'
-0000D0 EC?? F???      00127         call    LCD_shift 
-0000D4 0E20           00128         movlw   ' '
-0000D6 EC?? F???      00129         call    LCD_Send_Byte_D
-0000DA 0EC7           00130         movlw   b'11000111'
-0000DC EC?? F???      00131         call    LCD_shift 
-0000E0 0E02           00132         movlw   0x02
-0000E2 EC?? F???      00133         call    LCD_Send_Byte_D
-0000E6 EC?? F???      00134         call    food_delay 
-0000EA 0EC7           00135         movlw   b'11000111'
-0000EC EC?? F???      00136         call    LCD_shift 
-0000F0 0E20           00137         movlw   ' '
-0000F2 EC?? F???      00138         call    LCD_Send_Byte_D
-0000F6 0EC6           00139         movlw   b'11000110' ;46
-0000F8 EC?? F???      00140         call    LCD_shift 
-0000FC 0E02           00141         movlw   0x02
-0000FE EC?? F???      00142         call    LCD_Send_Byte_D
-000102 EC?? F???      00143         call    food_delay 
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE  4
+0000AC 0000           00097         nop
+0000AE 8A8A           00098         bsf         LATB, LCD_E     ; Take enable high
+0000B0 0000           00099         nop
+0000B2 0000           00100         nop
+0000B4 0000           00101         nop
+0000B6 0000           00102         nop
+0000B8 0000           00103         nop
+0000BA 0000           00104         nop
+0000BC 0000           00105         nop
+0000BE 9A8A           00106         bcf         LATB, LCD_E     ; Writes data to LCD
+0000C0 0012           00107         return
+                      00108     
+0000C2                00109 LCD_delay_ms                ; delay given in ms in W
+0000C2 6E??           00110         movwf   LCD_cnt_ms
+0000C4 0EFA           00111 lcdlp2  movlw   .250        ; 1 ms delay
+0000C6 EC?? F???      00112         call    LCD_delay_x4us  
+0000CA 2E??           00113         decfsz  LCD_cnt_ms
+0000CC D???           00114         bra     lcdlp2
+0000CE 0012           00115         return
+                      00116     
+0000D0                00117 LCD_delay_x4us              ; delay given in chunks of 4 microsecond in W
+0000D0 6E??           00118         movwf   LCD_cnt_l   ; now need to multiply by 16
+0000D2 3A??           00119         swapf   LCD_cnt_l,F ; swap nibbles
+0000D4 0E0F           00120         movlw   0x0f        
+0000D6 14??           00121         andwf   LCD_cnt_l,W ; move low nibble to W
+0000D8 6E??           00122         movwf   LCD_cnt_h   ; then to LCD_cnt_h
+0000DA 0EF0           00123         movlw   0xf0        
+0000DC 16??           00124         andwf   LCD_cnt_l,F ; keep high nibble in LCD_cnt_l
+0000DE EC?? F???      00125         call    LCD_delay
+0000E2 0012           00126         return
+                      00127 
+0000E4                00128 LCD_delay                       ; delay routine 4 instruction loop == 250ns         
+0000E4 0E00           00129         movlw   0x00            ; W=0
+0000E6 06??           00130 lcdlp1  decf    LCD_cnt_l,F     ; no carry when 0x00 -> 0xff
+0000E8 5A??           00131         subwfb  LCD_cnt_h,F     ; no carry when 0x00 -> 0xff
+0000EA E2??           00132         bc      lcdlp1          ; carry, then loop again
+0000EC 0012           00133         return                  ; carry reset so return
+                      00134 
+0000EE                00135 LCD_clear
+0000EE 0E01           00136         movlw   b'00000001'     ; display clear
+0000F0 EC?? F???      00137         call    LCD_Send_Byte_I
+0000F4 0E02           00138         movlw   .2              ; wait 2ms
+0000F6 EC?? F???      00139         call    LCD_delay_ms
+0000FA 0012           00140         return
+                      00141         
+0000FC                00142 LCD_shift
+0000FC EC?? F???      00143         call LCD_Send_Byte_I
+000100 0E0A           00144         movlw   .10             
+000102 EC?? F???      00145         call    LCD_delay_x4us
+000106 0012           00146         return 
+                      00147         
+000108                00148 LCD_custom_character_set_EGG   ;EGG 0X00,  HEART 0X01,  BABY 0X02, SUN 0X03, MOON 0X04, SMILEY 0X05, NEU
+                            TRAL 0X06, SAD 0X07
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000106 0EC6           00144         movlw   b'11000110' ;46
-000108 EC?? F???      00145         call    LCD_shift
-00010C 0E20           00146         movlw   ' '
-00010E EC?? F???      00147         call    LCD_Send_Byte_D
-000112 0EC5           00148         movlw   b'11000101'  ;45
-000114 EC?? F???      00149         call    LCD_shift 
-000118 0E02           00150         movlw   0x02
-00011A EC?? F???      00151         call    LCD_Send_Byte_D ;eaten
-00011E EC?? F???      00152         call    food_delay
-000122 0EC5           00153         movlw   b'11000101'  ;45
-000124 EC?? F???      00154         call    LCD_shift 
-000128 0E20           00155         movlw   ' '
-00012A EC?? F???      00156         call    LCD_Send_Byte_D
-00012E 0E02           00157         movlw   0x02
-000130 EC?? F???      00158         call    LCD_Send_Byte_D
-000134 EC?? F???      00159         call    food_delay 
-000138 0EC6           00160         movlw   b'11000110'
-00013A EC?? F???      00161         call    LCD_shift 
-00013E 0E20           00162         movlw   ' '
-000140 EC?? F???      00163         call    LCD_Send_Byte_D
-000144 0E02           00164         movlw   0x02
-000146 EC?? F???      00165         call    LCD_Send_Byte_D
-00014A EC?? F???      00166         call    food_delay 
-00014E 0EC7           00167         movlw   b'11000111'
-000150 EC?? F???      00168         call    LCD_shift 
-000154 0E20           00169         movlw   ' '
-000156 EC?? F???      00170         call    LCD_Send_Byte_D
-00015A 0E02           00171         movlw   0x02
-00015C EC?? F???      00172         call    LCD_Send_Byte_D
-000160 EC?? F???      00173         call    food_delay 
-000164 0EC8           00174         movlw   b'11001000'
-000166 EC?? F???      00175         call    LCD_shift 
-00016A 0E20           00176         movlw   ' '
-00016C EC?? F???      00177         call    LCD_Send_Byte_D
-000170 0E02           00178         movlw   0x02
-000172 EC?? F???      00179         call    LCD_Send_Byte_D ;back at centre
-000176                00180 CHECK_GROWTH
-000176                00181 check_2
-000176 0E02           00182         movlw   0x02
-000178 62??           00183         cpfseq  food_counter 
-00017A D???           00184         bra     check_4
-00017C D???           00185         bra     GROWTH
-00017E                00186 check_4
-00017E 0E04           00187         movlw   0x4
-000180 62??           00188         cpfseq  food_counter 
-000182 D???           00189         bra     check_6
-000184 D???           00190         bra     GROWTH
-000186                00191 check_6
-000186 0E06           00192         movlw   0x6
-000188 62??           00193         cpfseq  food_counter
-00018A 0012           00194         return 
-00018C EC?? F???      00195         call    GROWTH
-                      00196         
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE  5
+                      00149         
+000108                00150 EGG 
+000108 0E40           00151         movlw b'0001000000'   ;setting CGRAM address of first line 
+00010A EC?? F???      00152         call LCD_Send_Byte_I
+00010E 0E0A           00153         movlw   .10             
+000110 EC?? F???      00154         call    LCD_delay_x4us
+000114 0E00           00155         movlw b'00000000'    ;writing first line of egg
+000116 EC?? F???      00156         call LCD_Send_Byte_D
+00011A 0E0A           00157         movlw   .10             
+00011C EC?? F???      00158         call    LCD_delay_x4us
+000120 0E41           00159         movlw b'0001000001'   ;setting CGRAM address of second line 
+000122 EC?? F???      00160         call LCD_Send_Byte_I
+000126 0E0A           00161         movlw   .10             
+000128 EC?? F???      00162         call    LCD_delay_x4us
+00012C 0E04           00163         movlw b'00000100'    ;writing second line of egg
+00012E EC?? F???      00164         call LCD_Send_Byte_D
+000132 0E0A           00165         movlw   .10             
+000134 EC?? F???      00166         call    LCD_delay_x4us
+000138 0E42           00167         movlw b'0001000010'   ;setting CGRAM address of third line 
+00013A EC?? F???      00168         call LCD_Send_Byte_I
+00013E 0E0A           00169         movlw   .10             
+000140 EC?? F???      00170         call    LCD_delay_x4us
+000144 0E0A           00171         movlw b'00001010'    ;writing third line of egg
+000146 EC?? F???      00172         call LCD_Send_Byte_D
+00014A 0E0A           00173         movlw   .10             
+00014C EC?? F???      00174         call    LCD_delay_x4us
+000150 0E43           00175         movlw b'0001000011'   ;setting CGRAM address of fourth line 
+000152 EC?? F???      00176         call LCD_Send_Byte_I
+000156 0E0A           00177         movlw   .10             
+000158 EC?? F???      00178         call    LCD_delay_x4us
+00015C 0E15           00179         movlw b'00010101'    ;writing fourth line of egg
+00015E EC?? F???      00180         call LCD_Send_Byte_D
+000162 0E0A           00181         movlw   .10             
+000164 EC?? F???      00182         call    LCD_delay_x4us
+000168 0E44           00183         movlw b'0001000100'   ;setting CGRAM address of fifth line 
+00016A EC?? F???      00184         call LCD_Send_Byte_I
+00016E 0E0A           00185         movlw   .10             
+000170 EC?? F???      00186         call    LCD_delay_x4us
+000174 0E1B           00187         movlw b'00011011'    ;writing fifth line of egg
+000176 EC?? F???      00188         call LCD_Send_Byte_D
+00017A 0E0A           00189         movlw   .10             
+00017C EC?? F???      00190         call    LCD_delay_x4us
+000180 0E45           00191         movlw b'0001000101'   ;setting CGRAM address of sixth line 
+000182 EC?? F???      00192         call LCD_Send_Byte_I
+000186 0E0A           00193         movlw   .10             
+000188 EC?? F???      00194         call    LCD_delay_x4us
+00018C 0E15           00195         movlw b'00010101'    ;writing sixth line of egg
+00018E EC?? F???      00196         call LCD_Send_Byte_D
+000192 0E0A           00197         movlw   .10             
+000194 EC?? F???      00198         call    LCD_delay_x4us
+000198 0E46           00199         movlw b'0001000110'   ;setting CGRAM address of seventh line 
+00019A EC?? F???      00200         call LCD_Send_Byte_I
+00019E 0E0A           00201         movlw   .10             
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000190 0012           00197         return
-                      00198         
-                      00199         
-000192                00200 GROWTH
-000192 0E01           00201         movlw   0x01
-000194 2600           00202         addwf   lifemode_food, 1
-000196                00203 GROWTH_ANIMATE
-000196 0EC9           00204         movlw   b'11001001' ;0x49   ;position
-000198 EC?? F???      00205         call    LCD_shift 
-00019C 0E2A           00206         movlw   0x2A  ;star
-00019E EC?? F???      00207         call    LCD_Send_Byte_D
-0001A2 EC?? F???      00208         call    food_delay
-0001A6 EC?? F???      00209         call    food_delay
-0001AA EC?? F???      00210         call    food_delay
-0001AE 0ECA           00211         movlw   b'11001010';0x4A
-0001B0 EC?? F???      00212         call    LCD_shift 
-0001B4 0E2A           00213         movlw   0x2A
-0001B6 EC?? F???      00214         call    LCD_Send_Byte_D
-0001BA 0E89           00215         movlw   b'10001001';0x09
-0001BC EC?? F???      00216         call    LCD_shift 
-0001C0 0E2A           00217         movlw   0x2A
-0001C2 EC?? F???      00218         call    LCD_Send_Byte_D
-0001C6 0EC8           00219         movlw   b'11001000';0x48
-0001C8 EC?? F???      00220         call    LCD_shift 
-0001CC 0E2A           00221         movlw   0x2A
-0001CE EC?? F???      00222         call    LCD_Send_Byte_D
-0001D2 EC?? F???      00223         call    food_delay
-0001D6 EC?? F???      00224         call    food_delay
-0001DA EC?? F???      00225         call    food_delay
-0001DE 0ECB           00226         movlw   b'11001011';0x4B
-0001E0 EC?? F???      00227         call    LCD_shift 
-0001E4 0E2A           00228         movlw   0x2A
-0001E6 EC?? F???      00229         call    LCD_Send_Byte_D
-0001EA 0E8A           00230         movlw   b'10001010';0x0A
-0001EC EC?? F???      00231         call    LCD_shift 
-0001F0 0E2A           00232         movlw   0x2A
-0001F2 EC?? F???      00233         call    LCD_Send_Byte_D
-0001F6 0E88           00234         movlw   b'10001000';0x08
-0001F8 EC?? F???      00235         call    LCD_shift 
-0001FC 0E2A           00236         movlw   0x2A
-0001FE EC?? F???      00237         call    LCD_Send_Byte_D
-000202 0EC7           00238         movlw   b'11000111';0x47
-000204 EC?? F???      00239         call    LCD_shift 
-000208 0E2A           00240         movlw   0x2A
-00020A EC?? F???      00241         call    LCD_Send_Byte_D
-00020E EC?? F???      00242         call    food_delay
-000212 EC?? F???      00243         call    food_delay
-000216 EC?? F???      00244         call    food_delay
-00021A 0ECC           00245         movlw   b'11001100';0x4C
-00021C EC?? F???      00246         call    LCD_shift 
-000220 0E2A           00247         movlw   0x2A
-000222 EC?? F???      00248         call    LCD_Send_Byte_D
-000226 0E88           00249         movlw   b'10001000';0x0B
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE  6
+0001A0 EC?? F???      00202         call    LCD_delay_x4us
+0001A4 0E1B           00203         movlw b'00011011'    ;writing seventh line of egg
+0001A6 EC?? F???      00204         call LCD_Send_Byte_D
+0001AA 0E0A           00205         movlw   .10             
+0001AC EC?? F???      00206         call    LCD_delay_x4us
+0001B0 0E47           00207         movlw b'0001000111'   ;setting CGRAM address of eigth line 
+0001B2 EC?? F???      00208         call LCD_Send_Byte_I
+0001B6 0E0A           00209         movlw   .10             
+0001B8 EC?? F???      00210         call    LCD_delay_x4us
+0001BC 0E0E           00211         movlw b'00001110'    ;writing eigth line of egg
+0001BE EC?? F???      00212         call LCD_Send_Byte_D
+0001C2 0E0A           00213         movlw   .10             
+0001C4 EC?? F???      00214         call    LCD_delay_x4us
+                      00215          
+                      00216     
+0001C8                00217 HEART 
+0001C8 0E48           00218         movlw b'0001001000'   ;setting CGRAM address of first line 
+0001CA EC?? F???      00219         call LCD_Send_Byte_I
+0001CE 0E0A           00220         movlw   .10             
+0001D0 EC?? F???      00221         call    LCD_delay_x4us
+0001D4 0E00           00222         movlw b'00000000'    ;writing first line of heart
+0001D6 EC?? F???      00223         call LCD_Send_Byte_D
+0001DA 0E0A           00224         movlw   .10             
+0001DC EC?? F???      00225         call    LCD_delay_x4us
+0001E0 0E49           00226         movlw b'0001001001'   ;setting CGRAM address of second line 
+0001E2 EC?? F???      00227         call LCD_Send_Byte_I
+0001E6 0E0A           00228         movlw   .10             
+0001E8 EC?? F???      00229         call    LCD_delay_x4us
+0001EC 0E0A           00230         movlw b'00001010'    ;writing second line of heart
+0001EE EC?? F???      00231         call LCD_Send_Byte_D
+0001F2 0E0A           00232         movlw   .10             
+0001F4 EC?? F???      00233         call    LCD_delay_x4us
+0001F8 0E4A           00234         movlw b'0001001010'   ;setting CGRAM address of third line 
+0001FA EC?? F???      00235         call LCD_Send_Byte_I
+0001FE 0E0A           00236         movlw   .10             
+000200 EC?? F???      00237         call    LCD_delay_x4us
+000204 0E15           00238         movlw b'00010101'    ;writing third line of heart
+000206 EC?? F???      00239         call LCD_Send_Byte_D
+00020A 0E0A           00240         movlw   .10             
+00020C EC?? F???      00241         call    LCD_delay_x4us
+000210 0E4B           00242         movlw b'0001001011'   ;setting CGRAM address of fourth line 
+000212 EC?? F???      00243         call LCD_Send_Byte_I
+000216 0E0A           00244         movlw   .10             
+000218 EC?? F???      00245         call    LCD_delay_x4us
+00021C 0E11           00246         movlw b'00010001'    ;writing fourth line of heart
+00021E EC?? F???      00247         call LCD_Send_Byte_D
+000222 0E0A           00248         movlw   .10             
+000224 EC?? F???      00249         call    LCD_delay_x4us
+000228 0E4C           00250         movlw b'0001001100'   ;setting CGRAM address of fifth line 
+00022A EC?? F???      00251         call LCD_Send_Byte_I
+00022E 0E0A           00252         movlw   .10             
+000230 EC?? F???      00253         call    LCD_delay_x4us
+000234 0E11           00254         movlw b'00010001'    ;writing fifth line of heart
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000228 EC?? F???      00250         call    LCD_shift 
-00022C 0E2A           00251         movlw   0x2A
-00022E EC?? F???      00252         call    LCD_Send_Byte_D
-000232 0E87           00253         movlw   b'10000111';0x07
-000234 EC?? F???      00254         call    LCD_shift 
-000238 0E2A           00255         movlw   0x2A
-00023A EC?? F???      00256         call    LCD_Send_Byte_D
-00023E 0EC6           00257         movlw   b'11000110';0x46
-000240 EC?? F???      00258         call    LCD_shift 
-000244 0E2A           00259         movlw   0x2A
-000246 EC?? F???      00260         call    LCD_Send_Byte_D
-00024A EC?? F???      00261         call    food_delay
-00024E EC?? F???      00262         call    food_delay
-000252 EC?? F???      00263         call    food_delay
-000256 0ECB           00264         movlw   b'11001011';0x4D
-000258 EC?? F???      00265         call    LCD_shift 
-00025C 0E2A           00266         movlw   0x2A
-00025E EC?? F???      00267         call    LCD_Send_Byte_D
-000262 0E8C           00268         movlw   b'10001100';0x0C
-000264 EC?? F???      00269         call    LCD_shift 
-000268 0E2A           00270         movlw   0x2A
-00026A EC?? F???      00271         call    LCD_Send_Byte_D
-00026E 0E86           00272         movlw   b'10000110';0x06
-000270 EC?? F???      00273         call    LCD_shift 
-000274 0E2A           00274         movlw   0x2A
-000276 EC?? F???      00275         call    LCD_Send_Byte_D
-00027A 0EC5           00276         movlw   b'11000101';0x45
-00027C EC?? F???      00277         call    LCD_shift 
-000280 0E2A           00278         movlw   0x2A
-000282 EC?? F???      00279         call    LCD_Send_Byte_D
-000286 EC?? F???      00280         call    food_delay
-00028A EC?? F???      00281         call    food_delay
-00028E EC?? F???      00282         call    food_delay
-000292 0ECE           00283         movlw   b'11001110';0x4E
-000294 EC?? F???      00284         call    LCD_shift 
-000298 0E2A           00285         movlw   0x2A
-00029A EC?? F???      00286         call    LCD_Send_Byte_D
-00029E 0E8D           00287         movlw   b'10001101';0x0D
-0002A0 EC?? F???      00288         call    LCD_shift 
-0002A4 0E2A           00289         movlw   0x2A
-0002A6 EC?? F???      00290         call    LCD_Send_Byte_D
-0002AA 0E83           00291         movlw   b'10000011';0x05
-0002AC EC?? F???      00292         call    LCD_shift 
-0002B0 0E2A           00293         movlw   0x2A
-0002B2 EC?? F???      00294         call    LCD_Send_Byte_D
-0002B6 0EC4           00295         movlw   b'11000100';0x44
-0002B8 EC?? F???      00296         call    LCD_shift 
-0002BC 0E2A           00297         movlw   0x2A
-0002BE EC?? F???      00298         call    LCD_Send_Byte_D
-0002C2 EC?? F???      00299         call    food_delay
-0002C6 EC?? F???      00300         call    food_delay
-0002CA EC?? F???      00301         call    food_delay
-0002CE 0ECF           00302         movlw   b'11001111';0x4F
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE  7
+000236 EC?? F???      00255         call LCD_Send_Byte_D
+00023A 0E0A           00256         movlw   .10             
+00023C EC?? F???      00257         call    LCD_delay_x4us
+000240 0E4D           00258         movlw b'0001001101'   ;setting CGRAM address of sixth line 
+000242 EC?? F???      00259         call LCD_Send_Byte_I
+000246 0E0A           00260         movlw   .10             
+000248 EC?? F???      00261         call    LCD_delay_x4us
+00024C 0E0A           00262         movlw b'00001010'    ;writing sixth line of heart
+00024E EC?? F???      00263         call LCD_Send_Byte_D
+000252 0E0A           00264         movlw   .10             
+000254 EC?? F???      00265         call    LCD_delay_x4us
+000258 0E4E           00266         movlw b'0001001110'   ;setting CGRAM address of seventh line 
+00025A EC?? F???      00267         call LCD_Send_Byte_I
+00025E 0E0A           00268         movlw   .10             
+000260 EC?? F???      00269         call    LCD_delay_x4us
+000264 0E04           00270         movlw b'00000100'    ;writing seventh line of heart
+000266 EC?? F???      00271         call LCD_Send_Byte_D
+00026A 0E0A           00272         movlw   .10             
+00026C EC?? F???      00273         call    LCD_delay_x4us
+000270 0E4F           00274         movlw b'0001001111'   ;setting CGRAM address of eigth line 
+000272 EC?? F???      00275         call LCD_Send_Byte_I
+000276 0E0A           00276         movlw   .10             
+000278 EC?? F???      00277         call    LCD_delay_x4us
+00027C 0E00           00278         movlw b'00000000'    ;writing eigth line of heart
+00027E EC?? F???      00279         call LCD_Send_Byte_D
+000282 0E0A           00280         movlw   .10             
+000284 EC?? F???      00281         call    LCD_delay_x4us
+                      00282          
+000288                00283 BABY 
+000288 0E50           00284         movlw b'0001010000'   ;setting CGRAM address of first line 
+00028A EC?? F???      00285         call LCD_Send_Byte_I
+00028E 0E0A           00286         movlw   .10             
+000290 EC?? F???      00287         call    LCD_delay_x4us
+000294 0E00           00288         movlw b'00000000'    ;writing first line of rabbit
+000296 EC?? F???      00289         call LCD_Send_Byte_D
+00029A 0E0A           00290         movlw   .10             
+00029C EC?? F???      00291         call    LCD_delay_x4us
+0002A0 0E51           00292         movlw b'0001010001'    ;setting CGRAM address of second line 
+0002A2 EC?? F???      00293         call LCD_Send_Byte_I
+0002A6 0E0A           00294         movlw   .10             
+0002A8 EC?? F???      00295         call    LCD_delay_x4us
+0002AC 0E00           00296         movlw b'00000000'    ;writing second line of rabbit 
+0002AE EC?? F???      00297         call LCD_Send_Byte_D
+0002B2 0E0A           00298         movlw   .10             
+0002B4 EC?? F???      00299         call    LCD_delay_x4us
+0002B8 0E52           00300         movlw b'0001010010'    ;setting CGRAM address of third line 
+0002BA EC?? F???      00301         call LCD_Send_Byte_I
+0002BE 0E0A           00302         movlw   .10             
+0002C0 EC?? F???      00303         call    LCD_delay_x4us
+0002C4 0E00           00304         movlw b'00000000'    ;writing third line of rabbit 
+0002C6 EC?? F???      00305         call LCD_Send_Byte_D
+0002CA 0E0A           00306         movlw   .10             
+0002CC EC?? F???      00307         call    LCD_delay_x4us
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE  7
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0002D0 EC?? F???      00303         call    LCD_shift 
-0002D4 0E2A           00304         movlw   0x2A
-0002D6 EC?? F???      00305         call    LCD_Send_Byte_D
-0002DA 0E8E           00306         movlw   b'10001110';0x0E
-0002DC EC?? F???      00307         call    LCD_shift 
-0002E0 0E2A           00308         movlw   0x2A
-0002E2 EC?? F???      00309         call    LCD_Send_Byte_D
-0002E6 0E84           00310         movlw   b'10000100';0x04
-0002E8 EC?? F???      00311         call    LCD_shift 
-0002EC 0E2A           00312         movlw   0x2A
-0002EE EC?? F???      00313         call    LCD_Send_Byte_D
-0002F2 0EC3           00314         movlw   b'11000011';0x43
-0002F4 EC?? F???      00315         call    LCD_shift 
-0002F8 0E2A           00316         movlw   0x2A
-0002FA EC?? F???      00317         call    LCD_Send_Byte_D
-0002FE EC?? F???      00318         call    food_delay
-000302 EC?? F???      00319         call    food_delay
-000306 EC?? F???      00320         call    food_delay
-00030A 0E8F           00321         movlw   b'10001111';0x0F
-00030C EC?? F???      00322         call    LCD_shift 
-000310 0E2A           00323         movlw   0x2A
-000312 EC?? F???      00324         call    LCD_Send_Byte_D
-000316 0E83           00325         movlw   b'10000011';0x03
-000318 EC?? F???      00326         call    LCD_shift 
-00031C 0E2A           00327         movlw   0x2A
-00031E EC?? F???      00328         call    LCD_Send_Byte_D
-000322 0E05           00329         movlw   0x05
-000324 6E??           00330         movwf   flash_counter
-000326                00331 flashes 
-000326 EC?? F???      00332         call    food_delay
-00032A EC?? F???      00333         call    food_delay
-00032E EC?? F???      00334         call    food_delay
-000332 0E83           00335         movlw   b'10000011';0x03
-000334 EC?? F???      00336         call    LCD_shift 
-000338 EC?? F???      00337         call    output_flash_1
-00033C 0EC3           00338         movlw   b'11000011';0x43
-00033E EC?? F???      00339         call    LCD_shift 
-000342 EC?? F???      00340         call    output_flash_2
-000346 EC?? F???      00341         call    food_delay
-00034A EC?? F???      00342         call    food_delay
-00034E EC?? F???      00343         call    food_delay
-000352 0E83           00344         movlw   b'10000011'
-000354 EC?? F???      00345         call    LCD_shift 
-000358 EC?? F???      00346         call    output_flash_2
-00035C 0EC3           00347         movlw   b'11000011'
-00035E EC?? F???      00348         call    LCD_shift 
-000362 EC?? F???      00349         call    output_flash_1
-000366 2E??           00350         decfsz  flash_counter
-000368 D???           00351         bra     flashes
-00036A 0E83           00352         movlw   b'10000011'
-00036C EC?? F???      00353         call    LCD_shift 
-000370 EC?? F???      00354         call    output_blank
-000374 0EC3           00355         movlw   b'11000011'
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE  8
+0002D0 0E53           00308         movlw b'0001010011'    ;setting CGRAM address of fourth line 
+0002D2 EC?? F???      00309         call LCD_Send_Byte_I
+0002D6 0E0A           00310         movlw   .10             
+0002D8 EC?? F???      00311         call    LCD_delay_x4us
+0002DC 0E00           00312         movlw b'00000000'    ;writing fourth line of rabbit 
+0002DE EC?? F???      00313         call LCD_Send_Byte_D
+0002E2 0E0A           00314         movlw   .10             
+0002E4 EC?? F???      00315         call    LCD_delay_x4us
+0002E8 0E54           00316         movlw b'0001010100'    ;setting CGRAM address of fifth line 
+0002EA EC?? F???      00317         call LCD_Send_Byte_I
+0002EE 0E0A           00318         movlw   .10             
+0002F0 EC?? F???      00319         call    LCD_delay_x4us
+0002F4 0E00           00320         movlw b'00000000'    ;writing fifth line of rabbit 
+0002F6 EC?? F???      00321         call LCD_Send_Byte_D
+0002FA 0E0A           00322         movlw   .10             
+0002FC EC?? F???      00323         call    LCD_delay_x4us
+000300 0E55           00324         movlw b'0001010101'    ;setting CGRAM address of sixth line 
+000302 EC?? F???      00325         call LCD_Send_Byte_I
+000306 0E0A           00326         movlw   .10             
+000308 EC?? F???      00327         call    LCD_delay_x4us
+00030C 0E00           00328         movlw b'00000000'    ;writing sixth line of rabbit 
+00030E EC?? F???      00329         call LCD_Send_Byte_D
+000312 0E0A           00330         movlw   .10             
+000314 EC?? F???      00331         call    LCD_delay_x4us
+000318 0E56           00332         movlw b'0001010110'    ;setting CGRAM address of seventh line 
+00031A EC?? F???      00333         call LCD_Send_Byte_I
+00031E 0E0A           00334         movlw   .10             
+000320 EC?? F???      00335         call    LCD_delay_x4us
+000324 0E0C           00336         movlw b'00001100'    ;writing seventh line of rabbit 
+000326 EC?? F???      00337         call LCD_Send_Byte_D
+00032A 0E0A           00338         movlw   .10             
+00032C EC?? F???      00339         call    LCD_delay_x4us
+000330 0E57           00340         movlw b'0001010111'    ;setting CGRAM address of eigth line 
+000332 EC?? F???      00341         call LCD_Send_Byte_I
+000336 0E0A           00342         movlw   .10             
+000338 EC?? F???      00343         call    LCD_delay_x4us
+00033C 0E0C           00344         movlw b'00001100'    ;writing eigth line of rabbit 
+00033E EC?? F???      00345         call LCD_Send_Byte_D
+000342 0E0A           00346         movlw   .10             
+000344 EC?? F???      00347         call    LCD_delay_x4us  
+                      00348 
+                      00349         
+000348                00350 SUN
+000348 0E58           00351         movlw b'0001011000'   ;setting CGRAM address of first line 
+00034A EC?? F???      00352         call LCD_Send_Byte_I
+00034E 0E0A           00353         movlw   .10             
+000350 EC?? F???      00354         call    LCD_delay_x4us
+000354 0E00           00355         movlw b'00000000'    ;writing first line
+000356 EC?? F???      00356         call LCD_Send_Byte_D
+00035A 0E0A           00357         movlw   .10             
+00035C EC?? F???      00358         call    LCD_delay_x4us
+000360 0E59           00359         movlw b'0001011001'    ;setting CGRAM address of second line 
+000362 EC?? F???      00360         call LCD_Send_Byte_I
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE  8
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000376 EC?? F???      00356         call    LCD_shift 
-00037A EC?? F???      00357         call    output_blank
-00037E                00358 NEW_FORM
-00037E 0E01           00359         movlw   0x01
-000380 62??           00360         cpfseq  lifemode_food
-000382 D???           00361         bra     check_medium
-000384 D???           00362         bra     small
-000386                00363 check_medium
-000386 0E02           00364         movlw   0x02
-000388 62??           00365         cpfseq  lifemode_food
-00038A D???           00366         bra     large 
-00038C D???           00367         bra     medium
-00038E                00368 small 
-00038E EC?? F???      00369         call    LCD_custom_character_set_SMALL
-000392 0EC9           00370         movlw   b'11001001';0x49
-000394 EC?? F???      00371         call    LCD_shift
-000398 0E02           00372         movlw   0x02
-00039A EC?? F???      00373         call    LCD_Send_Byte_D   ;small rabbit created from baby 
-00039E 50??           00374         movf    lifemode_food, W
-0003A0 0012           00375         return 
-0003A2                00376 medium 
-0003A2 EC?? F???      00377         call    LCD_custom_character_set_MEDIUM
-0003A6 0EC9           00378         movlw   b'11001001'
-0003A8 EC?? F???      00379         call    LCD_shift
-0003AC 0E02           00380         movlw   0x02
-0003AE EC?? F???      00381         call    LCD_Send_Byte_D
-0003B2 50??           00382         movf    lifemode_food, W
-0003B4 0012           00383         return 
-0003B6                00384 large 
-0003B6 EC?? F???      00385         call    LCD_custom_character_set_LARGE
-0003BA 0EC9           00386         movlw   b'11001001'
-0003BC EC?? F???      00387         call    LCD_shift
-0003C0 0E02           00388         movlw   0x02
-0003C2 EC?? F???      00389         call    LCD_Send_Byte_D
-0003C6 50??           00390         movf    lifemode_food, W
-0003C8 0012           00391         return 
-                      00392         ;alternate flashes to go here followed by change of rabbit character
-                      00393 
-                      00394 
-0003CA                00395 food_delay
-0003CA 0E90           00396         movlw   0x90
-0003CC 6E??           00397         movwf   delay_counter_f1
-0003CE                00398 delay_1       
-0003CE 2E??           00399         decfsz  delay_counter_f1
-0003D0 D???           00400         bra     nested_2
-0003D2 0012           00401         return
-                      00402         
-0003D4                00403 nested_2
-0003D4 0E90           00404         movlw   0x90
-0003D6 6E??           00405         movwf   delay_counter_f2
-0003D8 2E??           00406 delay_2 decfsz  delay_counter_f2
-0003DA D???           00407         bra     nested_3
-0003DC D???           00408         bra     delay_1
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE  9
+000366 0E0A           00361         movlw   .10             
+000368 EC?? F???      00362         call    LCD_delay_x4us
+00036C 0E15           00363         movlw b'00010101'    ;writing second line
+00036E EC?? F???      00364         call LCD_Send_Byte_D
+000372 0E0A           00365         movlw   .10             
+000374 EC?? F???      00366         call    LCD_delay_x4us
+000378 0E5A           00367         movlw b'0001011010'    ;setting CGRAM address of third line 
+00037A EC?? F???      00368         call LCD_Send_Byte_I
+00037E 0E0A           00369         movlw   .10             
+000380 EC?? F???      00370         call    LCD_delay_x4us
+000384 0E0E           00371         movlw b'00001110'    ;writing third line
+000386 EC?? F???      00372         call LCD_Send_Byte_D
+00038A 0E0A           00373         movlw   .10             
+00038C EC?? F???      00374         call    LCD_delay_x4us
+000390 0E5B           00375         movlw b'0001011011'    ;setting CGRAM address of fourth line 
+000392 EC?? F???      00376         call LCD_Send_Byte_I
+000396 0E0A           00377         movlw   .10             
+000398 EC?? F???      00378         call    LCD_delay_x4us
+00039C 0E1F           00379         movlw b'00011111'    ;writing fourth line
+00039E EC?? F???      00380         call LCD_Send_Byte_D
+0003A2 0E0A           00381         movlw   .10             
+0003A4 EC?? F???      00382         call    LCD_delay_x4us
+0003A8 0E5C           00383         movlw b'0001011100'    ;setting CGRAM address of fifth line 
+0003AA EC?? F???      00384         call LCD_Send_Byte_I
+0003AE 0E0A           00385         movlw   .10             
+0003B0 EC?? F???      00386         call    LCD_delay_x4us
+0003B4 0E0E           00387         movlw b'00001110'    ;writing fifth line
+0003B6 EC?? F???      00388         call LCD_Send_Byte_D
+0003BA 0E0A           00389         movlw   .10             
+0003BC EC?? F???      00390         call    LCD_delay_x4us
+0003C0 0E5D           00391         movlw b'0001011101'    ;setting CGRAM address of sixth line 
+0003C2 EC?? F???      00392         call LCD_Send_Byte_I
+0003C6 0E0A           00393         movlw   .10             
+0003C8 EC?? F???      00394         call    LCD_delay_x4us
+0003CC 0E15           00395         movlw b'00010101'    ;writing sixth line
+0003CE EC?? F???      00396         call LCD_Send_Byte_D
+0003D2 0E0A           00397         movlw   .10             
+0003D4 EC?? F???      00398         call    LCD_delay_x4us
+0003D8 0E5E           00399         movlw b'0001011110'    ;setting CGRAM address of seventh line 
+0003DA EC?? F???      00400         call LCD_Send_Byte_I
+0003DE 0E0A           00401         movlw   .10             
+0003E0 EC?? F???      00402         call    LCD_delay_x4us
+0003E4 0E00           00403         movlw b'00000000'    ;writing seventh line
+0003E6 EC?? F???      00404         call LCD_Send_Byte_D
+0003EA 0E0A           00405         movlw   .10             
+0003EC EC?? F???      00406         call    LCD_delay_x4us
+0003F0 0E5F           00407         movlw b'0001011111'    ;setting CGRAM address of eigth line 
+0003F2 EC?? F???      00408         call LCD_Send_Byte_I
+0003F6 0E0A           00409         movlw   .10             
+0003F8 EC?? F???      00410         call    LCD_delay_x4us
+0003FC 0E00           00411         movlw b'00000000'    ;writing eigth line
+0003FE EC?? F???      00412         call LCD_Send_Byte_D
+000402 0E0A           00413         movlw   .10             
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE  9
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00409 
-0003DE                00410 nested_3
-0003DE 0E90           00411         movlw   0x90
-0003E0 6E??           00412         movwf   delay_counter_f3
-0003E2                00413 delay_3
-0003E2 2E??           00414         decfsz  delay_counter_f3
-0003E4 D???           00415         bra     delay_3
-0003E6 D???           00416         bra     delay_2
-                      00417      
-                      00418     
-                      00419     end 
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 10
+000404 EC?? F???      00414         call    LCD_delay_x4us
+                      00415         
+                      00416         
+000408                00417 MOON
+000408 0E60           00418         movlw b'0001100000'   ;setting CGRAM address of first line 
+00040A EC?? F???      00419         call LCD_Send_Byte_I
+00040E 0E0A           00420         movlw   .10             
+000410 EC?? F???      00421         call    LCD_delay_x4us
+000414 0E00           00422         movlw b'00000000'    ;writing first line of rabbit
+000416 EC?? F???      00423         call LCD_Send_Byte_D
+00041A 0E0A           00424         movlw   .10             
+00041C EC?? F???      00425         call    LCD_delay_x4us
+000420 0E61           00426         movlw b'0001100001'    ;setting CGRAM address of second line 
+000422 EC?? F???      00427         call LCD_Send_Byte_I
+000426 0E0A           00428         movlw   .10             
+000428 EC?? F???      00429         call    LCD_delay_x4us
+00042C 0E0F           00430         movlw b'00001111'    ;writing second line of rabbit 
+00042E EC?? F???      00431         call LCD_Send_Byte_D
+000432 0E0A           00432         movlw   .10             
+000434 EC?? F???      00433         call    LCD_delay_x4us
+000438 0E62           00434         movlw b'0001100010'    ;setting CGRAM address of third line 
+00043A EC?? F???      00435         call LCD_Send_Byte_I
+00043E 0E0A           00436         movlw   .10             
+000440 EC?? F???      00437         call    LCD_delay_x4us
+000444 0E1C           00438         movlw b'00011100'    ;writing third line of rabbit 
+000446 EC?? F???      00439         call LCD_Send_Byte_D
+00044A 0E0A           00440         movlw   .10             
+00044C EC?? F???      00441         call    LCD_delay_x4us
+000450 0E63           00442         movlw b'0001100011'    ;setting CGRAM address of fourth line 
+000452 EC?? F???      00443         call LCD_Send_Byte_I
+000456 0E0A           00444         movlw   .10             
+000458 EC?? F???      00445         call    LCD_delay_x4us
+00045C 0E18           00446         movlw b'00011000'    ;writing fourth line of rabbit 
+00045E EC?? F???      00447         call LCD_Send_Byte_D
+000462 0E0A           00448         movlw   .10             
+000464 EC?? F???      00449         call    LCD_delay_x4us
+000468 0E64           00450         movlw b'0001100100'    ;setting CGRAM address of fifth line 
+00046A EC?? F???      00451         call LCD_Send_Byte_I
+00046E 0E0A           00452         movlw   .10             
+000470 EC?? F???      00453         call    LCD_delay_x4us
+000474 0E18           00454         movlw b'00011000'    ;writing fifth line of rabbit 
+000476 EC?? F???      00455         call LCD_Send_Byte_D
+00047A 0E0A           00456         movlw   .10             
+00047C EC?? F???      00457         call    LCD_delay_x4us
+000480 0E65           00458         movlw b'0001100101'    ;setting CGRAM address of sixth line 
+000482 EC?? F???      00459         call LCD_Send_Byte_I
+000486 0E0A           00460         movlw   .10             
+000488 EC?? F???      00461         call    LCD_delay_x4us
+00048C 0E1C           00462         movlw b'00011100'    ;writing sixth line of rabbit 
+00048E EC?? F???      00463         call LCD_Send_Byte_D
+000492 0E0A           00464         movlw   .10             
+000494 EC?? F???      00465         call    LCD_delay_x4us
+000498 0E66           00466         movlw b'0001100110'    ;setting CGRAM address of seventh line 
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 10
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00049A EC?? F???      00467         call LCD_Send_Byte_I
+00049E 0E0A           00468         movlw   .10             
+0004A0 EC?? F???      00469         call    LCD_delay_x4us
+0004A4 0E0F           00470         movlw b'00001111'    ;writing seventh line of rabbit 
+0004A6 EC?? F???      00471         call LCD_Send_Byte_D
+0004AA 0E0A           00472         movlw   .10             
+0004AC EC?? F???      00473         call    LCD_delay_x4us
+0004B0 0E67           00474         movlw b'0001100111'    ;setting CGRAM address of eigth line 
+0004B2 EC?? F???      00475         call LCD_Send_Byte_I
+0004B6 0E0A           00476         movlw   .10             
+0004B8 EC?? F???      00477         call    LCD_delay_x4us
+0004BC 0E00           00478         movlw b'00000000'    ;writing eigth line of rabbit 
+0004BE EC?? F???      00479         call LCD_Send_Byte_D
+0004C2 0E0A           00480         movlw   .10             
+0004C4 EC?? F???      00481         call    LCD_delay_x4us
+                      00482 
+                      00483         
+0004C8                00484 SMILEY
+0004C8 0E68           00485         movlw b'0001101000'   ;setting CGRAM address of first line 
+0004CA EC?? F???      00486         call LCD_Send_Byte_I
+0004CE 0E0A           00487         movlw   .10             
+0004D0 EC?? F???      00488         call    LCD_delay_x4us
+0004D4 0E00           00489         movlw b'00000000'    ;writing first line 
+0004D6 EC?? F???      00490         call LCD_Send_Byte_D
+0004DA 0E0A           00491         movlw   .10             
+0004DC EC?? F???      00492         call    LCD_delay_x4us
+0004E0 0E69           00493         movlw b'0001101001'    ;setting CGRAM address of second line 
+0004E2 EC?? F???      00494         call LCD_Send_Byte_I
+0004E6 0E0A           00495         movlw   .10             
+0004E8 EC?? F???      00496         call    LCD_delay_x4us
+0004EC 0E00           00497         movlw b'00000000'    ;writing second line 
+0004EE EC?? F???      00498         call LCD_Send_Byte_D
+0004F2 0E0A           00499         movlw   .10             
+0004F4 EC?? F???      00500         call    LCD_delay_x4us
+0004F8 0E6A           00501         movlw b'0001101010'    ;setting CGRAM address of third line 
+0004FA EC?? F???      00502         call LCD_Send_Byte_I
+0004FE 0E0A           00503         movlw   .10             
+000500 EC?? F???      00504         call    LCD_delay_x4us
+000504 0E0A           00505         movlw b'00001010'    ;writing third line 
+000506 EC?? F???      00506         call LCD_Send_Byte_D
+00050A 0E0A           00507         movlw   .10             
+00050C EC?? F???      00508         call    LCD_delay_x4us
+000510 0E6B           00509         movlw b'0001101011'    ;setting CGRAM address of fourth line 
+000512 EC?? F???      00510         call LCD_Send_Byte_I
+000516 0E0A           00511         movlw   .10             
+000518 EC?? F???      00512         call    LCD_delay_x4us
+00051C 0E00           00513         movlw b'00000000'    ;writing fourth line 
+00051E EC?? F???      00514         call LCD_Send_Byte_D
+000522 0E0A           00515         movlw   .10             
+000524 EC?? F???      00516         call    LCD_delay_x4us
+000528 0E6C           00517         movlw b'0001101100'    ;setting CGRAM address of fifth line 
+00052A EC?? F???      00518         call LCD_Send_Byte_I
+00052E 0E0A           00519         movlw   .10             
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 11
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000530 EC?? F???      00520         call    LCD_delay_x4us
+000534 0E00           00521         movlw b'00000000'    ;writing fifth line 
+000536 EC?? F???      00522         call LCD_Send_Byte_D
+00053A 0E0A           00523         movlw   .10             
+00053C EC?? F???      00524         call    LCD_delay_x4us
+000540 0E6D           00525         movlw b'0001101101'    ;setting CGRAM address of sixth line 
+000542 EC?? F???      00526         call LCD_Send_Byte_I
+000546 0E0A           00527         movlw   .10             
+000548 EC?? F???      00528         call    LCD_delay_x4us
+00054C 0E0A           00529         movlw b'00001010'    ;writing sixth line 
+00054E EC?? F???      00530         call LCD_Send_Byte_D
+000552 0E0A           00531         movlw   .10             
+000554 EC?? F???      00532         call    LCD_delay_x4us
+000558 0E6E           00533         movlw b'0001101110'    ;setting CGRAM address of seventh line 
+00055A EC?? F???      00534         call LCD_Send_Byte_I
+00055E 0E0A           00535         movlw   .10             
+000560 EC?? F???      00536         call    LCD_delay_x4us
+000564 0E0E           00537         movlw b'00001110'    ;writing seventh line 
+000566 EC?? F???      00538         call LCD_Send_Byte_D
+00056A 0E0A           00539         movlw   .10             
+00056C EC?? F???      00540         call    LCD_delay_x4us
+000570 0E6F           00541         movlw b'0001101111'    ;setting CGRAM address of eigth line 
+000572 EC?? F???      00542         call LCD_Send_Byte_I
+000576 0E0A           00543         movlw   .10             
+000578 EC?? F???      00544         call    LCD_delay_x4us
+00057C 0E00           00545         movlw b'00000000'    ;writing eigth line 
+00057E EC?? F???      00546         call    LCD_Send_Byte_D
+000582 0E0A           00547         movlw   .10             
+000584 EC?? F???      00548         call    LCD_delay_x4us
+                      00549         
+                      00550         
+000588                00551 NEUTRAL   
+000588 0E70           00552         movlw b'0001110000'   ;setting CGRAM address of first line 
+00058A EC?? F???      00553         call LCD_Send_Byte_I
+00058E 0E0A           00554         movlw   .10             
+000590 EC?? F???      00555         call    LCD_delay_x4us
+000594 0E00           00556         movlw b'00000000'    ;writing first line 
+000596 EC?? F???      00557         call LCD_Send_Byte_D
+00059A 0E0A           00558         movlw   .10             
+00059C EC?? F???      00559         call    LCD_delay_x4us
+0005A0 0E71           00560         movlw b'0001110001'    ;setting CGRAM address of second line 
+0005A2 EC?? F???      00561         call LCD_Send_Byte_I
+0005A6 0E0A           00562         movlw   .10             
+0005A8 EC?? F???      00563         call    LCD_delay_x4us
+0005AC 0E00           00564         movlw b'00000000'    ;writing second line 
+0005AE EC?? F???      00565         call LCD_Send_Byte_D
+0005B2 0E0A           00566         movlw   .10             
+0005B4 EC?? F???      00567         call    LCD_delay_x4us
+0005B8 0E72           00568         movlw b'0001110010'    ;setting CGRAM address of third line 
+0005BA EC?? F???      00569         call LCD_Send_Byte_I
+0005BE 0E0A           00570         movlw   .10             
+0005C0 EC?? F???      00571         call    LCD_delay_x4us
+0005C4 0E0A           00572         movlw b'00001010'    ;writing third line 
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 12
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0005C6 EC?? F???      00573         call LCD_Send_Byte_D
+0005CA 0E0A           00574         movlw   .10             
+0005CC EC?? F???      00575         call    LCD_delay_x4us
+0005D0 0E73           00576         movlw b'0001110011'    ;setting CGRAM address of fourth line 
+0005D2 EC?? F???      00577         call LCD_Send_Byte_I
+0005D6 0E0A           00578         movlw   .10             
+0005D8 EC?? F???      00579         call    LCD_delay_x4us
+0005DC 0E00           00580         movlw b'00000000'    ;writing fourth line 
+0005DE EC?? F???      00581         call LCD_Send_Byte_D
+0005E2 0E0A           00582         movlw   .10             
+0005E4 EC?? F???      00583         call    LCD_delay_x4us
+0005E8 0E74           00584         movlw b'0001110100'    ;setting CGRAM address of fifth line 
+0005EA EC?? F???      00585         call LCD_Send_Byte_I
+0005EE 0E0A           00586         movlw   .10             
+0005F0 EC?? F???      00587         call    LCD_delay_x4us
+0005F4 0E00           00588         movlw b'00000000'    ;writing fifth line 
+0005F6 EC?? F???      00589         call LCD_Send_Byte_D
+0005FA 0E0A           00590         movlw   .10             
+0005FC EC?? F???      00591         call    LCD_delay_x4us
+000600 0E75           00592         movlw b'0001110101'    ;setting CGRAM address of sixth line 
+000602 EC?? F???      00593         call LCD_Send_Byte_I
+000606 0E0A           00594         movlw   .10             
+000608 EC?? F???      00595         call    LCD_delay_x4us
+00060C 0E0E           00596         movlw b'00001110'    ;writing sixth line 
+00060E EC?? F???      00597         call LCD_Send_Byte_D
+000612 0E0A           00598         movlw   .10             
+000614 EC?? F???      00599         call    LCD_delay_x4us
+000618 0E76           00600         movlw b'0001110110'    ;setting CGRAM address of seventh line 
+00061A EC?? F???      00601         call LCD_Send_Byte_I
+00061E 0E0A           00602         movlw   .10             
+000620 EC?? F???      00603         call    LCD_delay_x4us
+000624 0E00           00604         movlw b'00000000'    ;writing seventh line 
+000626 EC?? F???      00605         call LCD_Send_Byte_D
+00062A 0E0A           00606         movlw   .10             
+00062C EC?? F???      00607         call    LCD_delay_x4us
+000630 0E77           00608         movlw b'0001110111'    ;setting CGRAM address of eigth line 
+000632 EC?? F???      00609         call LCD_Send_Byte_I
+000636 0E0A           00610         movlw   .10             
+000638 EC?? F???      00611         call    LCD_delay_x4us
+00063C 0E00           00612         movlw b'00000000'    ;writing eigth line 
+00063E EC?? F???      00613         call    LCD_Send_Byte_D
+000642 0E0A           00614         movlw   .10             
+000644 EC?? F???      00615         call    LCD_delay_x4us
+                      00616         
+                      00617         
+000648                00618 SAD 
+000648 0E78           00619         movlw b'0001111000'   ;setting CGRAM address of first line 
+00064A EC?? F???      00620         call LCD_Send_Byte_I
+00064E 0E0A           00621         movlw   .10             
+000650 EC?? F???      00622         call    LCD_delay_x4us
+000654 0E00           00623         movlw b'00000000'    ;writing first line 
+000656 EC?? F???      00624         call LCD_Send_Byte_D
+00065A 0E0A           00625         movlw   .10             
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 13
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00065C EC?? F???      00626         call    LCD_delay_x4us
+000660 0E79           00627         movlw b'0001111001'    ;setting CGRAM address of second line 
+000662 EC?? F???      00628         call LCD_Send_Byte_I
+000666 0E0A           00629         movlw   .10             
+000668 EC?? F???      00630         call    LCD_delay_x4us
+00066C 0E00           00631         movlw b'00000000'    ;writing second line 
+00066E EC?? F???      00632         call LCD_Send_Byte_D
+000672 0E0A           00633         movlw   .10             
+000674 EC?? F???      00634         call    LCD_delay_x4us
+000678 0E7A           00635         movlw b'0001111010'    ;setting CGRAM address of third line 
+00067A EC?? F???      00636         call LCD_Send_Byte_I
+00067E 0E0A           00637         movlw   .10             
+000680 EC?? F???      00638         call    LCD_delay_x4us
+000684 0E0A           00639         movlw b'00001010'    ;writing third line 
+000686 EC?? F???      00640         call LCD_Send_Byte_D
+00068A 0E0A           00641         movlw   .10             
+00068C EC?? F???      00642         call    LCD_delay_x4us
+000690 0E7B           00643         movlw b'0001111011'    ;setting CGRAM address of fourth line 
+000692 EC?? F???      00644         call LCD_Send_Byte_I
+000696 0E0A           00645         movlw   .10             
+000698 EC?? F???      00646         call    LCD_delay_x4us
+00069C 0E00           00647         movlw b'00000000'    ;writing fourth line 
+00069E EC?? F???      00648         call LCD_Send_Byte_D
+0006A2 0E0A           00649         movlw   .10             
+0006A4 EC?? F???      00650         call    LCD_delay_x4us
+0006A8 0E7C           00651         movlw b'0001111100'    ;setting CGRAM address of fifth line 
+0006AA EC?? F???      00652         call LCD_Send_Byte_I
+0006AE 0E0A           00653         movlw   .10             
+0006B0 EC?? F???      00654         call    LCD_delay_x4us
+0006B4 0E00           00655         movlw b'00000000'    ;writing fifth line 
+0006B6 EC?? F???      00656         call LCD_Send_Byte_D
+0006BA 0E0A           00657         movlw   .10             
+0006BC EC?? F???      00658         call    LCD_delay_x4us
+0006C0 0E7D           00659         movlw b'0001111101'    ;setting CGRAM address of sixth line 
+0006C2 EC?? F???      00660         call LCD_Send_Byte_I
+0006C6 0E0A           00661         movlw   .10             
+0006C8 EC?? F???      00662         call    LCD_delay_x4us
+0006CC 0E0E           00663         movlw b'00001110'    ;writing sixth line 
+0006CE EC?? F???      00664         call LCD_Send_Byte_D
+0006D2 0E0A           00665         movlw   .10             
+0006D4 EC?? F???      00666         call    LCD_delay_x4us
+0006D8 0E7E           00667         movlw b'0001111110'    ;setting CGRAM address of seventh line 
+0006DA EC?? F???      00668         call LCD_Send_Byte_I
+0006DE 0E0A           00669         movlw   .10             
+0006E0 EC?? F???      00670         call    LCD_delay_x4us
+0006E4 0E0A           00671         movlw b'00001010'    ;writing seventh line 
+0006E6 EC?? F???      00672         call LCD_Send_Byte_D
+0006EA 0E0A           00673         movlw   .10             
+0006EC EC?? F???      00674         call    LCD_delay_x4us
+0006F0 0E7F           00675         movlw b'0001111111'    ;setting CGRAM address of eigth line 
+0006F2 EC?? F???      00676         call LCD_Send_Byte_I
+0006F6 0E0A           00677         movlw   .10             
+0006F8 EC?? F???      00678         call    LCD_delay_x4us
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 14
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0006FC 0E00           00679         movlw b'00000000'    ;writing eigth line 
+0006FE EC?? F???      00680         call    LCD_Send_Byte_D
+000702 0E0A           00681         movlw   .10             
+000704 EC?? F???      00682         call    LCD_delay_x4us
+                      00683         
+000708 0012           00684         return 
+                      00685         
+00070A                00686 LCD_custom_character_set_BABY  ;GHOST 0X00,  HEART 0X01,  BABY 0X02, SUN 0X03, MOON 0X04, SMILEY 0X05, N
+                            EUTRAL 0X06, SAD 0X07
+                      00687         
+00070A                00688 GHOST
+00070A 0E40           00689         movlw b'0001000000'   ;setting CGRAM address of first line 
+00070C EC?? F???      00690         call LCD_Send_Byte_I
+000710 0E0A           00691         movlw   .10             
+000712 EC?? F???      00692         call    LCD_delay_x4us
+000716 0E0E           00693         movlw b'00001110'    ;writing first line 
+000718 EC?? F???      00694         call LCD_Send_Byte_D
+00071C 0E0A           00695         movlw   .10             
+00071E EC?? F???      00696         call    LCD_delay_x4us
+000722 0E41           00697         movlw b'0001000001'    ;setting CGRAM address of second line 
+000724 EC?? F???      00698         call LCD_Send_Byte_I
+000728 0E0A           00699         movlw   .10             
+00072A EC?? F???      00700         call    LCD_delay_x4us
+00072E 0E1F           00701         movlw b'00011111'    ;writing second line 
+000730 EC?? F???      00702         call LCD_Send_Byte_D
+000734 0E0A           00703         movlw   .10             
+000736 EC?? F???      00704         call    LCD_delay_x4us
+00073A 0E42           00705         movlw b'0001000010'    ;setting CGRAM address of third line 
+00073C EC?? F???      00706         call LCD_Send_Byte_I
+000740 0E0A           00707         movlw   .10             
+000742 EC?? F???      00708         call    LCD_delay_x4us
+000746 0E15           00709         movlw b'00010101'    ;writing third line 
+000748 EC?? F???      00710         call LCD_Send_Byte_D
+00074C 0E0A           00711         movlw   .10             
+00074E EC?? F???      00712         call    LCD_delay_x4us
+000752 0E43           00713         movlw b'0001000011'    ;setting CGRAM address of fourth line 
+000754 EC?? F???      00714         call LCD_Send_Byte_I
+000758 0E0A           00715         movlw   .10             
+00075A EC?? F???      00716         call    LCD_delay_x4us
+00075E 0E1F           00717         movlw b'00011111'    ;writing fourth line 
+000760 EC?? F???      00718         call LCD_Send_Byte_D
+000764 0E0A           00719         movlw   .10             
+000766 EC?? F???      00720         call    LCD_delay_x4us
+00076A 0E44           00721         movlw b'0001000100'    ;setting CGRAM address of fifth line 
+00076C EC?? F???      00722         call LCD_Send_Byte_I
+000770 0E0A           00723         movlw   .10             
+000772 EC?? F???      00724         call    LCD_delay_x4us
+000776 0E1F           00725         movlw b'00011111'    ;writing fifth line 
+000778 EC?? F???      00726         call LCD_Send_Byte_D
+00077C 0E0A           00727         movlw   .10             
+00077E EC?? F???      00728         call    LCD_delay_x4us
+000782 0E45           00729         movlw b'0001000101'    ;setting CGRAM address of sixth line 
+000784 EC?? F???      00730         call LCD_Send_Byte_I
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 15
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000788 0E0A           00731         movlw   .10             
+00078A EC?? F???      00732         call    LCD_delay_x4us
+00078E 0E1F           00733         movlw b'00011111'    ;writing sixth line 
+000790 EC?? F???      00734         call LCD_Send_Byte_D
+000794 0E0A           00735         movlw   .10             
+000796 EC?? F???      00736         call    LCD_delay_x4us
+00079A 0E46           00737         movlw b'0001000110'    ;setting CGRAM address of seventh line 
+00079C EC?? F???      00738         call LCD_Send_Byte_I
+0007A0 0E0A           00739         movlw   .10             
+0007A2 EC?? F???      00740         call    LCD_delay_x4us
+0007A6 0E15           00741         movlw b'00010101'    ;writing seventh line 
+0007A8 EC?? F???      00742         call LCD_Send_Byte_D
+0007AC 0E0A           00743         movlw   .10             
+0007AE EC?? F???      00744         call    LCD_delay_x4us
+0007B2 0E47           00745         movlw b'0001000111'    ;setting CGRAM address of eigth line 
+0007B4 EC?? F???      00746         call LCD_Send_Byte_I
+0007B8 0E0A           00747         movlw   .10             
+0007BA EC?? F???      00748         call    LCD_delay_x4us
+0007BE 0E00           00749         movlw b'00000000'    ;writing eigth line 
+0007C0 EC?? F???      00750         call    LCD_Send_Byte_D
+0007C4 0E0A           00751         movlw   .10             
+0007C6 EC?? F???      00752         call    LCD_delay_x4us 
+                      00753 
+0007CA 0012           00754         return
+                      00755         
+0007CC                00756 LCD_custom_character_set_SMALL  ;GHOST 0X00,  HEART 0X01,  SMALL_RABBIT 0X02, SUN 0X03, MOON 0X04, SMILE
+                            Y 0X05, NEUTRAL 0X06, SAD 0X07
+                      00757         
+0007CC                00758 SMALL_RABBIT
+0007CC 0E50           00759         movlw b'0001010000'   ;setting CGRAM address of first line 
+0007CE EC?? F???      00760         call LCD_Send_Byte_I
+0007D2 0E0A           00761         movlw   .10             
+0007D4 EC?? F???      00762         call    LCD_delay_x4us
+0007D8 0E00           00763         movlw b'00000000'    ;writing first line of small rabbit
+0007DA EC?? F???      00764         call LCD_Send_Byte_D
+0007DE 0E0A           00765         movlw   .10             
+0007E0 EC?? F???      00766         call    LCD_delay_x4us
+0007E4 0E51           00767         movlw b'0001010001'    ;setting CGRAM address of second line 
+0007E6 EC?? F???      00768         call LCD_Send_Byte_I
+0007EA 0E0A           00769         movlw   .10             
+0007EC EC?? F???      00770         call    LCD_delay_x4us
+0007F0 0E00           00771         movlw b'00000000'    ;writing second line of small rabbit 
+0007F2 EC?? F???      00772         call LCD_Send_Byte_D
+0007F6 0E0A           00773         movlw   .10             
+0007F8 EC?? F???      00774         call    LCD_delay_x4us
+0007FC 0E52           00775         movlw b'0001010010'    ;setting CGRAM address of third line 
+0007FE EC?? F???      00776         call LCD_Send_Byte_I
+000802 0E0A           00777         movlw   .10             
+000804 EC?? F???      00778         call    LCD_delay_x4us
+000808 0E00           00779         movlw b'00000000'    ;writing third line of small rabbit 
+00080A EC?? F???      00780         call LCD_Send_Byte_D
+00080E 0E0A           00781         movlw   .10             
+000810 EC?? F???      00782         call    LCD_delay_x4us
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 16
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000814 0E53           00783         movlw b'0001010011'    ;setting CGRAM address of fourth line 
+000816 EC?? F???      00784         call LCD_Send_Byte_I
+00081A 0E0A           00785         movlw   .10             
+00081C EC?? F???      00786         call    LCD_delay_x4us
+000820 0E0A           00787         movlw b'00001010'    ;writing fourth line of small rabbit 
+000822 EC?? F???      00788         call LCD_Send_Byte_D
+000826 0E0A           00789         movlw   .10             
+000828 EC?? F???      00790         call    LCD_delay_x4us
+00082C 0E54           00791         movlw b'0001010100'    ;setting CGRAM address of fifth line 
+00082E EC?? F???      00792         call LCD_Send_Byte_I
+000832 0E0A           00793         movlw   .10             
+000834 EC?? F???      00794         call    LCD_delay_x4us
+000838 0E0A           00795         movlw b'00001010'    ;writing fifth line of small rabbit 
+00083A EC?? F???      00796         call LCD_Send_Byte_D
+00083E 0E0A           00797         movlw   .10             
+000840 EC?? F???      00798         call    LCD_delay_x4us
+000844 0E55           00799         movlw b'0001010101'    ;setting CGRAM address of sixth line 
+000846 EC?? F???      00800         call LCD_Send_Byte_I
+00084A 0E0A           00801         movlw   .10             
+00084C EC?? F???      00802         call    LCD_delay_x4us
+000850 0E0E           00803         movlw b'00001110'    ;writing sixth line of small rabbit 
+000852 EC?? F???      00804         call LCD_Send_Byte_D
+000856 0E0A           00805         movlw   .10             
+000858 EC?? F???      00806         call    LCD_delay_x4us
+00085C 0E56           00807         movlw b'0001010110'    ;setting CGRAM address of seventh line 
+00085E EC?? F???      00808         call LCD_Send_Byte_I
+000862 0E0A           00809         movlw   .10             
+000864 EC?? F???      00810         call    LCD_delay_x4us
+000868 0E0E           00811         movlw b'00001110'    ;writing seventh line of small rabbit 
+00086A EC?? F???      00812         call LCD_Send_Byte_D
+00086E 0E0A           00813         movlw   .10             
+000870 EC?? F???      00814         call    LCD_delay_x4us
+000874 0E57           00815         movlw b'0001010111'    ;setting CGRAM address of eigth line 
+000876 EC?? F???      00816         call LCD_Send_Byte_I
+00087A 0E0A           00817         movlw   .10             
+00087C EC?? F???      00818         call    LCD_delay_x4us
+000880 0E0E           00819         movlw b'00001110'    ;writing eigth line of small rabbit 
+000882 EC?? F???      00820         call LCD_Send_Byte_D
+000886 0E0A           00821         movlw   .10             
+000888 EC?? F???      00822         call    LCD_delay_x4us
+                      00823          
+00088C 0012           00824         return
+                      00825 
+                      00826         
+00088E                00827 LCD_custom_character_set_MEDIUM   ;GHOST 0X00,  HEART 0X01,  MEDIUM_RABBIT 0X02, SUN 0X03, MOON 0X04, SM
+                            ILEY 0X05, NEUTRAL 0X06, SAD 0X07
+                      00828         
+00088E                00829 MEDIUM_RABBIT
+00088E 0E50           00830         movlw b'0001010000'   ;setting CGRAM address of first line 
+000890 EC?? F???      00831         call LCD_Send_Byte_I
+000894 0E0A           00832         movlw   .10             
+000896 EC?? F???      00833         call    LCD_delay_x4us
+00089A 0E00           00834         movlw b'00000000'    ;writing first line of rabbit
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 17
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00089C EC?? F???      00835         call LCD_Send_Byte_D
+0008A0 0E0A           00836         movlw   .10             
+0008A2 EC?? F???      00837         call    LCD_delay_x4us
+0008A6 0E51           00838         movlw b'0001010001'    ;setting CGRAM address of second line 
+0008A8 EC?? F???      00839         call LCD_Send_Byte_I
+0008AC 0E0A           00840         movlw   .10             
+0008AE EC?? F???      00841         call    LCD_delay_x4us
+0008B2 0E0A           00842         movlw b'00001010'    ;writing second line of rabbit 
+0008B4 EC?? F???      00843         call LCD_Send_Byte_D
+0008B8 0E0A           00844         movlw   .10             
+0008BA EC?? F???      00845         call    LCD_delay_x4us
+0008BE 0E52           00846         movlw b'0001010010'    ;setting CGRAM address of third line 
+0008C0 EC?? F???      00847         call LCD_Send_Byte_I
+0008C4 0E0A           00848         movlw   .10             
+0008C6 EC?? F???      00849         call    LCD_delay_x4us
+0008CA 0E0A           00850         movlw b'00001010'    ;writing third line of rabbit 
+0008CC EC?? F???      00851         call LCD_Send_Byte_D
+0008D0 0E0A           00852         movlw   .10             
+0008D2 EC?? F???      00853         call    LCD_delay_x4us
+0008D6 0E53           00854         movlw b'0001010011'    ;setting CGRAM address of fourth line 
+0008D8 EC?? F???      00855         call LCD_Send_Byte_I
+0008DC 0E0A           00856         movlw   .10             
+0008DE EC?? F???      00857         call    LCD_delay_x4us
+0008E2 0E1F           00858         movlw b'00011111'    ;writing fourth line of rabbit 
+0008E4 EC?? F???      00859         call LCD_Send_Byte_D
+0008E8 0E0A           00860         movlw   .10             
+0008EA EC?? F???      00861         call    LCD_delay_x4us
+0008EE 0E54           00862         movlw b'0001010100'    ;setting CGRAM address of fifth line 
+0008F0 EC?? F???      00863         call LCD_Send_Byte_I
+0008F4 0E0A           00864         movlw   .10             
+0008F6 EC?? F???      00865         call    LCD_delay_x4us
+0008FA 0E15           00866         movlw b'00010101'    ;writing fifth line of rabbit 
+0008FC EC?? F???      00867         call LCD_Send_Byte_D
+000900 0E0A           00868         movlw   .10             
+000902 EC?? F???      00869         call    LCD_delay_x4us
+000906 0E55           00870         movlw b'0001010101'    ;setting CGRAM address of sixth line 
+000908 EC?? F???      00871         call LCD_Send_Byte_I
+00090C 0E0A           00872         movlw   .10             
+00090E EC?? F???      00873         call    LCD_delay_x4us
+000912 0E1B           00874         movlw b'00011011'    ;writing sixth line of rabbit 
+000914 EC?? F???      00875         call LCD_Send_Byte_D
+000918 0E0A           00876         movlw   .10             
+00091A EC?? F???      00877         call    LCD_delay_x4us
+00091E 0E56           00878         movlw b'0001010110'    ;setting CGRAM address of seventh line 
+000920 EC?? F???      00879         call LCD_Send_Byte_I
+000924 0E0A           00880         movlw   .10             
+000926 EC?? F???      00881         call    LCD_delay_x4us
+00092A 0E1F           00882         movlw b'00011111'    ;writing seventh line of rabbit 
+00092C EC?? F???      00883         call LCD_Send_Byte_D
+000930 0E0A           00884         movlw   .10             
+000932 EC?? F???      00885         call    LCD_delay_x4us
+000936 0E57           00886         movlw b'0001010111'    ;setting CGRAM address of eigth line 
+000938 EC?? F???      00887         call LCD_Send_Byte_I
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 18
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00093C 0E0A           00888         movlw   .10             
+00093E EC?? F???      00889         call    LCD_delay_x4us
+000942 0E0E           00890         movlw b'00001110'    ;writing eigth line of rabbit 
+000944 EC?? F???      00891         call LCD_Send_Byte_D
+000948 0E0A           00892         movlw   .10             
+00094A EC?? F???      00893         call    LCD_delay_x4us  
+                      00894 
+00094E 0012           00895         return
+                      00896 
+000950                00897 LCD_custom_character_set_LARGE   ;GHOST 0X00,  HEART 0X01,  LARGE_RABBIT 0X02, SUN 0X03, MOON 0X04, SMIL
+                            EY 0X05, NEUTRAL 0X06, SAD 0X07
+                      00898         
+000950                00899 LARGE_RABBIT
+000950 0E50           00900         movlw b'0001010000'   ;setting CGRAM address of first line 
+000952 EC?? F???      00901         call LCD_Send_Byte_I
+000956 0E0A           00902         movlw   .10             
+000958 EC?? F???      00903         call    LCD_delay_x4us
+00095C 0E1B           00904         movlw b'00011011'    ;writing first line of rabbit
+00095E EC?? F???      00905         call LCD_Send_Byte_D
+000962 0E0A           00906         movlw   .10             
+000964 EC?? F???      00907         call    LCD_delay_x4us
+000968 0E51           00908         movlw b'0001010001'    ;setting CGRAM address of second line 
+00096A EC?? F???      00909         call LCD_Send_Byte_I
+00096E 0E0A           00910         movlw   .10             
+000970 EC?? F???      00911         call    LCD_delay_x4us
+000974 0E0A           00912         movlw b'00001010'    ;writing second line of rabbit 
+000976 EC?? F???      00913         call LCD_Send_Byte_D
+00097A 0E0A           00914         movlw   .10             
+00097C EC?? F???      00915         call    LCD_delay_x4us
+000980 0E52           00916         movlw b'0001010010'    ;setting CGRAM address of third line 
+000982 EC?? F???      00917         call LCD_Send_Byte_I
+000986 0E0A           00918         movlw   .10             
+000988 EC?? F???      00919         call    LCD_delay_x4us
+00098C 0E1F           00920         movlw b'00011111'    ;writing third line of rabbit 
+00098E EC?? F???      00921         call LCD_Send_Byte_D
+000992 0E0A           00922         movlw   .10             
+000994 EC?? F???      00923         call    LCD_delay_x4us
+000998 0E53           00924         movlw b'0001010011'    ;setting CGRAM address of fourth line 
+00099A EC?? F???      00925         call LCD_Send_Byte_I
+00099E 0E0A           00926         movlw   .10             
+0009A0 EC?? F???      00927         call    LCD_delay_x4us
+0009A4 0E15           00928         movlw b'00010101'    ;writing fourth line of rabbit 
+0009A6 EC?? F???      00929         call LCD_Send_Byte_D
+0009AA 0E0A           00930         movlw   .10             
+0009AC EC?? F???      00931         call    LCD_delay_x4us
+0009B0 0E54           00932         movlw b'0001010100'    ;setting CGRAM address of fifth line 
+0009B2 EC?? F???      00933         call LCD_Send_Byte_I
+0009B6 0E0A           00934         movlw   .10             
+0009B8 EC?? F???      00935         call    LCD_delay_x4us
+0009BC 0E1B           00936         movlw b'00011011'    ;writing fifth line of rabbit 
+0009BE EC?? F???      00937         call LCD_Send_Byte_D
+0009C2 0E0A           00938         movlw   .10             
+0009C4 EC?? F???      00939         call    LCD_delay_x4us
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 19
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0009C8 0E55           00940         movlw b'0001010101'    ;setting CGRAM address of sixth line 
+0009CA EC?? F???      00941         call LCD_Send_Byte_I
+0009CE 0E0A           00942         movlw   .10             
+0009D0 EC?? F???      00943         call    LCD_delay_x4us
+0009D4 0E1F           00944         movlw b'00011111'    ;writing sixth line of rabbit 
+0009D6 EC?? F???      00945         call LCD_Send_Byte_D
+0009DA 0E0A           00946         movlw   .10             
+0009DC EC?? F???      00947         call    LCD_delay_x4us
+0009E0 0E56           00948         movlw b'0001010110'    ;setting CGRAM address of seventh line 
+0009E2 EC?? F???      00949         call LCD_Send_Byte_I
+0009E6 0E0A           00950         movlw   .10             
+0009E8 EC?? F???      00951         call    LCD_delay_x4us
+0009EC 0E0E           00952         movlw b'00001110'    ;writing seventh line of rabbit 
+0009EE EC?? F???      00953         call LCD_Send_Byte_D
+0009F2 0E0A           00954         movlw   .10             
+0009F4 EC?? F???      00955         call    LCD_delay_x4us
+0009F8 0E57           00956         movlw b'0001010111'    ;setting CGRAM address of eigth line 
+0009FA EC?? F???      00957         call LCD_Send_Byte_I
+0009FE 0E0A           00958         movlw   .10             
+000A00 EC?? F???      00959         call    LCD_delay_x4us
+000A04 0E1F           00960         movlw b'00011111'    ;writing eigth line of rabbit 
+000A06 EC?? F???      00961         call LCD_Send_Byte_D
+000A0A 0E0A           00962         movlw   .10             
+000A0C EC?? F???      00963         call    LCD_delay_x4us
+                      00964         
+000A10 0012           00965         return 
+                      00966         
+                      00967         
+                      00968         end
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 20
 
 
 SYMBOL TABLE
@@ -546,7 +1154,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 11
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 21
 
 
 SYMBOL TABLE
@@ -605,7 +1213,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 12
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 22
 
 
 SYMBOL TABLE
@@ -632,6 +1240,7 @@ ARPT5                             00000005
 ARPT6                             00000006
 ARPT7                             00000007
 BA0                               00000004
+BABY                              00000288
 BANKED                            00000001
 BAUDCON                           00000F65
 BAUDCON1                          00000F65
@@ -663,13 +1272,13 @@ C1OUT                             00000002
 C1TSEL0                           00000000
 C1TSEL1                           00000001
 C1TSEL2                           00000002
-C2INA                             00000004
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 13
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 23
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+C2INA                             00000004
 C2INB                             00000003
 C2INC                             00000004
 C2IND                             00000005
@@ -722,13 +1331,13 @@ CCP1IF                            00000001
 CCP1IP                            00000001
 CCP1M0                            00000000
 CCP1M1                            00000001
-CCP1M2                            00000002
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 14
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 24
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+CCP1M2                            00000002
 CCP1M3                            00000003
 CCP1MD                            00000005
 CCP1OD                            00000005
@@ -781,13 +1390,13 @@ CCP5IP                            00000002
 CCP5M0                            00000000
 CCP5M1                            00000001
 CCP5M2                            00000002
-CCP5M3                            00000003
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 15
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 25
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+CCP5M3                            00000003
 CCP5MD                            00000002
 CCP5OD                            00000002
 CCP5X                             00000005
@@ -840,13 +1449,13 @@ CCP9IF                            00000006
 CCP9IP                            00000006
 CCP9M0                            00000000
 CCP9M1                            00000001
-CCP9M2                            00000002
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 16
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 26
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+CCP9M2                            00000002
 CCP9M3                            00000003
 CCP9MD                            00000006
 CCP9OD                            00000006
@@ -889,7 +1498,6 @@ CCPTMRS1                          00000F2C
 CCPTMRS2                          00000F2B
 CE                                00000005
 CFGS                              00000006
-CHECK_GROWTH                      00000176
 CHIME                             00000006
 CHS0                              00000002
 CHS1                              00000003
@@ -900,7 +1508,7 @@ CHSN0                             00000000
 CHSN1                             00000001
 CHSN2                             00000002
 CK1                               00000006
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 17
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 27
 
 
 SYMBOL TABLE
@@ -959,7 +1567,7 @@ CTMUICON                          00000F55
 CTMUIE                            00000003
 CTMUIF                            00000003
 CTMUIP                            00000003
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 18
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 28
 
 
 SYMBOL TABLE
@@ -1018,7 +1626,7 @@ ECCP1AS0                          00000004
 ECCP1AS1                          00000005
 ECCP1AS2                          00000006
 ECCP1ASE                          00000007
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 19
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 29
 
 
 SYMBOL TABLE
@@ -1058,6 +1666,7 @@ EEIE                              00000004
 EEIF                              00000004
 EEIP                              00000004
 EEPGD                             00000007
+EGG                               00000108
 EMBMD                             00000000
 EVPOL0                            00000003
 EVPOL1                            00000004
@@ -1066,9 +1675,6 @@ FERR                              00000002
 FERR1                             00000002
 FERR2                             00000002
 FLT0                              00000000
-FOOD                              00000060
-FOOD_ANIMATE                      00000066
-FOOD_Setup                        00000000
 FREE                              00000004
 FSR0                              00000000
 FSR0H                             00000FEA
@@ -1077,24 +1683,24 @@ FSR1                              00000001
 FSR1H                             00000FE2
 FSR1L                             00000FE1
 FSR2                              00000002
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 20
+FSR2H                             00000FDA
+FSR2L                             00000FD9
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 30
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-FSR2H                             00000FDA
-FSR2L                             00000FD9
 GCEN                              00000007
+GHOST                             0000070A
 GIE                               00000007
 GIEH                              00000007
 GIEL                              00000006
 GIE_GIEH                          00000007
 GO                                00000001
 GO_NOT_DONE                       00000001
-GROWTH                            00000192
-GROWTH_ANIMATE                    00000196
 HALFSEC                           00000003
+HEART                             000001C8
 HFIOFS                            00000002
 HLVDCON                           00000FA8
 HLVDEN                            00000004
@@ -1136,14 +1742,14 @@ INT2IE                            00000004
 INT2IF                            00000001
 INT2IP                            00000007
 INT2P                             00000007
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 21
+INT3                              00000003
+INT3E                             00000005
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 31
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-INT3                              00000003
-INT3E                             00000005
 INT3F                             00000002
 INT3IE                            00000005
 INT3IF                            00000002
@@ -1180,6 +1786,7 @@ KBI0                              00000004
 KBI1                              00000005
 KBI2                              00000006
 KBI3                              00000007
+LARGE_RABBIT                      00000950
 LATA                              00000F89
 LATA0                             00000000
 LATA1                             00000001
@@ -1195,13 +1802,13 @@ LATB1                             00000001
 LATB2                             00000002
 LATB3                             00000003
 LATB4                             00000004
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 22
+LATB5                             00000005
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 32
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-LATB5                             00000005
 LATB6                             00000006
 LATB7                             00000007
 LATC                              00000F8B
@@ -1254,13 +1861,13 @@ LATH4                             00000004
 LATH5                             00000005
 LATH6                             00000006
 LATH7                             00000007
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 23
+LATJ                              00000F91
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 33
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-LATJ                              00000F91
 LATJ0                             00000000
 LATJ1                             00000001
 LATJ2                             00000002
@@ -1270,19 +1877,37 @@ LATJ5                             00000005
 LATJ6                             00000006
 LATJ7                             00000007
 LB                                00000006
-LCD_Send_Byte_D                   00000000
-LCD_clear                         00000000
-LCD_custom_character_set_BABY     00000000
-LCD_custom_character_set_LARGE    00000000
-LCD_custom_character_set_MEDIUM   00000000
-LCD_custom_character_set_SMALL    00000000
-LCD_shift                         00000000
+LCD_E                             00000005
+LCD_Enable                        0000009E
+LCD_Loop_message                  00000054
+LCD_RS                            00000004
+LCD_Send_Byte_D                   0000007C
+LCD_Send_Byte_I                   00000060
+LCD_Setup                         00000000
+LCD_Write_Message                 00000052
+LCD_clear                         000000EE
+LCD_cnt_h                         00000001
+LCD_cnt_l                         00000000
+LCD_cnt_ms                        00000002
+LCD_counter                       00000004
+LCD_custom_character_set_BABY     0000070A
+LCD_custom_character_set_EGG      00000108
+LCD_custom_character_set_LARGE    00000950
+LCD_custom_character_set_MEDIUM   0000088E
+LCD_custom_character_set_SMALL    000007CC
+LCD_delay                         000000E4
+LCD_delay_ms                      000000C2
+LCD_delay_x4us                    000000D0
+LCD_shift                         000000FC
+LCD_tmp                           00000003
 LVDIE                             00000002
 LVDIF                             00000002
 LVDIP                             00000002
+MEDIUM_RABBIT                     0000088E
 MEMCON                            00000F26
 MFIOFS                            00000001
 MFIOSEL                           00000000
+MOON                              00000408
 MSK0                              00000000
 MSK1                              00000001
 MSK2                              00000002
@@ -1292,10 +1917,16 @@ MSK5                              00000005
 MSK6                              00000006
 MSK7                              00000007
 N                                 00000004
-NEW_FORM                          0000037E
+NEUTRAL                           00000588
 NOT_A                             00000005
 NOT_ADDRESS                       00000005
 NOT_BOR                           00000000
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 34
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 NOT_CM                            00000005
 NOT_CS                            00000002
 NOT_DONE                          00000001
@@ -1313,12 +1944,6 @@ NOT_T3SYNC                        00000002
 NOT_T5DONE                        00000003
 NOT_T5SYNC                        00000002
 NOT_T7DONE                        00000003
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 24
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 NOT_T7SYNC                        00000002
 NOT_TO                            00000003
 NOT_TX8                           00000006
@@ -1355,6 +1980,12 @@ P1DC4                             00000004
 P1DC5                             00000005
 P1DC6                             00000006
 P1M0                              00000006
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 35
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 P1M1                              00000007
 P1RSEN                            00000007
 P2A_PORTC                         00000001
@@ -1372,12 +2003,6 @@ P2DC6                             00000006
 P2M0                              00000006
 P2M1                              00000007
 P2RSEN                            00000007
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 25
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 P3B                               00000004
 P3C                               00000003
 P3DC0                             00000000
@@ -1414,6 +2039,12 @@ PIE2                              00000FA0
 PIE3                              00000FA3
 PIE4                              00000FB6
 PIE5                              00000FB9
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 36
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 PIE6                              00000F60
 PIR1                              00000F9E
 PIR2                              00000FA1
@@ -1431,12 +2062,6 @@ PMD2                              00000F17
 PMD3                              00000F16
 POR                               00000001
 PORTA                             00000F80
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 26
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 PORTB                             00000F81
 PORTC                             00000F82
 PORTD                             00000F83
@@ -1473,6 +2098,12 @@ PSP5                              00000005
 PSP6                              00000006
 PSP7                              00000007
 PSPCON                            00000FA7
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 37
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 PSPIE                             00000007
 PSPIF                             00000007
 PSPIP                             00000007
@@ -1490,12 +2121,6 @@ PSS3AC0                           00000002
 PSS3AC1                           00000003
 PSS3BD0                           00000000
 PSS3BD1                           00000001
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 27
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 PSTR1CON                          00000F9C
 PSTR2CON                          00000F1B
 PSTR3CON                          00000F1A
@@ -1532,6 +2157,12 @@ RC2IE                             00000005
 RC2IF                             00000005
 RC2IP                             00000005
 RC3                               00000003
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 38
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 RC4                               00000004
 RC5                               00000005
 RC6                               00000006
@@ -1549,12 +2180,6 @@ RCREG                             00000FAE
 RCREG1                            00000FAE
 RCREG2                            00000F1D
 RCSTA                             00000FAB
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 28
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 RCSTA1                            00000FAB
 RCSTA2                            00000F22
 RD                                00000000
@@ -1591,6 +2216,12 @@ RF7                               00000007
 RG0                               00000000
 RG1                               00000001
 RG2                               00000002
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 39
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 RG3                               00000003
 RG4                               00000004
 RG5                               00000005
@@ -1608,12 +2239,6 @@ RJ1                               00000001
 RJ2                               00000002
 RJ3                               00000003
 RJ4                               00000004
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 29
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 RJ5                               00000005
 RJ6                               00000006
 RJ7                               00000007
@@ -1650,12 +2275,19 @@ RX9                               00000006
 RX91                              00000006
 RX92                              00000006
 RX9D                              00000000
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 40
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 RX9D1                             00000000
 RX9D2                             00000000
 RXDTP                             00000005
 R_NOT_W                           00000002
 R_W                               00000002
 S                                 00000003
+SAD                               00000648
 SBOREN                            00000006
 SCK1                              00000003
 SCK2                              00000006
@@ -1667,12 +2299,6 @@ SCS1                              00000001
 SDA1                              00000004
 SDA2                              00000005
 SDI1                              00000004
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 30
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 SDI2                              00000005
 SDO1                              00000005
 SDO2                              00000004
@@ -1680,6 +2306,8 @@ SEN                               00000000
 SENDB                             00000003
 SENDB1                            00000003
 SENDB2                            00000003
+SMALL_RABBIT                      000007CC
+SMILEY                            000004C8
 SMP                               00000007
 SOSCEN                            00000003
 SOSCGO                            00000003
@@ -1706,6 +2334,12 @@ SREN1                             00000005
 SREN2                             00000005
 SRETEN                            00000004
 SS1                               00000007
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 41
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 SSP1ADD                           00000FC8
 SSP1BUF                           00000FC9
 SSP1CON1                          00000FC6
@@ -1726,12 +2360,6 @@ SSP2IP                            00000005
 SSP2MD                            00000002
 SSP2MSK                           00000F69
 SSP2STAT                          00000F68
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 31
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 SSPADD                            00000FC8
 SSPBUF                            00000FC9
 SSPCON1                           00000FC6
@@ -1756,6 +2384,7 @@ STRB                              00000001
 STRC                              00000002
 STRD                              00000003
 STRSYNC                           00000004
+SUN                               00000348
 SWDTE                             00000000
 SWDTEN                            00000000
 SYNC                              00000004
@@ -1764,6 +2393,12 @@ SYNC2                             00000004
 T08BIT                            00000006
 T0CKI                             00000004
 T0CON                             00000FD5
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 42
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 T0CS                              00000005
 T0IE                              00000005
 T0IF                              00000002
@@ -1785,12 +2420,6 @@ T12CON                            00000F30
 T12OUTPS0                         00000003
 T12OUTPS1                         00000004
 T12OUTPS2                         00000005
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 32
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 T12OUTPS3                         00000006
 T1CKI                             00000005
 T1CKPS0                           00000004
@@ -1823,6 +2452,12 @@ T3GGO                             00000003
 T3GGO_NOT_T3DONE                  00000003
 T3GPOL                            00000006
 T3GSPM                            00000004
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 43
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 T3GSS0                            00000000
 T3GSS1                            00000001
 T3GTM                             00000005
@@ -1844,12 +2479,6 @@ T5GGO                             00000003
 T5GGO_NOT_T5DONE                  00000003
 T5GPOL                            00000006
 T5GSPM                            00000004
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 33
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 T5GSS0                            00000000
 T5GSS1                            00000001
 T5GTM                             00000005
@@ -1882,6 +2511,12 @@ T8OUTPS0                          00000003
 T8OUTPS1                          00000004
 T8OUTPS2                          00000005
 T8OUTPS3                          00000006
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 44
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TABLAT                            00000FF5
 TBLPTR                            00000FF6
 TBLPTRH                           00000FF7
@@ -1903,12 +2538,6 @@ TMR10IP                           00000005
 TMR10MD                           00000007
 TMR10ON                           00000002
 TMR12                             00000F32
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 34
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TMR12IE                           00000006
 TMR12IF                           00000006
 TMR12IP                           00000006
@@ -1941,6 +2570,12 @@ TMR3GIE                           00000000
 TMR3GIF                           00000000
 TMR3GIP                           00000000
 TMR3H                             00000FB3
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 45
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TMR3IE                            00000001
 TMR3IF                            00000001
 TMR3IP                            00000001
@@ -1962,12 +2597,6 @@ TMR5GIF                           00000007
 TMR5GIP                           00000007
 TMR5H                             00000F7D
 TMR5IE                            00000001
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 35
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TMR5IF                            00000001
 TMR5IP                            00000001
 TMR5L                             00000F7C
@@ -2000,6 +2629,12 @@ TMR8IP                            00000004
 TMR8MD                            00000006
 TMR8ON                            00000002
 TO                                00000003
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 46
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TOS                               00000FFD
 TOSH                              00000FFE
 TOSL                              00000FFD
@@ -2021,12 +2656,6 @@ TRISB1                            00000001
 TRISB2                            00000002
 TRISB3                            00000003
 TRISB4                            00000004
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 36
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TRISB5                            00000005
 TRISB6                            00000006
 TRISB7                            00000007
@@ -2059,6 +2688,12 @@ TRISE6                            00000006
 TRISE7                            00000007
 TRISF                             00000F97
 TRISF1                            00000001
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 47
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TRISF2                            00000002
 TRISF3                            00000003
 TRISF4                            00000004
@@ -2080,12 +2715,6 @@ TRISH4                            00000004
 TRISH5                            00000005
 TRISH6                            00000006
 TRISH7                            00000007
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 37
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TRISJ                             00000F9A
 TRISJ0                            00000000
 TRISJ1                            00000001
@@ -2118,6 +2747,12 @@ TX91                              00000006
 TX92                              00000006
 TX9D                              00000000
 TX9D1                             00000000
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 48
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TX9D2                             00000000
 TXCKP                             00000004
 TXD8                              00000000
@@ -2139,12 +2774,6 @@ UA                                00000001
 UART1MD                           00000003
 UART2MD                           00000004
 UB                                00000007
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 38
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 ULPEN                             00000002
 ULPLVL                            00000005
 ULPSINK                           00000001
@@ -2177,6 +2806,12 @@ _ABW_XM20_3L                      000000CF
 _BBSIZ_BB1K_4L                    000000EF
 _BBSIZ_BB2K_4L                    000000FF
 _BOREN_NOSLP_2L                   000000FD
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 49
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 _BOREN_OFF_2L                     000000F9
 _BOREN_ON_2L                      000000FB
 _BOREN_SBORDIS_2L                 000000FF
@@ -2198,12 +2833,6 @@ _CONFIG2H                         00300003
 _CONFIG2L                         00300002
 _CONFIG3H                         00300005
 _CONFIG3L                         00300004
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 39
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 _CONFIG4L                         00300006
 _CONFIG5H                         00300009
 _CONFIG5L                         00300008
@@ -2236,6 +2865,12 @@ _DEBUG_ON_4L                      0000007F
 _DEVID1                           003FFFFE
 _DEVID2                           003FFFFF
 _EASHFT_OFF_3L                    000000F7
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 50
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 _EASHFT_ON_3L                     000000FF
 _EBRT0_OFF_7L                     000000FF
 _EBRT0_ON_7L                      000000FE
@@ -2257,12 +2892,6 @@ _EBRTB_OFF_7H                     000000FF
 _EBRTB_ON_7H                      000000BF
 _ECCPMX_PORTE_3H                  000000FF
 _ECCPMX_PORTH_3H                  000000FD
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 40
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 _FCMEN_OFF_1H                     000000BF
 _FCMEN_ON_1H                      000000FF
 _FOSC_EC1IO_1H                    000000FC
@@ -2295,6 +2924,12 @@ _MCLRE_OFF_3H                     0000007F
 _MCLRE_ON_3H                      000000FF
 _MSSPMSK_MSK5_3H                  000000F7
 _MSSPMSK_MSK7_3H                  000000FF
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 51
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 _PLLCFG_OFF_1H                    000000EF
 _PLLCFG_ON_1H                     000000FF
 _PWRTEN_OFF_2L                    000000FF
@@ -2316,12 +2951,6 @@ _WDTEN_ON_2H                      000000FE
 _WDTEN_SWDTDIS_2H                 000000FF
 _WDTPS_1024_2H                    000000AB
 _WDTPS_1048576_2H                 000000FF
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 41
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 _WDTPS_128_2H                     0000009F
 _WDTPS_131072_2H                  000000C7
 _WDTPS_16384_2H                   000000BB
@@ -2354,6 +2983,12 @@ _WRT4_ON_6L                       000000EF
 _WRT5_OFF_6L                      000000FF
 _WRT5_ON_6L                       000000DF
 _WRT6_OFF_6L                      000000FF
+MPASM 5.81                           LCD.ASM   2-17-2020  18:11:31         PAGE 52
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 _WRT6_ON_6L                       000000BF
 _WRT7_OFF_6L                      000000FF
 _WRT7_ON_6L                       0000007F
@@ -2366,49 +3001,8 @@ _WRTD_ON_6H                       0000007F
 _XINST_OFF_1L                     000000BF
 _XINST_ON_1L                      000000FF
 __18F87K22                        00000001
-__DEBUG                           
-__MPLAB_DEBUGGER_ICD3             1
-blank_bytes                       0000000D
-blank_line                        0000001C
-check_2                           00000176
-check_4                           0000017E
-check_6                           00000186
-check_medium                      00000386
-counter_blank                     00000007
-MPASM 5.81                          FOOD.ASM   2-17-2020  17:37:39         PAGE 42
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
-counter_flash_1                   00000005
-counter_flash_2                   00000006
-delay_1                           000003CE
-delay_2                           000003D8
-delay_3                           000003E2
-delay_counter_f1                  00000001
-delay_counter_f2                  00000002
-delay_counter_f3                  00000003
-flash_bytes_2                     0000000D
-flash_bytes_l                     0000000D
-flash_counter                     00000004
-flash_line_1                      00000000
-flash_line_2                      0000000E
-flashes                           00000326
-food_counter                      00000008
-food_delay                        000003CA
-large                             000003B6
-lifemode_food                     00000000
-loopb                             00000052
-loopf1                            00000016
-loopf2                            00000034
-medium                            000003A2
-nested_2                          000003D4
-nested_3                          000003DE
-output_blank                      00000042
-output_flash_1                    00000006
-output_flash_2                    00000024
-small                             0000038E
+lcdlp1                            000000E6
+lcdlp2                            000000C4
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed
