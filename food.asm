@@ -390,19 +390,27 @@ large
 
 
 food_delay
-	movlw   0xFF
+	movlw   0x40
 	movwf   delay_counter_f1
-	movlw   0xFF
-	movwf   delay_counter_f2
-	movlw   0xFF
-	movwf   delay_counter_f3
-lb1f    decfsz  delay_counter_f1
-	bra     lb1f
-lb2f    decfsz  delay_counter_f2
-	bra     lb2f
-lb3f    decfsz  delay_counter_f3
-	bra     lb3f
+delay_1       
+	decfsz  delay_counter_f1
+	bra     nested_2
 	return
+	
+nested_2
+	movlw   0x40
+	movwf   delay_counter_f2
+delay_2	decfsz  delay_counter_f2
+	bra     nested_3
+	bra     delay_1
+
+nested_3
+	movlw   0x40
+	movwf   delay_counter_f3
+delay_3
+	decfsz  delay_counter_f3
+	bra     delay_3
+	bra     delay_2
      
     
     end 

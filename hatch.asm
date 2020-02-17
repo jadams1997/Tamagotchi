@@ -42,11 +42,10 @@ output_starting_screen
 	call    LCD_Send_Byte_D
 	movlw   b'11000000'
 	call    LCD_shift 
-	movlw   0x06
+	movlw   0x05
 	call    LCD_Send_Byte_D  ;display smiley face for starting happiness 
-	movlw   0x41
-	call    LCD_Send_Byte_D  ;display an A to show in hatching mode 
 	movlw   0x03
+	call    LCD_Send_Byte_D  ;display an A to show in hatching mode 
 	movlw   b'11001001'
 	call    LCD_shift 
 	movlw   0x00   
@@ -59,11 +58,11 @@ output_hatching_sequence
 	movwf   0x20  ; register to hold the number of times the egg will vibrate 
 dynamic	movlw   b'11001000'     ;dynamic sequence shows the egg vibrating before it hatches 
 	call    LCD_shift 
-	movlw   0xDE   ;move bracket " to left of egg
+	movlw   0xb2   ;move bracket " to left of egg
 	call    LCD_Send_Byte_D
 	movlw   b'11001010'
 	call    LCD_shift 
-	movlw   0xDE   ;move bracket " to right of egg
+	movlw   0xb2   ;move bracket " to right of egg
 	call    LCD_Send_Byte_D 
 	call    hatch_delay 
 	movlw   b'11001000'
@@ -94,19 +93,19 @@ egg_blink
 	bra     egg_blink 
 crack   movlw   b'11001001'
 	call    LCD_shift 
-	movlw   0x2E   ; dot / tiny rabbit
+	movlw   0x02   ; dot / tiny rabbit
 	call    LCD_Send_Byte_D   ;Output 
 	movlw   b'11001000'
 	call    LCD_shift 
-	movlw   0x18  ;(
+	movlw   0x28  ;(
 	call    LCD_Send_Byte_D
 	movlw   b'11001010'
 	call    LCD_shift 
-	movlw   0x19  ;)
+	movlw   0x29  ;)
 	call    LCD_Send_Byte_D 
-	call    hatch_delay 
-	call    hatch_delay 
-	call    hatch_delay 
+	call    hatch_delay  
+	call    hatch_delay
+	call    hatch_delay
 	movlw   b'11001000'
 	call    LCD_shift 
 	movlw   ' '
@@ -118,18 +117,26 @@ crack   movlw   b'11001001'
 	return 
 
 hatch_delay
-	movlw   0xFF
+	movlw   0x99
 	movwf   delay_counter_h1
-	movlw   0xFF
-	movwf   delay_counter_h2
-	movlw   0xFF
-	movwf   delay_counter_h3
-lb1h    decfsz  delay_counter_h1
-	bra     lb1h
-lb2h    decfsz  delay_counter_h2
-	bra     lb2h
-lb3h    decfsz  delay_counter_h3
-	bra     lb3h
+delay_1       
+	decfsz  delay_counter_h1
+	bra     nested_2
 	return
+	
+nested_2
+	movlw   0x99
+	movwf   delay_counter_h2
+delay_2	decfsz  delay_counter_h2
+	bra     nested_3
+	bra     delay_1
+
+nested_3
+	movlw   0x99
+	movwf   delay_counter_h3
+delay_3
+	decfsz  delay_counter_h3
+	bra     delay_3
+	bra     delay_2
   
 	end

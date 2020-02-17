@@ -1,6 +1,8 @@
 #include p18f87k22.inc
 
-    global  LCD_Setup, LCD_Write_Message, LCD_Send_Byte_D, LCD_shift, LCD_clear, LCD_custom_character_set_BABY, LCD_custom_character_set_SMALL, LCD_custom_character_set_MEDIUM, LCD_custom_character_set_LARGE
+    global  LCD_Setup, LCD_Write_Message, LCD_Send_Byte_D, LCD_shift, LCD_clear
+    global  LCD_custom_character_set_BABY, LCD_custom_character_set_SMALL
+    global  LCD_custom_character_set_MEDIUM, LCD_custom_character_set_LARGE
 
 acs0    udata_acs   ; named variables in access ram
 LCD_cnt_l   res 1   ; reserve 1 byte for variable LCD_cnt_l
@@ -46,7 +48,7 @@ LCD_Setup
 
 LCD_Write_Message	    ; Message stored at FSR2, length stored in W
 	movwf   LCD_counter
-    LCD_Loop_message
+LCD_Loop_message
 	movf    POSTINC0, W
 	call    LCD_Send_Byte_D
 	decfsz  LCD_counter

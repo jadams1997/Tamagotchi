@@ -44,7 +44,11 @@ PRESS_A_TO_HATCH
 	cpfseq  Key_Pressed   ;is the key pressed A?
 	bra     MAIN          ;if not, got back to start
 	call    output_starting_screen   ;if A is pressed, output starting screen 
+	call    delay
+	call    delay
 	call    output_hatching_sequence ;carry out hatching sequence 
+	call    delay
+	call    delay 
 	call    LCD_custom_character_set_BABY
 	movlw   0xFF
 	movwf   counter_happiness_decrement ;set the counter_happiness_decrement to 255
@@ -55,6 +59,7 @@ PRESS_A_TO_HATCH
 	movlw	0x00
 	movwf   life_mode ;initialise the life mode at 0 for baby rabbit
 GAME_MODE
+	call    delay
 	movlw   0x00
 	movwf   Key_Pressed    ;reset Key_Pressed variable 
 	call    Keyboard     ;wait for keyboard input 
@@ -171,21 +176,27 @@ DEATH   ;for death, clear the LCD, send ghost
 
 
 delay
-	movlw   0xFF
+	movlw   0xff
 	movwf   delay_count_1
-	movlw   0xFF
-	movwf   delay_count_2
-	movlw   0xFF
-	movwf   delay_count_3
-lb1     decfsz  delay_count_1
-	bra     lb1
-lb2     decfsz  delay_count_2
-	bra     lb2
-lb3     decfsz  delay_count_3
-	bra     lb3
+delay_1       
+	decfsz  delay_count_1
+	bra     nested_2
 	return
-
 	
+nested_2
+	movlw   0xff
+	movwf   delay_count_2
+delay_2	decfsz  delay_count_2
+	bra     nested_3
+	bra     delay_1
+
+nested_3
+	movlw   0xff
+	movwf   delay_count_3
+delay_3
+	decfsz  delay_count_3
+	bra     delay_3
+	bra     delay_2
 
 finished
 	
