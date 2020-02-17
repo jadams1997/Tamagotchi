@@ -1,13 +1,14 @@
 #include p18f87k22.inc
 
-    extern LCD_Setup, LCD_Send_Byte_D, LCD_shift, LCD_clear, LCD_custom_character_set_2, LCD_custom_character_set_3, LCD_custom_character_set_4, Keyboard_Setup, GHOST, Keyboard, FOOD, GROWTH, LEARN, DANCE, SLEEPY, BALL_GAME, output_starting_screen, output_hatching_sequence, output_PRESS_A_TO_HATCH
+    extern LCD_Setup, LCD_Send_Byte_D, LCD_shift, LCD_clear, LCD_custom_character_set_BABY
+    extern Keyboard_Setup, Keyboard, FOOD, LEARN, DANCE, SLEEPY, BALL_GAME, output_starting_screen
+    extern output_hatching_sequence, output_PRESS_A_TO_HATCH, FOOD_Setup
 	
 acs0                             udata_acs
 counter_happiness                res 1 
 counter_happiness_decrement      res 1
 life_mode                        res 1
 counter_life                     res 1
-counter_food			 res 1
 delay_count_1                    res 1
 delay_count_2                    res 1
 delay_count_3                    res 1
@@ -15,7 +16,6 @@ tables	                         udata 0x400
 myArray                          res 0x80 
 Key_Pressed                      res 0x40
  
-
 
 tamagotchi code
  
@@ -27,7 +27,8 @@ setup	bcf	EECON1, CFGS	; point to Flash program memory
 	bsf	EECON1, EEPGD 	; access Flash program memory
 	call	LCD_Setup	; setup LCD
 	call    Keyboard_Setup  ; setup keyboard 
-	goto    main
+	call    FOOD_Setup 
+	goto    MAIN
 	
 MAIN 
 	nop
@@ -44,17 +45,15 @@ PRESS_A_TO_HATCH
 	bra     MAIN          ;if not, got back to start
 	call    output_starting_screen   ;if A is pressed, output starting screen 
 	call    output_hatching_sequence ;carry out hatching sequence 
-	call    LCD_custom_character_set_2
+	call    LCD_custom_character_set_BABY
 	movlw   0xFF
 	movwf   counter_happiness_decrement ;set the counter_happiness_decrement to 255
 	movlw   0x64
 	movwf   counter_happiness  ;counter_happiness to 100
 	movlw   0x03          
 	movwf   counter_life ;counter_life to 3
-	movlw	0x01
-	movwf   life_mode ;initialise the life mode at 1 for baby rabbit
 	movlw	0x00
-	movwf   counter_food ;food counter initialised at 0
+	movwf   life_mode ;initialise the life mode at 0 for baby rabbit
 GAME_MODE
 	movlw   0x00
 	movwf   Key_Pressed    ;reset Key_Pressed variable 
@@ -98,45 +97,18 @@ CHECK_F_PRESSED
 	cpfseq  Key_Pressed 
 	bra     dch     ;if no key is pressed, decrement the happiness counter
 	movf    life_mode, W
-	call    FOOD  ; if F is pressed, go to FOOD
-	call	delay
-	call    delay
-	call    delay
-	movlw   0x01
-	addwf   counter_food
-	movlw   0x10
-	cpfseq  counter_food
-	bra     CHECK_Medium
-	movf	life_mode, W   
-	call    GROWTH
-	movlw   0x01
-	addwf	life_mode, 1
-CHECK_Medium	
-	movlw   0x25
-	cpfseq  counter_food
-	bra	CHECK_Large
-	movf	life_mode, W
-	call    GROWTH
-	movlw   0x01
-	addwf	life_mode, 1
-CHECK_Large
-	movlw   0x50
-	cpfseq  counter_food
-	bra	GAME_MODE
-	movf	life_mode, W 
-	call    GROWTH
-	movlw   0x01
-	addwf	life_mode, 1
-	bra     GAME_MODE
+	call    FOOD; if F is pressed, go to FOOD.  Food returns new life_mode
+	movwf   life_mode 
 dch	decfsz  counter_happiness_decrement
 	bra     GAME_MODE
 	movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter happiness by 1
-	subwf   counter_happiness
+	subwf   counter_happiness, 1
 	call    HAPPINESS  ;call happiness, to update smiley, keep track of happiness, lives and death 
+	movlw   0x64
+	movwf	counter_happiness_decrement ;reset counter_happiness_decrement to 100
+	bra	GAME_MODE
 	
-	
-	
-	
+
 	
 HAPPINESS	
 	movlw   0x00

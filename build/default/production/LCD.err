@@ -1,1 +1,2 @@
-Warning[207] H:\TAMAGOTCHI\TAMAGOTCHI.X\LCD.ASM 54 : Found label after column 1. (LCD_Loop_message)
+Error[113]   H:\TAMAGOTCHI\TAMAGOTCHI.X\LCD.ASM 3 : Symbol not previously defined (LCD_custom_character_se)
+Warning[207] H:\TAM
