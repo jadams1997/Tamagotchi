@@ -1,8 +1,8 @@
 #include p18f87k22.inc
 
     global  LCD_Setup, LCD_Write_Message, LCD_Send_Byte_D, LCD_shift, LCD_clear
-    global  LCD_custom_character_set_BABY, LCD_custom_character_set_SMALL
-    global  LCD_custom_character_set_MEDIUM, LCD_custom_character_set_LARGE
+    global  BABY, SMALL_RABBIT
+    global  MEDIUM_RABBIT, LARGE_RABBIT, GHOST, MOON, DISCO_1, DISCO_2
     global  LCD_custom_character_set_EGG
 
 acs0    udata_acs   ; named variables in access ram
@@ -683,7 +683,7 @@ SAD
 	
 	return 
 	
-LCD_custom_character_set_BABY  ;GHOST 0X00,  HEART 0X01,  BABY 0X02, SUN 0X03, MOON 0X04, SMILEY 0X05, NEUTRAL 0X06, SAD 0X07
+;GHOST 0X00,  HEART 0X01,  BABY 0X02, SUN 0X03, MOON 0X04, SMILEY 0X05, NEUTRAL 0X06, SAD 0X07
 	
 GHOST
 	movlw b'0001000000'   ;setting CGRAM address of first line 
@@ -753,7 +753,7 @@ GHOST
 
 	return
 	
-LCD_custom_character_set_SMALL  ;GHOST 0X00,  HEART 0X01,  SMALL_RABBIT 0X02, SUN 0X03, MOON 0X04, SMILEY 0X05, NEUTRAL 0X06, SAD 0X07
+;GHOST 0X00,  HEART 0X01,  SMALL_RABBIT 0X02, SUN 0X03, MOON 0X04, SMILEY 0X05, NEUTRAL 0X06, SAD 0X07
 	
 SMALL_RABBIT
 	movlw b'0001010000'   ;setting CGRAM address of first line 
@@ -823,8 +823,7 @@ SMALL_RABBIT
 	 
 	return
 
-	
-LCD_custom_character_set_MEDIUM   ;GHOST 0X00,  HEART 0X01,  MEDIUM_RABBIT 0X02, SUN 0X03, MOON 0X04, SMILEY 0X05, NEUTRAL 0X06, SAD 0X07
+  ;GHOST 0X00,  HEART 0X01,  MEDIUM_RABBIT 0X02, SUN 0X03, MOON 0X04, SMILEY 0X05, NEUTRAL 0X06, SAD 0X07
 	
 MEDIUM_RABBIT
 	movlw b'0001010000'   ;setting CGRAM address of first line 
@@ -894,7 +893,7 @@ MEDIUM_RABBIT
 
 	return
 
-LCD_custom_character_set_LARGE   ;GHOST 0X00,  HEART 0X01,  LARGE_RABBIT 0X02, SUN 0X03, MOON 0X04, SMILEY 0X05, NEUTRAL 0X06, SAD 0X07
+ ;GHOST 0X00,  HEART 0X01,  LARGE_RABBIT 0X02, SUN 0X03, MOON 0X04, SMILEY 0X05, NEUTRAL 0X06, SAD 0X07
 	
 LARGE_RABBIT
 	movlw b'0001010000'   ;setting CGRAM address of first line 
@@ -964,6 +963,143 @@ LARGE_RABBIT
 	
 	return 
 	
+DISCO_1
+	
+	movlw b'0001000000'   ;setting CGRAM address of first line 
+	call LCD_Send_Byte_I
+	movlw	.10		
+	call	LCD_delay_x4us
+	movlw b'00000100'    ;writing first line 
+	call LCD_Send_Byte_D
+        movlw	.10		
+	call	LCD_delay_x4us
+	movlw b'0001000001'    ;setting CGRAM address of second line 
+	call LCD_Send_Byte_I
+	movlw	.10		
+	call	LCD_delay_x4us
+        movlw b'00000100'    ;writing second line 
+	call LCD_Send_Byte_D
+        movlw	.10		
+	call	LCD_delay_x4us
+        movlw b'0001000010'    ;setting CGRAM address of third line 
+	call LCD_Send_Byte_I
+	movlw	.10		
+	call	LCD_delay_x4us
+        movlw b'00001110'    ;writing third line 
+	call LCD_Send_Byte_D
+        movlw	.10		
+	call	LCD_delay_x4us
+	movlw b'0001000011'    ;setting CGRAM address of fourth line 
+	call LCD_Send_Byte_I
+	movlw	.10		
+	call	LCD_delay_x4us
+        movlw b'00010101'    ;writing fourth line 
+	call LCD_Send_Byte_D
+        movlw	.10		
+	call	LCD_delay_x4us
+	movlw b'0001000100'    ;setting CGRAM address of fifth line 
+	call LCD_Send_Byte_I
+	movlw	.10		
+	call	LCD_delay_x4us
+        movlw b'00011011'    ;writing fifth line 
+	call LCD_Send_Byte_D
+        movlw	.10		
+	call	LCD_delay_x4us
+	movlw b'0001000101'    ;setting CGRAM address of sixth line 
+	call LCD_Send_Byte_I
+	movlw	.10		
+	call	LCD_delay_x4us
+        movlw b'00010101'    ;writing sixth line 
+	call LCD_Send_Byte_D
+        movlw	.10		
+	call	LCD_delay_x4us
+	movlw b'0001000110'    ;setting CGRAM address of seventh line 
+	call LCD_Send_Byte_I
+	movlw	.10		
+	call	LCD_delay_x4us
+        movlw b'00001110'    ;writing seventh line 
+	call LCD_Send_Byte_D
+        movlw	.10		
+	call	LCD_delay_x4us
+	movlw b'0001000111'    ;setting CGRAM address of eigth line 
+	call LCD_Send_Byte_I
+	movlw	.10		
+	call	LCD_delay_x4us
+        movlw b'00000000'    ;writing eigth line 
+	call    LCD_Send_Byte_D
+        movlw	.10		
+	call	LCD_delay_x4us 
+
+	return
+	
+DISCO_2
+	
+	movlw b'0001100000'   ;setting CGRAM address of first line 
+	call LCD_Send_Byte_I
+	movlw	.10		
+	call	LCD_delay_x4us
+	movlw b'00000100'    ;writing first line of rabbit
+	call LCD_Send_Byte_D
+        movlw	.10		
+	call	LCD_delay_x4us
+	movlw b'0001100001'    ;setting CGRAM address of second line 
+	call LCD_Send_Byte_I
+	movlw	.10		
+	call	LCD_delay_x4us
+        movlw b'00000100'    ;writing second line of rabbit 
+	call LCD_Send_Byte_D
+        movlw	.10		
+	call	LCD_delay_x4us
+        movlw b'0001100010'    ;setting CGRAM address of third line 
+	call LCD_Send_Byte_I
+	movlw	.10		
+	call	LCD_delay_x4us
+        movlw b'00001110'    ;writing third line of rabbit 
+	call LCD_Send_Byte_D
+        movlw	.10		
+	call	LCD_delay_x4us
+	movlw b'0001100011'    ;setting CGRAM address of fourth line 
+	call LCD_Send_Byte_I
+	movlw	.10		
+	call	LCD_delay_x4us
+        movlw b'00011011'    ;writing fourth line of rabbit 
+	call LCD_Send_Byte_D
+        movlw	.10		
+	call	LCD_delay_x4us
+	movlw b'0001100100'    ;setting CGRAM address of fifth line 
+	call LCD_Send_Byte_I
+	movlw	.10		
+	call	LCD_delay_x4us
+        movlw b'00010101'    ;writing fifth line of rabbit 
+	call LCD_Send_Byte_D
+        movlw	.10		
+	call	LCD_delay_x4us
+	movlw b'0001100101'    ;setting CGRAM address of sixth line 
+	call LCD_Send_Byte_I
+	movlw	.10		
+	call	LCD_delay_x4us
+        movlw b'00011011'    ;writing sixth line of rabbit 
+	call LCD_Send_Byte_D
+        movlw	.10		
+	call	LCD_delay_x4us
+	movlw b'0001100110'    ;setting CGRAM address of seventh line 
+	call LCD_Send_Byte_I
+	movlw	.10		
+	call	LCD_delay_x4us
+        movlw b'00001110'    ;writing seventh line of rabbit 
+	call LCD_Send_Byte_D
+        movlw	.10		
+	call	LCD_delay_x4us
+	movlw b'0001100111'    ;setting CGRAM address of eigth line 
+	call LCD_Send_Byte_I
+	movlw	.10		
+	call	LCD_delay_x4us
+        movlw b'00000000'    ;writing eigth line of rabbit 
+	call LCD_Send_Byte_D
+        movlw	.10		
+	call	LCD_delay_x4us
+	
+	return
 	
 	end
 

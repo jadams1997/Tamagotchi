@@ -1,14 +1,15 @@
 #include p18f87k22.inc
 
-    extern LCD_Setup, LCD_Send_Byte_D, LCD_shift, LCD_clear, LCD_custom_character_set_EGG
+    extern LCD_Setup, LCD_Send_Byte_D, LCD_shift, LCD_clear
     extern FOOD, LEARN, DANCE, SLEEPY, BALL_GAME, output_starting_screen
     extern output_hatching_sequence, output_PRESS_A_TO_HATCH, FOOD_Setup
-    extern LCD_custom_character_set_BABY
+    extern BABY
 	
 acs0                             udata_acs
-counter_happiness                res 1 
+counter_happiness                res 1
 counter_happiness_decrement      res 1
 counter_happiness_decrement_2    res 1
+counter_happiness_decrement_3    res 1
 life_mode                        res 1
 counter_life                     res 1
 delay_count_1                    res 1
@@ -57,13 +58,15 @@ PRESS_A_TO_HATCH
 	movwf   counter_happiness_decrement ;set the counter_happiness_decrement to 255
 	movlw   0xFE
 	movwf	counter_happiness_decrement_2
+	movlw   0x01
+	movwf   counter_happiness_decrement_3
 	movlw   0xF4
 	movwf   counter_happiness  ;counter_happiness to 100
 	movlw   0x03          
 	movwf   counter_life ;counter_life to 3
 	movlw	0x0
 	movwf   life_mode ;initialise the life mode at 0 for baby rabbit
-	call    LCD_custom_character_set_BABY
+	call    BABY
 GAME_MODE
 	movlw   0x00
 	movwf   Key_Pressed    ;reset Key_Pressed variable 
@@ -109,8 +112,8 @@ CHECK_F_PRESSED
 	movf    life_mode, W
 	call    FOOD; if F is pressed, go to FOOD.  Food returns new life_mode
 	movwf   life_mode
-	movlw	0x0A
-	addwf	counter_happiness, 1
+	movlw	0xf4
+	movwf	counter_happiness
 	call	HAPPINESS
 	bra     GAME_MODE
 	
@@ -327,7 +330,13 @@ dch1	decfsz  counter_happiness_decrement
 dch2    movlw	0xFE
 	movwf	counter_happiness_decrement
 	bra	read_row
-dch3	movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter happiness by 1
+dch3	decfsz  counter_happiness_decrement_3
+	bra	dch4
+	bra     dch5
+dch4	movlw	0xFE
+	movwf	counter_happiness_decrement_2
+	bra	read_row	
+dch5	movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter happiness by 1
 	subwf   counter_happiness, 1
 	call    HAPPINESS  ;call happiness, to update smiley, keep track of happiness, lives and death 
 	movlw   0x00
@@ -337,6 +346,8 @@ dch3	movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter ha
 	movwf	counter_happiness_decrement ;reset counter_happiness_decrement to 100
 	movlw	0xFE
 	movwf	counter_happiness_decrement_2
+	movlw	0x01
+	movwf	counter_happiness_decrement_3
 	bra	read_row
 	
 	

@@ -1,8 +1,8 @@
 #include p18f87k22.inc
 
-    extern LCD_Send_Byte_D, LCD_shift, LCD_clear, LCD_custom_character_set_BABY
-    extern LCD_custom_character_set_SMALL, LCD_custom_character_set_MEDIUM
-    extern LCD_custom_character_set_LARGE
+    extern LCD_Send_Byte_D, LCD_shift, LCD_clear
+    extern SMALL_RABBIT, MEDIUM_RABBIT
+    extern LARGE_RABBIT
     global FOOD, FOOD_Setup
 
 
@@ -179,17 +179,17 @@ FOOD_ANIMATE
 	call    LCD_Send_Byte_D ;back at centre
 CHECK_GROWTH
 check_2
-	movlw   0x02
+	movlw   0x0A
 	cpfseq  food_counter 
 	bra     check_4
 	bra     GROWTH
 check_4
-	movlw   0x04
+	movlw   0x19
 	cpfseq  food_counter 
 	bra     check_6
 	bra     GROWTH
 check_6
-	movlw   0x06
+	movlw   0x32
 	cpfseq  food_counter
 	bra     back
 	bra     GROWTH
@@ -359,7 +359,7 @@ check_medium
 	bra     large 
 	bra     medium
 small 
-	call    LCD_custom_character_set_SMALL
+	call    SMALL_RABBIT
 	movlw   b'11001001';0x49
 	call    LCD_shift
 	movlw   0x02
@@ -367,7 +367,7 @@ small
 	movf    lifemode_food, W
 	return 
 medium 
-	call    LCD_custom_character_set_MEDIUM
+	call    MEDIUM_RABBIT
 	movlw   b'11001001'
 	call    LCD_shift
 	movlw   0x02
@@ -375,7 +375,7 @@ medium
 	movf    lifemode_food, W
 	return 
 large 
-	call    LCD_custom_character_set_LARGE
+	call    LARGE_RABBIT
 	movlw   b'11001001'
 	call    LCD_shift
 	movlw   0x02
