@@ -184,16 +184,17 @@ check_2
 	bra     check_4
 	bra     GROWTH
 check_4
-	movlw   0x4
+	movlw   0x04
 	cpfseq  food_counter 
 	bra     check_6
 	bra     GROWTH
 check_6
-	movlw   0x6
+	movlw   0x06
 	cpfseq  food_counter
-	return 
+	bra     back
 	bra     GROWTH
-	
+back    movf    lifemode_food, W
+	return 
 	
 GROWTH
 	movlw   0x01

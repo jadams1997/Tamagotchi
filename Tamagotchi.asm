@@ -54,7 +54,7 @@ PRESS_A_TO_HATCH
 	movwf   counter_happiness  ;counter_happiness to 100
 	movlw   0x03          
 	movwf   counter_life ;counter_life to 3
-	movlw	0x00
+	movlw	0x0
 	movwf   life_mode ;initialise the life mode at 0 for baby rabbit
 GAME_MODE
 	movlw   0x00
@@ -100,7 +100,7 @@ CHECK_F_PRESSED
 	bra     dch     ;if no key is pressed, decrement the happiness counter
 	movf    life_mode, W
 	call    FOOD; if F is pressed, go to FOOD.  Food returns new life_mode
-	movwf   life_mode 
+	movwf   life_mode	
 	bra     GAME_MODE
 dch	decfsz  counter_happiness_decrement
 	bra     GAME_MODE
