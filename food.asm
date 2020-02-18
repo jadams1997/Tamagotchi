@@ -199,11 +199,13 @@ GROWTH
 	movlw   0x01
 	addwf   lifemode_food, 1
 GROWTH_ANIMATE
+	call    food_delay
+	call	food_delay
+	call	food_delay
 	movlw   b'11001001' ;0x49   ;position
 	call    LCD_shift 
 	movlw   0x2A  ;star
 	call    LCD_Send_Byte_D
-	call    food_delay
 	call    food_delay
 	call    food_delay
 	movlw   b'11001010';0x4A
@@ -218,7 +220,6 @@ GROWTH_ANIMATE
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
-	call    food_delay
 	call    food_delay
 	call    food_delay
 	movlw   b'11001011';0x4B
@@ -239,12 +240,11 @@ GROWTH_ANIMATE
 	call    LCD_Send_Byte_D
 	call    food_delay
 	call    food_delay
-	call    food_delay
 	movlw   b'11001100';0x4C
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
-	movlw   b'10001000';0x0B
+	movlw   b'10001011';0x0B
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
@@ -258,8 +258,7 @@ GROWTH_ANIMATE
 	call    LCD_Send_Byte_D
 	call    food_delay
 	call    food_delay
-	call    food_delay
-	movlw   b'11001011';0x4D
+	movlw   b'11001101';0x4D
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
@@ -277,7 +276,6 @@ GROWTH_ANIMATE
 	call    LCD_Send_Byte_D
 	call    food_delay
 	call    food_delay
-	call    food_delay
 	movlw   b'11001110';0x4E
 	call    LCD_shift 
 	movlw   0x2A
@@ -286,7 +284,7 @@ GROWTH_ANIMATE
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
-	movlw   b'10000011';0x05
+	movlw   b'10000101';0x05
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
@@ -294,7 +292,6 @@ GROWTH_ANIMATE
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
-	call    food_delay
 	call    food_delay
 	call    food_delay
 	movlw   b'11001111';0x4F
@@ -315,7 +312,6 @@ GROWTH_ANIMATE
 	call    LCD_Send_Byte_D
 	call    food_delay
 	call    food_delay
-	call    food_delay
 	movlw   b'10001111';0x0F
 	call    LCD_shift 
 	movlw   0x2A
@@ -329,14 +325,12 @@ GROWTH_ANIMATE
 flashes	
 	call    food_delay
 	call    food_delay
-	call    food_delay
 	movlw	b'10000011';0x03
 	call	LCD_shift 
 	call	output_flash_1
 	movlw	b'11000011';0x43
 	call	LCD_shift 
 	call    output_flash_2
-	call	food_delay
 	call	food_delay
 	call	food_delay
 	movlw	b'10000011'
