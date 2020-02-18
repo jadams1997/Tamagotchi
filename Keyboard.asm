@@ -1,7 +1,7 @@
 #include p18f87k22.inc
 
 
-    global Keyboard_Setup, Keyboard
+ 
  
  
 acs0	udata_acs 

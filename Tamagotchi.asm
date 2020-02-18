@@ -1,9 +1,9 @@
 #include p18f87k22.inc
 
     extern LCD_Setup, LCD_Send_Byte_D, LCD_shift, LCD_clear, LCD_custom_character_set_EGG
-    extern Keyboard_Setup, Keyboard, FOOD, LEARN, DANCE, SLEEPY, BALL_GAME, output_starting_screen
+    extern FOOD, LEARN, DANCE, SLEEPY, BALL_GAME, output_starting_screen
     extern output_hatching_sequence, output_PRESS_A_TO_HATCH, FOOD_Setup
-    extern LCD_custom_character_set_MEDIUM
+    extern LCD_custom_character_set_BABY
 	
 acs0                             udata_acs
 counter_happiness                res 1 
@@ -14,7 +14,9 @@ delay_count_1                    res 1
 delay_count_2                    res 1
 delay_count_3                    res 1
 tables	                         udata 0x400    
-myArray                          res 0x80 
+myArray                          res 0x80 		  
+counter_row	                 res 1
+counter_column	                 res 1
 Key_Pressed                      res 0x40
  
 
@@ -37,18 +39,20 @@ MAIN
 	nop
 	call    output_PRESS_A_TO_HATCH   ;output "PRESS_A_TO_HATCH"
 PRESS_A_TO_HATCH
+	movlw   0xFF
+	movwf	counter_happiness_decrement
 	movlw   0x00
 	movwf   Key_Pressed   ;Reset the key pressed variable
         call    Keyboard      ;call keyboard for an input
 	movwf   Key_Pressed   ;waits for input
 	movlw   0x41          
 	cpfseq  Key_Pressed   ;is the key pressed A?
-	bra     MAIN          ;if not, got back to start
+	bra     PRESS_A_TO_HATCH          ;if not, got back to start
 	call    output_starting_screen   ;if A is pressed, output starting screen 
 	call    delay
 	call    delay
 	call    output_hatching_sequence ;carry out hatching sequence 	
-	movlw   0xFF
+	movlw   0xFE
 	movwf   counter_happiness_decrement ;set the counter_happiness_decrement to 255
 	movlw   0x64
 	movwf   counter_happiness  ;counter_happiness to 100
@@ -56,6 +60,7 @@ PRESS_A_TO_HATCH
 	movwf   counter_life ;counter_life to 3
 	movlw	0x0
 	movwf   life_mode ;initialise the life mode at 0 for baby rabbit
+	call    LCD_custom_character_set_BABY
 GAME_MODE
 	movlw   0x00
 	movwf   Key_Pressed    ;reset Key_Pressed variable 
@@ -97,21 +102,225 @@ CHECK_E_PRESSED
 CHECK_F_PRESSED 
 	movlw   0x46
 	cpfseq  Key_Pressed 
-	bra     dch     ;if no key is pressed, decrement the happiness counter
+	bra     GAME_MODE    ;if no key is pressed
 	movf    life_mode, W
 	call    FOOD; if F is pressed, go to FOOD.  Food returns new life_mode
 	movwf   life_mode	
 	bra     GAME_MODE
-dch	decfsz  counter_happiness_decrement
-	bra     GAME_MODE
+	
+	
+ 
+Keyboard_Setup
+        clrf LATE 
+        movlw 0xFF
+        movwf 0x20
+        call delay
+        return 
+    
+    
+Keyboard
+        call setup_row
+        bra read_row
+column
+        call setup_column
+        bra read_column
+    
+    
+setup_row 
+        movlw 0xF0
+        movwf TRISE, ACCESS  
+        bsf PADCFG1, REPU, BANKED
+        movlw 0x0F
+        movwf PORTE, ACCESS
+        movlw 0xFF
+        movwf 0x20
+        call delay
+        return 
+   
+read_row   
+	btfss PORTE, RE4
+	bra check_1
+	movlw 0x0
+	movwf counter_row
+	bra column
+check_1
+	btfss PORTE, RE5
+	bra check_2
+	movlw 0x01
+	movwf counter_row
+	bra column
+check_2
+	btfss PORTE, RE6
+	bra check_3
+	movlw 0x02
+	movwf counter_row
+	bra column
+check_3
+	btfss PORTE, RE7
+	bra   dch
+	movlw 0x03
+	movwf counter_row
+	bra column
+    
+setup_column
+	movlw 0x0F
+	movwf TRISE, ACCESS 
+	bsf PADCFG1, REPU, BANKED
+	movlw 0xF0
+	movwf PORTE, ACCESS
+	movlw 0xFF
+	movwf 0x20
+	call delay_k
+	return 
+
+read_column   
+	btfss PORTE, RE0
+	bra check_5
+	movlw 0x04
+	movwf counter_column
+	bra decode
+check_5
+	btfss PORTE, RE1
+	bra check_6
+	movlw 0x05
+	movwf counter_column
+	bra decode
+check_6
+	btfss PORTE, RE2
+	bra check_7
+	movlw 0x06
+	movwf counter_column
+	bra decode
+check_7
+	btfss PORTE, RE3
+	bra read_row
+	movlw 0x07
+	movwf counter_column
+	bra decode
+
+	
+delay_k 
+	decfsz 0x20
+	bra delay_k
+	return 
+
+decode
+	movlw 0x00
+	cpfseq counter_row
+	bra row_1
+	bra column_11
+	return 
+column_11
+	movlw 0x04
+	cpfseq counter_column
+	bra column_12
+	movlw '1'
+	return 
+column_12
+	movlw 0x05
+	cpfseq counter_column
+	bra column_13
+	movlw '2'
+	return 
+column_13
+	movlw 0x06
+	cpfseq counter_column
+	bra column_14
+	movlw '3'
+	return 
+column_14
+	movlw 'F'
+	return 
+row_1 
+	movlw 0x01
+	cpfseq counter_row
+	bra row_2
+	bra column_21
+column_21
+	movlw 0x04
+	cpfseq counter_column
+	bra column_22
+	movlw '4'
+	return 
+column_22
+	movlw 0x05
+	cpfseq counter_column
+	bra column_23
+	movlw '5'
+	return 
+column_23
+	movlw 0x06
+	cpfseq counter_column
+	bra column_24
+	movlw '6'
+	return 
+column_24
+	movlw 'E'
+	return 
+row_2
+	movlw 0x02
+	cpfseq counter_row
+	bra row_3
+	bra column_31
+column_31
+	movlw 0x04
+	cpfseq counter_column
+	bra column_32
+	movlw '7'
+	return 
+column_32
+	movlw 0x05
+	cpfseq counter_column
+	bra column_33
+	movlw '8'
+	return 
+column_33
+	movlw 0x06
+	cpfseq counter_column
+	bra column_34
+	movlw '9'
+	return 
+column_34
+	movlw 'D'
+	return 
+row_3
+	bra column_41
+column_41
+	movlw 0x04
+	cpfseq counter_column
+	bra column_42
+	movlw 'A'
+	return 
+column_42
+	movlw 0x05
+	cpfseq counter_column
+	bra column_43
+	movlw '0'
+	return 
+column_43
+	movlw 0x06
+	cpfseq counter_column
+	bra column_44
+	movlw 'B'
+	return 
+column_44
+	movlw 'C'
+	return 
+
+	
+dch	movlw   0xFF
+	cpfseq  counter_happiness_decrement
+	bra	dch1
+	bra     read_row
+dch1	decfsz  counter_happiness_decrement
+	bra     read_row
 	movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter happiness by 1
 	subwf   counter_happiness, 1
 	call    HAPPINESS  ;call happiness, to update smiley, keep track of happiness, lives and death 
-	movlw   0x64
+	movlw   0xFE
 	movwf	counter_happiness_decrement ;reset counter_happiness_decrement to 100
-	bra	GAME_MODE
+	bra	read_row
 	
-
 	
 HAPPINESS	
 	movlw   0x00
@@ -127,12 +336,18 @@ HAPPINESS
 	bra     NEUTRAL
 	bra     SAD
 HAPPY   ;update the happiness marker 
+	movlw   b'11000000'
+	call    LCD_shift 
 	movlw   0x05    ;happy face location
 	call    LCD_Send_Byte_D
 NEUTRAL
+	movlw   b'11000000'
+	call    LCD_shift 
 	movlw   0x06    ;neutral face location
 	call    LCD_Send_Byte_D
 SAD 
+	movlw   b'11000000'
+	call    LCD_shift 
 	movlw   0x07    ;sad face location 
 	call    LCD_Send_Byte_D
 	return 
@@ -161,16 +376,63 @@ ONE_LIFE_LEFT
 	movlw   ' '
 	call    LCD_Send_Byte_D
 DEATH   ;for death, clear the LCD, send ghost 
-	call    LCD_clear 
-	movlw   b'11001000'
+	call    LCD_clear
+	movlw   b'11001001'
 	call    LCD_shift 
 	movlw   0x00   ; DDRAM location of ghost
 	call    LCD_Send_Byte_D
 	call    delay 
 	call    delay 
 	call    delay 
+	call    delay
+	movlw   b'11001001'  ;45
+	call    LCD_shift 
+	movlw   ' '
+	call    LCD_Send_Byte_D
+	movlw   0x00
+	call    LCD_Send_Byte_D
 	call    delay 
-	bra     finished 
+	movlw   b'11001010'
+	call    LCD_shift 
+	movlw   ' '
+	call    LCD_Send_Byte_D
+	movlw   0x00
+	call    LCD_Send_Byte_D
+	call    delay 
+	movlw   b'11001011'
+	call    LCD_shift 
+	movlw   ' '
+	call    LCD_Send_Byte_D
+	movlw   0x00
+	call    LCD_Send_Byte_D
+	call    delay 
+	movlw   b'11001100'
+	call    LCD_shift 
+	movlw   ' '
+	call    LCD_Send_Byte_D
+	movlw   0x00
+	call    LCD_Send_Byte_D
+	call	delay
+	movlw   b'11001101'  ;45
+	call    LCD_shift 
+	movlw   ' '
+	call    LCD_Send_Byte_D
+	movlw   0x00
+	call    LCD_Send_Byte_D
+	call    delay 
+	movlw   b'11001110'
+	call    LCD_shift 
+	movlw   ' '
+	call    LCD_Send_Byte_D
+	movlw   0x00
+	call    LCD_Send_Byte_D
+	call    delay 
+	movlw   b'11001111'
+	call    LCD_shift 
+	movlw   ' '
+	call    LCD_Send_Byte_D
+	bra     setup
+
 
 
 delay
