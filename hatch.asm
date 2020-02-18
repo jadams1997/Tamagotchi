@@ -53,9 +53,8 @@ output_starting_screen
 	return 	
 	
 output_hatching_sequence
-	call    hatch_delay
-	movlw   0x0F
-	movwf   0x20  ; register to hold the number of times the egg will vibrate 
+	movlw   0x05
+	movwf   0x21 ; register to hold the number of times the egg will vibrate 
 dynamic	movlw   b'11001000'     ;dynamic sequence shows the egg vibrating before it hatches 
 	call    LCD_shift 
 	movlw   0xb2   ;move bracket " to left of egg
@@ -74,10 +73,10 @@ dynamic	movlw   b'11001000'     ;dynamic sequence shows the egg vibrating before
 	movlw   ' '    ;make brackets disappear again
 	call    LCD_Send_Byte_D 
 	call    hatch_delay 
-	decfsz  0x20  ;repeat blinking 0x020 times
+	decfsz  0x21  ;repeat blinking 0x020 times
 	bra     dynamic 
 	movlw   0x05
-	movwf   0x20     ; register to hold the number of times the egg will blink in and out 
+	movwf   0x21     ; register to hold the number of times the egg will blink in and out 
 egg_blink
 	movlw   b'11001001'
 	call    LCD_shift 
@@ -89,7 +88,7 @@ egg_blink
 	movlw   ' '
 	call    LCD_Send_Byte_D 
 	call    hatch_delay 
-	decfsz  0x20
+	decfsz  0x21
 	bra     egg_blink 
 crack   movlw   b'11001001'
 	call    LCD_shift 
@@ -104,8 +103,6 @@ crack   movlw   b'11001001'
 	movlw   0x29  ;)
 	call    LCD_Send_Byte_D 
 	call    hatch_delay  
-	call    hatch_delay
-	call    hatch_delay
 	movlw   b'11001000'
 	call    LCD_shift 
 	movlw   ' '
@@ -117,7 +114,7 @@ crack   movlw   b'11001001'
 	return 
 
 hatch_delay
-	movlw   0x20
+	movlw   0x10
 	movwf   delay_counter_h1
 delay_1       
 	decfsz  delay_counter_h1
@@ -125,14 +122,14 @@ delay_1
 	return
 	
 nested_2
-	movlw   0x20
+	movlw   0x10
 	movwf   delay_counter_h2
 delay_2	decfsz  delay_counter_h2
 	bra     nested_3
 	bra     delay_1
 
 nested_3
-	movlw   0x20
+	movlw   0x10
 	movwf   delay_counter_h3
 delay_3
 	decfsz  delay_counter_h3

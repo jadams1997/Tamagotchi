@@ -52,7 +52,6 @@ PRESS_A_TO_HATCH
 	bra     PRESS_A_TO_HATCH          ;if not, got back to start
 	call    output_starting_screen   ;if A is pressed, output starting screen 
 	call    delay
-	call    delay
 	call    output_hatching_sequence ;carry out hatching sequence 	
 	movlw   0xFE
 	movwf   counter_happiness_decrement ;set the counter_happiness_decrement to 255
