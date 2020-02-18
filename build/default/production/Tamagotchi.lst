@@ -1,4 +1,4 @@
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE  1
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -24,508 +24,546 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00008 acs0                             udata_acs
 000000                00009 counter_happiness                res 1 
 000001                00010 counter_happiness_decrement      res 1
-000002                00011 life_mode                        res 1
-000003                00012 counter_life                     res 1
-000004                00013 delay_count_1                    res 1
-000005                00014 delay_count_2                    res 1
-000006                00015 delay_count_3                    res 1
-                      00016 tables                           udata 0x400    
-000400                00017 myArray                          res 0x80                 
-000480                00018 counter_row                      res 1
-000481                00019 counter_column                   res 1
-000482                00020 Key_Pressed                      res 0x40
-                      00021  
-                      00022 
-                      00023 tamagotchi code
-                      00024  
-                      00025         org     0x0
-000000 EF?? F???      00026         goto    setup
-                      00027         org     0x100
-                      00028  
-000100 9C7F           00029 setup   bcf     EECON1, CFGS    ; point to Flash program memory  
-000102 8E7F           00030         bsf     EECON1, EEPGD   ; access Flash program memory
-000104 EC?? F???      00031         call    LCD_Setup       ; setup LCD
-000108 EC?? F???      00032         call    Keyboard_Setup  ; setup keyboard 
-00010C EC?? F???      00033         call    FOOD_Setup 
-000110 EF?? F???      00034         goto    MAIN
-                      00035         
-000114                00036 MAIN 
-000114 0000           00037         nop
-000116 0000           00038         nop
-000118 0000           00039         nop
-00011A EC?? F???      00040         call    output_PRESS_A_TO_HATCH   ;output "PRESS_A_TO_HATCH"
-00011E                00041 PRESS_A_TO_HATCH
-00011E 0EFF           00042         movlw   0xFF
-000120 6E??           00043         movwf   counter_happiness_decrement
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE  2
+000002                00011 counter_happiness_decrement_2    res 1
+000003                00012 life_mode                        res 1
+000004                00013 counter_life                     res 1
+000005                00014 delay_count_1                    res 1
+000006                00015 delay_count_2                    res 1
+000007                00016 delay_count_3                    res 1
+                      00017 tables                           udata 0x400    
+000400                00018 myArray                          res 0x80                 
+000480                00019 counter_row                      res 1
+000481                00020 counter_column                   res 1
+000482                00021 Key_Pressed                      res 0x40
+                      00022  
+                      00023 
+                      00024 tamagotchi code
+                      00025  
+                      00026         org     0x0
+000000 EF?? F???      00027         goto    setup
+                      00028         org     0x100
+                      00029  
+000100 9C7F           00030 setup   bcf     EECON1, CFGS    ; point to Flash program memory  
+000102 8E7F           00031         bsf     EECON1, EEPGD   ; access Flash program memory
+000104 EC?? F???      00032         call    LCD_Setup       ; setup LCD
+000108 EC?? F???      00033         call    Keyboard_Setup  ; setup keyboard 
+00010C EC?? F???      00034         call    FOOD_Setup 
+000110 EF?? F???      00035         goto    MAIN
+                      00036         
+000114                00037 MAIN 
+000114 0000           00038         nop
+000116 0000           00039         nop
+000118 0000           00040         nop
+00011A EC?? F???      00041         call    output_PRESS_A_TO_HATCH   ;output "PRESS_A_TO_HATCH"
+00011E                00042 PRESS_A_TO_HATCH
+00011E 0EFF           00043         movlw   0xFF
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000122 0E00           00044         movlw   0x00
-000124 6E??           00045         movwf   Key_Pressed   ;Reset the key pressed variable
-000126 EC?? F???      00046         call    Keyboard      ;call keyboard for an input
-00012A 6E??           00047         movwf   Key_Pressed   ;waits for input
-00012C 0E41           00048         movlw   0x41          
-00012E 62??           00049         cpfseq  Key_Pressed   ;is the key pressed A?
-000130 D???           00050         bra     PRESS_A_TO_HATCH          ;if not, got back to start
-000132 EC?? F???      00051         call    output_starting_screen   ;if A is pressed, output starting screen 
-000136 EC?? F???      00052         call    delay
-00013A EC?? F???      00053         call    delay
-00013E EC?? F???      00054         call    output_hatching_sequence ;carry out hatching sequence   
-000142 0EFE           00055         movlw   0xFE
-000144 6E??           00056         movwf   counter_happiness_decrement ;set the counter_happiness_decrement to 255
-000146 0E64           00057         movlw   0x64
-000148 6E??           00058         movwf   counter_happiness  ;counter_happiness to 100
-00014A 0E03           00059         movlw   0x03          
-00014C 6E??           00060         movwf   counter_life ;counter_life to 3
-00014E 0E00           00061         movlw   0x0
-000150 6E??           00062         movwf   life_mode ;initialise the life mode at 0 for baby rabbit
-000152 EC?? F???      00063         call    LCD_custom_character_set_BABY
-000156                00064 GAME_MODE
-000156 0E00           00065         movlw   0x00
-000158 6E??           00066         movwf   Key_Pressed    ;reset Key_Pressed variable 
-00015A EC?? F???      00067         call    Keyboard     ;wait for keyboard input 
-00015E 6E??           00068         movwf   Key_Pressed 
-000160                00069 CHECK_A_PRESSED
-000160 0E41           00070         movlw   0x41      ;is the key pressed A?
-000162 62??           00071         cpfseq  Key_Pressed 
-000164 D???           00072         bra     CHECK_B_PRESSED   
-000166 D???           00073         bra     GAME_MODE
-000168                00074 CHECK_B_PRESSED
-000168 0E42           00075         movlw   0x42       ;is the key pressed B?
-00016A 62??           00076         cpfseq  Key_Pressed 
-00016C D???           00077         bra     CHECK_C_PRESSED
-00016E 50??           00078         movf    life_mode, W    ;save the life_mode for the game to use
-000170 EC?? F???      00079         call    BALL_GAME
-000174 D???           00080         bra     GAME_MODE
-000176                00081 CHECK_C_PRESSED
-000176 0E43           00082         movlw   0x43
-000178 62??           00083         cpfseq  Key_Pressed 
-00017A D???           00084         bra     CHECK_D_PRESSED 
-00017C 50??           00085         movf    life_mode, W
-00017E EC?? F???      00086         call    SLEEPY
-000182 D???           00087         bra     GAME_MODE
-000184                00088 CHECK_D_PRESSED
-000184 0E44           00089         movlw   0x44
-000186 62??           00090         cpfseq  Key_Pressed 
-000188 D???           00091         bra     CHECK_E_PRESSED
-00018A 50??           00092         movf    life_mode, W
-00018C EC?? F???      00093         call    DANCE
-000190 D???           00094         bra     GAME_MODE
-000192                00095 CHECK_E_PRESSED
-000192 0E45           00096         movlw   0x45
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE  3
+000120 6E??           00044         movwf   counter_happiness_decrement
+000122 0E00           00045         movlw   0x00
+000124 6E??           00046         movwf   Key_Pressed   ;Reset the key pressed variable
+000126 EC?? F???      00047         call    Keyboard      ;call keyboard for an input
+00012A 6E??           00048         movwf   Key_Pressed   ;waits for input
+00012C 0E41           00049         movlw   0x41          
+00012E 62??           00050         cpfseq  Key_Pressed   ;is the key pressed A?
+000130 D???           00051         bra     PRESS_A_TO_HATCH          ;if not, got back to start
+000132 EC?? F???      00052         call    output_starting_screen   ;if A is pressed, output starting screen 
+000136 EC?? F???      00053         call    delay
+00013A EC?? F???      00054         call    delay
+00013E EC?? F???      00055         call    output_hatching_sequence ;carry out hatching sequence   
+000142 0EFE           00056         movlw   0xFE
+000144 6E??           00057         movwf   counter_happiness_decrement ;set the counter_happiness_decrement to 255
+000146 0EFE           00058         movlw   0xFE
+000148 6E??           00059         movwf   counter_happiness_decrement_2
+00014A 0EF4           00060         movlw   0xF4
+00014C 6E??           00061         movwf   counter_happiness  ;counter_happiness to 100
+00014E 0E03           00062         movlw   0x03          
+000150 6E??           00063         movwf   counter_life ;counter_life to 3
+000152 0E00           00064         movlw   0x0
+000154 6E??           00065         movwf   life_mode ;initialise the life mode at 0 for baby rabbit
+000156 EC?? F???      00066         call    LCD_custom_character_set_BABY
+00015A                00067 GAME_MODE
+00015A 0E00           00068         movlw   0x00
+00015C 6E??           00069         movwf   Key_Pressed    ;reset Key_Pressed variable 
+00015E EC?? F???      00070         call    Keyboard     ;wait for keyboard input 
+000162 6E??           00071         movwf   Key_Pressed 
+000164                00072 CHECK_A_PRESSED
+000164 0E41           00073         movlw   0x41      ;is the key pressed A?
+000166 62??           00074         cpfseq  Key_Pressed 
+000168 D???           00075         bra     CHECK_B_PRESSED   
+00016A D???           00076         bra     GAME_MODE
+00016C                00077 CHECK_B_PRESSED
+00016C 0E42           00078         movlw   0x42       ;is the key pressed B?
+00016E 62??           00079         cpfseq  Key_Pressed 
+000170 D???           00080         bra     CHECK_C_PRESSED
+000172 50??           00081         movf    life_mode, W    ;save the life_mode for the game to use
+000174 EC?? F???      00082         call    BALL_GAME
+000178 D???           00083         bra     GAME_MODE
+00017A                00084 CHECK_C_PRESSED
+00017A 0E43           00085         movlw   0x43
+00017C 62??           00086         cpfseq  Key_Pressed 
+00017E D???           00087         bra     CHECK_D_PRESSED 
+000180 50??           00088         movf    life_mode, W
+000182 EC?? F???      00089         call    SLEEPY
+000186 D???           00090         bra     GAME_MODE
+000188                00091 CHECK_D_PRESSED
+000188 0E44           00092         movlw   0x44
+00018A 62??           00093         cpfseq  Key_Pressed 
+00018C D???           00094         bra     CHECK_E_PRESSED
+00018E 50??           00095         movf    life_mode, W
+000190 EC?? F???      00096         call    DANCE
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000194 62??           00097         cpfseq  Key_Pressed 
-000196 D???           00098         bra     CHECK_F_PRESSED
-000198 50??           00099         movf    life_mode, W
-00019A EC?? F???      00100         call    LEARN   
-00019E D???           00101         bra     GAME_MODE
-0001A0                00102 CHECK_F_PRESSED 
-0001A0 0E46           00103         movlw   0x46
-0001A2 62??           00104         cpfseq  Key_Pressed 
-0001A4 D???           00105         bra     GAME_MODE    ;if no key is pressed
-0001A6 50??           00106         movf    life_mode, W
-0001A8 EC?? F???      00107         call    FOOD; if F is pressed, go to FOOD.  Food returns new life_mode
-0001AC 6E??           00108         movwf   life_mode       
-0001AE D???           00109         bra     GAME_MODE
-                      00110         
-                      00111         
-                      00112  
-0001B0                00113 Keyboard_Setup
-0001B0 6A8D           00114         clrf LATE 
-0001B2 0EFF           00115         movlw 0xFF
-0001B4 6E20           00116         movwf 0x20
-0001B6 EC?? F???      00117         call delay
-0001BA 0012           00118         return 
-                      00119     
-                      00120     
-0001BC                00121 Keyboard
-0001BC EC?? F???      00122         call setup_row
-0001C0 D???           00123         bra read_row
-0001C2                00124 column
-0001C2 EC?? F???      00125         call setup_column
-0001C6 D???           00126         bra read_column
+000194 D???           00097         bra     GAME_MODE
+000196                00098 CHECK_E_PRESSED
+000196 0E45           00099         movlw   0x45
+000198 62??           00100         cpfseq  Key_Pressed 
+00019A D???           00101         bra     CHECK_F_PRESSED
+00019C 50??           00102         movf    life_mode, W
+00019E EC?? F???      00103         call    LEARN   
+0001A2 D???           00104         bra     GAME_MODE
+0001A4                00105 CHECK_F_PRESSED 
+0001A4 0E46           00106         movlw   0x46
+0001A6 62??           00107         cpfseq  Key_Pressed 
+0001A8 D???           00108         bra     GAME_MODE    ;if no key is pressed
+0001AA 50??           00109         movf    life_mode, W
+0001AC EC?? F???      00110         call    FOOD; if F is pressed, go to FOOD.  Food returns new life_mode
+0001B0 6E??           00111         movwf   life_mode
+0001B2 0E0A           00112         movlw   0x0A
+0001B4 2600           00113         addwf   counter_happiness, 1
+0001B6 EC?? F???      00114         call    HAPPINESS
+0001BA D???           00115         bra     GAME_MODE
+                      00116         
+                      00117         
+                      00118         
+                      00119  
+0001BC                00120 Keyboard_Setup
+0001BC 6A8D           00121         clrf LATE 
+0001BE 0EFF           00122         movlw 0xFF
+0001C0 6E20           00123         movwf 0x20
+0001C2 EC?? F???      00124         call delay
+0001C6 0012           00125         return 
+                      00126     
                       00127     
-                      00128     
-0001C8                00129 setup_row 
-0001C8 0EF0           00130         movlw 0xF0
-0001CA 6E96           00131         movwf TRISE, ACCESS  
-0001CC 8D53           00132         bsf PADCFG1, REPU, BANKED
-0001CE 0E0F           00133         movlw 0x0F
-0001D0 6E84           00134         movwf PORTE, ACCESS
-0001D2 0EFF           00135         movlw 0xFF
-0001D4 6E20           00136         movwf 0x20
-0001D6 EC?? F???      00137         call delay
-0001DA 0012           00138         return 
-                      00139    
-0001DC                00140 read_row   
-0001DC A884           00141         btfss PORTE, RE4
-0001DE D???           00142         bra check_1
-0001E0 0E00           00143         movlw 0x0
-0001E2 6E??           00144         movwf counter_row
-0001E4 D???           00145         bra column
-0001E6                00146 check_1
-0001E6 AA84           00147         btfss PORTE, RE5
-0001E8 D???           00148         bra check_2
-0001EA 0E01           00149         movlw 0x01
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE  4
+0001C8                00128 Keyboard
+0001C8 EC?? F???      00129         call setup_row
+0001CC D???           00130         bra read_row
+0001CE                00131 column
+0001CE EC?? F???      00132         call setup_column
+0001D2 D???           00133         bra read_column
+                      00134     
+                      00135     
+0001D4                00136 setup_row 
+0001D4 0EF0           00137         movlw 0xF0
+0001D6 6E96           00138         movwf TRISE, ACCESS  
+0001D8 8D53           00139         bsf PADCFG1, REPU, BANKED
+0001DA 0E0F           00140         movlw 0x0F
+0001DC 6E84           00141         movwf PORTE, ACCESS
+0001DE 0EFF           00142         movlw 0xFF
+0001E0 6E20           00143         movwf 0x20
+0001E2 EC?? F???      00144         call delay
+0001E6 0012           00145         return 
+                      00146    
+0001E8                00147 read_row   
+0001E8 A884           00148         btfss PORTE, RE4
+0001EA D???           00149         bra check_1
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0001EC 6E??           00150         movwf counter_row
-0001EE D???           00151         bra column
-0001F0                00152 check_2
-0001F0 AC84           00153         btfss PORTE, RE6
-0001F2 D???           00154         bra check_3
-0001F4 0E02           00155         movlw 0x02
-0001F6 6E??           00156         movwf counter_row
-0001F8 D???           00157         bra column
-0001FA                00158 check_3
-0001FA AE84           00159         btfss PORTE, RE7
-0001FC D???           00160         bra   dch
-0001FE 0E03           00161         movlw 0x03
-000200 6E??           00162         movwf counter_row
-000202 D???           00163         bra column
-                      00164     
-000204                00165 setup_column
-000204 0E0F           00166         movlw 0x0F
-000206 6E96           00167         movwf TRISE, ACCESS 
-000208 8D53           00168         bsf PADCFG1, REPU, BANKED
-00020A 0EF0           00169         movlw 0xF0
-00020C 6E84           00170         movwf PORTE, ACCESS
-00020E 0EFF           00171         movlw 0xFF
-000210 6E20           00172         movwf 0x20
-000212 EC?? F???      00173         call delay_k
-000216 0012           00174         return 
-                      00175 
-000218                00176 read_column   
-000218 A084           00177         btfss PORTE, RE0
-00021A D???           00178         bra check_5
-00021C 0E04           00179         movlw 0x04
-00021E 6E??           00180         movwf counter_column
-000220 D???           00181         bra decode
-000222                00182 check_5
-000222 A284           00183         btfss PORTE, RE1
-000224 D???           00184         bra check_6
-000226 0E05           00185         movlw 0x05
-000228 6E??           00186         movwf counter_column
-00022A D???           00187         bra decode
-00022C                00188 check_6
-00022C A484           00189         btfss PORTE, RE2
-00022E D???           00190         bra check_7
-000230 0E06           00191         movlw 0x06
-000232 6E??           00192         movwf counter_column
-000234 D???           00193         bra decode
-000236                00194 check_7
-000236 A684           00195         btfss PORTE, RE3
-000238 D???           00196         bra read_row
-00023A 0E07           00197         movlw 0x07
-00023C 6E??           00198         movwf counter_column
-00023E D???           00199         bra decode
-                      00200 
-                      00201         
-000240                00202 delay_k 
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE  5
+0001EC 0E00           00150         movlw 0x0
+0001EE 6E??           00151         movwf counter_row
+0001F0 D???           00152         bra column
+0001F2                00153 check_1
+0001F2 AA84           00154         btfss PORTE, RE5
+0001F4 D???           00155         bra check_2
+0001F6 0E01           00156         movlw 0x01
+0001F8 6E??           00157         movwf counter_row
+0001FA D???           00158         bra column
+0001FC                00159 check_2
+0001FC AC84           00160         btfss PORTE, RE6
+0001FE D???           00161         bra check_3
+000200 0E02           00162         movlw 0x02
+000202 6E??           00163         movwf counter_row
+000204 D???           00164         bra column
+000206                00165 check_3
+000206 AE84           00166         btfss PORTE, RE7
+000208 D???           00167         bra   dch
+00020A 0E03           00168         movlw 0x03
+00020C 6E??           00169         movwf counter_row
+00020E D???           00170         bra column
+                      00171     
+000210                00172 setup_column
+000210 0E0F           00173         movlw 0x0F
+000212 6E96           00174         movwf TRISE, ACCESS 
+000214 8D53           00175         bsf PADCFG1, REPU, BANKED
+000216 0EF0           00176         movlw 0xF0
+000218 6E84           00177         movwf PORTE, ACCESS
+00021A 0EFF           00178         movlw 0xFF
+00021C 6E20           00179         movwf 0x20
+00021E EC?? F???      00180         call delay_k
+000222 0012           00181         return 
+                      00182 
+000224                00183 read_column   
+000224 A084           00184         btfss PORTE, RE0
+000226 D???           00185         bra check_5
+000228 0E04           00186         movlw 0x04
+00022A 6E??           00187         movwf counter_column
+00022C D???           00188         bra decode
+00022E                00189 check_5
+00022E A284           00190         btfss PORTE, RE1
+000230 D???           00191         bra check_6
+000232 0E05           00192         movlw 0x05
+000234 6E??           00193         movwf counter_column
+000236 D???           00194         bra decode
+000238                00195 check_6
+000238 A484           00196         btfss PORTE, RE2
+00023A D???           00197         bra check_7
+00023C 0E06           00198         movlw 0x06
+00023E 6E??           00199         movwf counter_column
+000240 D???           00200         bra decode
+000242                00201 check_7
+000242 A684           00202         btfss PORTE, RE3
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000240 2E20           00203         decfsz 0x20
-000242 D???           00204         bra delay_k
-000244 0012           00205         return 
-                      00206 
-000246                00207 decode
-000246 0E00           00208         movlw 0x00
-000248 62??           00209         cpfseq counter_row
-00024A D???           00210         bra row_1
-00024C D???           00211         bra column_11
-00024E 0012           00212         return 
-000250                00213 column_11
-000250 0E04           00214         movlw 0x04
-000252 62??           00215         cpfseq counter_column
-000254 D???           00216         bra column_12
-000256 0E31           00217         movlw '1'
-000258 0012           00218         return 
-00025A                00219 column_12
-00025A 0E05           00220         movlw 0x05
-00025C 62??           00221         cpfseq counter_column
-00025E D???           00222         bra column_13
-000260 0E32           00223         movlw '2'
-000262 0012           00224         return 
-000264                00225 column_13
-000264 0E06           00226         movlw 0x06
-000266 62??           00227         cpfseq counter_column
-000268 D???           00228         bra column_14
-00026A 0E33           00229         movlw '3'
-00026C 0012           00230         return 
-00026E                00231 column_14
-00026E 0E46           00232         movlw 'F'
-000270 0012           00233         return 
-000272                00234 row_1 
-000272 0E01           00235         movlw 0x01
-000274 62??           00236         cpfseq counter_row
-000276 D???           00237         bra row_2
-000278 D???           00238         bra column_21
-00027A                00239 column_21
-00027A 0E04           00240         movlw 0x04
-00027C 62??           00241         cpfseq counter_column
-00027E D???           00242         bra column_22
-000280 0E34           00243         movlw '4'
-000282 0012           00244         return 
-000284                00245 column_22
-000284 0E05           00246         movlw 0x05
-000286 62??           00247         cpfseq counter_column
-000288 D???           00248         bra column_23
-00028A 0E35           00249         movlw '5'
-00028C 0012           00250         return 
-00028E                00251 column_23
-00028E 0E06           00252         movlw 0x06
-000290 62??           00253         cpfseq counter_column
-000292 D???           00254         bra column_24
-000294 0E36           00255         movlw '6'
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE  6
+000244 D???           00203         bra read_row
+000246 0E07           00204         movlw 0x07
+000248 6E??           00205         movwf counter_column
+00024A D???           00206         bra decode
+                      00207 
+                      00208         
+00024C                00209 delay_k 
+00024C 2E20           00210         decfsz 0x20
+00024E D???           00211         bra delay_k
+000250 0012           00212         return 
+                      00213 
+000252                00214 decode
+000252 0E00           00215         movlw 0x00
+000254 62??           00216         cpfseq counter_row
+000256 D???           00217         bra row_1
+000258 D???           00218         bra column_11
+00025A 0012           00219         return 
+00025C                00220 column_11
+00025C 0E04           00221         movlw 0x04
+00025E 62??           00222         cpfseq counter_column
+000260 D???           00223         bra column_12
+000262 0E31           00224         movlw '1'
+000264 0012           00225         return 
+000266                00226 column_12
+000266 0E05           00227         movlw 0x05
+000268 62??           00228         cpfseq counter_column
+00026A D???           00229         bra column_13
+00026C 0E32           00230         movlw '2'
+00026E 0012           00231         return 
+000270                00232 column_13
+000270 0E06           00233         movlw 0x06
+000272 62??           00234         cpfseq counter_column
+000274 D???           00235         bra column_14
+000276 0E33           00236         movlw '3'
+000278 0012           00237         return 
+00027A                00238 column_14
+00027A 0E46           00239         movlw 'F'
+00027C 0012           00240         return 
+00027E                00241 row_1 
+00027E 0E01           00242         movlw 0x01
+000280 62??           00243         cpfseq counter_row
+000282 D???           00244         bra row_2
+000284 D???           00245         bra column_21
+000286                00246 column_21
+000286 0E04           00247         movlw 0x04
+000288 62??           00248         cpfseq counter_column
+00028A D???           00249         bra column_22
+00028C 0E34           00250         movlw '4'
+00028E 0012           00251         return 
+000290                00252 column_22
+000290 0E05           00253         movlw 0x05
+000292 62??           00254         cpfseq counter_column
+000294 D???           00255         bra column_23
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000296 0012           00256         return 
-000298                00257 column_24
-000298 0E45           00258         movlw 'E'
-00029A 0012           00259         return 
-00029C                00260 row_2
-00029C 0E02           00261         movlw 0x02
-00029E 62??           00262         cpfseq counter_row
-0002A0 D???           00263         bra row_3
-0002A2 D???           00264         bra column_31
-0002A4                00265 column_31
-0002A4 0E04           00266         movlw 0x04
-0002A6 62??           00267         cpfseq counter_column
-0002A8 D???           00268         bra column_32
-0002AA 0E37           00269         movlw '7'
-0002AC 0012           00270         return 
-0002AE                00271 column_32
-0002AE 0E05           00272         movlw 0x05
-0002B0 62??           00273         cpfseq counter_column
-0002B2 D???           00274         bra column_33
-0002B4 0E38           00275         movlw '8'
-0002B6 0012           00276         return 
-0002B8                00277 column_33
-0002B8 0E06           00278         movlw 0x06
-0002BA 62??           00279         cpfseq counter_column
-0002BC D???           00280         bra column_34
-0002BE 0E39           00281         movlw '9'
-0002C0 0012           00282         return 
-0002C2                00283 column_34
-0002C2 0E44           00284         movlw 'D'
-0002C4 0012           00285         return 
-0002C6                00286 row_3
-0002C6 D???           00287         bra column_41
-0002C8                00288 column_41
-0002C8 0E04           00289         movlw 0x04
-0002CA 62??           00290         cpfseq counter_column
-0002CC D???           00291         bra column_42
-0002CE 0E41           00292         movlw 'A'
-0002D0 0012           00293         return 
-0002D2                00294 column_42
-0002D2 0E05           00295         movlw 0x05
-0002D4 62??           00296         cpfseq counter_column
-0002D6 D???           00297         bra column_43
-0002D8 0E30           00298         movlw '0'
-0002DA 0012           00299         return 
-0002DC                00300 column_43
-0002DC 0E06           00301         movlw 0x06
-0002DE 62??           00302         cpfseq counter_column
-0002E0 D???           00303         bra column_44
-0002E2 0E42           00304         movlw 'B'
-0002E4 0012           00305         return 
-0002E6                00306 column_44
-0002E6 0E43           00307         movlw 'C'
-0002E8 0012           00308         return 
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE  7
+000296 0E35           00256         movlw '5'
+000298 0012           00257         return 
+00029A                00258 column_23
+00029A 0E06           00259         movlw 0x06
+00029C 62??           00260         cpfseq counter_column
+00029E D???           00261         bra column_24
+0002A0 0E36           00262         movlw '6'
+0002A2 0012           00263         return 
+0002A4                00264 column_24
+0002A4 0E45           00265         movlw 'E'
+0002A6 0012           00266         return 
+0002A8                00267 row_2
+0002A8 0E02           00268         movlw 0x02
+0002AA 62??           00269         cpfseq counter_row
+0002AC D???           00270         bra row_3
+0002AE D???           00271         bra column_31
+0002B0                00272 column_31
+0002B0 0E04           00273         movlw 0x04
+0002B2 62??           00274         cpfseq counter_column
+0002B4 D???           00275         bra column_32
+0002B6 0E37           00276         movlw '7'
+0002B8 0012           00277         return 
+0002BA                00278 column_32
+0002BA 0E05           00279         movlw 0x05
+0002BC 62??           00280         cpfseq counter_column
+0002BE D???           00281         bra column_33
+0002C0 0E38           00282         movlw '8'
+0002C2 0012           00283         return 
+0002C4                00284 column_33
+0002C4 0E06           00285         movlw 0x06
+0002C6 62??           00286         cpfseq counter_column
+0002C8 D???           00287         bra column_34
+0002CA 0E39           00288         movlw '9'
+0002CC 0012           00289         return 
+0002CE                00290 column_34
+0002CE 0E44           00291         movlw 'D'
+0002D0 0012           00292         return 
+0002D2                00293 row_3
+0002D2 D???           00294         bra column_41
+0002D4                00295 column_41
+0002D4 0E04           00296         movlw 0x04
+0002D6 62??           00297         cpfseq counter_column
+0002D8 D???           00298         bra column_42
+0002DA 0E41           00299         movlw 'A'
+0002DC 0012           00300         return 
+0002DE                00301 column_42
+0002DE 0E05           00302         movlw 0x05
+0002E0 62??           00303         cpfseq counter_column
+0002E2 D???           00304         bra column_43
+0002E4 0E30           00305         movlw '0'
+0002E6 0012           00306         return 
+0002E8                00307 column_43
+0002E8 0E06           00308         movlw 0x06
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE  7
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00309 
-                      00310         
-0002EA 0EFF           00311 dch     movlw   0xFF
-0002EC 62??           00312         cpfseq  counter_happiness_decrement
-0002EE D???           00313         bra     dch1
-0002F0 D???           00314         bra     read_row
-0002F2 2E??           00315 dch1    decfsz  counter_happiness_decrement
-0002F4 D???           00316         bra     read_row
-0002F6 0E01           00317         movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter happiness by 1
-0002F8 5E00           00318         subwf   counter_happiness, 1
-0002FA EC?? F???      00319         call    HAPPINESS  ;call happiness, to update smiley, keep track of happiness, lives and death 
-0002FE 0EFE           00320         movlw   0xFE
-000300 6E??           00321         movwf   counter_happiness_decrement ;reset counter_happiness_decrement to 100
-000302 D???           00322         bra     read_row
-                      00323         
-                      00324         
-000304                00325 HAPPINESS       
-000304 0E00           00326         movlw   0x00
-000306 64??           00327         cpfsgt  counter_happiness
-000308 D???           00328         bra     LIFE  ;if counter_happiness is zero, go to decrease a life 
-00030A 0EC0           00329         movlw   b'11000000'
-00030C EC?? F???      00330         call    LCD_shift   ;shifting where the LCD writes to ammend happiness character
-000310 0E32           00331         movlw   0x32
-000312 60??           00332         cpfslt  counter_happiness 
-000314 D???           00333         bra     HAPPY
-000316 0E19           00334         movlw   0x19
-000318 60??           00335         cpfslt  counter_happiness
-00031A D???           00336         bra     NEUTRAL
-00031C D???           00337         bra     SAD
-00031E                00338 HAPPY   ;update the happiness marker 
-00031E 0EC0           00339         movlw   b'11000000'
-000320 EC?? F???      00340         call    LCD_shift 
-000324 0E05           00341         movlw   0x05    ;happy face location
-000326 EC?? F???      00342         call    LCD_Send_Byte_D
-00032A                00343 NEUTRAL
-00032A 0EC0           00344         movlw   b'11000000'
-00032C EC?? F???      00345         call    LCD_shift 
-000330 0E06           00346         movlw   0x06    ;neutral face location
-000332 EC?? F???      00347         call    LCD_Send_Byte_D
-000336                00348 SAD 
-000336 0EC0           00349         movlw   b'11000000'
-000338 EC?? F???      00350         call    LCD_shift 
-00033C 0E07           00351         movlw   0x07    ;sad face location 
-00033E EC?? F???      00352         call    LCD_Send_Byte_D
-000342 0012           00353         return 
-                      00354         
-                      00355         
-000344                00356 LIFE    ;evaluate the life counter and adjust hearts
-000344 0E01           00357         movlw   0x01
-000346 5E??           00358         subwf   counter_life 
-000348 0E02           00359         movlw   0x02
-00034A 62??           00360         cpfseq  counter_life 
-00034C D???           00361         bra     CHECK_LAST_LIFE
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE  8
+0002EA 62??           00309         cpfseq counter_column
+0002EC D???           00310         bra column_44
+0002EE 0E42           00311         movlw 'B'
+0002F0 0012           00312         return 
+0002F2                00313 column_44
+0002F2 0E43           00314         movlw 'C'
+0002F4 0012           00315         return 
+                      00316 
+                      00317         
+0002F6 0EFF           00318 dch     movlw   0xFF
+0002F8 62??           00319         cpfseq  counter_happiness_decrement
+0002FA D???           00320         bra     dch1
+0002FC D???           00321         bra     read_row
+0002FE 2E??           00322 dch1    decfsz  counter_happiness_decrement
+000300 D???           00323         bra     read_row
+000302 2E??           00324         decfsz  counter_happiness_decrement_2
+000304 D???           00325         bra     dch2
+000306 D???           00326         bra     dch3
+000308 0EFE           00327 dch2    movlw   0xFE
+00030A 6E??           00328         movwf   counter_happiness_decrement
+00030C D???           00329         bra     read_row
+00030E 0E01           00330 dch3    movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter happiness by 1
+000310 5E00           00331         subwf   counter_happiness, 1
+000312 EC?? F???      00332         call    HAPPINESS  ;call happiness, to update smiley, keep track of happiness, lives and death 
+000316 0E00           00333         movlw   0x00
+000318 64??           00334         cpfsgt  counter_happiness
+00031A EC?? F???      00335         call    LIFE  ;if counter_happiness is zero, go to decrease a life 
+00031E 0EFE           00336         movlw   0xFE
+000320 6E??           00337         movwf   counter_happiness_decrement ;reset counter_happiness_decrement to 100
+000322 0EFE           00338         movlw   0xFE
+000324 6E??           00339         movwf   counter_happiness_decrement_2
+000326 D???           00340         bra     read_row
+                      00341         
+                      00342         
+000328                00343 HAPPINESS       
+000328 0EC0           00344         movlw   b'11000000'
+00032A EC?? F???      00345         call    LCD_shift   ;shifting where the LCD writes to ammend happiness character
+00032E 0E96           00346         movlw   0x96
+000330 60??           00347         cpfslt  counter_happiness 
+000332 D???           00348         bra     HAPPY
+000334 0E32           00349         movlw   0x32
+000336 60??           00350         cpfslt  counter_happiness
+000338 D???           00351         bra     NEUTRAL
+00033A D???           00352         bra     SAD
+                      00353         
+00033C                00354 HAPPY   ;update the happiness marker 
+00033C 0EC0           00355         movlw   b'11000000'
+00033E EC?? F???      00356         call    LCD_shift 
+000342 0E05           00357         movlw   0x05    ;happy face location
+000344 EC?? F???      00358         call    LCD_Send_Byte_D
+000348 0012           00359         return 
+00034A                00360 NEUTRAL
+00034A 0EC0           00361         movlw   b'11000000'
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE  8
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00034E D???           00362         bra     TWO_LIVES_LEFT
-000350                00363 CHECK_LAST_LIFE    
-000350 0E01           00364         movlw   0x01 
-000352 62??           00365         cpfseq  counter_life
-000354 D???           00366         bra     DEATH
-000356 D???           00367         bra     ONE_LIFE_LEFT
-000358                00368 TWO_LIVES_LEFT
-000358 0E82           00369         movlw   b'10000010'
-00035A EC?? F???      00370         call    LCD_shift
-00035E 0E20           00371         movlw   ' '
-000360 EC?? F???      00372         call    LCD_Send_Byte_D
-000364                00373 ONE_LIFE_LEFT
-000364 0E81           00374         movlw   b'10000001'
-000366 EC?? F???      00375         call    LCD_shift
-00036A 0E20           00376         movlw   ' '
-00036C EC?? F???      00377         call    LCD_Send_Byte_D
-000370                00378 DEATH   ;for death, clear the LCD, send ghost 
-000370 EC?? F???      00379         call    LCD_clear
-000374 0EC9           00380         movlw   b'11001001'
-000376 EC?? F???      00381         call    LCD_shift 
-00037A 0E00           00382         movlw   0x00   ; DDRAM location of ghost
-00037C EC?? F???      00383         call    LCD_Send_Byte_D
-000380 EC?? F???      00384         call    delay 
-000384 EC?? F???      00385         call    delay 
-000388 EC?? F???      00386         call    delay 
-00038C EC?? F???      00387         call    delay
-000390 0EC9           00388         movlw   b'11001001'  ;45
-000392 EC?? F???      00389         call    LCD_shift 
-000396 0E20           00390         movlw   ' '
-000398 EC?? F???      00391         call    LCD_Send_Byte_D
-00039C 0E00           00392         movlw   0x00
-00039E EC?? F???      00393         call    LCD_Send_Byte_D
-0003A2 EC?? F???      00394         call    delay 
-0003A6 0ECA           00395         movlw   b'11001010'
-0003A8 EC?? F???      00396         call    LCD_shift 
-0003AC 0E20           00397         movlw   ' '
-0003AE EC?? F???      00398         call    LCD_Send_Byte_D
-0003B2 0E00           00399         movlw   0x00
-0003B4 EC?? F???      00400         call    LCD_Send_Byte_D
-0003B8 EC?? F???      00401         call    delay 
-0003BC 0ECB           00402         movlw   b'11001011'
-0003BE EC?? F???      00403         call    LCD_shift 
-0003C2 0E20           00404         movlw   ' '
-0003C4 EC?? F???      00405         call    LCD_Send_Byte_D
-0003C8 0E00           00406         movlw   0x00
-0003CA EC?? F???      00407         call    LCD_Send_Byte_D
-0003CE EC?? F???      00408         call    delay 
-0003D2 0ECC           00409         movlw   b'11001100'
-0003D4 EC?? F???      00410         call    LCD_shift 
-0003D8 0E20           00411         movlw   ' '
-0003DA EC?? F???      00412         call    LCD_Send_Byte_D
-0003DE 0E00           00413         movlw   0x00
-0003E0 EC?? F???      00414         call    LCD_Send_Byte_D
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE  9
+00034C EC?? F???      00362         call    LCD_shift 
+000350 0E06           00363         movlw   0x06    ;neutral face location
+000352 EC?? F???      00364         call    LCD_Send_Byte_D
+000356 0012           00365         return 
+000358                00366 SAD 
+000358 0EC0           00367         movlw   b'11000000'
+00035A EC?? F???      00368         call    LCD_shift 
+00035E 0E07           00369         movlw   0x07    ;sad face location 
+000360 EC?? F???      00370         call    LCD_Send_Byte_D
+000364 0012           00371         return 
+                      00372         
+                      00373         
+000366                00374 LIFE    ;evaluate the life counter and adjust hearts
+000366 0E01           00375         movlw   0x01
+000368 5E00           00376         subwf   counter_life, 1
+00036A 0E02           00377         movlw   0x02
+00036C 62??           00378         cpfseq  counter_life 
+00036E D???           00379         bra     CHECK_LAST_LIFE
+000370 D???           00380         bra     TWO_LIVES_LEFT
+000372                00381 CHECK_LAST_LIFE    
+000372 0E01           00382         movlw   0x01 
+000374 62??           00383         cpfseq  counter_life
+000376 D???           00384         bra     DEATH
+000378 D???           00385         bra     ONE_LIFE_LEFT
+00037A                00386 TWO_LIVES_LEFT
+00037A 0E82           00387         movlw   b'10000010'
+00037C EC?? F???      00388         call    LCD_shift
+000380 0E20           00389         movlw   ' '
+000382 EC?? F???      00390         call    LCD_Send_Byte_D
+000386 0EF4           00391         movlw   0xF4
+000388 6E??           00392         movwf   counter_happiness
+00038A 0EC0           00393         movlw   b'11000000'
+00038C EC?? F???      00394         call    LCD_shift
+000390 0E05           00395         movlw   0x05
+000392 EC?? F???      00396         call    LCD_Send_Byte_D
+000396 0012           00397         return 
+000398                00398 ONE_LIFE_LEFT
+000398 0E81           00399         movlw   b'10000001'
+00039A EC?? F???      00400         call    LCD_shift
+00039E 0E20           00401         movlw   ' '
+0003A0 EC?? F???      00402         call    LCD_Send_Byte_D
+0003A4 0EF4           00403         movlw   0xF4
+0003A6 6E??           00404         movwf   counter_happiness
+0003A8 0EC0           00405         movlw   b'11000000'
+0003AA EC?? F???      00406         call    LCD_shift
+0003AE 0E05           00407         movlw   0x05
+0003B0 EC?? F???      00408         call    LCD_Send_Byte_D
+0003B4 0012           00409         return 
+0003B6                00410 DEATH   ;for death, clear the LCD, send ghost 
+0003B6 EC?? F???      00411         call    LCD_clear
+0003BA 0EC9           00412         movlw   b'11001001'
+0003BC EC?? F???      00413         call    LCD_shift 
+0003C0 0E00           00414         movlw   0x00   ; DDRAM location of ghost
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE  9
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0003E4 EC?? F???      00415         call    delay
-0003E8 0ECD           00416         movlw   b'11001101'  ;45
-0003EA EC?? F???      00417         call    LCD_shift 
-0003EE 0E20           00418         movlw   ' '
-0003F0 EC?? F???      00419         call    LCD_Send_Byte_D
-0003F4 0E00           00420         movlw   0x00
-0003F6 EC?? F???      00421         call    LCD_Send_Byte_D
-0003FA EC?? F???      00422         call    delay 
-0003FE 0ECE           00423         movlw   b'11001110'
-000400 EC?? F???      00424         call    LCD_shift 
-000404 0E20           00425         movlw   ' '
-000406 EC?? F???      00426         call    LCD_Send_Byte_D
-00040A 0E00           00427         movlw   0x00
-00040C EC?? F???      00428         call    LCD_Send_Byte_D
-000410 EC?? F???      00429         call    delay 
-000414 0ECF           00430         movlw   b'11001111'
-000416 EC?? F???      00431         call    LCD_shift 
-00041A 0E20           00432         movlw   ' '
-00041C EC?? F???      00433         call    LCD_Send_Byte_D
-000420 D???           00434         bra     setup
-                      00435 
-                      00436 
-                      00437 
-000422                00438 delay
-000422 0EFF           00439         movlw   0xff
-000424 6E??           00440         movwf   delay_count_1
-000426                00441 delay_1       
-000426 2E??           00442         decfsz  delay_count_1
-000428 D???           00443         bra     nested_2
-00042A 0012           00444         return
-                      00445         
-00042C                00446 nested_2
-00042C 0EFF           00447         movlw   0xff
-00042E 6E??           00448         movwf   delay_count_2
-000430 2E??           00449 delay_2 decfsz  delay_count_2
-000432 D???           00450         bra     nested_3
-000434 D???           00451         bra     delay_1
-                      00452 
-000436                00453 nested_3
-000436 0EFF           00454         movlw   0xff
-000438 6E??           00455         movwf   delay_count_3
-00043A                00456 delay_3
-00043A 2E??           00457         decfsz  delay_count_3
-00043C D???           00458         bra     delay_3
-00043E D???           00459         bra     delay_2
-                      00460 
-000440                00461 finished
-                      00462         
-                      00463         end
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 10
+0003C2 EC?? F???      00415         call    LCD_Send_Byte_D
+0003C6 EC?? F???      00416         call    delay 
+0003CA EC?? F???      00417         call    delay 
+0003CE EC?? F???      00418         call    delay 
+0003D2 EC?? F???      00419         call    delay
+0003D6 0EC9           00420         movlw   b'11001001'  ;45
+0003D8 EC?? F???      00421         call    LCD_shift 
+0003DC 0E20           00422         movlw   ' '
+0003DE EC?? F???      00423         call    LCD_Send_Byte_D
+0003E2 0E00           00424         movlw   0x00
+0003E4 EC?? F???      00425         call    LCD_Send_Byte_D
+0003E8 EC?? F???      00426         call    delay 
+0003EC 0ECA           00427         movlw   b'11001010'
+0003EE EC?? F???      00428         call    LCD_shift 
+0003F2 0E20           00429         movlw   ' '
+0003F4 EC?? F???      00430         call    LCD_Send_Byte_D
+0003F8 0E00           00431         movlw   0x00
+0003FA EC?? F???      00432         call    LCD_Send_Byte_D
+0003FE EC?? F???      00433         call    delay 
+000402 0ECB           00434         movlw   b'11001011'
+000404 EC?? F???      00435         call    LCD_shift 
+000408 0E20           00436         movlw   ' '
+00040A EC?? F???      00437         call    LCD_Send_Byte_D
+00040E 0E00           00438         movlw   0x00
+000410 EC?? F???      00439         call    LCD_Send_Byte_D
+000414 EC?? F???      00440         call    delay 
+000418 0ECC           00441         movlw   b'11001100'
+00041A EC?? F???      00442         call    LCD_shift 
+00041E 0E20           00443         movlw   ' '
+000420 EC?? F???      00444         call    LCD_Send_Byte_D
+000424 0E00           00445         movlw   0x00
+000426 EC?? F???      00446         call    LCD_Send_Byte_D
+00042A EC?? F???      00447         call    delay
+00042E 0ECD           00448         movlw   b'11001101'  ;45
+000430 EC?? F???      00449         call    LCD_shift 
+000434 0E20           00450         movlw   ' '
+000436 EC?? F???      00451         call    LCD_Send_Byte_D
+00043A 0E00           00452         movlw   0x00
+00043C EC?? F???      00453         call    LCD_Send_Byte_D
+000440 EC?? F???      00454         call    delay 
+000444 0ECE           00455         movlw   b'11001110'
+000446 EC?? F???      00456         call    LCD_shift 
+00044A 0E20           00457         movlw   ' '
+00044C EC?? F???      00458         call    LCD_Send_Byte_D
+000450 0E00           00459         movlw   0x00
+000452 EC?? F???      00460         call    LCD_Send_Byte_D
+000456 EC?? F???      00461         call    delay 
+00045A 0ECF           00462         movlw   b'11001111'
+00045C EC?? F???      00463         call    LCD_shift 
+000460 0E20           00464         movlw   ' '
+000462 EC?? F???      00465         call    LCD_Send_Byte_D
+000466 D???           00466         bra     setup
+                      00467 
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 10
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00468 
+                      00469 
+000468                00470 delay
+000468 0EFF           00471         movlw   0xff
+00046A 6E??           00472         movwf   delay_count_1
+00046C                00473 delay_1       
+00046C 2E??           00474         decfsz  delay_count_1
+00046E D???           00475         bra     nested_2
+000470 0012           00476         return
+                      00477         
+000472                00478 nested_2
+000472 0EFF           00479         movlw   0xff
+000474 6E??           00480         movwf   delay_count_2
+000476 2E??           00481 delay_2 decfsz  delay_count_2
+000478 D???           00482         bra     nested_3
+00047A D???           00483         bra     delay_1
+                      00484 
+00047C                00485 nested_3
+00047C 0EFF           00486         movlw   0xff
+00047E 6E??           00487         movwf   delay_count_3
+000480                00488 delay_3
+000480 2E??           00489         decfsz  delay_count_3
+000482 D???           00490         bra     delay_3
+000484 D???           00491         bra     delay_2
+                      00492 
+000486                00493 finished
+                      00494         
+                      00495         end
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 11
 
 
 SYMBOL TABLE
@@ -584,7 +622,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 11
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 12
 
 
 SYMBOL TABLE
@@ -643,7 +681,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 12
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 13
 
 
 SYMBOL TABLE
@@ -702,7 +740,7 @@ C1OUT                             00000002
 C1TSEL0                           00000000
 C1TSEL1                           00000001
 C1TSEL2                           00000002
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 13
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 14
 
 
 SYMBOL TABLE
@@ -761,7 +799,7 @@ CCP1IF                            00000001
 CCP1IP                            00000001
 CCP1M0                            00000000
 CCP1M1                            00000001
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 14
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 15
 
 
 SYMBOL TABLE
@@ -820,7 +858,7 @@ CCP5IP                            00000002
 CCP5M0                            00000000
 CCP5M1                            00000001
 CCP5M2                            00000002
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 15
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 16
 
 
 SYMBOL TABLE
@@ -879,7 +917,7 @@ CCP9IF                            00000006
 CCP9IP                            00000006
 CCP9M0                            00000000
 CCP9M1                            00000001
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 16
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 17
 
 
 SYMBOL TABLE
@@ -928,17 +966,17 @@ CCPTMRS1                          00000F2C
 CCPTMRS2                          00000F2B
 CE                                00000005
 CFGS                              00000006
-CHECK_A_PRESSED                   00000160
-CHECK_B_PRESSED                   00000168
-CHECK_C_PRESSED                   00000176
-CHECK_D_PRESSED                   00000184
-CHECK_E_PRESSED                   00000192
-CHECK_F_PRESSED                   000001A0
-CHECK_LAST_LIFE                   00000350
+CHECK_A_PRESSED                   00000164
+CHECK_B_PRESSED                   0000016C
+CHECK_C_PRESSED                   0000017A
+CHECK_D_PRESSED                   00000188
+CHECK_E_PRESSED                   00000196
+CHECK_F_PRESSED                   000001A4
+CHECK_LAST_LIFE                   00000372
 CHIME                             00000006
 CHS0                              00000002
 CHS1                              00000003
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 17
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 18
 
 
 SYMBOL TABLE
@@ -997,7 +1035,7 @@ CTED1                             00000002
 CTED2                             00000003
 CTMUCONH                          00000F57
 CTMUCONL                          00000F56
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 18
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 19
 
 
 SYMBOL TABLE
@@ -1053,10 +1091,10 @@ DDRB                              TRISB
 DDRC                              TRISC
 DDRD                              TRISD
 DDRE                              TRISE
-DEATH                             00000370
+DEATH                             000003B6
 DONE                              00000001
 DT1                               00000007
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 19
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 20
 
 
 SYMBOL TABLE
@@ -1115,7 +1153,7 @@ FERR2                             00000002
 FLT0                              00000000
 FOOD                              00000000
 FOOD_Setup                        00000000
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 20
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 21
 
 
 SYMBOL TABLE
@@ -1131,7 +1169,7 @@ FSR1L                             00000FE1
 FSR2                              00000002
 FSR2H                             00000FDA
 FSR2L                             00000FD9
-GAME_MODE                         00000156
+GAME_MODE                         0000015A
 GCEN                              00000007
 GIE                               00000007
 GIEH                              00000007
@@ -1140,8 +1178,8 @@ GIE_GIEH                          00000007
 GO                                00000001
 GO_NOT_DONE                       00000001
 HALFSEC                           00000003
-HAPPINESS                         00000304
-HAPPY                             0000031E
+HAPPINESS                         00000328
+HAPPY                             0000033C
 HFIOFS                            00000002
 HLVDCON                           00000FA8
 HLVDEN                            00000004
@@ -1174,7 +1212,7 @@ INT1E                             00000003
 INT1F                             00000000
 INT1IE                            00000003
 INT1IF                            00000000
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 21
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 22
 
 
 SYMBOL TABLE
@@ -1228,12 +1266,12 @@ KBI1                              00000005
 KBI2                              00000006
 KBI3                              00000007
 Key_Pressed                       00000482
-Keyboard                          000001BC
-Keyboard_Setup                    000001B0
+Keyboard                          000001C8
+Keyboard_Setup                    000001BC
 LATA                              00000F89
 LATA0                             00000000
 LATA1                             00000001
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 22
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 23
 
 
 SYMBOL TABLE
@@ -1292,7 +1330,7 @@ LATF7                             00000007
 LATG                              00000F8F
 LATG0                             00000000
 LATG1                             00000001
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 23
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 24
 
 
 SYMBOL TABLE
@@ -1327,7 +1365,7 @@ LCD_custom_character_set_BABY     00000000
 LCD_custom_character_set_EGG      00000000
 LCD_shift                         00000000
 LEARN                             00000000
-LIFE                              00000344
+LIFE                              00000366
 LVDIE                             00000002
 LVDIF                             00000002
 LVDIP                             00000002
@@ -1344,14 +1382,14 @@ MSK5                              00000005
 MSK6                              00000006
 MSK7                              00000007
 N                                 00000004
-NEUTRAL                           0000032A
+NEUTRAL                           0000034A
 NOT_A                             00000005
 NOT_ADDRESS                       00000005
 NOT_BOR                           00000000
 NOT_CM                            00000005
 NOT_CS                            00000002
 NOT_DONE                          00000001
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 24
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 25
 
 
 SYMBOL TABLE
@@ -1385,7 +1423,7 @@ OE                                00000001
 OERR                              00000001
 OERR1                             00000001
 OERR2                             00000001
-ONE_LIFE_LEFT                     00000364
+ONE_LIFE_LEFT                     00000398
 OSC1                              00000007
 OSC2                              00000006
 OSCCON                            00000FD3
@@ -1410,7 +1448,7 @@ P1DC6                             00000006
 P1M0                              00000006
 P1M1                              00000007
 P1RSEN                            00000007
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 25
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 26
 
 
 SYMBOL TABLE
@@ -1469,7 +1507,7 @@ PIE4                              00000FB6
 PIE5                              00000FB9
 PIE6                              00000F60
 PIR1                              00000F9E
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 26
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 27
 
 
 SYMBOL TABLE
@@ -1528,7 +1566,7 @@ PSP6                              00000006
 PSP7                              00000007
 PSPCON                            00000FA7
 PSPIE                             00000007
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 27
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 28
 
 
 SYMBOL TABLE
@@ -1587,7 +1625,7 @@ RC2IF                             00000005
 RC2IP                             00000005
 RC3                               00000003
 RC4                               00000004
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 28
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 29
 
 
 SYMBOL TABLE
@@ -1646,7 +1684,7 @@ RG0                               00000000
 RG1                               00000001
 RG2                               00000002
 RG3                               00000003
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 29
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 30
 
 
 SYMBOL TABLE
@@ -1705,7 +1743,7 @@ RX91                              00000006
 RX92                              00000006
 RX9D                              00000000
 RX9D1                             00000000
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 30
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 31
 
 
 SYMBOL TABLE
@@ -1716,7 +1754,7 @@ RXDTP                             00000005
 R_NOT_W                           00000002
 R_W                               00000002
 S                                 00000003
-SAD                               00000336
+SAD                               00000358
 SBOREN                            00000006
 SCK1                              00000003
 SCK2                              00000006
@@ -1764,7 +1802,7 @@ SRETEN                            00000004
 SS1                               00000007
 SSP1ADD                           00000FC8
 SSP1BUF                           00000FC9
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 31
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 32
 
 
 SYMBOL TABLE
@@ -1823,7 +1861,7 @@ T0CON                             00000FD5
 T0CS                              00000005
 T0IE                              00000005
 T0IF                              00000002
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 32
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 33
 
 
 SYMBOL TABLE
@@ -1882,7 +1920,7 @@ T3GSPM                            00000004
 T3GSS0                            00000000
 T3GSS1                            00000001
 T3GTM                             00000005
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 33
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 34
 
 
 SYMBOL TABLE
@@ -1941,7 +1979,7 @@ T8OUTPS3                          00000006
 TABLAT                            00000FF5
 TBLPTR                            00000FF6
 TBLPTRH                           00000FF7
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 34
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 35
 
 
 SYMBOL TABLE
@@ -2000,7 +2038,7 @@ TMR3H                             00000FB3
 TMR3IE                            00000001
 TMR3IF                            00000001
 TMR3IP                            00000001
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 35
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 36
 
 
 SYMBOL TABLE
@@ -2059,7 +2097,7 @@ TO                                00000003
 TOS                               00000FFD
 TOSH                              00000FFE
 TOSL                              00000FFD
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 36
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 37
 
 
 SYMBOL TABLE
@@ -2118,7 +2156,7 @@ TRISF1                            00000001
 TRISF2                            00000002
 TRISF3                            00000003
 TRISF4                            00000004
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 37
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 38
 
 
 SYMBOL TABLE
@@ -2160,7 +2198,7 @@ TUN2                              00000002
 TUN3                              00000003
 TUN4                              00000004
 TUN5                              00000005
-TWO_LIVES_LEFT                    00000358
+TWO_LIVES_LEFT                    0000037A
 TX1                               00000006
 TX1IE                             00000004
 TX1IF                             00000004
@@ -2177,7 +2215,7 @@ TX9D                              00000000
 TX9D1                             00000000
 TX9D2                             00000000
 TXCKP                             00000004
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 38
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 39
 
 
 SYMBOL TABLE
@@ -2236,7 +2274,7 @@ _BBSIZ_BB2K_4L                    000000FF
 _BOREN_NOSLP_2L                   000000FD
 _BOREN_OFF_2L                     000000F9
 _BOREN_ON_2L                      000000FB
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 39
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 40
 
 
 SYMBOL TABLE
@@ -2295,7 +2333,7 @@ _DEVID2                           003FFFFF
 _EASHFT_OFF_3L                    000000F7
 _EASHFT_ON_3L                     000000FF
 _EBRT0_OFF_7L                     000000FF
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 40
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 41
 
 
 SYMBOL TABLE
@@ -2354,7 +2392,7 @@ _MSSPMSK_MSK5_3H                  000000F7
 _MSSPMSK_MSK7_3H                  000000FF
 _PLLCFG_OFF_1H                    000000EF
 _PLLCFG_ON_1H                     000000FF
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 41
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 42
 
 
 SYMBOL TABLE
@@ -2413,7 +2451,7 @@ _WRT5_ON_6L                       000000DF
 _WRT6_OFF_6L                      000000FF
 _WRT6_ON_6L                       000000BF
 _WRT7_OFF_6L                      000000FF
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 42
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 43
 
 
 SYMBOL TABLE
@@ -2429,67 +2467,70 @@ _WRTD_ON_6H                       0000007F
 _XINST_OFF_1L                     000000BF
 _XINST_ON_1L                      000000FF
 __18F87K22                        00000001
-check_1                           000001E6
-check_2                           000001F0
-check_3                           000001FA
-check_5                           00000222
-check_6                           0000022C
-check_7                           00000236
-column                            000001C2
-column_11                         00000250
-column_12                         0000025A
-column_13                         00000264
-column_14                         0000026E
-column_21                         0000027A
-column_22                         00000284
-column_23                         0000028E
-column_24                         00000298
-column_31                         000002A4
-column_32                         000002AE
-column_33                         000002B8
-column_34                         000002C2
-column_41                         000002C8
-column_42                         000002D2
-column_43                         000002DC
-column_44                         000002E6
+check_1                           000001F2
+check_2                           000001FC
+check_3                           00000206
+check_5                           0000022E
+check_6                           00000238
+check_7                           00000242
+column                            000001CE
+column_11                         0000025C
+column_12                         00000266
+column_13                         00000270
+column_14                         0000027A
+column_21                         00000286
+column_22                         00000290
+column_23                         0000029A
+column_24                         000002A4
+column_31                         000002B0
+column_32                         000002BA
+column_33                         000002C4
+column_34                         000002CE
+column_41                         000002D4
+column_42                         000002DE
+column_43                         000002E8
+column_44                         000002F2
 counter_column                    00000481
 counter_happiness                 00000000
 counter_happiness_decrement       00000001
-counter_life                      00000003
+counter_happiness_decrement_2     00000002
+counter_life                      00000004
 counter_row                       00000480
-dch                               000002EA
-dch1                              000002F2
-decode                            00000246
-delay                             00000422
-delay_1                           00000426
-delay_2                           00000430
-delay_3                           0000043A
-delay_count_1                     00000004
-delay_count_2                     00000005
-delay_count_3                     00000006
-delay_k                           00000240
-finished                          00000440
-life_mode                         00000002
-myArray                           00000400
-nested_2                          0000042C
-MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  11:53:49         PAGE 43
+dch                               000002F6
+dch1                              000002FE
+dch2                              00000308
+dch3                              0000030E
+decode                            00000252
+delay                             00000468
+delay_1                           0000046C
+delay_2                           00000476
+delay_3                           00000480
+delay_count_1                     00000005
+delay_count_2                     00000006
+delay_count_3                     00000007
+delay_k                           0000024C
+finished                          00000486
+MPASM 5.81                    TAMAGOTCHI.ASM   2-18-2020  14:48:07         PAGE 44
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-nested_3                          00000436
+life_mode                         00000003
+myArray                           00000400
+nested_2                          00000472
+nested_3                          0000047C
 output_PRESS_A_TO_HATCH           00000000
 output_hatching_sequence          00000000
 output_starting_screen            00000000
-read_column                       00000218
-read_row                          000001DC
-row_1                             00000272
-row_2                             0000029C
-row_3                             000002C6
+read_column                       00000224
+read_row                          000001E8
+row_1                             0000027E
+row_2                             000002A8
+row_3                             000002D2
 setup                             00000100
-setup_column                      00000204
-setup_row                         000001C8
+setup_column                      00000210
+setup_row                         000001D4
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed

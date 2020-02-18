@@ -8,6 +8,7 @@
 acs0                             udata_acs
 counter_happiness                res 1 
 counter_happiness_decrement      res 1
+counter_happiness_decrement_2    res 1
 life_mode                        res 1
 counter_life                     res 1
 delay_count_1                    res 1
@@ -54,7 +55,9 @@ PRESS_A_TO_HATCH
 	call    output_hatching_sequence ;carry out hatching sequence 	
 	movlw   0xFE
 	movwf   counter_happiness_decrement ;set the counter_happiness_decrement to 255
-	movlw   0x64
+	movlw   0xFE
+	movwf	counter_happiness_decrement_2
+	movlw   0xF4
 	movwf   counter_happiness  ;counter_happiness to 100
 	movlw   0x03          
 	movwf   counter_life ;counter_life to 3
@@ -105,8 +108,12 @@ CHECK_F_PRESSED
 	bra     GAME_MODE    ;if no key is pressed
 	movf    life_mode, W
 	call    FOOD; if F is pressed, go to FOOD.  Food returns new life_mode
-	movwf   life_mode	
+	movwf   life_mode
+	movlw	0x0A
+	addwf	counter_happiness, 1
+	call	HAPPINESS
 	bra     GAME_MODE
+	
 	
 	
  
@@ -314,37 +321,48 @@ dch	movlw   0xFF
 	bra     read_row
 dch1	decfsz  counter_happiness_decrement
 	bra     read_row
-	movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter happiness by 1
+	decfsz  counter_happiness_decrement_2
+	bra	dch2
+	bra     dch3
+dch2    movlw	0xFE
+	movwf	counter_happiness_decrement
+	bra	read_row
+dch3	movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter happiness by 1
 	subwf   counter_happiness, 1
 	call    HAPPINESS  ;call happiness, to update smiley, keep track of happiness, lives and death 
+	movlw   0x00
+	cpfsgt  counter_happiness
+	call    LIFE  ;if counter_happiness is zero, go to decrease a life 
 	movlw   0xFE
 	movwf	counter_happiness_decrement ;reset counter_happiness_decrement to 100
+	movlw	0xFE
+	movwf	counter_happiness_decrement_2
 	bra	read_row
 	
 	
 HAPPINESS	
-	movlw   0x00
-	cpfsgt  counter_happiness
-	bra     LIFE  ;if counter_happiness is zero, go to decrease a life 
 	movlw   b'11000000'
 	call    LCD_shift   ;shifting where the LCD writes to ammend happiness character
-	movlw   0x32
+	movlw   0x96
         cpfslt  counter_happiness 
 	bra     HAPPY
-	movlw   0x19
+	movlw   0x32
 	cpfslt  counter_happiness
 	bra     NEUTRAL
 	bra     SAD
+	
 HAPPY   ;update the happiness marker 
 	movlw   b'11000000'
 	call    LCD_shift 
 	movlw   0x05    ;happy face location
 	call    LCD_Send_Byte_D
+	return 
 NEUTRAL
 	movlw   b'11000000'
 	call    LCD_shift 
 	movlw   0x06    ;neutral face location
 	call    LCD_Send_Byte_D
+	return 
 SAD 
 	movlw   b'11000000'
 	call    LCD_shift 
@@ -355,7 +373,7 @@ SAD
 	
 LIFE    ;evaluate the life counter and adjust hearts
 	movlw   0x01
-	subwf   counter_life 
+	subwf   counter_life, 1
 	movlw   0x02
 	cpfseq  counter_life 
 	bra     CHECK_LAST_LIFE
@@ -370,11 +388,25 @@ TWO_LIVES_LEFT
 	call    LCD_shift
 	movlw   ' '
 	call    LCD_Send_Byte_D
+	movlw   0xF4
+	movwf   counter_happiness
+	movlw   b'11000000'
+	call    LCD_shift
+	movlw   0x05
+	call    LCD_Send_Byte_D
+	return 
 ONE_LIFE_LEFT
 	movlw   b'10000001'
 	call    LCD_shift
 	movlw   ' '
 	call    LCD_Send_Byte_D
+	movlw   0xF4
+	movwf   counter_happiness
+	movlw   b'11000000'
+	call    LCD_shift
+	movlw   0x05
+	call    LCD_Send_Byte_D
+	return 
 DEATH   ;for death, clear the LCD, send ghost 
 	call    LCD_clear
 	movlw   b'11001001'
