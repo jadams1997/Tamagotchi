@@ -5,20 +5,297 @@
     
 
     
-acs0		    udata_acs
-lifemode_dance 	    res 1
-delay_counter_d1    res 1
-delay_counter_d2    res 1
-delay_counter_d3    res 1
-dance_counter	    res 1    
- 
+acs0		    	udata_acs
+lifemode_dance 	    	res 1
+delay_counter_d1    	res 1
+delay_counter_d2    	res 1
+delay_counter_d3    	res 1
+dance_counter_baby  	res 1    
+dance_counter_small_1	res 1
+dance_counter_small_2	res 1
+wave_counter		res 1
+
 dance code
- 
+
+DBALL_1
+	movlw	b'10001111'
+	call    LCD_shift
+	movlw	0x00
+	call	LCD_Send_Byte_D
+	return
+
+DBALL_2
+	movlw	b'10001111'
+	call    LCD_shift
+	movlw	0x04
+	call	LCD_Send_Byte_D
+	return
+
+DBALL_CLEAR
+	movlw	b'10001111'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	return
+
+BOUNCE
+	call    DBALL_1
+	movlw	b'11001001'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'10001001'
+	call    LCD_shift
+	movlw	0x02
+	call	LCD_Send_Byte_D
+	call	dance_delay
+	call	DBALL_2
+	movlw	b'10001001'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'11001001'
+	call    LCD_shift
+	movlw	0x02
+	call	LCD_Send_Byte_D
+	call	dance_delay
+	return
+	
+HOPS
+	call    DBALL_1
+	movlw	b'11001001'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'10001000'
+	call    LCD_shift
+	movlw	0x02
+	call	LCD_Send_Byte_D
+	call    dance_delay
+	call    DBALL_2
+	movlw	b'10001000'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'11000111'
+	call    LCD_shift
+	movlw	0x02
+	call	LCD_Send_Byte_D
+	call    dance_delay
+	call    DBALL_1
+	movlw	b'11000111'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'10000110'
+	call    LCD_shift
+	movlw	0x02
+	call	LCD_Send_Byte_D
+	call    dance_delay
+	call    DBALL_2
+	movlw	b'10000110'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'11000101'
+	call    LCD_shift
+	movlw	0x02
+	call	LCD_Send_Byte_D
+	call    dance_delay
+	call    DBALL_1
+	movlw	b'11000101'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'10000110'
+	call    LCD_shift
+	movlw	0x02
+	call	LCD_Send_Byte_D
+	call 	dance_delay
+	call    DBALL_2
+	movlw	b'10000110'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'11000111'
+	call    LCD_shift
+	movlw	0x02
+	call	LCD_Send_Byte_D
+	call    dance_delay
+	call    DBALL_1
+	movlw	b'11000111'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'10001000'
+	call    LCD_shift
+	movlw	0x02
+	call	LCD_Send_Byte_D
+	call    dance_delay
+	call    DBALL_2
+	movlw	b'10001000'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'11001001'
+	call    LCD_shift
+	movlw	0x02
+	call	LCD_Send_Byte_D
+	call    dance_delay
+	call    DBALL_1
+	movlw	b'11001001'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'10001010'
+	call    LCD_shift
+	movlw	0x02
+	call	LCD_Send_Byte_D
+	call    dance_delay
+	call    DBALL_2
+	movlw	b'10001010'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'11001011'
+	call    LCD_shift
+	movlw	0x02
+	call	LCD_Send_Byte_D
+	call    dance_delay
+	call    DBALL_1
+	movlw	b'11001011'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'10001100'
+	call    LCD_shift
+	movlw	0x02
+	call	LCD_Send_Byte_D
+	call    dance_delay
+	call    DBALL_2
+	movlw	b'10001100'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'11001101'
+	call    LCD_shift
+	movlw	0x02
+	call	LCD_Send_Byte_D
+	call    dance_delay
+	call    DBALL_1
+	movlw	b'11001101'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'10001100'
+	call    LCD_shift
+	movlw	0x02
+	call	LCD_Send_Byte_D
+	call    dance_delay
+	call    DBALL_2
+	movlw	b'10001100'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'11001011'
+	call    LCD_shift
+	movlw	0x02
+	call	LCD_Send_Byte_D
+	call    dance_delay
+	call    DBALL_1
+	movlw	b'11001011'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'10001010'
+	call    LCD_shift
+	movlw	0x02
+	call	LCD_Send_Byte_D
+	call    dance_delay
+	call    DBALL_2
+	movlw	b'10001010'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'11001001'
+	call    LCD_shift
+	movlw	0x02
+	call	LCD_Send_Byte_D
+	call	dance_delay
+	return
+
+WAVE	
+	movlw	0x0A
+	movwf	wave_counter
+wave	call	DBALL_1
+	movlw	b'11001010'
+	call    LCD_shift
+	movlw	0xCD
+	call	LCD_Send_Byte_D
+	movlw	b'11001000'
+	call    LCD_shift
+	movlw	0xCD
+	call	LCD_Send_Byte_D
+	call 	dance_delay
+	call	DBALL_2
+	movlw	b'11001010'
+	call    LCD_shift
+	movlw	' ' 
+	call	LCD_Send_Byte_D
+	movlw	b'11001000'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'10001010'
+	call    LCD_shift
+	movlw	0x2E
+	call	LCD_Send_Byte_D
+	movlw	b'10001000'
+	call    LCD_shift
+	movlw	0x2E
+	call	LCD_Send_Byte_D
+	call 	dance_delay
+	movlw	b'10001010'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'10001000'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	decfsz	wave_counter
+	bra	wave
+	call 	DBALL_1
+	movlw	b'11001010'
+	call    LCD_shift
+	movlw	0xCD
+	call	LCD_Send_Byte_D
+	movlw	b'11001000'
+	call    LCD_shift
+	movlw	0xCD
+	call	LCD_Send_Byte_D
+	call 	dance_delay
+	call	DBALL_2
+	movlw	b'11001010'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	movlw	b'11001000'
+	call    LCD_shift
+	movlw	' '
+	call	LCD_Send_Byte_D
+	call    dance_delay
+	return
+	
 DANCE 
 	call	DISCO_1
 	call	DISCO_2
-	movlw	0x05
-	movwf	dance_counter
+	movlw	0x0A
+	movwf	dance_counter_baby
+	movlw	0x04
+	movwf	dance_counter_small_1
+	movlw	0x02
+	movwf	dance_counter_small_2
 	movwf   lifemode_dance
 	movlw   0x0
         cpfseq  lifemode_dance 
@@ -32,116 +309,88 @@ check_2 movlw   0x02
 	cpfseq  lifemode_dance
 	bra     LARGE 
 	bra     MEDIUM 
-BABY 
-	movlw	b'10001111'
-	call    LCD_shift
-	movlw	0x00
-	call	LCD_Send_Byte_D
-	movlw	b'11001001'
-	call    LCD_shift
-	movlw	' '
-	call	LCD_Send_Byte_D
-	movlw	b'10001001'
-	call    LCD_shift
-	movlw	0x02
-	call	LCD_Send_Byte_D
+
+
+BABY 	
+	call    DBALL_1
 	call	dance_delay
-	movlw	b'10001111'
-	call    LCD_shift
-	movlw	0x04
-	call	LCD_Send_Byte_D
-	movlw	b'10001001'
-	call    LCD_shift
-	movlw	' '
-	call	LCD_Send_Byte_D
-	movlw	b'11001001'
-	call    LCD_shift
-	movlw	0x02
-	call	LCD_Send_Byte_D
+	call 	DBALL_2
 	call	dance_delay
-	decfsz  dance_counter
+	call	BOUNCE
+	decfsz  dance_counter_baby
 	bra	BABY
-	movlw	b'11001001'
-	call    LCD_shift
-	movlw	' '
-	call	LCD_Send_Byte_D
-	movlw	b'10001001'
-	call    LCD_shift
-	movlw	0x02
-	call	LCD_Send_Byte_D
+	call	DBALL_1
+	call	dance_delay
+	call	DBALL_2
+	call 	dance_delay
+	call 	DBALL_CLEAR
 	call	GHOST
 	call	MOON
 	return
+
 SMALL 
-	movlw	b'10001111'
-	call    LCD_shift
-	movlw	0x00
-	call	LCD_Send_Byte_D
-	movlw	b'11001001'
-	call    LCD_shift
-	movlw	' '
-	call	LCD_Send_Byte_D
-	movlw	b'10001001'
-	call    LCD_shift
-	movlw	0x02
-	call	LCD_Send_Byte_D
+	call    DBALL_1
 	call	dance_delay
-	movlw	b'10001111'
-	call    LCD_shift
-	movlw	0x04
-	call	LCD_Send_Byte_D
-	movlw	b'10001001'
-	call    LCD_shift
-	movlw	' '
-	call	LCD_Send_Byte_D
-	movlw	b'11001001'
-	call    LCD_shift
-	movlw	0x02
-	call	LCD_Send_Byte_D
+	call	DBALL_2
 	call	dance_delay
-	decfsz  dance_counter
+	call	BOUNCE
+	decfsz  dance_counter_small_1
 	bra	SMALL
-	movlw	b'11001001'
-	call    LCD_shift
-	movlw	' '
-	call	LCD_Send_Byte_D
-	movlw	b'10001001'
-	call    LCD_shift
-	movlw	0x02
-	call	LCD_Send_Byte_D
+	call	DBALL_1
+	call	dance_delay
+	call	DBALL_2
+	call	dance_delay
+hops	call 	HOPS
+	decfsz	dance_counter_small_2
+	bra	hops
+	call	DBALL_1
+	call	dance_delay
+	call	DBALL_2
+	call	dance_delay
+	call 	DBALL_CLEAR
 	call	GHOST
 	call	MOON
 	return
 	
-MEDIUM 
-	movlw	b'10001111'
-	call    LCD_shift
-	movlw	0x00
-	call	LCD_Send_Byte_D
+MEDIUM 	
+	call    DBALL_1
 	call	dance_delay
-	movlw	b'10001111'
-	call    LCD_shift
-	movlw	0x04
-	call	LCD_Send_Byte_D
+	call	DBALL_2
 	call	dance_delay
-	decfsz  dance_counter
-	bra	MEDIUM
+	call 	WAVE
+	call 	HOPS
+	call	WAVE
+	call	HOPS
+	call	WAVE
+	call    DBALL_1
+	call	dance_delay
+	call    DBALL_2
+	call	dance_delay
+	call	DBALL_CLEAR
 	call	GHOST
 	call	MOON
 	return
 LARGE 
-	movlw	b'10001111'
-	call    LCD_shift
-	movlw	0x00
-	call	LCD_Send_Byte_D
+	call    DBALL_1
 	call	dance_delay
-	movlw	b'10001111'
-	call    LCD_shift
-	movlw	0x04
-	call	LCD_Send_Byte_D
+	call	DBALL_2
 	call	dance_delay
-	decfsz  dance_counter
-	bra	LARGE
+	call	BOUNCE
+	call	BOUNCE
+	call	WAVE
+	call    BOUNCE
+	call	BOUNCE
+	call	HOPS
+	call	BOUNCE
+	call	BOUNCE
+	call	WAVE
+	call	BOUNCE
+	call 	BOUNCE
+	call    DBALL_1
+	call	dance_delay
+	call	DBALL_2
+	call	dance_delay
+	call	DBALL_CLEAR
 	call	GHOST
 	call	MOON
 	return 
