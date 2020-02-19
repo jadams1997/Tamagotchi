@@ -288,6 +288,7 @@ wave	call	DBALL_1
 	return
 	
 DANCE 
+	movwf   lifemode_dance
 	call	DISCO_1
 	call	DISCO_2
 	movlw	0x0A
@@ -296,7 +297,6 @@ DANCE
 	movwf	dance_counter_small_1
 	movlw	0x02
 	movwf	dance_counter_small_2
-	movwf   lifemode_dance
 	movlw   0x0
         cpfseq  lifemode_dance 
 	bra     check_1

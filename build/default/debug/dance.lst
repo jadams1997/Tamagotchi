@@ -1,4 +1,4 @@
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE  1
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -16,20 +16,476 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00009 
                       02986         LIST
                       00002 
-  0000                00003     extern LCD_Send_Byte_D,LCD_shift, LCD_clear
+  0000                00003     extern LCD_Send_Byte_D,LCD_shift, LCD_clear,DISCO_1,DISCO_2,GHOST,MOON
   0000                00004     global DANCE
                       00005     
-                      00006 dance code
+                      00006 
                       00007     
-                      00008     
-000000                00009 DANCE 
-000000 0012           00010     return 
-                      00011     
-                      00012     
-                      00013     
-                      00014     
-                      00015     end 
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE  2
+                      00008 acs0                    udata_acs
+000000                00009 lifemode_dance          res 1
+000001                00010 delay_counter_d1        res 1
+000002                00011 delay_counter_d2        res 1
+000003                00012 delay_counter_d3        res 1
+000004                00013 dance_counter_baby      res 1    
+000005                00014 dance_counter_small_1   res 1
+000006                00015 dance_counter_small_2   res 1
+000007                00016 wave_counter            res 1
+                      00017 
+                      00018 dance code
+                      00019 
+000000                00020 DBALL_1
+000000 0E8F           00021         movlw   b'10001111'
+000002 EC?? F???      00022         call    LCD_shift
+000006 0E00           00023         movlw   0x00
+000008 EC?? F???      00024         call    LCD_Send_Byte_D
+00000C 0012           00025         return
+                      00026 
+00000E                00027 DBALL_2
+00000E 0E8F           00028         movlw   b'10001111'
+000010 EC?? F???      00029         call    LCD_shift
+000014 0E04           00030         movlw   0x04
+000016 EC?? F???      00031         call    LCD_Send_Byte_D
+00001A 0012           00032         return
+                      00033 
+00001C                00034 DBALL_CLEAR
+00001C 0E8F           00035         movlw   b'10001111'
+00001E EC?? F???      00036         call    LCD_shift
+000022 0E20           00037         movlw   ' '
+000024 EC?? F???      00038         call    LCD_Send_Byte_D
+000028 0012           00039         return
+                      00040 
+00002A                00041 BOUNCE
+00002A EC?? F???      00042         call    DBALL_1
+00002E 0EC9           00043         movlw   b'11001001'
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000030 EC?? F???      00044         call    LCD_shift
+000034 0E20           00045         movlw   ' '
+000036 EC?? F???      00046         call    LCD_Send_Byte_D
+00003A 0E89           00047         movlw   b'10001001'
+00003C EC?? F???      00048         call    LCD_shift
+000040 0E02           00049         movlw   0x02
+000042 EC?? F???      00050         call    LCD_Send_Byte_D
+000046 EC?? F???      00051         call    dance_delay
+00004A EC?? F???      00052         call    DBALL_2
+00004E 0E89           00053         movlw   b'10001001'
+000050 EC?? F???      00054         call    LCD_shift
+000054 0E20           00055         movlw   ' '
+000056 EC?? F???      00056         call    LCD_Send_Byte_D
+00005A 0EC9           00057         movlw   b'11001001'
+00005C EC?? F???      00058         call    LCD_shift
+000060 0E02           00059         movlw   0x02
+000062 EC?? F???      00060         call    LCD_Send_Byte_D
+000066 EC?? F???      00061         call    dance_delay
+00006A 0012           00062         return
+                      00063         
+00006C                00064 HOPS
+00006C EC?? F???      00065         call    DBALL_1
+000070 0EC9           00066         movlw   b'11001001'
+000072 EC?? F???      00067         call    LCD_shift
+000076 0E20           00068         movlw   ' '
+000078 EC?? F???      00069         call    LCD_Send_Byte_D
+00007C 0E88           00070         movlw   b'10001000'
+00007E EC?? F???      00071         call    LCD_shift
+000082 0E02           00072         movlw   0x02
+000084 EC?? F???      00073         call    LCD_Send_Byte_D
+000088 EC?? F???      00074         call    dance_delay
+00008C EC?? F???      00075         call    DBALL_2
+000090 0E88           00076         movlw   b'10001000'
+000092 EC?? F???      00077         call    LCD_shift
+000096 0E20           00078         movlw   ' '
+000098 EC?? F???      00079         call    LCD_Send_Byte_D
+00009C 0EC7           00080         movlw   b'11000111'
+00009E EC?? F???      00081         call    LCD_shift
+0000A2 0E02           00082         movlw   0x02
+0000A4 EC?? F???      00083         call    LCD_Send_Byte_D
+0000A8 EC?? F???      00084         call    dance_delay
+0000AC EC?? F???      00085         call    DBALL_1
+0000B0 0EC7           00086         movlw   b'11000111'
+0000B2 EC?? F???      00087         call    LCD_shift
+0000B6 0E20           00088         movlw   ' '
+0000B8 EC?? F???      00089         call    LCD_Send_Byte_D
+0000BC 0E86           00090         movlw   b'10000110'
+0000BE EC?? F???      00091         call    LCD_shift
+0000C2 0E02           00092         movlw   0x02
+0000C4 EC?? F???      00093         call    LCD_Send_Byte_D
+0000C8 EC?? F???      00094         call    dance_delay
+0000CC EC?? F???      00095         call    DBALL_2
+0000D0 0E86           00096         movlw   b'10000110'
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0000D2 EC?? F???      00097         call    LCD_shift
+0000D6 0E20           00098         movlw   ' '
+0000D8 EC?? F???      00099         call    LCD_Send_Byte_D
+0000DC 0EC5           00100         movlw   b'11000101'
+0000DE EC?? F???      00101         call    LCD_shift
+0000E2 0E02           00102         movlw   0x02
+0000E4 EC?? F???      00103         call    LCD_Send_Byte_D
+0000E8 EC?? F???      00104         call    dance_delay
+0000EC EC?? F???      00105         call    DBALL_1
+0000F0 0EC5           00106         movlw   b'11000101'
+0000F2 EC?? F???      00107         call    LCD_shift
+0000F6 0E20           00108         movlw   ' '
+0000F8 EC?? F???      00109         call    LCD_Send_Byte_D
+0000FC 0E86           00110         movlw   b'10000110'
+0000FE EC?? F???      00111         call    LCD_shift
+000102 0E02           00112         movlw   0x02
+000104 EC?? F???      00113         call    LCD_Send_Byte_D
+000108 EC?? F???      00114         call    dance_delay
+00010C EC?? F???      00115         call    DBALL_2
+000110 0E86           00116         movlw   b'10000110'
+000112 EC?? F???      00117         call    LCD_shift
+000116 0E20           00118         movlw   ' '
+000118 EC?? F???      00119         call    LCD_Send_Byte_D
+00011C 0EC7           00120         movlw   b'11000111'
+00011E EC?? F???      00121         call    LCD_shift
+000122 0E02           00122         movlw   0x02
+000124 EC?? F???      00123         call    LCD_Send_Byte_D
+000128 EC?? F???      00124         call    dance_delay
+00012C EC?? F???      00125         call    DBALL_1
+000130 0EC7           00126         movlw   b'11000111'
+000132 EC?? F???      00127         call    LCD_shift
+000136 0E20           00128         movlw   ' '
+000138 EC?? F???      00129         call    LCD_Send_Byte_D
+00013C 0E88           00130         movlw   b'10001000'
+00013E EC?? F???      00131         call    LCD_shift
+000142 0E02           00132         movlw   0x02
+000144 EC?? F???      00133         call    LCD_Send_Byte_D
+000148 EC?? F???      00134         call    dance_delay
+00014C EC?? F???      00135         call    DBALL_2
+000150 0E88           00136         movlw   b'10001000'
+000152 EC?? F???      00137         call    LCD_shift
+000156 0E20           00138         movlw   ' '
+000158 EC?? F???      00139         call    LCD_Send_Byte_D
+00015C 0EC9           00140         movlw   b'11001001'
+00015E EC?? F???      00141         call    LCD_shift
+000162 0E02           00142         movlw   0x02
+000164 EC?? F???      00143         call    LCD_Send_Byte_D
+000168 EC?? F???      00144         call    dance_delay
+00016C EC?? F???      00145         call    DBALL_1
+000170 0EC9           00146         movlw   b'11001001'
+000172 EC?? F???      00147         call    LCD_shift
+000176 0E20           00148         movlw   ' '
+000178 EC?? F???      00149         call    LCD_Send_Byte_D
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00017C 0E8A           00150         movlw   b'10001010'
+00017E EC?? F???      00151         call    LCD_shift
+000182 0E02           00152         movlw   0x02
+000184 EC?? F???      00153         call    LCD_Send_Byte_D
+000188 EC?? F???      00154         call    dance_delay
+00018C EC?? F???      00155         call    DBALL_2
+000190 0E8A           00156         movlw   b'10001010'
+000192 EC?? F???      00157         call    LCD_shift
+000196 0E20           00158         movlw   ' '
+000198 EC?? F???      00159         call    LCD_Send_Byte_D
+00019C 0ECB           00160         movlw   b'11001011'
+00019E EC?? F???      00161         call    LCD_shift
+0001A2 0E02           00162         movlw   0x02
+0001A4 EC?? F???      00163         call    LCD_Send_Byte_D
+0001A8 EC?? F???      00164         call    dance_delay
+0001AC EC?? F???      00165         call    DBALL_1
+0001B0 0ECB           00166         movlw   b'11001011'
+0001B2 EC?? F???      00167         call    LCD_shift
+0001B6 0E20           00168         movlw   ' '
+0001B8 EC?? F???      00169         call    LCD_Send_Byte_D
+0001BC 0E8C           00170         movlw   b'10001100'
+0001BE EC?? F???      00171         call    LCD_shift
+0001C2 0E02           00172         movlw   0x02
+0001C4 EC?? F???      00173         call    LCD_Send_Byte_D
+0001C8 EC?? F???      00174         call    dance_delay
+0001CC EC?? F???      00175         call    DBALL_2
+0001D0 0E8C           00176         movlw   b'10001100'
+0001D2 EC?? F???      00177         call    LCD_shift
+0001D6 0E20           00178         movlw   ' '
+0001D8 EC?? F???      00179         call    LCD_Send_Byte_D
+0001DC 0ECD           00180         movlw   b'11001101'
+0001DE EC?? F???      00181         call    LCD_shift
+0001E2 0E02           00182         movlw   0x02
+0001E4 EC?? F???      00183         call    LCD_Send_Byte_D
+0001E8 EC?? F???      00184         call    dance_delay
+0001EC EC?? F???      00185         call    DBALL_1
+0001F0 0ECD           00186         movlw   b'11001101'
+0001F2 EC?? F???      00187         call    LCD_shift
+0001F6 0E20           00188         movlw   ' '
+0001F8 EC?? F???      00189         call    LCD_Send_Byte_D
+0001FC 0E8C           00190         movlw   b'10001100'
+0001FE EC?? F???      00191         call    LCD_shift
+000202 0E02           00192         movlw   0x02
+000204 EC?? F???      00193         call    LCD_Send_Byte_D
+000208 EC?? F???      00194         call    dance_delay
+00020C EC?? F???      00195         call    DBALL_2
+000210 0E8C           00196         movlw   b'10001100'
+000212 EC?? F???      00197         call    LCD_shift
+000216 0E20           00198         movlw   ' '
+000218 EC?? F???      00199         call    LCD_Send_Byte_D
+00021C 0ECB           00200         movlw   b'11001011'
+00021E EC?? F???      00201         call    LCD_shift
+000222 0E02           00202         movlw   0x02
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000224 EC?? F???      00203         call    LCD_Send_Byte_D
+000228 EC?? F???      00204         call    dance_delay
+00022C EC?? F???      00205         call    DBALL_1
+000230 0ECB           00206         movlw   b'11001011'
+000232 EC?? F???      00207         call    LCD_shift
+000236 0E20           00208         movlw   ' '
+000238 EC?? F???      00209         call    LCD_Send_Byte_D
+00023C 0E8A           00210         movlw   b'10001010'
+00023E EC?? F???      00211         call    LCD_shift
+000242 0E02           00212         movlw   0x02
+000244 EC?? F???      00213         call    LCD_Send_Byte_D
+000248 EC?? F???      00214         call    dance_delay
+00024C EC?? F???      00215         call    DBALL_2
+000250 0E8A           00216         movlw   b'10001010'
+000252 EC?? F???      00217         call    LCD_shift
+000256 0E20           00218         movlw   ' '
+000258 EC?? F???      00219         call    LCD_Send_Byte_D
+00025C 0EC9           00220         movlw   b'11001001'
+00025E EC?? F???      00221         call    LCD_shift
+000262 0E02           00222         movlw   0x02
+000264 EC?? F???      00223         call    LCD_Send_Byte_D
+000268 EC?? F???      00224         call    dance_delay
+00026C 0012           00225         return
+                      00226 
+00026E                00227 WAVE    
+00026E 0E0A           00228         movlw   0x0A
+000270 6E??           00229         movwf   wave_counter
+000272 EC?? F???      00230 wave    call    DBALL_1
+000276 0ECA           00231         movlw   b'11001010'
+000278 EC?? F???      00232         call    LCD_shift
+00027C 0ECD           00233         movlw   0xCD
+00027E EC?? F???      00234         call    LCD_Send_Byte_D
+000282 0EC8           00235         movlw   b'11001000'
+000284 EC?? F???      00236         call    LCD_shift
+000288 0ECD           00237         movlw   0xCD
+00028A EC?? F???      00238         call    LCD_Send_Byte_D
+00028E EC?? F???      00239         call    dance_delay
+000292 EC?? F???      00240         call    DBALL_2
+000296 0ECA           00241         movlw   b'11001010'
+000298 EC?? F???      00242         call    LCD_shift
+00029C 0E20           00243         movlw   ' ' 
+00029E EC?? F???      00244         call    LCD_Send_Byte_D
+0002A2 0EC8           00245         movlw   b'11001000'
+0002A4 EC?? F???      00246         call    LCD_shift
+0002A8 0E20           00247         movlw   ' '
+0002AA EC?? F???      00248         call    LCD_Send_Byte_D
+0002AE 0E8A           00249         movlw   b'10001010'
+0002B0 EC?? F???      00250         call    LCD_shift
+0002B4 0E2E           00251         movlw   0x2E
+0002B6 EC?? F???      00252         call    LCD_Send_Byte_D
+0002BA 0E88           00253         movlw   b'10001000'
+0002BC EC?? F???      00254         call    LCD_shift
+0002C0 0E2E           00255         movlw   0x2E
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0002C2 EC?? F???      00256         call    LCD_Send_Byte_D
+0002C6 EC?? F???      00257         call    dance_delay
+0002CA 0E8A           00258         movlw   b'10001010'
+0002CC EC?? F???      00259         call    LCD_shift
+0002D0 0E20           00260         movlw   ' '
+0002D2 EC?? F???      00261         call    LCD_Send_Byte_D
+0002D6 0E88           00262         movlw   b'10001000'
+0002D8 EC?? F???      00263         call    LCD_shift
+0002DC 0E20           00264         movlw   ' '
+0002DE EC?? F???      00265         call    LCD_Send_Byte_D
+0002E2 2E??           00266         decfsz  wave_counter
+0002E4 D???           00267         bra     wave
+0002E6 EC?? F???      00268         call    DBALL_1
+0002EA 0ECA           00269         movlw   b'11001010'
+0002EC EC?? F???      00270         call    LCD_shift
+0002F0 0ECD           00271         movlw   0xCD
+0002F2 EC?? F???      00272         call    LCD_Send_Byte_D
+0002F6 0EC8           00273         movlw   b'11001000'
+0002F8 EC?? F???      00274         call    LCD_shift
+0002FC 0ECD           00275         movlw   0xCD
+0002FE EC?? F???      00276         call    LCD_Send_Byte_D
+000302 EC?? F???      00277         call    dance_delay
+000306 EC?? F???      00278         call    DBALL_2
+00030A 0ECA           00279         movlw   b'11001010'
+00030C EC?? F???      00280         call    LCD_shift
+000310 0E20           00281         movlw   ' '
+000312 EC?? F???      00282         call    LCD_Send_Byte_D
+000316 0EC8           00283         movlw   b'11001000'
+000318 EC?? F???      00284         call    LCD_shift
+00031C 0E20           00285         movlw   ' '
+00031E EC?? F???      00286         call    LCD_Send_Byte_D
+000322 EC?? F???      00287         call    dance_delay
+000326 0012           00288         return
+                      00289         
+000328                00290 DANCE 
+000328 6E??           00291         movwf   lifemode_dance
+00032A EC?? F???      00292         call    DISCO_1
+00032E EC?? F???      00293         call    DISCO_2
+000332 0E0A           00294         movlw   0x0A
+000334 6E??           00295         movwf   dance_counter_baby
+000336 0E04           00296         movlw   0x04
+000338 6E??           00297         movwf   dance_counter_small_1
+00033A 0E02           00298         movlw   0x02
+00033C 6E??           00299         movwf   dance_counter_small_2
+00033E 0E00           00300         movlw   0x0
+000340 62??           00301         cpfseq  lifemode_dance 
+000342 D???           00302         bra     check_1
+000344 D???           00303         bra     BABY
+000346 0E01           00304 check_1 movlw   0x01
+000348 62??           00305         cpfseq  lifemode_dance 
+00034A D???           00306         bra     check_2
+00034C D???           00307         bra     SMALL
+00034E 0E02           00308 check_2 movlw   0x02
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000350 62??           00309         cpfseq  lifemode_dance
+000352 D???           00310         bra     LARGE 
+000354 D???           00311         bra     MEDIUM 
+                      00312 
+                      00313 
+000356                00314 BABY    
+000356 EC?? F???      00315         call    DBALL_1
+00035A EC?? F???      00316         call    dance_delay
+00035E EC?? F???      00317         call    DBALL_2
+000362 EC?? F???      00318         call    dance_delay
+000366 EC?? F???      00319         call    BOUNCE
+00036A 2E??           00320         decfsz  dance_counter_baby
+00036C D???           00321         bra     BABY
+00036E EC?? F???      00322         call    DBALL_1
+000372 EC?? F???      00323         call    dance_delay
+000376 EC?? F???      00324         call    DBALL_2
+00037A EC?? F???      00325         call    dance_delay
+00037E EC?? F???      00326         call    DBALL_CLEAR
+000382 EC?? F???      00327         call    GHOST
+000386 EC?? F???      00328         call    MOON
+00038A 0012           00329         return
+                      00330 
+00038C                00331 SMALL 
+00038C EC?? F???      00332         call    DBALL_1
+000390 EC?? F???      00333         call    dance_delay
+000394 EC?? F???      00334         call    DBALL_2
+000398 EC?? F???      00335         call    dance_delay
+00039C EC?? F???      00336         call    BOUNCE
+0003A0 2E??           00337         decfsz  dance_counter_small_1
+0003A2 D???           00338         bra     SMALL
+0003A4 EC?? F???      00339         call    DBALL_1
+0003A8 EC?? F???      00340         call    dance_delay
+0003AC EC?? F???      00341         call    DBALL_2
+0003B0 EC?? F???      00342         call    dance_delay
+0003B4 EC?? F???      00343 hops    call    HOPS
+0003B8 2E??           00344         decfsz  dance_counter_small_2
+0003BA D???           00345         bra     hops
+0003BC EC?? F???      00346         call    DBALL_1
+0003C0 EC?? F???      00347         call    dance_delay
+0003C4 EC?? F???      00348         call    DBALL_2
+0003C8 EC?? F???      00349         call    dance_delay
+0003CC EC?? F???      00350         call    DBALL_CLEAR
+0003D0 EC?? F???      00351         call    GHOST
+0003D4 EC?? F???      00352         call    MOON
+0003D8 0012           00353         return
+                      00354         
+0003DA                00355 MEDIUM  
+0003DA EC?? F???      00356         call    DBALL_1
+0003DE EC?? F???      00357         call    dance_delay
+0003E2 EC?? F???      00358         call    DBALL_2
+0003E6 EC?? F???      00359         call    dance_delay
+0003EA EC?? F???      00360         call    WAVE
+0003EE EC?? F???      00361         call    HOPS
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE  8
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0003F2 EC?? F???      00362         call    WAVE
+0003F6 EC?? F???      00363         call    HOPS
+0003FA EC?? F???      00364         call    WAVE
+0003FE EC?? F???      00365         call    DBALL_1
+000402 EC?? F???      00366         call    dance_delay
+000406 EC?? F???      00367         call    DBALL_2
+00040A EC?? F???      00368         call    dance_delay
+00040E EC?? F???      00369         call    DBALL_CLEAR
+000412 EC?? F???      00370         call    GHOST
+000416 EC?? F???      00371         call    MOON
+00041A 0012           00372         return
+00041C                00373 LARGE 
+00041C EC?? F???      00374         call    DBALL_1
+000420 EC?? F???      00375         call    dance_delay
+000424 EC?? F???      00376         call    DBALL_2
+000428 EC?? F???      00377         call    dance_delay
+00042C EC?? F???      00378         call    BOUNCE
+000430 EC?? F???      00379         call    BOUNCE
+000434 EC?? F???      00380         call    WAVE
+000438 EC?? F???      00381         call    BOUNCE
+00043C EC?? F???      00382         call    BOUNCE
+000440 EC?? F???      00383         call    HOPS
+000444 EC?? F???      00384         call    BOUNCE
+000448 EC?? F???      00385         call    BOUNCE
+00044C EC?? F???      00386         call    WAVE
+000450 EC?? F???      00387         call    BOUNCE
+000454 EC?? F???      00388         call    BOUNCE
+000458 EC?? F???      00389         call    DBALL_1
+00045C EC?? F???      00390         call    dance_delay
+000460 EC?? F???      00391         call    DBALL_2
+000464 EC?? F???      00392         call    dance_delay
+000468 EC?? F???      00393         call    DBALL_CLEAR
+00046C EC?? F???      00394         call    GHOST
+000470 EC?? F???      00395         call    MOON
+000474 0012           00396         return 
+                      00397     
+                      00398     
+000476                00399 dance_delay
+000476 0E90           00400         movlw   0x90
+000478 6E??           00401         movwf   delay_counter_d1
+00047A                00402 delay_1       
+00047A 2E??           00403         decfsz  delay_counter_d1
+00047C D???           00404         bra     nested_2
+00047E 0012           00405         return
+                      00406         
+000480                00407 nested_2
+000480 0E90           00408         movlw   0x90
+000482 6E??           00409         movwf   delay_counter_d2
+000484 2E??           00410 delay_2 decfsz  delay_counter_d2
+000486 D???           00411         bra     nested_3
+000488 D???           00412         bra     delay_1
+                      00413 
+00048A                00414 nested_3
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE  9
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00048A 0E90           00415         movlw   0x90
+00048C 6E??           00416         movwf   delay_counter_d3
+00048E                00417 delay_3
+00048E 2E??           00418         decfsz  delay_counter_d3
+000490 D???           00419         bra     delay_3
+000492 D???           00420         bra     delay_2
+                      00421     
+                      00422     
+                      00423     end 
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 10
 
 
 SYMBOL TABLE
@@ -88,7 +544,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE  3
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 11
 
 
 SYMBOL TABLE
@@ -147,7 +603,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE  4
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 12
 
 
 SYMBOL TABLE
@@ -174,6 +630,7 @@ ARPT5                             00000005
 ARPT6                             00000006
 ARPT7                             00000007
 BA0                               00000004
+BABY                              00000356
 BANKED                            00000001
 BAUDCON                           00000F65
 BAUDCON1                          00000F65
@@ -191,6 +648,7 @@ BCLIP                             00000003
 BF                                00000000
 BGVST                             00000006
 BOR                               00000000
+BOUNCE                            0000002A
 BRG16                             00000003
 BRGH                              00000002
 BRGH1                             00000002
@@ -204,14 +662,14 @@ C1INC                             00000006
 C1OUT                             00000002
 C1TSEL0                           00000000
 C1TSEL1                           00000001
-C1TSEL2                           00000002
-C2INA                             00000004
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE  5
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 13
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+C1TSEL2                           00000002
+C2INA                             00000004
 C2INB                             00000003
 C2INC                             00000004
 C2IND                             00000005
@@ -263,14 +721,14 @@ CCP1IE                            00000001
 CCP1IF                            00000001
 CCP1IP                            00000001
 CCP1M0                            00000000
-CCP1M1                            00000001
-CCP1M2                            00000002
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE  6
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 14
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+CCP1M1                            00000001
+CCP1M2                            00000002
 CCP1M3                            00000003
 CCP1MD                            00000005
 CCP1OD                            00000005
@@ -322,14 +780,14 @@ CCP5IF                            00000002
 CCP5IP                            00000002
 CCP5M0                            00000000
 CCP5M1                            00000001
-CCP5M2                            00000002
-CCP5M3                            00000003
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE  7
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 15
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+CCP5M2                            00000002
+CCP5M3                            00000003
 CCP5MD                            00000002
 CCP5OD                            00000002
 CCP5X                             00000005
@@ -381,14 +839,14 @@ CCP9IE                            00000006
 CCP9IF                            00000006
 CCP9IP                            00000006
 CCP9M0                            00000000
-CCP9M1                            00000001
-CCP9M2                            00000002
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE  8
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 16
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+CCP9M1                            00000001
+CCP9M2                            00000002
 CCP9M3                            00000003
 CCP9MD                            00000006
 CCP9OD                            00000006
@@ -440,14 +898,14 @@ CHS4                              00000006
 CHSN0                             00000000
 CHSN1                             00000001
 CHSN2                             00000002
-CK1                               00000006
-CK2                               00000001
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE  9
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 17
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+CK1                               00000006
+CK2                               00000001
 CKE                               00000006
 CKP                               00000004
 CLKI                              00000007
@@ -499,14 +957,14 @@ CTMUI                             00000003
 CTMUICON                          00000F55
 CTMUIE                            00000003
 CTMUIF                            00000003
-CTMUIP                            00000003
-CTMUMD                            00000006
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 10
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 18
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+CTMUIP                            00000003
+CTMUMD                            00000006
 CTMUSIDL                          00000005
 CTPLS                             00000000
 CTTRIG                            00000000
@@ -521,8 +979,11 @@ CVREN                             00000007
 CVROE                             00000006
 CVRSS                             00000005
 D                                 00000005
-DANCE                             00000000
+DANCE                             00000328
 DATA_ADDRESS                      00000005
+DBALL_1                           00000000
+DBALL_2                           0000000E
+DBALL_CLEAR                       0000001C
 DC                                00000001
 DC10B0                            00000004
 DC10B1                            00000005
@@ -549,10 +1010,18 @@ DDRB                              TRISB
 DDRC                              TRISC
 DDRD                              TRISD
 DDRE                              TRISE
+DISCO_1                           00000000
+DISCO_2                           00000000
 DONE                              00000001
 DT1                               00000007
 DT2                               00000002
 D_A                               00000005
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 19
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 D_NOT_A                           00000005
 EBDIS                             00000007
 ECCP1AS                           00000FBF
@@ -560,12 +1029,6 @@ ECCP1AS0                          00000004
 ECCP1AS1                          00000005
 ECCP1AS2                          00000006
 ECCP1ASE                          00000007
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 11
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 ECCP1CON                          00000FBB
 ECCP1DEL                          00000FBE
 ECCP2AS                           00000F52
@@ -612,6 +1075,12 @@ FREE                              00000004
 FSR0                              00000000
 FSR0H                             00000FEA
 FSR0L                             00000FE9
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 20
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 FSR1                              00000001
 FSR1H                             00000FE2
 FSR1L                             00000FE1
@@ -619,12 +1088,7 @@ FSR2                              00000002
 FSR2H                             00000FDA
 FSR2L                             00000FD9
 GCEN                              00000007
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 12
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
+GHOST                             00000000
 GIE                               00000007
 GIEH                              00000007
 GIEL                              00000006
@@ -643,6 +1107,7 @@ HLVDL0                            00000000
 HLVDL1                            00000001
 HLVDL2                            00000002
 HLVDL3                            00000003
+HOPS                              0000006C
 I2C_DAT                           00000005
 I2C_READ                          00000002
 I2C_START                         00000003
@@ -669,6 +1134,12 @@ INT1P                             00000006
 INT2                              00000002
 INT2E                             00000004
 INT2F                             00000001
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 21
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 INT2IE                            00000004
 INT2IF                            00000001
 INT2IP                            00000007
@@ -678,12 +1149,6 @@ INT3E                             00000005
 INT3F                             00000002
 INT3IE                            00000005
 INT3IF                            00000002
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 13
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 INT3IP                            00000001
 INT3P                             00000001
 INTCON                            00000FF2
@@ -717,6 +1182,7 @@ KBI0                              00000004
 KBI1                              00000005
 KBI2                              00000006
 KBI3                              00000007
+LARGE                             0000041C
 LATA                              00000F89
 LATA0                             00000000
 LATA1                             00000001
@@ -727,6 +1193,12 @@ LATA5                             00000005
 LATA6                             00000006
 LATA7                             00000007
 LATB                              00000F8A
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 22
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 LATB0                             00000000
 LATB1                             00000001
 LATB2                             00000002
@@ -737,12 +1209,6 @@ LATB6                             00000006
 LATB7                             00000007
 LATC                              00000F8B
 LATC0                             00000000
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 14
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 LATC1                             00000001
 LATC2                             00000002
 LATC3                             00000003
@@ -786,6 +1252,12 @@ LATH                              00000F90
 LATH0                             00000000
 LATH1                             00000001
 LATH2                             00000002
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 23
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 LATH3                             00000003
 LATH4                             00000004
 LATH5                             00000005
@@ -796,12 +1268,6 @@ LATJ0                             00000000
 LATJ1                             00000001
 LATJ2                             00000002
 LATJ3                             00000003
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 15
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 LATJ4                             00000004
 LATJ5                             00000005
 LATJ6                             00000006
@@ -813,9 +1279,11 @@ LCD_shift                         00000000
 LVDIE                             00000002
 LVDIF                             00000002
 LVDIP                             00000002
+MEDIUM                            000003DA
 MEMCON                            00000F26
 MFIOFS                            00000001
 MFIOSEL                           00000000
+MOON                              00000000
 MSK0                              00000000
 MSK1                              00000001
 MSK2                              00000002
@@ -843,6 +1311,12 @@ NOT_T1SYNC                        00000002
 NOT_T3DONE                        00000003
 NOT_T3SYNC                        00000002
 NOT_T5DONE                        00000003
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 24
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 NOT_T5SYNC                        00000002
 NOT_T7DONE                        00000003
 NOT_T7SYNC                        00000002
@@ -855,12 +1329,6 @@ OBF                               00000006
 ODCON1                            00000F29
 ODCON2                            00000F28
 ODCON3                            00000F27
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 16
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 OE                                00000001
 OERR                              00000001
 OERR1                             00000001
@@ -902,6 +1370,12 @@ P2DC4                             00000004
 P2DC5                             00000005
 P2DC6                             00000006
 P2M0                              00000006
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 25
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 P2M1                              00000007
 P2RSEN                            00000007
 P3B                               00000004
@@ -914,12 +1388,6 @@ P3DC4                             00000004
 P3DC5                             00000005
 P3DC6                             00000006
 P3M0                              00000006
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 17
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 P3M1                              00000007
 P3RSEN                            00000007
 PA3                               00000000
@@ -961,6 +1429,12 @@ PMD0                              00000F19
 PMD1                              00000F18
 PMD2                              00000F17
 PMD3                              00000F16
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 26
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 POR                               00000001
 PORTA                             00000F80
 PORTB                             00000F81
@@ -973,12 +1447,6 @@ PORTH                             00000F87
 PORTJ                             00000F88
 POSTDEC0                          00000FED
 POSTDEC1                          00000FE5
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 18
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 POSTDEC2                          00000FDD
 POSTINC0                          00000FEE
 POSTINC1                          00000FE6
@@ -1020,6 +1488,12 @@ PSS2BD0                           00000000
 PSS2BD1                           00000001
 PSS3AC0                           00000002
 PSS3AC1                           00000003
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 27
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 PSS3BD0                           00000000
 PSS3BD1                           00000001
 PSTR1CON                          00000F9C
@@ -1032,12 +1506,6 @@ RA0                               00000000
 RA1                               00000001
 RA2                               00000002
 RA3                               00000003
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 19
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 RA4                               00000004
 RA5                               00000005
 RA6                               00000006
@@ -1079,6 +1547,12 @@ RCIP                              00000005
 RCON                              00000FD0
 RCREG                             00000FAE
 RCREG1                            00000FAE
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 28
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 RCREG2                            00000F1D
 RCSTA                             00000FAB
 RCSTA1                            00000FAB
@@ -1091,12 +1565,6 @@ RD2                               00000002
 RD3                               00000003
 RD4                               00000004
 RD5                               00000005
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 20
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 RD6                               00000006
 RD7                               00000007
 RDPU                              00000007
@@ -1138,6 +1606,12 @@ RI                                00000004
 RJ0                               00000000
 RJ1                               00000001
 RJ2                               00000002
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 29
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 RJ3                               00000003
 RJ4                               00000004
 RJ5                               00000005
@@ -1150,12 +1624,6 @@ RODIV2                            00000002
 RODIV3                            00000003
 ROON                              00000007
 ROSEL                             00000004
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 21
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 ROSSLP                            00000005
 RSEN                              00000001
 RTCC                              00000004
@@ -1197,6 +1665,12 @@ SCL2                              00000006
 SCS0                              00000000
 SCS1                              00000001
 SDA1                              00000004
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 30
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 SDA2                              00000005
 SDI1                              00000004
 SDI2                              00000005
@@ -1206,15 +1680,10 @@ SEN                               00000000
 SENDB                             00000003
 SENDB1                            00000003
 SENDB2                            00000003
+SMALL                             0000038C
 SMP                               00000007
 SOSCEN                            00000003
 SOSCGO                            00000003
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 22
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 SOSCI                             00000001
 SOSCO                             00000000
 SOSCRUN                           00000006
@@ -1255,6 +1724,12 @@ SSP2CON2                          00000F66
 SSP2IE                            00000005
 SSP2IF                            00000005
 SSP2IP                            00000005
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 31
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 SSP2MD                            00000002
 SSP2MSK                           00000F69
 SSP2STAT                          00000F68
@@ -1268,12 +1743,6 @@ SSPIF                             00000003
 SSPIP                             00000003
 SSPM0                             00000000
 SSPM1                             00000001
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 23
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 SSPM2                             00000002
 SSPM3                             00000003
 SSPOV                             00000006
@@ -1314,6 +1783,12 @@ T10OUTPS3                         00000006
 T12CKPS0                          00000000
 T12CKPS1                          00000001
 T12CON                            00000F30
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 32
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 T12OUTPS0                         00000003
 T12OUTPS1                         00000004
 T12OUTPS2                         00000005
@@ -1327,12 +1802,6 @@ T1GCON                            00000FAA
 T1GGO                             00000003
 T1GGO_NOT_T1DONE                  00000003
 T1GPOL                            00000006
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 24
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 T1GSPM                            00000004
 T1GSS0                            00000000
 T1GSS1                            00000001
@@ -1373,6 +1842,12 @@ T5CON                             00000F7B
 T5G                               00000004
 T5GCON                            00000F7A
 T5GGO                             00000003
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 33
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 T5GGO_NOT_T5DONE                  00000003
 T5GPOL                            00000006
 T5GSPM                            00000004
@@ -1386,12 +1861,6 @@ T6CON                             00000F39
 T6OUTPS0                          00000003
 T6OUTPS1                          00000004
 T6OUTPS2                          00000005
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 25
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 T6OUTPS3                          00000006
 T7CKI                             00000004
 T7CKPS0                           00000004
@@ -1432,6 +1901,12 @@ TMR10                             00000F35
 TMR10IE                           00000005
 TMR10IF                           00000005
 TMR10IP                           00000005
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 34
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TMR10MD                           00000007
 TMR10ON                           00000002
 TMR12                             00000F32
@@ -1445,12 +1920,6 @@ TMR1CS1                           00000007
 TMR1GE                            00000007
 TMR1GIE                           00000002
 TMR1GIF                           00000002
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 26
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TMR1GIP                           00000002
 TMR1H                             00000FCF
 TMR1IE                            00000000
@@ -1491,6 +1960,12 @@ TMR5CS1                           00000007
 TMR5GE                            00000007
 TMR5GIE                           00000007
 TMR5GIF                           00000007
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 35
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TMR5GIP                           00000007
 TMR5H                             00000F7D
 TMR5IE                            00000001
@@ -1504,12 +1979,6 @@ TMR6IE                            00000002
 TMR6IF                            00000002
 TMR6IP                            00000002
 TMR6MD                            00000004
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 27
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TMR6ON                            00000002
 TMR7                              00000F3E
 TMR7CS0                           00000006
@@ -1550,6 +2019,12 @@ TRISA7                            00000007
 TRISB                             00000F93
 TRISB0                            00000000
 TRISB1                            00000001
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 36
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TRISB2                            00000002
 TRISB3                            00000003
 TRISB4                            00000004
@@ -1563,12 +2038,6 @@ TRISC2                            00000002
 TRISC3                            00000003
 TRISC4                            00000004
 TRISC5                            00000005
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 28
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TRISC6                            00000006
 TRISC7                            00000007
 TRISD                             00000F95
@@ -1609,6 +2078,12 @@ TRISH1                            00000001
 TRISH2                            00000002
 TRISH3                            00000003
 TRISH4                            00000004
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 37
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TRISH5                            00000005
 TRISH6                            00000006
 TRISH7                            00000007
@@ -1622,12 +2097,6 @@ TRISJ5                            00000005
 TRISJ6                            00000006
 TRISJ7                            00000007
 TRMT                              00000001
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 29
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TRMT1                             00000001
 TRMT2                             00000001
 TUN0                              00000000
@@ -1668,6 +2137,12 @@ TXSTA2                            00000F21
 U1OD                              00000006
 U2OD                              00000007
 UA                                00000001
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 38
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 UART1MD                           00000003
 UART2MD                           00000004
 UB                                00000007
@@ -1681,15 +2156,10 @@ VDIRMAG                           00000007
 VNCFG                             00000003
 VREF_MINUS                        00000002
 VREF_PLUS                         00000003
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 30
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 W                                 00000000
 WAIT0                             00000004
 WAIT1                             00000005
+WAVE                              0000026E
 WCOL                              00000007
 WDTCON                            00000FD1
 WM0                               00000000
@@ -1726,6 +2196,12 @@ _CCP2MX_PORTBE_3H                 000000FE
 _CCP2MX_PORTC_3H                  000000FF
 _CONFIG1H                         00300001
 _CONFIG1L                         00300000
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 39
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 _CONFIG2H                         00300003
 _CONFIG2L                         00300002
 _CONFIG3H                         00300005
@@ -1740,12 +2216,6 @@ _CONFIG7L                         0030000C
 _CP0_OFF_5L                       000000FF
 _CP0_ON_5L                        000000FE
 _CP1_OFF_5L                       000000FF
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 31
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 _CP1_ON_5L                        000000FD
 _CP2_OFF_5L                       000000FF
 _CP2_ON_5L                        000000FB
@@ -1785,6 +2255,12 @@ _EBRT6_OFF_7L                     000000FF
 _EBRT6_ON_7L                      000000BF
 _EBRT7_OFF_7L                     000000FF
 _EBRT7_ON_7L                      0000007F
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 40
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 _EBRTB_OFF_7H                     000000FF
 _EBRTB_ON_7H                      000000BF
 _ECCPMX_PORTE_3H                  000000FF
@@ -1799,12 +2275,6 @@ _FOSC_EC3IO_1H                    000000F4
 _FOSC_EC3_1H                      000000F5
 _FOSC_HS1_1H                      000000F3
 _FOSC_HS2_1H                      000000F2
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 32
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 _FOSC_INTIO1_1H                   000000F9
 _FOSC_INTIO2_1H                   000000F8
 _FOSC_LP_1H                       000000F0
@@ -1844,6 +2314,12 @@ _WAIT_OFF_3L                      000000FF
 _WAIT_ON_3L                       0000007F
 _WDTEN_NOSLP_2H                   000000FD
 _WDTEN_OFF_2H                     000000FC
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 41
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 _WDTEN_ON_2H                      000000FE
 _WDTEN_SWDTDIS_2H                 000000FF
 _WDTPS_1024_2H                    000000AB
@@ -1858,12 +2334,6 @@ _WDTPS_256_2H                     000000A3
 _WDTPS_262144_2H                  000000CB
 _WDTPS_2_2H                       00000087
 _WDTPS_32768_2H                   000000BF
-MPASM 5.81                         DANCE.ASM   2-17-2020  15:09:42         PAGE 33
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 _WDTPS_32_2H                      00000097
 _WDTPS_4096_2H                    000000B3
 _WDTPS_4_2H                       0000008B
@@ -1900,6 +2370,30 @@ _XINST_ON_1L                      000000FF
 __18F87K22                        00000001
 __DEBUG                           
 __MPLAB_DEBUGGER_ICD3             1
+check_1                           00000346
+check_2                           0000034E
+dance_counter_baby                00000004
+MPASM 5.81                         DANCE.ASM   2-19-2020  13:08:49         PAGE 42
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+dance_counter_small_1             00000005
+dance_counter_small_2             00000006
+dance_delay                       00000476
+delay_1                           0000047A
+delay_2                           00000484
+delay_3                           0000048E
+delay_counter_d1                  00000001
+delay_counter_d2                  00000002
+delay_counter_d3                  00000003
+hops                              000003B4
+lifemode_dance                    00000000
+nested_2                          00000480
+nested_3                          0000048A
+wave                              00000272
+wave_counter                      00000007
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed

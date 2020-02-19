@@ -30,12 +30,12 @@ ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 IMAGE_TYPE=debug
 OUTPUT_SUFFIX=cof
 DEBUGGABLE_SUFFIX=cof
-FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 else
 IMAGE_TYPE=production
 OUTPUT_SUFFIX=hex
 DEBUGGABLE_SUFFIX=cof
-FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 endif
 
 ifeq ($(COMPARE_BUILD), true)
@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=config.asm LCD.asm Tamagotchi.asm Keyboard.asm sleepy.asm dance.asm learn.asm food.asm hatch.asm ballgame.asm
+SOURCEFILES_QUOTED_IF_SPACED=config.asm LCD.asm Tamagotchi.asm sleepy.asm dance.asm learn.asm food.asm hatch.asm ballgame.asm Numberpad.asm
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o ${OBJECTDIR}/Keyboard.o ${OBJECTDIR}/sleepy.o ${OBJECTDIR}/dance.o ${OBJECTDIR}/learn.o ${OBJECTDIR}/food.o ${OBJECTDIR}/hatch.o ${OBJECTDIR}/ballgame.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/config.o.d ${OBJECTDIR}/LCD.o.d ${OBJECTDIR}/Tamagotchi.o.d ${OBJECTDIR}/Keyboard.o.d ${OBJECTDIR}/sleepy.o.d ${OBJECTDIR}/dance.o.d ${OBJECTDIR}/learn.o.d ${OBJECTDIR}/food.o.d ${OBJECTDIR}/hatch.o.d ${OBJECTDIR}/ballgame.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o ${OBJECTDIR}/sleepy.o ${OBJECTDIR}/dance.o ${OBJECTDIR}/learn.o ${OBJECTDIR}/food.o ${OBJECTDIR}/hatch.o ${OBJECTDIR}/ballgame.o ${OBJECTDIR}/Numberpad.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/config.o.d ${OBJECTDIR}/LCD.o.d ${OBJECTDIR}/Tamagotchi.o.d ${OBJECTDIR}/sleepy.o.d ${OBJECTDIR}/dance.o.d ${OBJECTDIR}/learn.o.d ${OBJECTDIR}/food.o.d ${OBJECTDIR}/hatch.o.d ${OBJECTDIR}/ballgame.o.d ${OBJECTDIR}/Numberpad.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o ${OBJECTDIR}/Keyboard.o ${OBJECTDIR}/sleepy.o ${OBJECTDIR}/dance.o ${OBJECTDIR}/learn.o ${OBJECTDIR}/food.o ${OBJECTDIR}/hatch.o ${OBJECTDIR}/ballgame.o
+OBJECTFILES=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o ${OBJECTDIR}/sleepy.o ${OBJECTDIR}/dance.o ${OBJECTDIR}/learn.o ${OBJECTDIR}/food.o ${OBJECTDIR}/hatch.o ${OBJECTDIR}/ballgame.o ${OBJECTDIR}/Numberpad.o
 
 # Source Files
-SOURCEFILES=config.asm LCD.asm Tamagotchi.asm Keyboard.asm sleepy.asm dance.asm learn.asm food.asm hatch.asm ballgame.asm
+SOURCEFILES=config.asm LCD.asm Tamagotchi.asm sleepy.asm dance.asm learn.asm food.asm hatch.asm ballgame.asm Numberpad.asm
 
 
 CFLAGS=
@@ -87,7 +87,7 @@ FIXDEPS=fixDeps
 ifneq ($(INFORMATION_MESSAGE), )
 	@echo $(INFORMATION_MESSAGE)
 endif
-	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 
 MP_PROCESSOR_OPTION=18f87k22
 MP_LINKER_DEBUG_OPTION= 
@@ -117,14 +117,6 @@ ${OBJECTDIR}/Tamagotchi.o: Tamagotchi.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/Tamagotchi.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_ICD3=1 -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/Tamagotchi.lst\" -e\"${OBJECTDIR}/Tamagotchi.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/Tamagotchi.o\" \"Tamagotchi.asm\" 
 	@${DEP_GEN} -d "${OBJECTDIR}/Tamagotchi.o"
 	@${FIXDEPS} "${OBJECTDIR}/Tamagotchi.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
-${OBJECTDIR}/Keyboard.o: Keyboard.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/Keyboard.o.d 
-	@${RM} ${OBJECTDIR}/Keyboard.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/Keyboard.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_ICD3=1 -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/Keyboard.lst\" -e\"${OBJECTDIR}/Keyboard.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/Keyboard.o\" \"Keyboard.asm\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/Keyboard.o"
-	@${FIXDEPS} "${OBJECTDIR}/Keyboard.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 ${OBJECTDIR}/sleepy.o: sleepy.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -174,6 +166,14 @@ ${OBJECTDIR}/ballgame.o: ballgame.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${DEP_GEN} -d "${OBJECTDIR}/ballgame.o"
 	@${FIXDEPS} "${OBJECTDIR}/ballgame.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
+${OBJECTDIR}/Numberpad.o: Numberpad.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/Numberpad.o.d 
+	@${RM} ${OBJECTDIR}/Numberpad.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/Numberpad.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_ICD3=1 -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/Numberpad.lst\" -e\"${OBJECTDIR}/Numberpad.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/Numberpad.o\" \"Numberpad.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/Numberpad.o"
+	@${FIXDEPS} "${OBJECTDIR}/Numberpad.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
 else
 ${OBJECTDIR}/config.o: config.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -198,14 +198,6 @@ ${OBJECTDIR}/Tamagotchi.o: Tamagotchi.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/Tamagotchi.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/Tamagotchi.lst\" -e\"${OBJECTDIR}/Tamagotchi.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/Tamagotchi.o\" \"Tamagotchi.asm\" 
 	@${DEP_GEN} -d "${OBJECTDIR}/Tamagotchi.o"
 	@${FIXDEPS} "${OBJECTDIR}/Tamagotchi.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
-${OBJECTDIR}/Keyboard.o: Keyboard.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/Keyboard.o.d 
-	@${RM} ${OBJECTDIR}/Keyboard.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/Keyboard.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/Keyboard.lst\" -e\"${OBJECTDIR}/Keyboard.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/Keyboard.o\" \"Keyboard.asm\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/Keyboard.o"
-	@${FIXDEPS} "${OBJECTDIR}/Keyboard.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 ${OBJECTDIR}/sleepy.o: sleepy.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -255,18 +247,26 @@ ${OBJECTDIR}/ballgame.o: ballgame.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${DEP_GEN} -d "${OBJECTDIR}/ballgame.o"
 	@${FIXDEPS} "${OBJECTDIR}/ballgame.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
+${OBJECTDIR}/Numberpad.o: Numberpad.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/Numberpad.o.d 
+	@${RM} ${OBJECTDIR}/Numberpad.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/Numberpad.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/Numberpad.lst\" -e\"${OBJECTDIR}/Numberpad.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/Numberpad.o\" \"Numberpad.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/Numberpad.o"
+	@${FIXDEPS} "${OBJECTDIR}/Numberpad.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
 endif
 
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: link
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-dist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
+dist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_LD} $(MP_EXTRA_LD_PRE)   -p$(MP_PROCESSOR_OPTION)  -w -x -u_DEBUG -z__ICD2RAM=1 -m"${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"   -z__MPLAB_BUILD=1  -z__MPLAB_DEBUG=1 -z__MPLAB_DEBUGGER_ICD3=1 $(MP_LINKER_DEBUG_OPTION) -odist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.${IMAGE_TYPE}.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
+	${MP_LD} $(MP_EXTRA_LD_PRE)   -p$(MP_PROCESSOR_OPTION)  -w -x -u_DEBUG -z__ICD2RAM=1 -m"${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"   -z__MPLAB_BUILD=1  -z__MPLAB_DEBUG=1 -z__MPLAB_DEBUGGER_ICD3=1 $(MP_LINKER_DEBUG_OPTION) -odist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
 else
-dist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
+dist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_LD} $(MP_EXTRA_LD_PRE)   -p$(MP_PROCESSOR_OPTION)  -w  -m"${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"   -z__MPLAB_BUILD=1  -odist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
+	${MP_LD} $(MP_EXTRA_LD_PRE)   -p$(MP_PROCESSOR_OPTION)  -w  -m"${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"   -z__MPLAB_BUILD=1  -odist/${CND_CONF}/${IMAGE_TYPE}/Tamagotchi.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
 endif
 
 

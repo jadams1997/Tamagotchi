@@ -96,6 +96,9 @@ CHECK_D_PRESSED
 	bra     CHECK_E_PRESSED
 	movf    life_mode, W
 	call    DANCE
+	movlw	0xf4
+	movwf	counter_happiness
+	call	HAPPINESS
 	bra     GAME_MODE
 CHECK_E_PRESSED
 	movlw   0x45

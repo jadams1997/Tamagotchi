@@ -6,7 +6,7 @@
     global FOOD, FOOD_Setup
 
 
-acs0		    udata_acs
+acs1		    udata_acs
 lifemode_food	    res 1
 delay_counter_f1    res 1
 delay_counter_f2    res 1
@@ -86,9 +86,11 @@ loopb 	tblrd*+			; one byte from PM to TABLAT, increment TBLPRT
 	
 	
 FOOD 
+	;movff	0x99, food_counter
 	movwf   lifemode_food
 	movlw   0x01
 	addwf   food_counter, 1
+	;movff   food_counter, 0x99
 FOOD_ANIMATE
 	movlw   b'10000101'
 	call    LCD_shift 
@@ -179,17 +181,18 @@ FOOD_ANIMATE
 	call    LCD_Send_Byte_D ;back at centre
 CHECK_GROWTH
 check_2
-	movlw   0x0A
+	movf   food_counter, w
+	movlw   0x02
 	cpfseq  food_counter 
 	bra     check_4
 	bra     GROWTH
 check_4
-	movlw   0x19
+	movlw   0x04
 	cpfseq  food_counter 
 	bra     check_6
 	bra     GROWTH
 check_6
-	movlw   0x32
+	movlw   0x06
 	cpfseq  food_counter
 	bra     back
 	bra     GROWTH
