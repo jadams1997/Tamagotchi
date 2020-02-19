@@ -90,6 +90,9 @@ CHECK_C_PRESSED
 	bra     CHECK_D_PRESSED 
 	movf    life_mode, W
 	call    SLEEPY
+	movlw	0xf4
+	movwf	counter_happiness
+	call	HAPPINESS
 	bra     GAME_MODE
 CHECK_D_PRESSED
 	movlw   0x44

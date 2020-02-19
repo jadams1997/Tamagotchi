@@ -16,9 +16,9 @@ Number_pressed_2_string   res 1
 integer                res 1
 string	                res 1
 result                 res 1 
-output_1                res 1
-output_2                res 1
-count        res 1
+random_number   res 1
+guess       res 1
+count  res 1
 
 learn code
     
@@ -47,25 +47,127 @@ learn
     movwf   Number_pressed_1_string
     movlw   ' '
     movwf   Number_pressed_2_string
-    movlw   0x0F
-    movwf   integer 
-    movlw   ' '
-    movwf   output_2
+    movlw   0x01
+    movwf   random_number
     call    Numberpad 
-    movff   integer, Number_pressed_1_int
-    movff   string, Number_pressed_1_string
-    call    learn_delay
+    movff   random_number, Number_pressed_1_int
+    call    learn_delay 
     call    Numberpad 
-    movff   integer,  Number_pressed_2_int
-    movff   string, Number_pressed_2_string
-    movlw   0x0F
+    movff   random_number, Number_pressed_2_int 
+cr0 movlw   0x00
     cpfseq  Number_pressed_1_int
-    bra     c
-    bra     learn 
-c   movlw   0X0F
+    bra     cr1
+    movlw   '0'
+    movwf   Number_pressed_1_string 
+    bra     cr20
+cr1 movlw   0x01
+    cpfseq  Number_pressed_1_int
+    bra     cr2
+    movlw   '1'
+    movwf   Number_pressed_1_string
+    bra     cr20
+cr2 movlw   0x02
+    cpfseq  Number_pressed_1_int
+    bra     cr3
+    movlw   '2'
+    movwf   Number_pressed_1_string 
+    bra     cr20
+cr3 movlw   0x03
+    cpfseq  Number_pressed_1_int
+    bra     cr4
+    movlw   '3'
+    movwf   Number_pressed_1_string 
+    bra     cr20
+cr4 movlw   0x04
+    cpfseq  Number_pressed_1_int
+    bra     cr5
+    movlw   '4'
+    movwf   Number_pressed_1_string 
+    bra     cr20
+cr5 movlw   0x05
+    cpfseq  Number_pressed_1_int
+    bra     cr6
+    movlw   '5'
+    movwf   Number_pressed_1_string 
+    bra     cr20
+cr6 movlw   0x06
+    cpfseq  Number_pressed_1_int
+    bra     cr7
+    movlw   '6'
+    movwf   Number_pressed_1_string 
+    bra     cr20
+cr7 movlw   0x07
+    cpfseq  Number_pressed_1_int
+    bra     cr8
+    movlw   '7'
+    movwf   Number_pressed_1_string 
+    bra     cr20
+cr8 movlw   0x08
+    cpfseq  Number_pressed_1_int
+    bra     cr9
+    movlw   '8'
+    movwf   Number_pressed_1_string 
+    bra     cr20
+cr9 movlw   '9'
+    movwf   Number_pressed_1_string 
+    bra     cr20
+cr20 movlw   0x00
     cpfseq  Number_pressed_2_int
+    bra     cr21
+    movlw   '0'
+    movwf   Number_pressed_2_string 
     bra     calculate
-    bra     learn 
+cr21 movlw   0x01
+    cpfseq  Number_pressed_2_int
+    bra     cr22
+    movlw   '1'
+    movwf   Number_pressed_2_string 
+    bra     calculate
+cr22 movlw   0x02
+    cpfseq  Number_pressed_2_int
+    bra     cr23
+    movlw   '2'
+    movwf   Number_pressed_2_string 
+    bra     calculate
+cr23 movlw   0x03
+    cpfseq  Number_pressed_2_int
+    bra     cr24
+    movlw   '3'
+    movwf   Number_pressed_2_string 
+    bra     calculate
+cr24 movlw   0x04
+    cpfseq  Number_pressed_2_int
+    bra     cr25
+    movlw   '4'
+    movwf   Number_pressed_2_string 
+    bra     calculate
+cr25 movlw   0x05
+    cpfseq  Number_pressed_2_int
+    bra     cr26
+    movlw   '5'
+    movwf   Number_pressed_2_string 
+    bra     calculate
+cr26 movlw   0x06
+    cpfseq  Number_pressed_2_int
+    bra     cr27
+    movlw   '6'
+    movwf   Number_pressed_2_string 
+    bra     calculate
+cr27 movlw   0x07
+    cpfseq  Number_pressed_2_int
+    bra     cr28
+    movlw   '7'
+    movwf   Number_pressed_2_string 
+    bra     calculate
+cr28 movlw   0x08
+    cpfseq  Number_pressed_2_int
+    bra     cr29
+    movlw   '8'
+    movwf   Number_pressed_2_string 
+    bra     calculate
+cr29 movlw   '9'
+    movwf   Number_pressed_2_string 
+    bra     calculate
 calculate
     movlw   b'10001000'
     call    LCD_shift 
@@ -74,171 +176,29 @@ calculate
     movlw   b'10001010'
     call    LCD_shift 
     movf    Number_pressed_2_string, w 
-    call    LCD_Send_Byte_D 
-    call    learn_delay 
-    call    learn_delay 
+    call    LCD_Send_Byte_D      ;send two random numbers to screen
+    call    Numberpad
+    movwf   guess 
     movf    Number_pressed_1_int, w
     addwf   result, 1
     movf    Number_pressed_2_int, w
     addwf   result, 1
-    movlw   0x00
-checked
-    cpfseq  result 
-    bra     c_1
-    movlw   '0'
-    movwf   output_1
-    bra     output 
-c_1 movlw   0x01
-    cpfseq  result 
-    bra     c_2
-    movlw   '1'
-    movwf   output_1
-    bra     output 
-c_2 movlw   0x02
-    cpfseq  result 
-    bra     c_3
-    movlw   '2'
-    movwf   output_1
-    bra     output 
-c_3 movlw   0x03
-    cpfseq  result 
-    bra     c_4
-    movlw   '3'
-    movwf   output_1
-    bra     output 
-c_4 movlw   0x04
-    cpfseq  result 
-    bra     c_5
-    movlw   '4'
-    movwf   output_1
-    bra     output 
-c_5 movlw   0x05
-    cpfseq  result 
-    bra     c_6
-    movlw   '5'
-    movwf   output_1
-    bra     output 
-c_6 movlw   0x06
-    cpfseq  result 
-    bra     c_7
-    movlw   '6'
-    movwf   output_1
-    bra     output 
-c_7 movlw   0x07
-    cpfseq  result 
-    bra     c_8
-    movlw   '7'
-    movwf   output_1
-    bra     output 
-c_8 movlw   0x08
-    cpfseq  result 
-    bra     c_9
-    movlw   '8'
-    movwf   output_1
-    bra     output 
-c_9 movlw   0x09
-    cpfseq  result 
-    bra     c_10
-    movlw   '9'
-    movwf   output_1
-    bra     output 
-c_10
-    movlw   0x0A
-    cpfseq  result 
-    bra     c_11
-    movlw   '1'
-    movwf   output_1
-    movlw   '0'
-    movwf   output_2
-    bra     output 
-c_11 movlw   0x0B
-    cpfseq  result 
-    bra     c_12
-    movlw   '1'
-    movwf   output_1
-    movlw   '1'
-    movwf   output_2
-    bra     output 
-c_12
-    movlw   0x0C
-    cpfseq  result 
-    bra     c_13
-    movlw   '1'
-    movwf   output_1
-    movlw   '2'
-    movwf   output_2
-    bra     output 
-c_13 movlw   0x0D
-    cpfseq  result 
-    bra     c_14
-    movlw   '1'
-    movwf   output_1
-    movlw   '3'
-    movwf   output_2
-    bra     output 
-c_14 movlw   0x0E
-    cpfseq  result 
-    bra     c_15
-    movlw   '1'
-    movwf   output_1
-    movlw   '4'
-    movwf   output_2
-    bra     output 
-c_15 movlw   0x0F
-    cpfseq  result 
-    bra     c_16
-    movlw   '1'
-    movwf   output_1
-    movlw   '5'
-    movwf   output_2
-    bra     output 
-c_16 movlw   0x10
-    cpfseq  result 
-    bra     c_17
-    movlw   '1'
-    movwf   output_1
-    movlw   '6'
-    movwf   output_2
-    bra     output 
-c_17 movlw   0x11
-    cpfseq  result 
-    bra     c_18
-    movlw   '1'
-    movwf   output_1
-    movlw   '7'
-    movwf   output_2
-    bra     output 
-c_18 
-    movlw   '1'
-    movwf   output_1
-    movlw   '8'
-    movwf   output_2
-    bra     output 
-output 
-    movlw   b'10001100'
+    movf    result, w
+    cpfseq  guess 
+    bra     wrong 
+    bra     right 
+wrong 
+    movlw   b'10001101'
     call    LCD_shift 
-    movf    output_1, w
-    call    LCD_Send_Byte_D 
-    movf    output_2, w
-    call    LCD_Send_Byte_D
-    call    learn_delay 
-    call    learn_delay
-    movlw   b'10001000'
+    movlw   0x06 
+    call    LCD_Send_Byte
+    return 
+right 
+    movlw   b'10001101'
     call    LCD_shift 
-    movlw   ' '
-    call    LCD_Send_Byte_D
-    movlw   ' '
-    call    LCD_Send_Byte_D
-    movlw   ' '
-    call    LCD_Send_Byte_D
-    movlw   ' '
-    call    LCD_Send_Byte_D
-    movlw   ' '
-    call    LCD_Send_Byte_D
-    movlw   ' '
-    call    LCD_Send_Byte_D
-    return
-    
+    movlw   0x07
+    call    LCD_Send_Byte 
+    return 
  
     
 Numberpad
@@ -262,7 +222,18 @@ setup_row
     call   delay
     return 
    
-read_row       
+read_row     
+    movlw 0x01
+    addwf random_number, 1
+    movlw 0xA
+    cpfseq random_number
+    bra    continue
+    bra    rst 
+rst
+    movlw 0x01
+    movwf random_number
+    bra   continue 
+continue
     btfss PORTE, RE4
     bra check_1
     movlw 0x0
