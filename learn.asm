@@ -262,7 +262,7 @@ setup_row
     call   delay
     return 
    
-read_row   
+read_row       
     btfss PORTE, RE4
     bra check_1
     movlw 0x0
