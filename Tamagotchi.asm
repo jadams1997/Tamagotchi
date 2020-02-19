@@ -3,7 +3,7 @@
     extern LCD_Setup, LCD_Send_Byte_D, LCD_shift, LCD_clear
     extern FOOD, LEARN, DANCE, SLEEPY, BALL_GAME, output_starting_screen
     extern output_hatching_sequence, output_PRESS_A_TO_HATCH, FOOD_Setup
-    extern BABY
+    extern BABY, GHOST
 	
 acs0                             udata_acs
 counter_happiness                res 1
@@ -66,6 +66,7 @@ PRESS_A_TO_HATCH
 	movlw	0x0
 	movwf   life_mode ;initialise the life mode at 0 for baby rabbit
 	call    BABY
+	call	GHOST
 GAME_MODE
 	movlw   0x00
 	movwf   Key_Pressed    ;reset Key_Pressed variable 
@@ -105,7 +106,10 @@ CHECK_E_PRESSED
 	cpfseq  Key_Pressed 
 	bra     CHECK_F_PRESSED
 	movf    life_mode, W
-	call    LEARN	
+	call    LEARN
+	movlw	0xf4
+	movwf	counter_happiness
+	call	HAPPINESS
 	bra     GAME_MODE
 CHECK_F_PRESSED 
 	movlw   0x46
@@ -126,7 +130,7 @@ Keyboard_Setup
         clrf LATE 
         movlw 0xFF
         movwf 0x20
-        call delay
+        call delay_k
         return 
     
     
@@ -146,7 +150,7 @@ setup_row
         movwf PORTE, ACCESS
         movlw 0xFF
         movwf 0x20
-        call delay
+        call delay_k
         return 
    
 read_row   

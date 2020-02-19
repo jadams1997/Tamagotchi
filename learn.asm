@@ -11,10 +11,14 @@ delay_count_l2      res 1
 delay_count_l3      res 1
 Number_pressed_1_int   res 1
 Number_pressed_2_int   res 1
+Number_pressed_1_string   res 1
+Number_pressed_2_string   res 1
 integer                res 1
+string	                res 1
 result                 res 1 
 output_1                res 1
 output_2                res 1
+count        res 1
 
 learn code
     
@@ -33,16 +37,27 @@ LEARN
     movlw   0x3F
     call    LCD_Send_Byte_D
 learn
+    movlw   0x00
+    movwf   result 
+    movlw   0x00
+    movwf   Number_pressed_1_int
+    movlw   0x00
+    movwf   Number_pressed_2_int
+    movlw   ' '
+    movwf   Number_pressed_1_string
+    movlw   ' '
+    movwf   Number_pressed_2_string
     movlw   0x0F
     movwf   integer 
     movlw   ' '
     movwf   output_2
-    movlw   0x00
-    movwf   result 
     call    Numberpad 
     movff   integer, Number_pressed_1_int
+    movff   string, Number_pressed_1_string
+    call    learn_delay
     call    Numberpad 
     movff   integer,  Number_pressed_2_int
+    movff   string, Number_pressed_2_string
     movlw   0x0F
     cpfseq  Number_pressed_1_int
     bra     c
@@ -54,11 +69,11 @@ c   movlw   0X0F
 calculate
     movlw   b'10001000'
     call    LCD_shift 
-    movf    Number_pressed_1_int, w
+    movf    Number_pressed_1_string, w
     call    LCD_Send_Byte_D
     movlw   b'10001010'
     call    LCD_shift 
-    movf    Number_pressed_2_int, w 
+    movf    Number_pressed_2_string, w 
     call    LCD_Send_Byte_D 
     call    learn_delay 
     call    learn_delay 
@@ -128,7 +143,7 @@ c_9 movlw   0x09
     movwf   output_1
     bra     output 
 c_10
-    movlw   0x10
+    movlw   0x0A
     cpfseq  result 
     bra     c_11
     movlw   '1'
@@ -136,7 +151,7 @@ c_10
     movlw   '0'
     movwf   output_2
     bra     output 
-c_11 movlw   0x11
+c_11 movlw   0x0B
     cpfseq  result 
     bra     c_12
     movlw   '1'
@@ -145,7 +160,7 @@ c_11 movlw   0x11
     movwf   output_2
     bra     output 
 c_12
-    movlw   0x12
+    movlw   0x0C
     cpfseq  result 
     bra     c_13
     movlw   '1'
@@ -153,7 +168,7 @@ c_12
     movlw   '2'
     movwf   output_2
     bra     output 
-c_13 movlw   0x13
+c_13 movlw   0x0D
     cpfseq  result 
     bra     c_14
     movlw   '1'
@@ -161,7 +176,7 @@ c_13 movlw   0x13
     movlw   '3'
     movwf   output_2
     bra     output 
-c_14 movlw   0x14
+c_14 movlw   0x0E
     cpfseq  result 
     bra     c_15
     movlw   '1'
@@ -169,7 +184,7 @@ c_14 movlw   0x14
     movlw   '4'
     movwf   output_2
     bra     output 
-c_15 movlw   0x15
+c_15 movlw   0x0F
     cpfseq  result 
     bra     c_16
     movlw   '1'
@@ -177,7 +192,7 @@ c_15 movlw   0x15
     movlw   '5'
     movwf   output_2
     bra     output 
-c_16 movlw   0x16
+c_16 movlw   0x10
     cpfseq  result 
     bra     c_17
     movlw   '1'
@@ -185,7 +200,7 @@ c_16 movlw   0x16
     movlw   '6'
     movwf   output_2
     bra     output 
-c_17 movlw   0x17
+c_17 movlw   0x11
     cpfseq  result 
     bra     c_18
     movlw   '1'
@@ -208,11 +223,27 @@ output
     call    LCD_Send_Byte_D
     call    learn_delay 
     call    learn_delay
+    movlw   b'10001000'
+    call    LCD_shift 
+    movlw   ' '
+    call    LCD_Send_Byte_D
+    movlw   ' '
+    call    LCD_Send_Byte_D
+    movlw   ' '
+    call    LCD_Send_Byte_D
+    movlw   ' '
+    call    LCD_Send_Byte_D
+    movlw   ' '
+    call    LCD_Send_Byte_D
+    movlw   ' '
+    call    LCD_Send_Byte_D
     return
     
  
     
 Numberpad
+    movlw 0xFF
+    movwf  count
     call setup_row
     bra read_row
 column
@@ -227,8 +258,8 @@ setup_row
     movlw 0x0F
     movwf PORTE, ACCESS
     movlw 0xFF
-    movwf 0x20
-    call delay
+    movwf  count
+    call   delay
     return 
    
 read_row   
@@ -263,8 +294,8 @@ setup_column
     movlw 0xF0
     movwf PORTE, ACCESS
     movlw 0xFF
-    movwf 0x20
-    call delay
+    movwf  count
+    call   delay
     return 
 
 read_column   
@@ -293,7 +324,7 @@ check_7
     bra decode
   
 delay 
-    decfsz 0x20
+    decfsz count
     bra delay
     return 
 
@@ -309,6 +340,8 @@ column_11
     bra column_12
     movlw  0x01
     movwf integer 
+    movlw  '1'
+    movwf string 
     return 
 column_12
     movlw 0x05
@@ -316,6 +349,8 @@ column_12
     bra column_13
     movlw  0x02
     movwf integer 
+    movlw  '2'
+    movwf string 
     return 
 column_13
     movlw 0x06
@@ -323,6 +358,8 @@ column_13
     bra column_14
     movlw  0x03
     movwf integer 
+    movlw  '3'
+    movwf string 
 column_14
     return 
 row_1 
@@ -336,20 +373,26 @@ column_21
     bra column_22
     movlw  0x04
     movwf integer 
+    movlw  '4'
+    movwf string 
     return 
 column_22
     movlw 0x05
     cpfseq counter_column
     bra column_23
     movlw  0x05
-    movwf integer 
+    movwf integer
+    movlw  '5'
+    movwf string 
     return 
 column_23
     movlw 0x06
     cpfseq counter_column
     bra column_24
     movlw  0x06
-    movwf integer 
+    movwf integer
+    movlw  '6'
+    movwf string 
     return 
 column_24
     return 
@@ -363,21 +406,27 @@ column_31
     cpfseq counter_column
     bra column_32
     movlw  0x07
-    movwf integer 
+    movwf integer
+    movlw  '7'
+    movwf string 
     return 
 column_32
     movlw 0x05
     cpfseq counter_column
     bra column_33 
     movlw  0x08
-    movwf integer 
+    movwf integer
+    movlw  '8'
+    movwf string 
     return 
 column_33
     movlw 0x06
     cpfseq counter_column
     bra column_34
     movlw  0x09
-    movwf integer 
+    movwf integer
+    movlw  '9'
+    movwf string 
     return 
 column_34
     return 
@@ -393,7 +442,9 @@ column_42
     cpfseq counter_column
     bra column_43
     movlw  0x0
-    movwf integer 
+    movwf integer
+    movlw  '0'
+    movwf string 
     return 
 column_43
     movlw 0x06
@@ -407,7 +458,7 @@ column_44
     
 
 learn_delay
-	movlw   0xff
+	movlw   0x90
 	movwf   delay_count_l1
 delay_1       
 	decfsz  delay_count_l1
@@ -415,14 +466,14 @@ delay_1
 	return
 	
 nested_2
-	movlw   0xff
+	movlw   0x90
 	movwf   delay_count_l2
 delay_2	decfsz  delay_count_l2
 	bra     nested_3
 	bra     delay_1
 
 nested_3
-	movlw   0xff
+	movlw   0x90
 	movwf   delay_count_l3
 delay_3
 	decfsz  delay_count_l3
