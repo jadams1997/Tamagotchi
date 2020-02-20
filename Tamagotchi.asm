@@ -3,7 +3,7 @@
     extern LCD_Setup, LCD_Send_Byte_D, LCD_shift, LCD_clear
     extern FOOD, LEARN, DANCE, SLEEPY, BALL_GAME, output_starting_screen
     extern output_hatching_sequence, output_PRESS_A_TO_HATCH, FOOD_Setup
-    extern BABY, GHOST
+    extern BABY, GHOST, ADC_Setup, TEMPERATURE, Temperature_hex_1, Temperature_hex_2
 	
 acs0                             udata_acs
 counter_happiness                res 1
@@ -33,6 +33,7 @@ setup	bcf	EECON1, CFGS	; point to Flash program memory
 	call	LCD_Setup	; setup LCD
 	call    Keyboard_Setup  ; setup keyboard 
 	call    FOOD_Setup 
+	call    ADC_Setup
 	goto    MAIN
 	
 MAIN 
@@ -364,6 +365,8 @@ dch5	movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter ha
 	
 	
 HAPPINESS	
+	call    TEMPERATURE 
+	movf    Temperature_hex_1, w
 	movlw   b'11000000'
 	call    LCD_shift   ;shifting where the LCD writes to ammend happiness character
 	movlw   0x96

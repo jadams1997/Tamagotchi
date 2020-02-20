@@ -46,7 +46,7 @@ output_starting_screen
 	movlw   0x05
 	call    LCD_Send_Byte_D  ;display smiley face for starting happiness 
 	movlw   0x03
-	call    LCD_Send_Byte_D  ;display an A to show in hatching mode 
+	call    LCD_Send_Byte_D  ;display sun
 	movlw   b'11001001'
 	call    LCD_shift 
 	movlw   0x00   

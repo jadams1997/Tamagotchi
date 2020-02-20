@@ -69,6 +69,7 @@ LCD_Send_Byte_I		    ; Transmits byte stored in W to instruction reg
 	bcf	LATB, LCD_RS    ; Instruction write clear RS bit
         call    LCD_Enable  ; Pulse enable Bit 
 	return
+	
 
 LCD_Send_Byte_D		    ; Transmits byte stored in W to data reg
 	movwf   LCD_tmp

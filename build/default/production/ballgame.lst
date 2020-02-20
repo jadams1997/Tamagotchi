@@ -1,4 +1,4 @@
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE  1
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -57,7 +57,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000030 EC?? F???      00041     call   LCD_Send_Byte_D
 000034 EC?? F???      00042     call   ball_delay
 000038 0ECB           00043     movlw  b'11001011'
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE  2
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -116,7 +116,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0000D2 0EC6           00094     movlw b'11000110'
 0000D4 EC?? F???      00095     call  LCD_shift 
 0000D8 0E20           00096     movlw ' '
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE  3
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -175,7 +175,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000178 0E00           00147     movlw 0x00
 00017A EC?? F???      00148     call  LCD_Send_Byte_D 
 00017E EC?? F???      00149     call   ball_delay
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE  4
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -234,7 +234,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000202 EC?? F???      00200     call  LCD_Send_Byte_D
 000206 0E00           00201     movlw 0x00
 000208 EC?? F???      00202     call  LCD_Send_Byte_D 
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE  5
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -293,7 +293,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0002AA 0E20           00253     movlw ' '
 0002AC EC?? F???      00254     call  LCD_Send_Byte_D
 0002B0 0ECA           00255     movlw b'11001010'
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE  6
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -352,7 +352,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000312 5E00           00306         subwf   timer_2_remaining, 1
 000314 0E40           00307         movlw   0x40
 000316 6E??           00308         movwf   timer_3
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE  7
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE  7
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -411,7 +411,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000354 D???           00359         bra     delay_1
                       00360 
 000356                00361 nested_3
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE  8
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE  8
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -428,7 +428,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00370     
                       00371     
                       00372     end 
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE  9
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE  9
 
 
 SYMBOL TABLE
@@ -487,7 +487,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 10
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 10
 
 
 SYMBOL TABLE
@@ -546,7 +546,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 11
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 11
 
 
 SYMBOL TABLE
@@ -605,7 +605,7 @@ C1OUT                             00000002
 C1TSEL0                           00000000
 C1TSEL1                           00000001
 C1TSEL2                           00000002
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 12
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 12
 
 
 SYMBOL TABLE
@@ -664,7 +664,7 @@ CCP1IF                            00000001
 CCP1IP                            00000001
 CCP1M0                            00000000
 CCP1M1                            00000001
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 13
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 13
 
 
 SYMBOL TABLE
@@ -723,7 +723,7 @@ CCP5IP                            00000002
 CCP5M0                            00000000
 CCP5M1                            00000001
 CCP5M2                            00000002
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 14
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 14
 
 
 SYMBOL TABLE
@@ -782,7 +782,7 @@ CCP9IF                            00000006
 CCP9IP                            00000006
 CCP9M0                            00000000
 CCP9M1                            00000001
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 15
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 15
 
 
 SYMBOL TABLE
@@ -841,7 +841,7 @@ CHSN0                             00000000
 CHSN1                             00000001
 CHSN2                             00000002
 CK1                               00000006
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 16
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 16
 
 
 SYMBOL TABLE
@@ -900,7 +900,7 @@ CTMUICON                          00000F55
 CTMUIE                            00000003
 CTMUIF                            00000003
 CTMUIP                            00000003
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 17
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 17
 
 
 SYMBOL TABLE
@@ -959,7 +959,7 @@ ECCP1AS0                          00000004
 ECCP1AS1                          00000005
 ECCP1AS2                          00000006
 ECCP1ASE                          00000007
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 18
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 18
 
 
 SYMBOL TABLE
@@ -1018,7 +1018,7 @@ FSR2                              00000002
 FSR2H                             00000FDA
 FSR2L                             00000FD9
 GCEN                              00000007
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 19
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 19
 
 
 SYMBOL TABLE
@@ -1077,7 +1077,7 @@ INT3E                             00000005
 INT3F                             00000002
 INT3IE                            00000005
 INT3IF                            00000002
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 20
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 20
 
 
 SYMBOL TABLE
@@ -1136,7 +1136,7 @@ LATB6                             00000006
 LATB7                             00000007
 LATC                              00000F8B
 LATC0                             00000000
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 21
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 21
 
 
 SYMBOL TABLE
@@ -1195,7 +1195,7 @@ LATJ0                             00000000
 LATJ1                             00000001
 LATJ2                             00000002
 LATJ3                             00000003
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 22
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 22
 
 
 SYMBOL TABLE
@@ -1254,7 +1254,7 @@ OBF                               00000006
 ODCON1                            00000F29
 ODCON2                            00000F28
 ODCON3                            00000F27
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 23
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 23
 
 
 SYMBOL TABLE
@@ -1313,7 +1313,7 @@ P3DC4                             00000004
 P3DC5                             00000005
 P3DC6                             00000006
 P3M0                              00000006
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 24
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 24
 
 
 SYMBOL TABLE
@@ -1372,7 +1372,7 @@ PORTH                             00000F87
 PORTJ                             00000F88
 POSTDEC0                          00000FED
 POSTDEC1                          00000FE5
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 25
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 25
 
 
 SYMBOL TABLE
@@ -1431,7 +1431,7 @@ RA0                               00000000
 RA1                               00000001
 RA2                               00000002
 RA3                               00000003
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 26
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 26
 
 
 SYMBOL TABLE
@@ -1490,7 +1490,7 @@ RD2                               00000002
 RD3                               00000003
 RD4                               00000004
 RD5                               00000005
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 27
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 27
 
 
 SYMBOL TABLE
@@ -1549,7 +1549,7 @@ RODIV2                            00000002
 RODIV3                            00000003
 ROON                              00000007
 ROSEL                             00000004
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 28
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 28
 
 
 SYMBOL TABLE
@@ -1608,7 +1608,7 @@ SENDB1                            00000003
 SENDB2                            00000003
 SMP                               00000007
 SOSCEN                            00000003
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 29
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 29
 
 
 SYMBOL TABLE
@@ -1667,7 +1667,7 @@ SSPIE                             00000003
 SSPIF                             00000003
 SSPIP                             00000003
 SSPM0                             00000000
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 30
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 30
 
 
 SYMBOL TABLE
@@ -1726,7 +1726,7 @@ T1G                               00000005
 T1GCON                            00000FAA
 T1GGO                             00000003
 T1GGO_NOT_T1DONE                  00000003
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 31
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 31
 
 
 SYMBOL TABLE
@@ -1785,7 +1785,7 @@ T6CKPS1                           00000001
 T6CON                             00000F39
 T6OUTPS0                          00000003
 T6OUTPS1                          00000004
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 32
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 32
 
 
 SYMBOL TABLE
@@ -1844,7 +1844,7 @@ TMR1CS0                           00000006
 TMR1CS1                           00000007
 TMR1GE                            00000007
 TMR1GIE                           00000002
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 33
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 33
 
 
 SYMBOL TABLE
@@ -1903,7 +1903,7 @@ TMR6                              00000F3B
 TMR6IE                            00000002
 TMR6IF                            00000002
 TMR6IP                            00000002
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 34
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 34
 
 
 SYMBOL TABLE
@@ -1962,7 +1962,7 @@ TRISC1                            00000001
 TRISC2                            00000002
 TRISC3                            00000003
 TRISC4                            00000004
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 35
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 35
 
 
 SYMBOL TABLE
@@ -2021,7 +2021,7 @@ TRISJ4                            00000004
 TRISJ5                            00000005
 TRISJ6                            00000006
 TRISJ7                            00000007
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 36
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 36
 
 
 SYMBOL TABLE
@@ -2080,7 +2080,7 @@ VCFG1                             00000005
 VDIRMAG                           00000007
 VNCFG                             00000003
 VREF_MINUS                        00000002
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 37
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 37
 
 
 SYMBOL TABLE
@@ -2139,7 +2139,7 @@ _CONFIG7H                         0030000D
 _CONFIG7L                         0030000C
 _CP0_OFF_5L                       000000FF
 _CP0_ON_5L                        000000FE
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 38
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 38
 
 
 SYMBOL TABLE
@@ -2198,7 +2198,7 @@ _FOSC_EC2_1H                      000000FB
 _FOSC_EC3IO_1H                    000000F4
 _FOSC_EC3_1H                      000000F5
 _FOSC_HS1_1H                      000000F3
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 39
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 39
 
 
 SYMBOL TABLE
@@ -2257,7 +2257,7 @@ _WDTPS_2048_2H                    000000AF
 _WDTPS_256_2H                     000000A3
 _WDTPS_262144_2H                  000000CB
 _WDTPS_2_2H                       00000087
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 40
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 40
 
 
 SYMBOL TABLE
@@ -2316,7 +2316,7 @@ move_ghost                        000001BE
 n2                                00000302
 n3                                00000310
 n_2                               000001AA
-MPASM 5.81                      BALLGAME.ASM   2-20-2020  14:47:33         PAGE 41
+MPASM 5.81                      BALLGAME.ASM   2-20-2020  16:50:00         PAGE 41
 
 
 SYMBOL TABLE

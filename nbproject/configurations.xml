@@ -15,13 +15,13 @@
       <itemPath>config.asm</itemPath>
       <itemPath>LCD.asm</itemPath>
       <itemPath>Tamagotchi.asm</itemPath>
-      <itemPath>Keyboard.asm</itemPath>
       <itemPath>sleepy.asm</itemPath>
       <itemPath>dance.asm</itemPath>
       <itemPath>learn.asm</itemPath>
       <itemPath>food.asm</itemPath>
       <itemPath>hatch.asm</itemPath>
       <itemPath>ballgame.asm</itemPath>
+      <itemPath>temperature.asm</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

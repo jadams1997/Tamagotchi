@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=config.asm LCD.asm Tamagotchi.asm sleepy.asm dance.asm learn.asm food.asm hatch.asm ballgame.asm
+SOURCEFILES_QUOTED_IF_SPACED=config.asm LCD.asm Tamagotchi.asm sleepy.asm dance.asm learn.asm food.asm hatch.asm ballgame.asm temperature.asm
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o ${OBJECTDIR}/sleepy.o ${OBJECTDIR}/dance.o ${OBJECTDIR}/learn.o ${OBJECTDIR}/food.o ${OBJECTDIR}/hatch.o ${OBJECTDIR}/ballgame.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/config.o.d ${OBJECTDIR}/LCD.o.d ${OBJECTDIR}/Tamagotchi.o.d ${OBJECTDIR}/sleepy.o.d ${OBJECTDIR}/dance.o.d ${OBJECTDIR}/learn.o.d ${OBJECTDIR}/food.o.d ${OBJECTDIR}/hatch.o.d ${OBJECTDIR}/ballgame.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o ${OBJECTDIR}/sleepy.o ${OBJECTDIR}/dance.o ${OBJECTDIR}/learn.o ${OBJECTDIR}/food.o ${OBJECTDIR}/hatch.o ${OBJECTDIR}/ballgame.o ${OBJECTDIR}/temperature.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/config.o.d ${OBJECTDIR}/LCD.o.d ${OBJECTDIR}/Tamagotchi.o.d ${OBJECTDIR}/sleepy.o.d ${OBJECTDIR}/dance.o.d ${OBJECTDIR}/learn.o.d ${OBJECTDIR}/food.o.d ${OBJECTDIR}/hatch.o.d ${OBJECTDIR}/ballgame.o.d ${OBJECTDIR}/temperature.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o ${OBJECTDIR}/sleepy.o ${OBJECTDIR}/dance.o ${OBJECTDIR}/learn.o ${OBJECTDIR}/food.o ${OBJECTDIR}/hatch.o ${OBJECTDIR}/ballgame.o
+OBJECTFILES=${OBJECTDIR}/config.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Tamagotchi.o ${OBJECTDIR}/sleepy.o ${OBJECTDIR}/dance.o ${OBJECTDIR}/learn.o ${OBJECTDIR}/food.o ${OBJECTDIR}/hatch.o ${OBJECTDIR}/ballgame.o ${OBJECTDIR}/temperature.o
 
 # Source Files
-SOURCEFILES=config.asm LCD.asm Tamagotchi.asm sleepy.asm dance.asm learn.asm food.asm hatch.asm ballgame.asm
+SOURCEFILES=config.asm LCD.asm Tamagotchi.asm sleepy.asm dance.asm learn.asm food.asm hatch.asm ballgame.asm temperature.asm
 
 
 CFLAGS=
@@ -166,6 +166,14 @@ ${OBJECTDIR}/ballgame.o: ballgame.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${DEP_GEN} -d "${OBJECTDIR}/ballgame.o"
 	@${FIXDEPS} "${OBJECTDIR}/ballgame.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
+${OBJECTDIR}/temperature.o: temperature.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/temperature.o.d 
+	@${RM} ${OBJECTDIR}/temperature.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/temperature.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_ICD3=1 -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/temperature.lst\" -e\"${OBJECTDIR}/temperature.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/temperature.o\" \"temperature.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/temperature.o"
+	@${FIXDEPS} "${OBJECTDIR}/temperature.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
 else
 ${OBJECTDIR}/config.o: config.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -238,6 +246,14 @@ ${OBJECTDIR}/ballgame.o: ballgame.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/ballgame.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/ballgame.lst\" -e\"${OBJECTDIR}/ballgame.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/ballgame.o\" \"ballgame.asm\" 
 	@${DEP_GEN} -d "${OBJECTDIR}/ballgame.o"
 	@${FIXDEPS} "${OBJECTDIR}/ballgame.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/temperature.o: temperature.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/temperature.o.d 
+	@${RM} ${OBJECTDIR}/temperature.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/temperature.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/temperature.lst\" -e\"${OBJECTDIR}/temperature.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/temperature.o\" \"temperature.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/temperature.o"
+	@${FIXDEPS} "${OBJECTDIR}/temperature.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 endif
 

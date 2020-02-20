@@ -1,4 +1,4 @@
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE  1
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -57,7 +57,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000038 EC?? F???      00041         call    LCD_delay_x4us  ;movlw  b'00000001'     ; display clear
 00003C EC?? F???      00042         call    LCD_clear ;call LCD_Send_Byte_I
 000040 0E06           00043         movlw   b'00000110'     ; entry mode incr by 1 no shift
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE  2
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -91,1162 +91,1163 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000074 988A           00069         bcf     LATB, LCD_RS    ; Instruction write clear RS bit
 000076 EC?? F???      00070         call    LCD_Enable  ; Pulse enable Bit 
 00007A 0012           00071         return
-                      00072 
-00007C                00073 LCD_Send_Byte_D             ; Transmits byte stored in W to data reg
-00007C 6E??           00074         movwf   LCD_tmp
-00007E 38??           00075         swapf   LCD_tmp,W   ; swap nibbles, high nibble goes first
-000080 0B0F           00076         andlw   0x0f        ; select just low nibble
-000082 6E8A           00077         movwf   LATB        ; output data bits to LCD
-000084 888A           00078         bsf     LATB, LCD_RS    ; Data write set RS bit
-000086 EC?? F???      00079         call    LCD_Enable  ; Pulse enable Bit 
-00008A 50??           00080         movf    LCD_tmp,W   ; swap nibbles, now do low nibble
-00008C 0B0F           00081         andlw   0x0f        ; select just low nibble
-00008E 6E8A           00082         movwf   LATB        ; output data bits to LCD
-000090 888A           00083         bsf     LATB, LCD_RS    ; Data write set RS bit     
-000092 EC?? F???      00084         call    LCD_Enable  ; Pulse enable Bit 
-000096 0E0A           00085         movlw   .10         ; delay 40us
-000098 EC?? F???      00086         call    LCD_delay_x4us
-00009C 0012           00087         return
-                      00088 
-00009E                00089 LCD_Enable          ; pulse enable bit LCD_E for 500ns
-00009E 0000           00090         nop
-0000A0 0000           00091         nop
-0000A2 0000           00092         nop
-0000A4 0000           00093         nop
-0000A6 0000           00094         nop
-0000A8 0000           00095         nop
-0000AA 0000           00096         nop
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE  3
+                      00072         
+                      00073 
+00007C                00074 LCD_Send_Byte_D             ; Transmits byte stored in W to data reg
+00007C 6E??           00075         movwf   LCD_tmp
+00007E 38??           00076         swapf   LCD_tmp,W   ; swap nibbles, high nibble goes first
+000080 0B0F           00077         andlw   0x0f        ; select just low nibble
+000082 6E8A           00078         movwf   LATB        ; output data bits to LCD
+000084 888A           00079         bsf     LATB, LCD_RS    ; Data write set RS bit
+000086 EC?? F???      00080         call    LCD_Enable  ; Pulse enable Bit 
+00008A 50??           00081         movf    LCD_tmp,W   ; swap nibbles, now do low nibble
+00008C 0B0F           00082         andlw   0x0f        ; select just low nibble
+00008E 6E8A           00083         movwf   LATB        ; output data bits to LCD
+000090 888A           00084         bsf     LATB, LCD_RS    ; Data write set RS bit     
+000092 EC?? F???      00085         call    LCD_Enable  ; Pulse enable Bit 
+000096 0E0A           00086         movlw   .10         ; delay 40us
+000098 EC?? F???      00087         call    LCD_delay_x4us
+00009C 0012           00088         return
+                      00089 
+00009E                00090 LCD_Enable          ; pulse enable bit LCD_E for 500ns
+00009E 0000           00091         nop
+0000A0 0000           00092         nop
+0000A2 0000           00093         nop
+0000A4 0000           00094         nop
+0000A6 0000           00095         nop
+0000A8 0000           00096         nop
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0000AC 0000           00097         nop
-0000AE 8A8A           00098         bsf         LATB, LCD_E     ; Take enable high
-0000B0 0000           00099         nop
-0000B2 0000           00100         nop
-0000B4 0000           00101         nop
-0000B6 0000           00102         nop
-0000B8 0000           00103         nop
-0000BA 0000           00104         nop
-0000BC 0000           00105         nop
-0000BE 9A8A           00106         bcf         LATB, LCD_E     ; Writes data to LCD
-0000C0 0012           00107         return
-                      00108     
-0000C2                00109 LCD_delay_ms                ; delay given in ms in W
-0000C2 6E??           00110         movwf   LCD_cnt_ms
-0000C4 0EFA           00111 lcdlp2  movlw   .250        ; 1 ms delay
-0000C6 EC?? F???      00112         call    LCD_delay_x4us  
-0000CA 2E??           00113         decfsz  LCD_cnt_ms
-0000CC D???           00114         bra     lcdlp2
-0000CE 0012           00115         return
-                      00116     
-0000D0                00117 LCD_delay_x4us              ; delay given in chunks of 4 microsecond in W
-0000D0 6E??           00118         movwf   LCD_cnt_l   ; now need to multiply by 16
-0000D2 3A??           00119         swapf   LCD_cnt_l,F ; swap nibbles
-0000D4 0E0F           00120         movlw   0x0f        
-0000D6 14??           00121         andwf   LCD_cnt_l,W ; move low nibble to W
-0000D8 6E??           00122         movwf   LCD_cnt_h   ; then to LCD_cnt_h
-0000DA 0EF0           00123         movlw   0xf0        
-0000DC 16??           00124         andwf   LCD_cnt_l,F ; keep high nibble in LCD_cnt_l
-0000DE EC?? F???      00125         call    LCD_delay
-0000E2 0012           00126         return
-                      00127 
-0000E4                00128 LCD_delay                       ; delay routine 4 instruction loop == 250ns         
-0000E4 0E00           00129         movlw   0x00            ; W=0
-0000E6 06??           00130 lcdlp1  decf    LCD_cnt_l,F     ; no carry when 0x00 -> 0xff
-0000E8 5A??           00131         subwfb  LCD_cnt_h,F     ; no carry when 0x00 -> 0xff
-0000EA E2??           00132         bc      lcdlp1          ; carry, then loop again
-0000EC 0012           00133         return                  ; carry reset so return
-                      00134 
-0000EE                00135 LCD_clear
-0000EE 0E01           00136         movlw   b'00000001'     ; display clear
-0000F0 EC?? F???      00137         call    LCD_Send_Byte_I
-0000F4 0E02           00138         movlw   .2              ; wait 2ms
-0000F6 EC?? F???      00139         call    LCD_delay_ms
-0000FA 0012           00140         return
-                      00141         
-0000FC                00142 LCD_shift
-0000FC EC?? F???      00143         call LCD_Send_Byte_I
-000100 0E0A           00144         movlw   .10             
-000102 EC?? F???      00145         call    LCD_delay_x4us
-000106 0012           00146         return 
-                      00147         
-000108                00148 LCD_custom_character_set_EGG   ;EGG 0X00,  HEART 0X01,  BABY 0X02, SUN 0X03, MOON 0X04, SMILEY 0X05, NEU
+0000AA 0000           00097         nop
+0000AC 0000           00098         nop
+0000AE 8A8A           00099         bsf         LATB, LCD_E     ; Take enable high
+0000B0 0000           00100         nop
+0000B2 0000           00101         nop
+0000B4 0000           00102         nop
+0000B6 0000           00103         nop
+0000B8 0000           00104         nop
+0000BA 0000           00105         nop
+0000BC 0000           00106         nop
+0000BE 9A8A           00107         bcf         LATB, LCD_E     ; Writes data to LCD
+0000C0 0012           00108         return
+                      00109     
+0000C2                00110 LCD_delay_ms                ; delay given in ms in W
+0000C2 6E??           00111         movwf   LCD_cnt_ms
+0000C4 0EFA           00112 lcdlp2  movlw   .250        ; 1 ms delay
+0000C6 EC?? F???      00113         call    LCD_delay_x4us  
+0000CA 2E??           00114         decfsz  LCD_cnt_ms
+0000CC D???           00115         bra     lcdlp2
+0000CE 0012           00116         return
+                      00117     
+0000D0                00118 LCD_delay_x4us              ; delay given in chunks of 4 microsecond in W
+0000D0 6E??           00119         movwf   LCD_cnt_l   ; now need to multiply by 16
+0000D2 3A??           00120         swapf   LCD_cnt_l,F ; swap nibbles
+0000D4 0E0F           00121         movlw   0x0f        
+0000D6 14??           00122         andwf   LCD_cnt_l,W ; move low nibble to W
+0000D8 6E??           00123         movwf   LCD_cnt_h   ; then to LCD_cnt_h
+0000DA 0EF0           00124         movlw   0xf0        
+0000DC 16??           00125         andwf   LCD_cnt_l,F ; keep high nibble in LCD_cnt_l
+0000DE EC?? F???      00126         call    LCD_delay
+0000E2 0012           00127         return
+                      00128 
+0000E4                00129 LCD_delay                       ; delay routine 4 instruction loop == 250ns         
+0000E4 0E00           00130         movlw   0x00            ; W=0
+0000E6 06??           00131 lcdlp1  decf    LCD_cnt_l,F     ; no carry when 0x00 -> 0xff
+0000E8 5A??           00132         subwfb  LCD_cnt_h,F     ; no carry when 0x00 -> 0xff
+0000EA E2??           00133         bc      lcdlp1          ; carry, then loop again
+0000EC 0012           00134         return                  ; carry reset so return
+                      00135 
+0000EE                00136 LCD_clear
+0000EE 0E01           00137         movlw   b'00000001'     ; display clear
+0000F0 EC?? F???      00138         call    LCD_Send_Byte_I
+0000F4 0E02           00139         movlw   .2              ; wait 2ms
+0000F6 EC?? F???      00140         call    LCD_delay_ms
+0000FA 0012           00141         return
+                      00142         
+0000FC                00143 LCD_shift
+0000FC EC?? F???      00144         call LCD_Send_Byte_I
+000100 0E0A           00145         movlw   .10             
+000102 EC?? F???      00146         call    LCD_delay_x4us
+000106 0012           00147         return 
+                      00148         
+000108                00149 LCD_custom_character_set_EGG   ;EGG 0X00,  HEART 0X01,  BABY 0X02, SUN 0X03, MOON 0X04, SMILEY 0X05, NEU
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
                             TRAL 0X06, SAD 0X07
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE  4
+                      00150         
+000108                00151 EGG 
+000108 0E40           00152         movlw b'0001000000'   ;setting CGRAM address of first line 
+00010A EC?? F???      00153         call LCD_Send_Byte_I
+00010E 0E0A           00154         movlw   .10             
+000110 EC?? F???      00155         call    LCD_delay_x4us
+000114 0E00           00156         movlw b'00000000'    ;writing first line of egg
+000116 EC?? F???      00157         call LCD_Send_Byte_D
+00011A 0E0A           00158         movlw   .10             
+00011C EC?? F???      00159         call    LCD_delay_x4us
+000120 0E41           00160         movlw b'0001000001'   ;setting CGRAM address of second line 
+000122 EC?? F???      00161         call LCD_Send_Byte_I
+000126 0E0A           00162         movlw   .10             
+000128 EC?? F???      00163         call    LCD_delay_x4us
+00012C 0E04           00164         movlw b'00000100'    ;writing second line of egg
+00012E EC?? F???      00165         call LCD_Send_Byte_D
+000132 0E0A           00166         movlw   .10             
+000134 EC?? F???      00167         call    LCD_delay_x4us
+000138 0E42           00168         movlw b'0001000010'   ;setting CGRAM address of third line 
+00013A EC?? F???      00169         call LCD_Send_Byte_I
+00013E 0E0A           00170         movlw   .10             
+000140 EC?? F???      00171         call    LCD_delay_x4us
+000144 0E0A           00172         movlw b'00001010'    ;writing third line of egg
+000146 EC?? F???      00173         call LCD_Send_Byte_D
+00014A 0E0A           00174         movlw   .10             
+00014C EC?? F???      00175         call    LCD_delay_x4us
+000150 0E43           00176         movlw b'0001000011'   ;setting CGRAM address of fourth line 
+000152 EC?? F???      00177         call LCD_Send_Byte_I
+000156 0E0A           00178         movlw   .10             
+000158 EC?? F???      00179         call    LCD_delay_x4us
+00015C 0E15           00180         movlw b'00010101'    ;writing fourth line of egg
+00015E EC?? F???      00181         call LCD_Send_Byte_D
+000162 0E0A           00182         movlw   .10             
+000164 EC?? F???      00183         call    LCD_delay_x4us
+000168 0E44           00184         movlw b'0001000100'   ;setting CGRAM address of fifth line 
+00016A EC?? F???      00185         call LCD_Send_Byte_I
+00016E 0E0A           00186         movlw   .10             
+000170 EC?? F???      00187         call    LCD_delay_x4us
+000174 0E1B           00188         movlw b'00011011'    ;writing fifth line of egg
+000176 EC?? F???      00189         call LCD_Send_Byte_D
+00017A 0E0A           00190         movlw   .10             
+00017C EC?? F???      00191         call    LCD_delay_x4us
+000180 0E45           00192         movlw b'0001000101'   ;setting CGRAM address of sixth line 
+000182 EC?? F???      00193         call LCD_Send_Byte_I
+000186 0E0A           00194         movlw   .10             
+000188 EC?? F???      00195         call    LCD_delay_x4us
+00018C 0E15           00196         movlw b'00010101'    ;writing sixth line of egg
+00018E EC?? F???      00197         call LCD_Send_Byte_D
+000192 0E0A           00198         movlw   .10             
+000194 EC?? F???      00199         call    LCD_delay_x4us
+000198 0E46           00200         movlw b'0001000110'   ;setting CGRAM address of seventh line 
+00019A EC?? F???      00201         call LCD_Send_Byte_I
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00149         
-000108                00150 EGG 
-000108 0E40           00151         movlw b'0001000000'   ;setting CGRAM address of first line 
-00010A EC?? F???      00152         call LCD_Send_Byte_I
-00010E 0E0A           00153         movlw   .10             
-000110 EC?? F???      00154         call    LCD_delay_x4us
-000114 0E00           00155         movlw b'00000000'    ;writing first line of egg
-000116 EC?? F???      00156         call LCD_Send_Byte_D
-00011A 0E0A           00157         movlw   .10             
-00011C EC?? F???      00158         call    LCD_delay_x4us
-000120 0E41           00159         movlw b'0001000001'   ;setting CGRAM address of second line 
-000122 EC?? F???      00160         call LCD_Send_Byte_I
-000126 0E0A           00161         movlw   .10             
-000128 EC?? F???      00162         call    LCD_delay_x4us
-00012C 0E04           00163         movlw b'00000100'    ;writing second line of egg
-00012E EC?? F???      00164         call LCD_Send_Byte_D
-000132 0E0A           00165         movlw   .10             
-000134 EC?? F???      00166         call    LCD_delay_x4us
-000138 0E42           00167         movlw b'0001000010'   ;setting CGRAM address of third line 
-00013A EC?? F???      00168         call LCD_Send_Byte_I
-00013E 0E0A           00169         movlw   .10             
-000140 EC?? F???      00170         call    LCD_delay_x4us
-000144 0E0A           00171         movlw b'00001010'    ;writing third line of egg
-000146 EC?? F???      00172         call LCD_Send_Byte_D
-00014A 0E0A           00173         movlw   .10             
-00014C EC?? F???      00174         call    LCD_delay_x4us
-000150 0E43           00175         movlw b'0001000011'   ;setting CGRAM address of fourth line 
-000152 EC?? F???      00176         call LCD_Send_Byte_I
-000156 0E0A           00177         movlw   .10             
-000158 EC?? F???      00178         call    LCD_delay_x4us
-00015C 0E15           00179         movlw b'00010101'    ;writing fourth line of egg
-00015E EC?? F???      00180         call LCD_Send_Byte_D
-000162 0E0A           00181         movlw   .10             
-000164 EC?? F???      00182         call    LCD_delay_x4us
-000168 0E44           00183         movlw b'0001000100'   ;setting CGRAM address of fifth line 
-00016A EC?? F???      00184         call LCD_Send_Byte_I
-00016E 0E0A           00185         movlw   .10             
-000170 EC?? F???      00186         call    LCD_delay_x4us
-000174 0E1B           00187         movlw b'00011011'    ;writing fifth line of egg
-000176 EC?? F???      00188         call LCD_Send_Byte_D
-00017A 0E0A           00189         movlw   .10             
-00017C EC?? F???      00190         call    LCD_delay_x4us
-000180 0E45           00191         movlw b'0001000101'   ;setting CGRAM address of sixth line 
-000182 EC?? F???      00192         call LCD_Send_Byte_I
-000186 0E0A           00193         movlw   .10             
-000188 EC?? F???      00194         call    LCD_delay_x4us
-00018C 0E15           00195         movlw b'00010101'    ;writing sixth line of egg
-00018E EC?? F???      00196         call LCD_Send_Byte_D
-000192 0E0A           00197         movlw   .10             
-000194 EC?? F???      00198         call    LCD_delay_x4us
-000198 0E46           00199         movlw b'0001000110'   ;setting CGRAM address of seventh line 
-00019A EC?? F???      00200         call LCD_Send_Byte_I
-00019E 0E0A           00201         movlw   .10             
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE  5
+00019E 0E0A           00202         movlw   .10             
+0001A0 EC?? F???      00203         call    LCD_delay_x4us
+0001A4 0E1B           00204         movlw b'00011011'    ;writing seventh line of egg
+0001A6 EC?? F???      00205         call LCD_Send_Byte_D
+0001AA 0E0A           00206         movlw   .10             
+0001AC EC?? F???      00207         call    LCD_delay_x4us
+0001B0 0E47           00208         movlw b'0001000111'   ;setting CGRAM address of eigth line 
+0001B2 EC?? F???      00209         call LCD_Send_Byte_I
+0001B6 0E0A           00210         movlw   .10             
+0001B8 EC?? F???      00211         call    LCD_delay_x4us
+0001BC 0E0E           00212         movlw b'00001110'    ;writing eigth line of egg
+0001BE EC?? F???      00213         call LCD_Send_Byte_D
+0001C2 0E0A           00214         movlw   .10             
+0001C4 EC?? F???      00215         call    LCD_delay_x4us
+                      00216          
+                      00217     
+0001C8                00218 HEART 
+0001C8 0E48           00219         movlw b'0001001000'   ;setting CGRAM address of first line 
+0001CA EC?? F???      00220         call LCD_Send_Byte_I
+0001CE 0E0A           00221         movlw   .10             
+0001D0 EC?? F???      00222         call    LCD_delay_x4us
+0001D4 0E00           00223         movlw b'00000000'    ;writing first line of heart
+0001D6 EC?? F???      00224         call LCD_Send_Byte_D
+0001DA 0E0A           00225         movlw   .10             
+0001DC EC?? F???      00226         call    LCD_delay_x4us
+0001E0 0E49           00227         movlw b'0001001001'   ;setting CGRAM address of second line 
+0001E2 EC?? F???      00228         call LCD_Send_Byte_I
+0001E6 0E0A           00229         movlw   .10             
+0001E8 EC?? F???      00230         call    LCD_delay_x4us
+0001EC 0E0A           00231         movlw b'00001010'    ;writing second line of heart
+0001EE EC?? F???      00232         call LCD_Send_Byte_D
+0001F2 0E0A           00233         movlw   .10             
+0001F4 EC?? F???      00234         call    LCD_delay_x4us
+0001F8 0E4A           00235         movlw b'0001001010'   ;setting CGRAM address of third line 
+0001FA EC?? F???      00236         call LCD_Send_Byte_I
+0001FE 0E0A           00237         movlw   .10             
+000200 EC?? F???      00238         call    LCD_delay_x4us
+000204 0E15           00239         movlw b'00010101'    ;writing third line of heart
+000206 EC?? F???      00240         call LCD_Send_Byte_D
+00020A 0E0A           00241         movlw   .10             
+00020C EC?? F???      00242         call    LCD_delay_x4us
+000210 0E4B           00243         movlw b'0001001011'   ;setting CGRAM address of fourth line 
+000212 EC?? F???      00244         call LCD_Send_Byte_I
+000216 0E0A           00245         movlw   .10             
+000218 EC?? F???      00246         call    LCD_delay_x4us
+00021C 0E11           00247         movlw b'00010001'    ;writing fourth line of heart
+00021E EC?? F???      00248         call LCD_Send_Byte_D
+000222 0E0A           00249         movlw   .10             
+000224 EC?? F???      00250         call    LCD_delay_x4us
+000228 0E4C           00251         movlw b'0001001100'   ;setting CGRAM address of fifth line 
+00022A EC?? F???      00252         call LCD_Send_Byte_I
+00022E 0E0A           00253         movlw   .10             
+000230 EC?? F???      00254         call    LCD_delay_x4us
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0001A0 EC?? F???      00202         call    LCD_delay_x4us
-0001A4 0E1B           00203         movlw b'00011011'    ;writing seventh line of egg
-0001A6 EC?? F???      00204         call LCD_Send_Byte_D
-0001AA 0E0A           00205         movlw   .10             
-0001AC EC?? F???      00206         call    LCD_delay_x4us
-0001B0 0E47           00207         movlw b'0001000111'   ;setting CGRAM address of eigth line 
-0001B2 EC?? F???      00208         call LCD_Send_Byte_I
-0001B6 0E0A           00209         movlw   .10             
-0001B8 EC?? F???      00210         call    LCD_delay_x4us
-0001BC 0E0E           00211         movlw b'00001110'    ;writing eigth line of egg
-0001BE EC?? F???      00212         call LCD_Send_Byte_D
-0001C2 0E0A           00213         movlw   .10             
-0001C4 EC?? F???      00214         call    LCD_delay_x4us
-                      00215          
-                      00216     
-0001C8                00217 HEART 
-0001C8 0E48           00218         movlw b'0001001000'   ;setting CGRAM address of first line 
-0001CA EC?? F???      00219         call LCD_Send_Byte_I
-0001CE 0E0A           00220         movlw   .10             
-0001D0 EC?? F???      00221         call    LCD_delay_x4us
-0001D4 0E00           00222         movlw b'00000000'    ;writing first line of heart
-0001D6 EC?? F???      00223         call LCD_Send_Byte_D
-0001DA 0E0A           00224         movlw   .10             
-0001DC EC?? F???      00225         call    LCD_delay_x4us
-0001E0 0E49           00226         movlw b'0001001001'   ;setting CGRAM address of second line 
-0001E2 EC?? F???      00227         call LCD_Send_Byte_I
-0001E6 0E0A           00228         movlw   .10             
-0001E8 EC?? F???      00229         call    LCD_delay_x4us
-0001EC 0E0A           00230         movlw b'00001010'    ;writing second line of heart
-0001EE EC?? F???      00231         call LCD_Send_Byte_D
-0001F2 0E0A           00232         movlw   .10             
-0001F4 EC?? F???      00233         call    LCD_delay_x4us
-0001F8 0E4A           00234         movlw b'0001001010'   ;setting CGRAM address of third line 
-0001FA EC?? F???      00235         call LCD_Send_Byte_I
-0001FE 0E0A           00236         movlw   .10             
-000200 EC?? F???      00237         call    LCD_delay_x4us
-000204 0E15           00238         movlw b'00010101'    ;writing third line of heart
-000206 EC?? F???      00239         call LCD_Send_Byte_D
-00020A 0E0A           00240         movlw   .10             
-00020C EC?? F???      00241         call    LCD_delay_x4us
-000210 0E4B           00242         movlw b'0001001011'   ;setting CGRAM address of fourth line 
-000212 EC?? F???      00243         call LCD_Send_Byte_I
-000216 0E0A           00244         movlw   .10             
-000218 EC?? F???      00245         call    LCD_delay_x4us
-00021C 0E11           00246         movlw b'00010001'    ;writing fourth line of heart
-00021E EC?? F???      00247         call LCD_Send_Byte_D
-000222 0E0A           00248         movlw   .10             
-000224 EC?? F???      00249         call    LCD_delay_x4us
-000228 0E4C           00250         movlw b'0001001100'   ;setting CGRAM address of fifth line 
-00022A EC?? F???      00251         call LCD_Send_Byte_I
-00022E 0E0A           00252         movlw   .10             
-000230 EC?? F???      00253         call    LCD_delay_x4us
-000234 0E11           00254         movlw b'00010001'    ;writing fifth line of heart
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE  6
+000234 0E11           00255         movlw b'00010001'    ;writing fifth line of heart
+000236 EC?? F???      00256         call LCD_Send_Byte_D
+00023A 0E0A           00257         movlw   .10             
+00023C EC?? F???      00258         call    LCD_delay_x4us
+000240 0E4D           00259         movlw b'0001001101'   ;setting CGRAM address of sixth line 
+000242 EC?? F???      00260         call LCD_Send_Byte_I
+000246 0E0A           00261         movlw   .10             
+000248 EC?? F???      00262         call    LCD_delay_x4us
+00024C 0E0A           00263         movlw b'00001010'    ;writing sixth line of heart
+00024E EC?? F???      00264         call LCD_Send_Byte_D
+000252 0E0A           00265         movlw   .10             
+000254 EC?? F???      00266         call    LCD_delay_x4us
+000258 0E4E           00267         movlw b'0001001110'   ;setting CGRAM address of seventh line 
+00025A EC?? F???      00268         call LCD_Send_Byte_I
+00025E 0E0A           00269         movlw   .10             
+000260 EC?? F???      00270         call    LCD_delay_x4us
+000264 0E04           00271         movlw b'00000100'    ;writing seventh line of heart
+000266 EC?? F???      00272         call LCD_Send_Byte_D
+00026A 0E0A           00273         movlw   .10             
+00026C EC?? F???      00274         call    LCD_delay_x4us
+000270 0E4F           00275         movlw b'0001001111'   ;setting CGRAM address of eigth line 
+000272 EC?? F???      00276         call LCD_Send_Byte_I
+000276 0E0A           00277         movlw   .10             
+000278 EC?? F???      00278         call    LCD_delay_x4us
+00027C 0E00           00279         movlw b'00000000'    ;writing eigth line of heart
+00027E EC?? F???      00280         call LCD_Send_Byte_D
+000282 0E0A           00281         movlw   .10             
+000284 EC?? F???      00282         call    LCD_delay_x4us
+                      00283          
+000288                00284 BABY 
+000288 0E50           00285         movlw b'0001010000'   ;setting CGRAM address of first line 
+00028A EC?? F???      00286         call LCD_Send_Byte_I
+00028E 0E0A           00287         movlw   .10             
+000290 EC?? F???      00288         call    LCD_delay_x4us
+000294 0E00           00289         movlw b'00000000'    ;writing first line of rabbit
+000296 EC?? F???      00290         call LCD_Send_Byte_D
+00029A 0E0A           00291         movlw   .10             
+00029C EC?? F???      00292         call    LCD_delay_x4us
+0002A0 0E51           00293         movlw b'0001010001'    ;setting CGRAM address of second line 
+0002A2 EC?? F???      00294         call LCD_Send_Byte_I
+0002A6 0E0A           00295         movlw   .10             
+0002A8 EC?? F???      00296         call    LCD_delay_x4us
+0002AC 0E00           00297         movlw b'00000000'    ;writing second line of rabbit 
+0002AE EC?? F???      00298         call LCD_Send_Byte_D
+0002B2 0E0A           00299         movlw   .10             
+0002B4 EC?? F???      00300         call    LCD_delay_x4us
+0002B8 0E52           00301         movlw b'0001010010'    ;setting CGRAM address of third line 
+0002BA EC?? F???      00302         call LCD_Send_Byte_I
+0002BE 0E0A           00303         movlw   .10             
+0002C0 EC?? F???      00304         call    LCD_delay_x4us
+0002C4 0E00           00305         movlw b'00000000'    ;writing third line of rabbit 
+0002C6 EC?? F???      00306         call LCD_Send_Byte_D
+0002CA 0E0A           00307         movlw   .10             
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE  7
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000236 EC?? F???      00255         call LCD_Send_Byte_D
-00023A 0E0A           00256         movlw   .10             
-00023C EC?? F???      00257         call    LCD_delay_x4us
-000240 0E4D           00258         movlw b'0001001101'   ;setting CGRAM address of sixth line 
-000242 EC?? F???      00259         call LCD_Send_Byte_I
-000246 0E0A           00260         movlw   .10             
-000248 EC?? F???      00261         call    LCD_delay_x4us
-00024C 0E0A           00262         movlw b'00001010'    ;writing sixth line of heart
-00024E EC?? F???      00263         call LCD_Send_Byte_D
-000252 0E0A           00264         movlw   .10             
-000254 EC?? F???      00265         call    LCD_delay_x4us
-000258 0E4E           00266         movlw b'0001001110'   ;setting CGRAM address of seventh line 
-00025A EC?? F???      00267         call LCD_Send_Byte_I
-00025E 0E0A           00268         movlw   .10             
-000260 EC?? F???      00269         call    LCD_delay_x4us
-000264 0E04           00270         movlw b'00000100'    ;writing seventh line of heart
-000266 EC?? F???      00271         call LCD_Send_Byte_D
-00026A 0E0A           00272         movlw   .10             
-00026C EC?? F???      00273         call    LCD_delay_x4us
-000270 0E4F           00274         movlw b'0001001111'   ;setting CGRAM address of eigth line 
-000272 EC?? F???      00275         call LCD_Send_Byte_I
-000276 0E0A           00276         movlw   .10             
-000278 EC?? F???      00277         call    LCD_delay_x4us
-00027C 0E00           00278         movlw b'00000000'    ;writing eigth line of heart
-00027E EC?? F???      00279         call LCD_Send_Byte_D
-000282 0E0A           00280         movlw   .10             
-000284 EC?? F???      00281         call    LCD_delay_x4us
-                      00282          
-000288                00283 BABY 
-000288 0E50           00284         movlw b'0001010000'   ;setting CGRAM address of first line 
-00028A EC?? F???      00285         call LCD_Send_Byte_I
-00028E 0E0A           00286         movlw   .10             
-000290 EC?? F???      00287         call    LCD_delay_x4us
-000294 0E00           00288         movlw b'00000000'    ;writing first line of rabbit
-000296 EC?? F???      00289         call LCD_Send_Byte_D
-00029A 0E0A           00290         movlw   .10             
-00029C EC?? F???      00291         call    LCD_delay_x4us
-0002A0 0E51           00292         movlw b'0001010001'    ;setting CGRAM address of second line 
-0002A2 EC?? F???      00293         call LCD_Send_Byte_I
-0002A6 0E0A           00294         movlw   .10             
-0002A8 EC?? F???      00295         call    LCD_delay_x4us
-0002AC 0E00           00296         movlw b'00000000'    ;writing second line of rabbit 
-0002AE EC?? F???      00297         call LCD_Send_Byte_D
-0002B2 0E0A           00298         movlw   .10             
-0002B4 EC?? F???      00299         call    LCD_delay_x4us
-0002B8 0E52           00300         movlw b'0001010010'    ;setting CGRAM address of third line 
-0002BA EC?? F???      00301         call LCD_Send_Byte_I
-0002BE 0E0A           00302         movlw   .10             
-0002C0 EC?? F???      00303         call    LCD_delay_x4us
-0002C4 0E00           00304         movlw b'00000000'    ;writing third line of rabbit 
-0002C6 EC?? F???      00305         call LCD_Send_Byte_D
-0002CA 0E0A           00306         movlw   .10             
-0002CC EC?? F???      00307         call    LCD_delay_x4us
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE  7
+0002CC EC?? F???      00308         call    LCD_delay_x4us
+0002D0 0E53           00309         movlw b'0001010011'    ;setting CGRAM address of fourth line 
+0002D2 EC?? F???      00310         call LCD_Send_Byte_I
+0002D6 0E0A           00311         movlw   .10             
+0002D8 EC?? F???      00312         call    LCD_delay_x4us
+0002DC 0E00           00313         movlw b'00000000'    ;writing fourth line of rabbit 
+0002DE EC?? F???      00314         call LCD_Send_Byte_D
+0002E2 0E0A           00315         movlw   .10             
+0002E4 EC?? F???      00316         call    LCD_delay_x4us
+0002E8 0E54           00317         movlw b'0001010100'    ;setting CGRAM address of fifth line 
+0002EA EC?? F???      00318         call LCD_Send_Byte_I
+0002EE 0E0A           00319         movlw   .10             
+0002F0 EC?? F???      00320         call    LCD_delay_x4us
+0002F4 0E00           00321         movlw b'00000000'    ;writing fifth line of rabbit 
+0002F6 EC?? F???      00322         call LCD_Send_Byte_D
+0002FA 0E0A           00323         movlw   .10             
+0002FC EC?? F???      00324         call    LCD_delay_x4us
+000300 0E55           00325         movlw b'0001010101'    ;setting CGRAM address of sixth line 
+000302 EC?? F???      00326         call LCD_Send_Byte_I
+000306 0E0A           00327         movlw   .10             
+000308 EC?? F???      00328         call    LCD_delay_x4us
+00030C 0E00           00329         movlw b'00000000'    ;writing sixth line of rabbit 
+00030E EC?? F???      00330         call LCD_Send_Byte_D
+000312 0E0A           00331         movlw   .10             
+000314 EC?? F???      00332         call    LCD_delay_x4us
+000318 0E56           00333         movlw b'0001010110'    ;setting CGRAM address of seventh line 
+00031A EC?? F???      00334         call LCD_Send_Byte_I
+00031E 0E0A           00335         movlw   .10             
+000320 EC?? F???      00336         call    LCD_delay_x4us
+000324 0E0C           00337         movlw b'00001100'    ;writing seventh line of rabbit 
+000326 EC?? F???      00338         call LCD_Send_Byte_D
+00032A 0E0A           00339         movlw   .10             
+00032C EC?? F???      00340         call    LCD_delay_x4us
+000330 0E57           00341         movlw b'0001010111'    ;setting CGRAM address of eigth line 
+000332 EC?? F???      00342         call LCD_Send_Byte_I
+000336 0E0A           00343         movlw   .10             
+000338 EC?? F???      00344         call    LCD_delay_x4us
+00033C 0E0C           00345         movlw b'00001100'    ;writing eigth line of rabbit 
+00033E EC?? F???      00346         call LCD_Send_Byte_D
+000342 0E0A           00347         movlw   .10             
+000344 EC?? F???      00348         call    LCD_delay_x4us  
+                      00349 
+                      00350         
+000348                00351 SUN
+000348 0E58           00352         movlw b'0001011000'   ;setting CGRAM address of first line 
+00034A EC?? F???      00353         call LCD_Send_Byte_I
+00034E 0E0A           00354         movlw   .10             
+000350 EC?? F???      00355         call    LCD_delay_x4us
+000354 0E00           00356         movlw b'00000000'    ;writing first line
+000356 EC?? F???      00357         call LCD_Send_Byte_D
+00035A 0E0A           00358         movlw   .10             
+00035C EC?? F???      00359         call    LCD_delay_x4us
+000360 0E59           00360         movlw b'0001011001'    ;setting CGRAM address of second line 
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE  8
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0002D0 0E53           00308         movlw b'0001010011'    ;setting CGRAM address of fourth line 
-0002D2 EC?? F???      00309         call LCD_Send_Byte_I
-0002D6 0E0A           00310         movlw   .10             
-0002D8 EC?? F???      00311         call    LCD_delay_x4us
-0002DC 0E00           00312         movlw b'00000000'    ;writing fourth line of rabbit 
-0002DE EC?? F???      00313         call LCD_Send_Byte_D
-0002E2 0E0A           00314         movlw   .10             
-0002E4 EC?? F???      00315         call    LCD_delay_x4us
-0002E8 0E54           00316         movlw b'0001010100'    ;setting CGRAM address of fifth line 
-0002EA EC?? F???      00317         call LCD_Send_Byte_I
-0002EE 0E0A           00318         movlw   .10             
-0002F0 EC?? F???      00319         call    LCD_delay_x4us
-0002F4 0E00           00320         movlw b'00000000'    ;writing fifth line of rabbit 
-0002F6 EC?? F???      00321         call LCD_Send_Byte_D
-0002FA 0E0A           00322         movlw   .10             
-0002FC EC?? F???      00323         call    LCD_delay_x4us
-000300 0E55           00324         movlw b'0001010101'    ;setting CGRAM address of sixth line 
-000302 EC?? F???      00325         call LCD_Send_Byte_I
-000306 0E0A           00326         movlw   .10             
-000308 EC?? F???      00327         call    LCD_delay_x4us
-00030C 0E00           00328         movlw b'00000000'    ;writing sixth line of rabbit 
-00030E EC?? F???      00329         call LCD_Send_Byte_D
-000312 0E0A           00330         movlw   .10             
-000314 EC?? F???      00331         call    LCD_delay_x4us
-000318 0E56           00332         movlw b'0001010110'    ;setting CGRAM address of seventh line 
-00031A EC?? F???      00333         call LCD_Send_Byte_I
-00031E 0E0A           00334         movlw   .10             
-000320 EC?? F???      00335         call    LCD_delay_x4us
-000324 0E0C           00336         movlw b'00001100'    ;writing seventh line of rabbit 
-000326 EC?? F???      00337         call LCD_Send_Byte_D
-00032A 0E0A           00338         movlw   .10             
-00032C EC?? F???      00339         call    LCD_delay_x4us
-000330 0E57           00340         movlw b'0001010111'    ;setting CGRAM address of eigth line 
-000332 EC?? F???      00341         call LCD_Send_Byte_I
-000336 0E0A           00342         movlw   .10             
-000338 EC?? F???      00343         call    LCD_delay_x4us
-00033C 0E0C           00344         movlw b'00001100'    ;writing eigth line of rabbit 
-00033E EC?? F???      00345         call LCD_Send_Byte_D
-000342 0E0A           00346         movlw   .10             
-000344 EC?? F???      00347         call    LCD_delay_x4us  
-                      00348 
-                      00349         
-000348                00350 SUN
-000348 0E58           00351         movlw b'0001011000'   ;setting CGRAM address of first line 
-00034A EC?? F???      00352         call LCD_Send_Byte_I
-00034E 0E0A           00353         movlw   .10             
-000350 EC?? F???      00354         call    LCD_delay_x4us
-000354 0E00           00355         movlw b'00000000'    ;writing first line
-000356 EC?? F???      00356         call LCD_Send_Byte_D
-00035A 0E0A           00357         movlw   .10             
-00035C EC?? F???      00358         call    LCD_delay_x4us
-000360 0E59           00359         movlw b'0001011001'    ;setting CGRAM address of second line 
-000362 EC?? F???      00360         call LCD_Send_Byte_I
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE  8
+000362 EC?? F???      00361         call LCD_Send_Byte_I
+000366 0E0A           00362         movlw   .10             
+000368 EC?? F???      00363         call    LCD_delay_x4us
+00036C 0E15           00364         movlw b'00010101'    ;writing second line
+00036E EC?? F???      00365         call LCD_Send_Byte_D
+000372 0E0A           00366         movlw   .10             
+000374 EC?? F???      00367         call    LCD_delay_x4us
+000378 0E5A           00368         movlw b'0001011010'    ;setting CGRAM address of third line 
+00037A EC?? F???      00369         call LCD_Send_Byte_I
+00037E 0E0A           00370         movlw   .10             
+000380 EC?? F???      00371         call    LCD_delay_x4us
+000384 0E0E           00372         movlw b'00001110'    ;writing third line
+000386 EC?? F???      00373         call LCD_Send_Byte_D
+00038A 0E0A           00374         movlw   .10             
+00038C EC?? F???      00375         call    LCD_delay_x4us
+000390 0E5B           00376         movlw b'0001011011'    ;setting CGRAM address of fourth line 
+000392 EC?? F???      00377         call LCD_Send_Byte_I
+000396 0E0A           00378         movlw   .10             
+000398 EC?? F???      00379         call    LCD_delay_x4us
+00039C 0E1F           00380         movlw b'00011111'    ;writing fourth line
+00039E EC?? F???      00381         call LCD_Send_Byte_D
+0003A2 0E0A           00382         movlw   .10             
+0003A4 EC?? F???      00383         call    LCD_delay_x4us
+0003A8 0E5C           00384         movlw b'0001011100'    ;setting CGRAM address of fifth line 
+0003AA EC?? F???      00385         call LCD_Send_Byte_I
+0003AE 0E0A           00386         movlw   .10             
+0003B0 EC?? F???      00387         call    LCD_delay_x4us
+0003B4 0E0E           00388         movlw b'00001110'    ;writing fifth line
+0003B6 EC?? F???      00389         call LCD_Send_Byte_D
+0003BA 0E0A           00390         movlw   .10             
+0003BC EC?? F???      00391         call    LCD_delay_x4us
+0003C0 0E5D           00392         movlw b'0001011101'    ;setting CGRAM address of sixth line 
+0003C2 EC?? F???      00393         call LCD_Send_Byte_I
+0003C6 0E0A           00394         movlw   .10             
+0003C8 EC?? F???      00395         call    LCD_delay_x4us
+0003CC 0E15           00396         movlw b'00010101'    ;writing sixth line
+0003CE EC?? F???      00397         call LCD_Send_Byte_D
+0003D2 0E0A           00398         movlw   .10             
+0003D4 EC?? F???      00399         call    LCD_delay_x4us
+0003D8 0E5E           00400         movlw b'0001011110'    ;setting CGRAM address of seventh line 
+0003DA EC?? F???      00401         call LCD_Send_Byte_I
+0003DE 0E0A           00402         movlw   .10             
+0003E0 EC?? F???      00403         call    LCD_delay_x4us
+0003E4 0E00           00404         movlw b'00000000'    ;writing seventh line
+0003E6 EC?? F???      00405         call LCD_Send_Byte_D
+0003EA 0E0A           00406         movlw   .10             
+0003EC EC?? F???      00407         call    LCD_delay_x4us
+0003F0 0E5F           00408         movlw b'0001011111'    ;setting CGRAM address of eigth line 
+0003F2 EC?? F???      00409         call LCD_Send_Byte_I
+0003F6 0E0A           00410         movlw   .10             
+0003F8 EC?? F???      00411         call    LCD_delay_x4us
+0003FC 0E00           00412         movlw b'00000000'    ;writing eigth line
+0003FE EC?? F???      00413         call LCD_Send_Byte_D
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE  9
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000366 0E0A           00361         movlw   .10             
-000368 EC?? F???      00362         call    LCD_delay_x4us
-00036C 0E15           00363         movlw b'00010101'    ;writing second line
-00036E EC?? F???      00364         call LCD_Send_Byte_D
-000372 0E0A           00365         movlw   .10             
-000374 EC?? F???      00366         call    LCD_delay_x4us
-000378 0E5A           00367         movlw b'0001011010'    ;setting CGRAM address of third line 
-00037A EC?? F???      00368         call LCD_Send_Byte_I
-00037E 0E0A           00369         movlw   .10             
-000380 EC?? F???      00370         call    LCD_delay_x4us
-000384 0E0E           00371         movlw b'00001110'    ;writing third line
-000386 EC?? F???      00372         call LCD_Send_Byte_D
-00038A 0E0A           00373         movlw   .10             
-00038C EC?? F???      00374         call    LCD_delay_x4us
-000390 0E5B           00375         movlw b'0001011011'    ;setting CGRAM address of fourth line 
-000392 EC?? F???      00376         call LCD_Send_Byte_I
-000396 0E0A           00377         movlw   .10             
-000398 EC?? F???      00378         call    LCD_delay_x4us
-00039C 0E1F           00379         movlw b'00011111'    ;writing fourth line
-00039E EC?? F???      00380         call LCD_Send_Byte_D
-0003A2 0E0A           00381         movlw   .10             
-0003A4 EC?? F???      00382         call    LCD_delay_x4us
-0003A8 0E5C           00383         movlw b'0001011100'    ;setting CGRAM address of fifth line 
-0003AA EC?? F???      00384         call LCD_Send_Byte_I
-0003AE 0E0A           00385         movlw   .10             
-0003B0 EC?? F???      00386         call    LCD_delay_x4us
-0003B4 0E0E           00387         movlw b'00001110'    ;writing fifth line
-0003B6 EC?? F???      00388         call LCD_Send_Byte_D
-0003BA 0E0A           00389         movlw   .10             
-0003BC EC?? F???      00390         call    LCD_delay_x4us
-0003C0 0E5D           00391         movlw b'0001011101'    ;setting CGRAM address of sixth line 
-0003C2 EC?? F???      00392         call LCD_Send_Byte_I
-0003C6 0E0A           00393         movlw   .10             
-0003C8 EC?? F???      00394         call    LCD_delay_x4us
-0003CC 0E15           00395         movlw b'00010101'    ;writing sixth line
-0003CE EC?? F???      00396         call LCD_Send_Byte_D
-0003D2 0E0A           00397         movlw   .10             
-0003D4 EC?? F???      00398         call    LCD_delay_x4us
-0003D8 0E5E           00399         movlw b'0001011110'    ;setting CGRAM address of seventh line 
-0003DA EC?? F???      00400         call LCD_Send_Byte_I
-0003DE 0E0A           00401         movlw   .10             
-0003E0 EC?? F???      00402         call    LCD_delay_x4us
-0003E4 0E00           00403         movlw b'00000000'    ;writing seventh line
-0003E6 EC?? F???      00404         call LCD_Send_Byte_D
-0003EA 0E0A           00405         movlw   .10             
-0003EC EC?? F???      00406         call    LCD_delay_x4us
-0003F0 0E5F           00407         movlw b'0001011111'    ;setting CGRAM address of eigth line 
-0003F2 EC?? F???      00408         call LCD_Send_Byte_I
-0003F6 0E0A           00409         movlw   .10             
-0003F8 EC?? F???      00410         call    LCD_delay_x4us
-0003FC 0E00           00411         movlw b'00000000'    ;writing eigth line
-0003FE EC?? F???      00412         call LCD_Send_Byte_D
-000402 0E0A           00413         movlw   .10             
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE  9
-
-
-LOC  OBJECT CODE     LINE SOURCE TEXT
-  VALUE
-
-000404 EC?? F???      00414         call    LCD_delay_x4us
-                      00415         
+000402 0E0A           00414         movlw   .10             
+000404 EC?? F???      00415         call    LCD_delay_x4us
                       00416         
-000408                00417 MOON
-000408 0E60           00418         movlw b'0001100000'   ;setting CGRAM address of first line 
-00040A EC?? F???      00419         call LCD_Send_Byte_I
-00040E 0E0A           00420         movlw   .10             
-000410 EC?? F???      00421         call    LCD_delay_x4us
-000414 0E00           00422         movlw b'00000000'    ;writing first line of rabbit
-000416 EC?? F???      00423         call LCD_Send_Byte_D
-00041A 0E0A           00424         movlw   .10             
-00041C EC?? F???      00425         call    LCD_delay_x4us
-000420 0E61           00426         movlw b'0001100001'    ;setting CGRAM address of second line 
-000422 EC?? F???      00427         call LCD_Send_Byte_I
-000426 0E0A           00428         movlw   .10             
-000428 EC?? F???      00429         call    LCD_delay_x4us
-00042C 0E0F           00430         movlw b'00001111'    ;writing second line of rabbit 
-00042E EC?? F???      00431         call LCD_Send_Byte_D
-000432 0E0A           00432         movlw   .10             
-000434 EC?? F???      00433         call    LCD_delay_x4us
-000438 0E62           00434         movlw b'0001100010'    ;setting CGRAM address of third line 
-00043A EC?? F???      00435         call LCD_Send_Byte_I
-00043E 0E0A           00436         movlw   .10             
-000440 EC?? F???      00437         call    LCD_delay_x4us
-000444 0E1C           00438         movlw b'00011100'    ;writing third line of rabbit 
-000446 EC?? F???      00439         call LCD_Send_Byte_D
-00044A 0E0A           00440         movlw   .10             
-00044C EC?? F???      00441         call    LCD_delay_x4us
-000450 0E63           00442         movlw b'0001100011'    ;setting CGRAM address of fourth line 
-000452 EC?? F???      00443         call LCD_Send_Byte_I
-000456 0E0A           00444         movlw   .10             
-000458 EC?? F???      00445         call    LCD_delay_x4us
-00045C 0E18           00446         movlw b'00011000'    ;writing fourth line of rabbit 
-00045E EC?? F???      00447         call LCD_Send_Byte_D
-000462 0E0A           00448         movlw   .10             
-000464 EC?? F???      00449         call    LCD_delay_x4us
-000468 0E64           00450         movlw b'0001100100'    ;setting CGRAM address of fifth line 
-00046A EC?? F???      00451         call LCD_Send_Byte_I
-00046E 0E0A           00452         movlw   .10             
-000470 EC?? F???      00453         call    LCD_delay_x4us
-000474 0E18           00454         movlw b'00011000'    ;writing fifth line of rabbit 
-000476 EC?? F???      00455         call LCD_Send_Byte_D
-00047A 0E0A           00456         movlw   .10             
-00047C EC?? F???      00457         call    LCD_delay_x4us
-000480 0E65           00458         movlw b'0001100101'    ;setting CGRAM address of sixth line 
-000482 EC?? F???      00459         call LCD_Send_Byte_I
-000486 0E0A           00460         movlw   .10             
-000488 EC?? F???      00461         call    LCD_delay_x4us
-00048C 0E1C           00462         movlw b'00011100'    ;writing sixth line of rabbit 
-00048E EC?? F???      00463         call LCD_Send_Byte_D
-000492 0E0A           00464         movlw   .10             
-000494 EC?? F???      00465         call    LCD_delay_x4us
-000498 0E66           00466         movlw b'0001100110'    ;setting CGRAM address of seventh line 
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 10
+                      00417         
+000408                00418 MOON
+000408 0E60           00419         movlw b'0001100000'   ;setting CGRAM address of first line 
+00040A EC?? F???      00420         call LCD_Send_Byte_I
+00040E 0E0A           00421         movlw   .10             
+000410 EC?? F???      00422         call    LCD_delay_x4us
+000414 0E00           00423         movlw b'00000000'    ;writing first line of rabbit
+000416 EC?? F???      00424         call LCD_Send_Byte_D
+00041A 0E0A           00425         movlw   .10             
+00041C EC?? F???      00426         call    LCD_delay_x4us
+000420 0E61           00427         movlw b'0001100001'    ;setting CGRAM address of second line 
+000422 EC?? F???      00428         call LCD_Send_Byte_I
+000426 0E0A           00429         movlw   .10             
+000428 EC?? F???      00430         call    LCD_delay_x4us
+00042C 0E0F           00431         movlw b'00001111'    ;writing second line of rabbit 
+00042E EC?? F???      00432         call LCD_Send_Byte_D
+000432 0E0A           00433         movlw   .10             
+000434 EC?? F???      00434         call    LCD_delay_x4us
+000438 0E62           00435         movlw b'0001100010'    ;setting CGRAM address of third line 
+00043A EC?? F???      00436         call LCD_Send_Byte_I
+00043E 0E0A           00437         movlw   .10             
+000440 EC?? F???      00438         call    LCD_delay_x4us
+000444 0E1C           00439         movlw b'00011100'    ;writing third line of rabbit 
+000446 EC?? F???      00440         call LCD_Send_Byte_D
+00044A 0E0A           00441         movlw   .10             
+00044C EC?? F???      00442         call    LCD_delay_x4us
+000450 0E63           00443         movlw b'0001100011'    ;setting CGRAM address of fourth line 
+000452 EC?? F???      00444         call LCD_Send_Byte_I
+000456 0E0A           00445         movlw   .10             
+000458 EC?? F???      00446         call    LCD_delay_x4us
+00045C 0E18           00447         movlw b'00011000'    ;writing fourth line of rabbit 
+00045E EC?? F???      00448         call LCD_Send_Byte_D
+000462 0E0A           00449         movlw   .10             
+000464 EC?? F???      00450         call    LCD_delay_x4us
+000468 0E64           00451         movlw b'0001100100'    ;setting CGRAM address of fifth line 
+00046A EC?? F???      00452         call LCD_Send_Byte_I
+00046E 0E0A           00453         movlw   .10             
+000470 EC?? F???      00454         call    LCD_delay_x4us
+000474 0E18           00455         movlw b'00011000'    ;writing fifth line of rabbit 
+000476 EC?? F???      00456         call LCD_Send_Byte_D
+00047A 0E0A           00457         movlw   .10             
+00047C EC?? F???      00458         call    LCD_delay_x4us
+000480 0E65           00459         movlw b'0001100101'    ;setting CGRAM address of sixth line 
+000482 EC?? F???      00460         call LCD_Send_Byte_I
+000486 0E0A           00461         movlw   .10             
+000488 EC?? F???      00462         call    LCD_delay_x4us
+00048C 0E1C           00463         movlw b'00011100'    ;writing sixth line of rabbit 
+00048E EC?? F???      00464         call LCD_Send_Byte_D
+000492 0E0A           00465         movlw   .10             
+000494 EC?? F???      00466         call    LCD_delay_x4us
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 10
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00049A EC?? F???      00467         call LCD_Send_Byte_I
-00049E 0E0A           00468         movlw   .10             
-0004A0 EC?? F???      00469         call    LCD_delay_x4us
-0004A4 0E0F           00470         movlw b'00001111'    ;writing seventh line of rabbit 
-0004A6 EC?? F???      00471         call LCD_Send_Byte_D
-0004AA 0E0A           00472         movlw   .10             
-0004AC EC?? F???      00473         call    LCD_delay_x4us
-0004B0 0E67           00474         movlw b'0001100111'    ;setting CGRAM address of eigth line 
-0004B2 EC?? F???      00475         call LCD_Send_Byte_I
-0004B6 0E0A           00476         movlw   .10             
-0004B8 EC?? F???      00477         call    LCD_delay_x4us
-0004BC 0E00           00478         movlw b'00000000'    ;writing eigth line of rabbit 
-0004BE EC?? F???      00479         call LCD_Send_Byte_D
-0004C2 0E0A           00480         movlw   .10             
-0004C4 EC?? F???      00481         call    LCD_delay_x4us
-                      00482 
-                      00483         
-0004C8                00484 SMILEY
-0004C8 0E68           00485         movlw b'0001101000'   ;setting CGRAM address of first line 
-0004CA EC?? F???      00486         call LCD_Send_Byte_I
-0004CE 0E0A           00487         movlw   .10             
-0004D0 EC?? F???      00488         call    LCD_delay_x4us
-0004D4 0E00           00489         movlw b'00000000'    ;writing first line 
-0004D6 EC?? F???      00490         call LCD_Send_Byte_D
-0004DA 0E0A           00491         movlw   .10             
-0004DC EC?? F???      00492         call    LCD_delay_x4us
-0004E0 0E69           00493         movlw b'0001101001'    ;setting CGRAM address of second line 
-0004E2 EC?? F???      00494         call LCD_Send_Byte_I
-0004E6 0E0A           00495         movlw   .10             
-0004E8 EC?? F???      00496         call    LCD_delay_x4us
-0004EC 0E00           00497         movlw b'00000000'    ;writing second line 
-0004EE EC?? F???      00498         call LCD_Send_Byte_D
-0004F2 0E0A           00499         movlw   .10             
-0004F4 EC?? F???      00500         call    LCD_delay_x4us
-0004F8 0E6A           00501         movlw b'0001101010'    ;setting CGRAM address of third line 
-0004FA EC?? F???      00502         call LCD_Send_Byte_I
-0004FE 0E0A           00503         movlw   .10             
-000500 EC?? F???      00504         call    LCD_delay_x4us
-000504 0E0A           00505         movlw b'00001010'    ;writing third line 
-000506 EC?? F???      00506         call LCD_Send_Byte_D
-00050A 0E0A           00507         movlw   .10             
-00050C EC?? F???      00508         call    LCD_delay_x4us
-000510 0E6B           00509         movlw b'0001101011'    ;setting CGRAM address of fourth line 
-000512 EC?? F???      00510         call LCD_Send_Byte_I
-000516 0E0A           00511         movlw   .10             
-000518 EC?? F???      00512         call    LCD_delay_x4us
-00051C 0E00           00513         movlw b'00000000'    ;writing fourth line 
-00051E EC?? F???      00514         call LCD_Send_Byte_D
-000522 0E0A           00515         movlw   .10             
-000524 EC?? F???      00516         call    LCD_delay_x4us
-000528 0E6C           00517         movlw b'0001101100'    ;setting CGRAM address of fifth line 
-00052A EC?? F???      00518         call LCD_Send_Byte_I
-00052E 0E0A           00519         movlw   .10             
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 11
+000498 0E66           00467         movlw b'0001100110'    ;setting CGRAM address of seventh line 
+00049A EC?? F???      00468         call LCD_Send_Byte_I
+00049E 0E0A           00469         movlw   .10             
+0004A0 EC?? F???      00470         call    LCD_delay_x4us
+0004A4 0E0F           00471         movlw b'00001111'    ;writing seventh line of rabbit 
+0004A6 EC?? F???      00472         call LCD_Send_Byte_D
+0004AA 0E0A           00473         movlw   .10             
+0004AC EC?? F???      00474         call    LCD_delay_x4us
+0004B0 0E67           00475         movlw b'0001100111'    ;setting CGRAM address of eigth line 
+0004B2 EC?? F???      00476         call LCD_Send_Byte_I
+0004B6 0E0A           00477         movlw   .10             
+0004B8 EC?? F???      00478         call    LCD_delay_x4us
+0004BC 0E00           00479         movlw b'00000000'    ;writing eigth line of rabbit 
+0004BE EC?? F???      00480         call LCD_Send_Byte_D
+0004C2 0E0A           00481         movlw   .10             
+0004C4 EC?? F???      00482         call    LCD_delay_x4us
+                      00483 
+                      00484         
+0004C8                00485 SMILEY
+0004C8 0E68           00486         movlw b'0001101000'   ;setting CGRAM address of first line 
+0004CA EC?? F???      00487         call LCD_Send_Byte_I
+0004CE 0E0A           00488         movlw   .10             
+0004D0 EC?? F???      00489         call    LCD_delay_x4us
+0004D4 0E00           00490         movlw b'00000000'    ;writing first line 
+0004D6 EC?? F???      00491         call LCD_Send_Byte_D
+0004DA 0E0A           00492         movlw   .10             
+0004DC EC?? F???      00493         call    LCD_delay_x4us
+0004E0 0E69           00494         movlw b'0001101001'    ;setting CGRAM address of second line 
+0004E2 EC?? F???      00495         call LCD_Send_Byte_I
+0004E6 0E0A           00496         movlw   .10             
+0004E8 EC?? F???      00497         call    LCD_delay_x4us
+0004EC 0E00           00498         movlw b'00000000'    ;writing second line 
+0004EE EC?? F???      00499         call LCD_Send_Byte_D
+0004F2 0E0A           00500         movlw   .10             
+0004F4 EC?? F???      00501         call    LCD_delay_x4us
+0004F8 0E6A           00502         movlw b'0001101010'    ;setting CGRAM address of third line 
+0004FA EC?? F???      00503         call LCD_Send_Byte_I
+0004FE 0E0A           00504         movlw   .10             
+000500 EC?? F???      00505         call    LCD_delay_x4us
+000504 0E0A           00506         movlw b'00001010'    ;writing third line 
+000506 EC?? F???      00507         call LCD_Send_Byte_D
+00050A 0E0A           00508         movlw   .10             
+00050C EC?? F???      00509         call    LCD_delay_x4us
+000510 0E6B           00510         movlw b'0001101011'    ;setting CGRAM address of fourth line 
+000512 EC?? F???      00511         call LCD_Send_Byte_I
+000516 0E0A           00512         movlw   .10             
+000518 EC?? F???      00513         call    LCD_delay_x4us
+00051C 0E00           00514         movlw b'00000000'    ;writing fourth line 
+00051E EC?? F???      00515         call LCD_Send_Byte_D
+000522 0E0A           00516         movlw   .10             
+000524 EC?? F???      00517         call    LCD_delay_x4us
+000528 0E6C           00518         movlw b'0001101100'    ;setting CGRAM address of fifth line 
+00052A EC?? F???      00519         call LCD_Send_Byte_I
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 11
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000530 EC?? F???      00520         call    LCD_delay_x4us
-000534 0E00           00521         movlw b'00000000'    ;writing fifth line 
-000536 EC?? F???      00522         call LCD_Send_Byte_D
-00053A 0E0A           00523         movlw   .10             
-00053C EC?? F???      00524         call    LCD_delay_x4us
-000540 0E6D           00525         movlw b'0001101101'    ;setting CGRAM address of sixth line 
-000542 EC?? F???      00526         call LCD_Send_Byte_I
-000546 0E0A           00527         movlw   .10             
-000548 EC?? F???      00528         call    LCD_delay_x4us
-00054C 0E0A           00529         movlw b'00001010'    ;writing sixth line 
-00054E EC?? F???      00530         call LCD_Send_Byte_D
-000552 0E0A           00531         movlw   .10             
-000554 EC?? F???      00532         call    LCD_delay_x4us
-000558 0E6E           00533         movlw b'0001101110'    ;setting CGRAM address of seventh line 
-00055A EC?? F???      00534         call LCD_Send_Byte_I
-00055E 0E0A           00535         movlw   .10             
-000560 EC?? F???      00536         call    LCD_delay_x4us
-000564 0E0E           00537         movlw b'00001110'    ;writing seventh line 
-000566 EC?? F???      00538         call LCD_Send_Byte_D
-00056A 0E0A           00539         movlw   .10             
-00056C EC?? F???      00540         call    LCD_delay_x4us
-000570 0E6F           00541         movlw b'0001101111'    ;setting CGRAM address of eigth line 
-000572 EC?? F???      00542         call LCD_Send_Byte_I
-000576 0E0A           00543         movlw   .10             
-000578 EC?? F???      00544         call    LCD_delay_x4us
-00057C 0E00           00545         movlw b'00000000'    ;writing eigth line 
-00057E EC?? F???      00546         call    LCD_Send_Byte_D
-000582 0E0A           00547         movlw   .10             
-000584 EC?? F???      00548         call    LCD_delay_x4us
-                      00549         
+00052E 0E0A           00520         movlw   .10             
+000530 EC?? F???      00521         call    LCD_delay_x4us
+000534 0E00           00522         movlw b'00000000'    ;writing fifth line 
+000536 EC?? F???      00523         call LCD_Send_Byte_D
+00053A 0E0A           00524         movlw   .10             
+00053C EC?? F???      00525         call    LCD_delay_x4us
+000540 0E6D           00526         movlw b'0001101101'    ;setting CGRAM address of sixth line 
+000542 EC?? F???      00527         call LCD_Send_Byte_I
+000546 0E0A           00528         movlw   .10             
+000548 EC?? F???      00529         call    LCD_delay_x4us
+00054C 0E0A           00530         movlw b'00001010'    ;writing sixth line 
+00054E EC?? F???      00531         call LCD_Send_Byte_D
+000552 0E0A           00532         movlw   .10             
+000554 EC?? F???      00533         call    LCD_delay_x4us
+000558 0E6E           00534         movlw b'0001101110'    ;setting CGRAM address of seventh line 
+00055A EC?? F???      00535         call LCD_Send_Byte_I
+00055E 0E0A           00536         movlw   .10             
+000560 EC?? F???      00537         call    LCD_delay_x4us
+000564 0E0E           00538         movlw b'00001110'    ;writing seventh line 
+000566 EC?? F???      00539         call LCD_Send_Byte_D
+00056A 0E0A           00540         movlw   .10             
+00056C EC?? F???      00541         call    LCD_delay_x4us
+000570 0E6F           00542         movlw b'0001101111'    ;setting CGRAM address of eigth line 
+000572 EC?? F???      00543         call LCD_Send_Byte_I
+000576 0E0A           00544         movlw   .10             
+000578 EC?? F???      00545         call    LCD_delay_x4us
+00057C 0E00           00546         movlw b'00000000'    ;writing eigth line 
+00057E EC?? F???      00547         call    LCD_Send_Byte_D
+000582 0E0A           00548         movlw   .10             
+000584 EC?? F???      00549         call    LCD_delay_x4us
                       00550         
-000588                00551 NEUTRAL   
-000588 0E70           00552         movlw b'0001110000'   ;setting CGRAM address of first line 
-00058A EC?? F???      00553         call LCD_Send_Byte_I
-00058E 0E0A           00554         movlw   .10             
-000590 EC?? F???      00555         call    LCD_delay_x4us
-000594 0E00           00556         movlw b'00000000'    ;writing first line 
-000596 EC?? F???      00557         call LCD_Send_Byte_D
-00059A 0E0A           00558         movlw   .10             
-00059C EC?? F???      00559         call    LCD_delay_x4us
-0005A0 0E71           00560         movlw b'0001110001'    ;setting CGRAM address of second line 
-0005A2 EC?? F???      00561         call LCD_Send_Byte_I
-0005A6 0E0A           00562         movlw   .10             
-0005A8 EC?? F???      00563         call    LCD_delay_x4us
-0005AC 0E00           00564         movlw b'00000000'    ;writing second line 
-0005AE EC?? F???      00565         call LCD_Send_Byte_D
-0005B2 0E0A           00566         movlw   .10             
-0005B4 EC?? F???      00567         call    LCD_delay_x4us
-0005B8 0E72           00568         movlw b'0001110010'    ;setting CGRAM address of third line 
-0005BA EC?? F???      00569         call LCD_Send_Byte_I
-0005BE 0E0A           00570         movlw   .10             
-0005C0 EC?? F???      00571         call    LCD_delay_x4us
-0005C4 0E0A           00572         movlw b'00001010'    ;writing third line 
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 12
+                      00551         
+000588                00552 NEUTRAL   
+000588 0E70           00553         movlw b'0001110000'   ;setting CGRAM address of first line 
+00058A EC?? F???      00554         call LCD_Send_Byte_I
+00058E 0E0A           00555         movlw   .10             
+000590 EC?? F???      00556         call    LCD_delay_x4us
+000594 0E00           00557         movlw b'00000000'    ;writing first line 
+000596 EC?? F???      00558         call LCD_Send_Byte_D
+00059A 0E0A           00559         movlw   .10             
+00059C EC?? F???      00560         call    LCD_delay_x4us
+0005A0 0E71           00561         movlw b'0001110001'    ;setting CGRAM address of second line 
+0005A2 EC?? F???      00562         call LCD_Send_Byte_I
+0005A6 0E0A           00563         movlw   .10             
+0005A8 EC?? F???      00564         call    LCD_delay_x4us
+0005AC 0E00           00565         movlw b'00000000'    ;writing second line 
+0005AE EC?? F???      00566         call LCD_Send_Byte_D
+0005B2 0E0A           00567         movlw   .10             
+0005B4 EC?? F???      00568         call    LCD_delay_x4us
+0005B8 0E72           00569         movlw b'0001110010'    ;setting CGRAM address of third line 
+0005BA EC?? F???      00570         call LCD_Send_Byte_I
+0005BE 0E0A           00571         movlw   .10             
+0005C0 EC?? F???      00572         call    LCD_delay_x4us
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 12
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0005C6 EC?? F???      00573         call LCD_Send_Byte_D
-0005CA 0E0A           00574         movlw   .10             
-0005CC EC?? F???      00575         call    LCD_delay_x4us
-0005D0 0E73           00576         movlw b'0001110011'    ;setting CGRAM address of fourth line 
-0005D2 EC?? F???      00577         call LCD_Send_Byte_I
-0005D6 0E0A           00578         movlw   .10             
-0005D8 EC?? F???      00579         call    LCD_delay_x4us
-0005DC 0E00           00580         movlw b'00000000'    ;writing fourth line 
-0005DE EC?? F???      00581         call LCD_Send_Byte_D
-0005E2 0E0A           00582         movlw   .10             
-0005E4 EC?? F???      00583         call    LCD_delay_x4us
-0005E8 0E74           00584         movlw b'0001110100'    ;setting CGRAM address of fifth line 
-0005EA EC?? F???      00585         call LCD_Send_Byte_I
-0005EE 0E0A           00586         movlw   .10             
-0005F0 EC?? F???      00587         call    LCD_delay_x4us
-0005F4 0E00           00588         movlw b'00000000'    ;writing fifth line 
-0005F6 EC?? F???      00589         call LCD_Send_Byte_D
-0005FA 0E0A           00590         movlw   .10             
-0005FC EC?? F???      00591         call    LCD_delay_x4us
-000600 0E75           00592         movlw b'0001110101'    ;setting CGRAM address of sixth line 
-000602 EC?? F???      00593         call LCD_Send_Byte_I
-000606 0E0A           00594         movlw   .10             
-000608 EC?? F???      00595         call    LCD_delay_x4us
-00060C 0E0E           00596         movlw b'00001110'    ;writing sixth line 
-00060E EC?? F???      00597         call LCD_Send_Byte_D
-000612 0E0A           00598         movlw   .10             
-000614 EC?? F???      00599         call    LCD_delay_x4us
-000618 0E76           00600         movlw b'0001110110'    ;setting CGRAM address of seventh line 
-00061A EC?? F???      00601         call LCD_Send_Byte_I
-00061E 0E0A           00602         movlw   .10             
-000620 EC?? F???      00603         call    LCD_delay_x4us
-000624 0E00           00604         movlw b'00000000'    ;writing seventh line 
-000626 EC?? F???      00605         call LCD_Send_Byte_D
-00062A 0E0A           00606         movlw   .10             
-00062C EC?? F???      00607         call    LCD_delay_x4us
-000630 0E77           00608         movlw b'0001110111'    ;setting CGRAM address of eigth line 
-000632 EC?? F???      00609         call LCD_Send_Byte_I
-000636 0E0A           00610         movlw   .10             
-000638 EC?? F???      00611         call    LCD_delay_x4us
-00063C 0E00           00612         movlw b'00000000'    ;writing eigth line 
-00063E EC?? F???      00613         call    LCD_Send_Byte_D
-000642 0E0A           00614         movlw   .10             
-000644 EC?? F???      00615         call    LCD_delay_x4us
-                      00616         
+0005C4 0E0A           00573         movlw b'00001010'    ;writing third line 
+0005C6 EC?? F???      00574         call LCD_Send_Byte_D
+0005CA 0E0A           00575         movlw   .10             
+0005CC EC?? F???      00576         call    LCD_delay_x4us
+0005D0 0E73           00577         movlw b'0001110011'    ;setting CGRAM address of fourth line 
+0005D2 EC?? F???      00578         call LCD_Send_Byte_I
+0005D6 0E0A           00579         movlw   .10             
+0005D8 EC?? F???      00580         call    LCD_delay_x4us
+0005DC 0E00           00581         movlw b'00000000'    ;writing fourth line 
+0005DE EC?? F???      00582         call LCD_Send_Byte_D
+0005E2 0E0A           00583         movlw   .10             
+0005E4 EC?? F???      00584         call    LCD_delay_x4us
+0005E8 0E74           00585         movlw b'0001110100'    ;setting CGRAM address of fifth line 
+0005EA EC?? F???      00586         call LCD_Send_Byte_I
+0005EE 0E0A           00587         movlw   .10             
+0005F0 EC?? F???      00588         call    LCD_delay_x4us
+0005F4 0E00           00589         movlw b'00000000'    ;writing fifth line 
+0005F6 EC?? F???      00590         call LCD_Send_Byte_D
+0005FA 0E0A           00591         movlw   .10             
+0005FC EC?? F???      00592         call    LCD_delay_x4us
+000600 0E75           00593         movlw b'0001110101'    ;setting CGRAM address of sixth line 
+000602 EC?? F???      00594         call LCD_Send_Byte_I
+000606 0E0A           00595         movlw   .10             
+000608 EC?? F???      00596         call    LCD_delay_x4us
+00060C 0E0E           00597         movlw b'00001110'    ;writing sixth line 
+00060E EC?? F???      00598         call LCD_Send_Byte_D
+000612 0E0A           00599         movlw   .10             
+000614 EC?? F???      00600         call    LCD_delay_x4us
+000618 0E76           00601         movlw b'0001110110'    ;setting CGRAM address of seventh line 
+00061A EC?? F???      00602         call LCD_Send_Byte_I
+00061E 0E0A           00603         movlw   .10             
+000620 EC?? F???      00604         call    LCD_delay_x4us
+000624 0E00           00605         movlw b'00000000'    ;writing seventh line 
+000626 EC?? F???      00606         call LCD_Send_Byte_D
+00062A 0E0A           00607         movlw   .10             
+00062C EC?? F???      00608         call    LCD_delay_x4us
+000630 0E77           00609         movlw b'0001110111'    ;setting CGRAM address of eigth line 
+000632 EC?? F???      00610         call LCD_Send_Byte_I
+000636 0E0A           00611         movlw   .10             
+000638 EC?? F???      00612         call    LCD_delay_x4us
+00063C 0E00           00613         movlw b'00000000'    ;writing eigth line 
+00063E EC?? F???      00614         call    LCD_Send_Byte_D
+000642 0E0A           00615         movlw   .10             
+000644 EC?? F???      00616         call    LCD_delay_x4us
                       00617         
-000648                00618 SAD 
-000648 0E78           00619         movlw b'0001111000'   ;setting CGRAM address of first line 
-00064A EC?? F???      00620         call LCD_Send_Byte_I
-00064E 0E0A           00621         movlw   .10             
-000650 EC?? F???      00622         call    LCD_delay_x4us
-000654 0E00           00623         movlw b'00000000'    ;writing first line 
-000656 EC?? F???      00624         call LCD_Send_Byte_D
-00065A 0E0A           00625         movlw   .10             
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 13
+                      00618         
+000648                00619 SAD 
+000648 0E78           00620         movlw b'0001111000'   ;setting CGRAM address of first line 
+00064A EC?? F???      00621         call LCD_Send_Byte_I
+00064E 0E0A           00622         movlw   .10             
+000650 EC?? F???      00623         call    LCD_delay_x4us
+000654 0E00           00624         movlw b'00000000'    ;writing first line 
+000656 EC?? F???      00625         call LCD_Send_Byte_D
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 13
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00065C EC?? F???      00626         call    LCD_delay_x4us
-000660 0E79           00627         movlw b'0001111001'    ;setting CGRAM address of second line 
-000662 EC?? F???      00628         call LCD_Send_Byte_I
-000666 0E0A           00629         movlw   .10             
-000668 EC?? F???      00630         call    LCD_delay_x4us
-00066C 0E00           00631         movlw b'00000000'    ;writing second line 
-00066E EC?? F???      00632         call LCD_Send_Byte_D
-000672 0E0A           00633         movlw   .10             
-000674 EC?? F???      00634         call    LCD_delay_x4us
-000678 0E7A           00635         movlw b'0001111010'    ;setting CGRAM address of third line 
-00067A EC?? F???      00636         call LCD_Send_Byte_I
-00067E 0E0A           00637         movlw   .10             
-000680 EC?? F???      00638         call    LCD_delay_x4us
-000684 0E0A           00639         movlw b'00001010'    ;writing third line 
-000686 EC?? F???      00640         call LCD_Send_Byte_D
-00068A 0E0A           00641         movlw   .10             
-00068C EC?? F???      00642         call    LCD_delay_x4us
-000690 0E7B           00643         movlw b'0001111011'    ;setting CGRAM address of fourth line 
-000692 EC?? F???      00644         call LCD_Send_Byte_I
-000696 0E0A           00645         movlw   .10             
-000698 EC?? F???      00646         call    LCD_delay_x4us
-00069C 0E00           00647         movlw b'00000000'    ;writing fourth line 
-00069E EC?? F???      00648         call LCD_Send_Byte_D
-0006A2 0E0A           00649         movlw   .10             
-0006A4 EC?? F???      00650         call    LCD_delay_x4us
-0006A8 0E7C           00651         movlw b'0001111100'    ;setting CGRAM address of fifth line 
-0006AA EC?? F???      00652         call LCD_Send_Byte_I
-0006AE 0E0A           00653         movlw   .10             
-0006B0 EC?? F???      00654         call    LCD_delay_x4us
-0006B4 0E00           00655         movlw b'00000000'    ;writing fifth line 
-0006B6 EC?? F???      00656         call LCD_Send_Byte_D
-0006BA 0E0A           00657         movlw   .10             
-0006BC EC?? F???      00658         call    LCD_delay_x4us
-0006C0 0E7D           00659         movlw b'0001111101'    ;setting CGRAM address of sixth line 
-0006C2 EC?? F???      00660         call LCD_Send_Byte_I
-0006C6 0E0A           00661         movlw   .10             
-0006C8 EC?? F???      00662         call    LCD_delay_x4us
-0006CC 0E0E           00663         movlw b'00001110'    ;writing sixth line 
-0006CE EC?? F???      00664         call LCD_Send_Byte_D
-0006D2 0E0A           00665         movlw   .10             
-0006D4 EC?? F???      00666         call    LCD_delay_x4us
-0006D8 0E7E           00667         movlw b'0001111110'    ;setting CGRAM address of seventh line 
-0006DA EC?? F???      00668         call LCD_Send_Byte_I
-0006DE 0E0A           00669         movlw   .10             
-0006E0 EC?? F???      00670         call    LCD_delay_x4us
-0006E4 0E0A           00671         movlw b'00001010'    ;writing seventh line 
-0006E6 EC?? F???      00672         call LCD_Send_Byte_D
-0006EA 0E0A           00673         movlw   .10             
-0006EC EC?? F???      00674         call    LCD_delay_x4us
-0006F0 0E7F           00675         movlw b'0001111111'    ;setting CGRAM address of eigth line 
-0006F2 EC?? F???      00676         call LCD_Send_Byte_I
-0006F6 0E0A           00677         movlw   .10             
-0006F8 EC?? F???      00678         call    LCD_delay_x4us
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 14
+00065A 0E0A           00626         movlw   .10             
+00065C EC?? F???      00627         call    LCD_delay_x4us
+000660 0E79           00628         movlw b'0001111001'    ;setting CGRAM address of second line 
+000662 EC?? F???      00629         call LCD_Send_Byte_I
+000666 0E0A           00630         movlw   .10             
+000668 EC?? F???      00631         call    LCD_delay_x4us
+00066C 0E00           00632         movlw b'00000000'    ;writing second line 
+00066E EC?? F???      00633         call LCD_Send_Byte_D
+000672 0E0A           00634         movlw   .10             
+000674 EC?? F???      00635         call    LCD_delay_x4us
+000678 0E7A           00636         movlw b'0001111010'    ;setting CGRAM address of third line 
+00067A EC?? F???      00637         call LCD_Send_Byte_I
+00067E 0E0A           00638         movlw   .10             
+000680 EC?? F???      00639         call    LCD_delay_x4us
+000684 0E0A           00640         movlw b'00001010'    ;writing third line 
+000686 EC?? F???      00641         call LCD_Send_Byte_D
+00068A 0E0A           00642         movlw   .10             
+00068C EC?? F???      00643         call    LCD_delay_x4us
+000690 0E7B           00644         movlw b'0001111011'    ;setting CGRAM address of fourth line 
+000692 EC?? F???      00645         call LCD_Send_Byte_I
+000696 0E0A           00646         movlw   .10             
+000698 EC?? F???      00647         call    LCD_delay_x4us
+00069C 0E00           00648         movlw b'00000000'    ;writing fourth line 
+00069E EC?? F???      00649         call LCD_Send_Byte_D
+0006A2 0E0A           00650         movlw   .10             
+0006A4 EC?? F???      00651         call    LCD_delay_x4us
+0006A8 0E7C           00652         movlw b'0001111100'    ;setting CGRAM address of fifth line 
+0006AA EC?? F???      00653         call LCD_Send_Byte_I
+0006AE 0E0A           00654         movlw   .10             
+0006B0 EC?? F???      00655         call    LCD_delay_x4us
+0006B4 0E00           00656         movlw b'00000000'    ;writing fifth line 
+0006B6 EC?? F???      00657         call LCD_Send_Byte_D
+0006BA 0E0A           00658         movlw   .10             
+0006BC EC?? F???      00659         call    LCD_delay_x4us
+0006C0 0E7D           00660         movlw b'0001111101'    ;setting CGRAM address of sixth line 
+0006C2 EC?? F???      00661         call LCD_Send_Byte_I
+0006C6 0E0A           00662         movlw   .10             
+0006C8 EC?? F???      00663         call    LCD_delay_x4us
+0006CC 0E0E           00664         movlw b'00001110'    ;writing sixth line 
+0006CE EC?? F???      00665         call LCD_Send_Byte_D
+0006D2 0E0A           00666         movlw   .10             
+0006D4 EC?? F???      00667         call    LCD_delay_x4us
+0006D8 0E7E           00668         movlw b'0001111110'    ;setting CGRAM address of seventh line 
+0006DA EC?? F???      00669         call LCD_Send_Byte_I
+0006DE 0E0A           00670         movlw   .10             
+0006E0 EC?? F???      00671         call    LCD_delay_x4us
+0006E4 0E0A           00672         movlw b'00001010'    ;writing seventh line 
+0006E6 EC?? F???      00673         call LCD_Send_Byte_D
+0006EA 0E0A           00674         movlw   .10             
+0006EC EC?? F???      00675         call    LCD_delay_x4us
+0006F0 0E7F           00676         movlw b'0001111111'    ;setting CGRAM address of eigth line 
+0006F2 EC?? F???      00677         call LCD_Send_Byte_I
+0006F6 0E0A           00678         movlw   .10             
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 14
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0006FC 0E00           00679         movlw b'00000000'    ;writing eigth line 
-0006FE EC?? F???      00680         call    LCD_Send_Byte_D
-000702 0E0A           00681         movlw   .10             
-000704 EC?? F???      00682         call    LCD_delay_x4us
-                      00683         
-000708 0012           00684         return 
-                      00685         
-                      00686 ;GHOST 0X00,  HEART 0X01,  BABY 0X02, SUN 0X03, MOON 0X04, SMILEY 0X05, NEUTRAL 0X06, SAD 0X07
-                      00687         
-00070A                00688 GHOST
-00070A 0E40           00689         movlw b'0001000000'   ;setting CGRAM address of first line 
-00070C EC?? F???      00690         call LCD_Send_Byte_I
-000710 0E0A           00691         movlw   .10             
-000712 EC?? F???      00692         call    LCD_delay_x4us
-000716 0E0E           00693         movlw b'00001110'    ;writing first line 
-000718 EC?? F???      00694         call LCD_Send_Byte_D
-00071C 0E0A           00695         movlw   .10             
-00071E EC?? F???      00696         call    LCD_delay_x4us
-000722 0E41           00697         movlw b'0001000001'    ;setting CGRAM address of second line 
-000724 EC?? F???      00698         call LCD_Send_Byte_I
-000728 0E0A           00699         movlw   .10             
-00072A EC?? F???      00700         call    LCD_delay_x4us
-00072E 0E1F           00701         movlw b'00011111'    ;writing second line 
-000730 EC?? F???      00702         call LCD_Send_Byte_D
-000734 0E0A           00703         movlw   .10             
-000736 EC?? F???      00704         call    LCD_delay_x4us
-00073A 0E42           00705         movlw b'0001000010'    ;setting CGRAM address of third line 
-00073C EC?? F???      00706         call LCD_Send_Byte_I
-000740 0E0A           00707         movlw   .10             
-000742 EC?? F???      00708         call    LCD_delay_x4us
-000746 0E15           00709         movlw b'00010101'    ;writing third line 
-000748 EC?? F???      00710         call LCD_Send_Byte_D
-00074C 0E0A           00711         movlw   .10             
-00074E EC?? F???      00712         call    LCD_delay_x4us
-000752 0E43           00713         movlw b'0001000011'    ;setting CGRAM address of fourth line 
-000754 EC?? F???      00714         call LCD_Send_Byte_I
-000758 0E0A           00715         movlw   .10             
-00075A EC?? F???      00716         call    LCD_delay_x4us
-00075E 0E1F           00717         movlw b'00011111'    ;writing fourth line 
-000760 EC?? F???      00718         call LCD_Send_Byte_D
-000764 0E0A           00719         movlw   .10             
-000766 EC?? F???      00720         call    LCD_delay_x4us
-00076A 0E44           00721         movlw b'0001000100'    ;setting CGRAM address of fifth line 
-00076C EC?? F???      00722         call LCD_Send_Byte_I
-000770 0E0A           00723         movlw   .10             
-000772 EC?? F???      00724         call    LCD_delay_x4us
-000776 0E1F           00725         movlw b'00011111'    ;writing fifth line 
-000778 EC?? F???      00726         call LCD_Send_Byte_D
-00077C 0E0A           00727         movlw   .10             
-00077E EC?? F???      00728         call    LCD_delay_x4us
-000782 0E45           00729         movlw b'0001000101'    ;setting CGRAM address of sixth line 
-000784 EC?? F???      00730         call LCD_Send_Byte_I
-000788 0E0A           00731         movlw   .10             
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 15
+0006F8 EC?? F???      00679         call    LCD_delay_x4us
+0006FC 0E00           00680         movlw b'00000000'    ;writing eigth line 
+0006FE EC?? F???      00681         call    LCD_Send_Byte_D
+000702 0E0A           00682         movlw   .10             
+000704 EC?? F???      00683         call    LCD_delay_x4us
+                      00684         
+000708 0012           00685         return 
+                      00686         
+                      00687 ;GHOST 0X00,  HEART 0X01,  BABY 0X02, SUN 0X03, MOON 0X04, SMILEY 0X05, NEUTRAL 0X06, SAD 0X07
+                      00688         
+00070A                00689 GHOST
+00070A 0E40           00690         movlw b'0001000000'   ;setting CGRAM address of first line 
+00070C EC?? F???      00691         call LCD_Send_Byte_I
+000710 0E0A           00692         movlw   .10             
+000712 EC?? F???      00693         call    LCD_delay_x4us
+000716 0E0E           00694         movlw b'00001110'    ;writing first line 
+000718 EC?? F???      00695         call LCD_Send_Byte_D
+00071C 0E0A           00696         movlw   .10             
+00071E EC?? F???      00697         call    LCD_delay_x4us
+000722 0E41           00698         movlw b'0001000001'    ;setting CGRAM address of second line 
+000724 EC?? F???      00699         call LCD_Send_Byte_I
+000728 0E0A           00700         movlw   .10             
+00072A EC?? F???      00701         call    LCD_delay_x4us
+00072E 0E1F           00702         movlw b'00011111'    ;writing second line 
+000730 EC?? F???      00703         call LCD_Send_Byte_D
+000734 0E0A           00704         movlw   .10             
+000736 EC?? F???      00705         call    LCD_delay_x4us
+00073A 0E42           00706         movlw b'0001000010'    ;setting CGRAM address of third line 
+00073C EC?? F???      00707         call LCD_Send_Byte_I
+000740 0E0A           00708         movlw   .10             
+000742 EC?? F???      00709         call    LCD_delay_x4us
+000746 0E15           00710         movlw b'00010101'    ;writing third line 
+000748 EC?? F???      00711         call LCD_Send_Byte_D
+00074C 0E0A           00712         movlw   .10             
+00074E EC?? F???      00713         call    LCD_delay_x4us
+000752 0E43           00714         movlw b'0001000011'    ;setting CGRAM address of fourth line 
+000754 EC?? F???      00715         call LCD_Send_Byte_I
+000758 0E0A           00716         movlw   .10             
+00075A EC?? F???      00717         call    LCD_delay_x4us
+00075E 0E1F           00718         movlw b'00011111'    ;writing fourth line 
+000760 EC?? F???      00719         call LCD_Send_Byte_D
+000764 0E0A           00720         movlw   .10             
+000766 EC?? F???      00721         call    LCD_delay_x4us
+00076A 0E44           00722         movlw b'0001000100'    ;setting CGRAM address of fifth line 
+00076C EC?? F???      00723         call LCD_Send_Byte_I
+000770 0E0A           00724         movlw   .10             
+000772 EC?? F???      00725         call    LCD_delay_x4us
+000776 0E1F           00726         movlw b'00011111'    ;writing fifth line 
+000778 EC?? F???      00727         call LCD_Send_Byte_D
+00077C 0E0A           00728         movlw   .10             
+00077E EC?? F???      00729         call    LCD_delay_x4us
+000782 0E45           00730         movlw b'0001000101'    ;setting CGRAM address of sixth line 
+000784 EC?? F???      00731         call LCD_Send_Byte_I
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 15
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00078A EC?? F???      00732         call    LCD_delay_x4us
-00078E 0E1F           00733         movlw b'00011111'    ;writing sixth line 
-000790 EC?? F???      00734         call LCD_Send_Byte_D
-000794 0E0A           00735         movlw   .10             
-000796 EC?? F???      00736         call    LCD_delay_x4us
-00079A 0E46           00737         movlw b'0001000110'    ;setting CGRAM address of seventh line 
-00079C EC?? F???      00738         call LCD_Send_Byte_I
-0007A0 0E0A           00739         movlw   .10             
-0007A2 EC?? F???      00740         call    LCD_delay_x4us
-0007A6 0E15           00741         movlw b'00010101'    ;writing seventh line 
-0007A8 EC?? F???      00742         call LCD_Send_Byte_D
-0007AC 0E0A           00743         movlw   .10             
-0007AE EC?? F???      00744         call    LCD_delay_x4us
-0007B2 0E47           00745         movlw b'0001000111'    ;setting CGRAM address of eigth line 
-0007B4 EC?? F???      00746         call LCD_Send_Byte_I
-0007B8 0E0A           00747         movlw   .10             
-0007BA EC?? F???      00748         call    LCD_delay_x4us
-0007BE 0E00           00749         movlw b'00000000'    ;writing eigth line 
-0007C0 EC?? F???      00750         call    LCD_Send_Byte_D
-0007C4 0E0A           00751         movlw   .10             
-0007C6 EC?? F???      00752         call    LCD_delay_x4us 
-                      00753 
-0007CA 0012           00754         return
-                      00755         
-                      00756 ;GHOST 0X00,  HEART 0X01,  SMALL_RABBIT 0X02, SUN 0X03, MOON 0X04, SMILEY 0X05, NEUTRAL 0X06, SAD 0X07
-                      00757         
-0007CC                00758 SMALL_RABBIT
-0007CC 0E50           00759         movlw b'0001010000'   ;setting CGRAM address of first line 
-0007CE EC?? F???      00760         call LCD_Send_Byte_I
-0007D2 0E0A           00761         movlw   .10             
-0007D4 EC?? F???      00762         call    LCD_delay_x4us
-0007D8 0E00           00763         movlw b'00000000'    ;writing first line of small rabbit
-0007DA EC?? F???      00764         call LCD_Send_Byte_D
-0007DE 0E0A           00765         movlw   .10             
-0007E0 EC?? F???      00766         call    LCD_delay_x4us
-0007E4 0E51           00767         movlw b'0001010001'    ;setting CGRAM address of second line 
-0007E6 EC?? F???      00768         call LCD_Send_Byte_I
-0007EA 0E0A           00769         movlw   .10             
-0007EC EC?? F???      00770         call    LCD_delay_x4us
-0007F0 0E00           00771         movlw b'00000000'    ;writing second line of small rabbit 
-0007F2 EC?? F???      00772         call LCD_Send_Byte_D
-0007F6 0E0A           00773         movlw   .10             
-0007F8 EC?? F???      00774         call    LCD_delay_x4us
-0007FC 0E52           00775         movlw b'0001010010'    ;setting CGRAM address of third line 
-0007FE EC?? F???      00776         call LCD_Send_Byte_I
-000802 0E0A           00777         movlw   .10             
-000804 EC?? F???      00778         call    LCD_delay_x4us
-000808 0E00           00779         movlw b'00000000'    ;writing third line of small rabbit 
-00080A EC?? F???      00780         call LCD_Send_Byte_D
-00080E 0E0A           00781         movlw   .10             
-000810 EC?? F???      00782         call    LCD_delay_x4us
-000814 0E53           00783         movlw b'0001010011'    ;setting CGRAM address of fourth line 
-000816 EC?? F???      00784         call LCD_Send_Byte_I
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 16
+000788 0E0A           00732         movlw   .10             
+00078A EC?? F???      00733         call    LCD_delay_x4us
+00078E 0E1F           00734         movlw b'00011111'    ;writing sixth line 
+000790 EC?? F???      00735         call LCD_Send_Byte_D
+000794 0E0A           00736         movlw   .10             
+000796 EC?? F???      00737         call    LCD_delay_x4us
+00079A 0E46           00738         movlw b'0001000110'    ;setting CGRAM address of seventh line 
+00079C EC?? F???      00739         call LCD_Send_Byte_I
+0007A0 0E0A           00740         movlw   .10             
+0007A2 EC?? F???      00741         call    LCD_delay_x4us
+0007A6 0E15           00742         movlw b'00010101'    ;writing seventh line 
+0007A8 EC?? F???      00743         call LCD_Send_Byte_D
+0007AC 0E0A           00744         movlw   .10             
+0007AE EC?? F???      00745         call    LCD_delay_x4us
+0007B2 0E47           00746         movlw b'0001000111'    ;setting CGRAM address of eigth line 
+0007B4 EC?? F???      00747         call LCD_Send_Byte_I
+0007B8 0E0A           00748         movlw   .10             
+0007BA EC?? F???      00749         call    LCD_delay_x4us
+0007BE 0E00           00750         movlw b'00000000'    ;writing eigth line 
+0007C0 EC?? F???      00751         call    LCD_Send_Byte_D
+0007C4 0E0A           00752         movlw   .10             
+0007C6 EC?? F???      00753         call    LCD_delay_x4us 
+                      00754 
+0007CA 0012           00755         return
+                      00756         
+                      00757 ;GHOST 0X00,  HEART 0X01,  SMALL_RABBIT 0X02, SUN 0X03, MOON 0X04, SMILEY 0X05, NEUTRAL 0X06, SAD 0X07
+                      00758         
+0007CC                00759 SMALL_RABBIT
+0007CC 0E50           00760         movlw b'0001010000'   ;setting CGRAM address of first line 
+0007CE EC?? F???      00761         call LCD_Send_Byte_I
+0007D2 0E0A           00762         movlw   .10             
+0007D4 EC?? F???      00763         call    LCD_delay_x4us
+0007D8 0E00           00764         movlw b'00000000'    ;writing first line of small rabbit
+0007DA EC?? F???      00765         call LCD_Send_Byte_D
+0007DE 0E0A           00766         movlw   .10             
+0007E0 EC?? F???      00767         call    LCD_delay_x4us
+0007E4 0E51           00768         movlw b'0001010001'    ;setting CGRAM address of second line 
+0007E6 EC?? F???      00769         call LCD_Send_Byte_I
+0007EA 0E0A           00770         movlw   .10             
+0007EC EC?? F???      00771         call    LCD_delay_x4us
+0007F0 0E00           00772         movlw b'00000000'    ;writing second line of small rabbit 
+0007F2 EC?? F???      00773         call LCD_Send_Byte_D
+0007F6 0E0A           00774         movlw   .10             
+0007F8 EC?? F???      00775         call    LCD_delay_x4us
+0007FC 0E52           00776         movlw b'0001010010'    ;setting CGRAM address of third line 
+0007FE EC?? F???      00777         call LCD_Send_Byte_I
+000802 0E0A           00778         movlw   .10             
+000804 EC?? F???      00779         call    LCD_delay_x4us
+000808 0E00           00780         movlw b'00000000'    ;writing third line of small rabbit 
+00080A EC?? F???      00781         call LCD_Send_Byte_D
+00080E 0E0A           00782         movlw   .10             
+000810 EC?? F???      00783         call    LCD_delay_x4us
+000814 0E53           00784         movlw b'0001010011'    ;setting CGRAM address of fourth line 
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 16
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00081A 0E0A           00785         movlw   .10             
-00081C EC?? F???      00786         call    LCD_delay_x4us
-000820 0E0A           00787         movlw b'00001010'    ;writing fourth line of small rabbit 
-000822 EC?? F???      00788         call LCD_Send_Byte_D
-000826 0E0A           00789         movlw   .10             
-000828 EC?? F???      00790         call    LCD_delay_x4us
-00082C 0E54           00791         movlw b'0001010100'    ;setting CGRAM address of fifth line 
-00082E EC?? F???      00792         call LCD_Send_Byte_I
-000832 0E0A           00793         movlw   .10             
-000834 EC?? F???      00794         call    LCD_delay_x4us
-000838 0E0A           00795         movlw b'00001010'    ;writing fifth line of small rabbit 
-00083A EC?? F???      00796         call LCD_Send_Byte_D
-00083E 0E0A           00797         movlw   .10             
-000840 EC?? F???      00798         call    LCD_delay_x4us
-000844 0E55           00799         movlw b'0001010101'    ;setting CGRAM address of sixth line 
-000846 EC?? F???      00800         call LCD_Send_Byte_I
-00084A 0E0A           00801         movlw   .10             
-00084C EC?? F???      00802         call    LCD_delay_x4us
-000850 0E0E           00803         movlw b'00001110'    ;writing sixth line of small rabbit 
-000852 EC?? F???      00804         call LCD_Send_Byte_D
-000856 0E0A           00805         movlw   .10             
-000858 EC?? F???      00806         call    LCD_delay_x4us
-00085C 0E56           00807         movlw b'0001010110'    ;setting CGRAM address of seventh line 
-00085E EC?? F???      00808         call LCD_Send_Byte_I
-000862 0E0A           00809         movlw   .10             
-000864 EC?? F???      00810         call    LCD_delay_x4us
-000868 0E0E           00811         movlw b'00001110'    ;writing seventh line of small rabbit 
-00086A EC?? F???      00812         call LCD_Send_Byte_D
-00086E 0E0A           00813         movlw   .10             
-000870 EC?? F???      00814         call    LCD_delay_x4us
-000874 0E57           00815         movlw b'0001010111'    ;setting CGRAM address of eigth line 
-000876 EC?? F???      00816         call LCD_Send_Byte_I
-00087A 0E0A           00817         movlw   .10             
-00087C EC?? F???      00818         call    LCD_delay_x4us
-000880 0E0E           00819         movlw b'00001110'    ;writing eigth line of small rabbit 
-000882 EC?? F???      00820         call LCD_Send_Byte_D
-000886 0E0A           00821         movlw   .10             
-000888 EC?? F???      00822         call    LCD_delay_x4us
-                      00823          
-00088C 0012           00824         return
-                      00825 
-                      00826   ;GHOST 0X00,  HEART 0X01,  MEDIUM_RABBIT 0X02, SUN 0X03, MOON 0X04, SMILEY 0X05, NEUTRAL 0X06, SAD 0X0
+000816 EC?? F???      00785         call LCD_Send_Byte_I
+00081A 0E0A           00786         movlw   .10             
+00081C EC?? F???      00787         call    LCD_delay_x4us
+000820 0E0A           00788         movlw b'00001010'    ;writing fourth line of small rabbit 
+000822 EC?? F???      00789         call LCD_Send_Byte_D
+000826 0E0A           00790         movlw   .10             
+000828 EC?? F???      00791         call    LCD_delay_x4us
+00082C 0E54           00792         movlw b'0001010100'    ;setting CGRAM address of fifth line 
+00082E EC?? F???      00793         call LCD_Send_Byte_I
+000832 0E0A           00794         movlw   .10             
+000834 EC?? F???      00795         call    LCD_delay_x4us
+000838 0E0A           00796         movlw b'00001010'    ;writing fifth line of small rabbit 
+00083A EC?? F???      00797         call LCD_Send_Byte_D
+00083E 0E0A           00798         movlw   .10             
+000840 EC?? F???      00799         call    LCD_delay_x4us
+000844 0E55           00800         movlw b'0001010101'    ;setting CGRAM address of sixth line 
+000846 EC?? F???      00801         call LCD_Send_Byte_I
+00084A 0E0A           00802         movlw   .10             
+00084C EC?? F???      00803         call    LCD_delay_x4us
+000850 0E0E           00804         movlw b'00001110'    ;writing sixth line of small rabbit 
+000852 EC?? F???      00805         call LCD_Send_Byte_D
+000856 0E0A           00806         movlw   .10             
+000858 EC?? F???      00807         call    LCD_delay_x4us
+00085C 0E56           00808         movlw b'0001010110'    ;setting CGRAM address of seventh line 
+00085E EC?? F???      00809         call LCD_Send_Byte_I
+000862 0E0A           00810         movlw   .10             
+000864 EC?? F???      00811         call    LCD_delay_x4us
+000868 0E0E           00812         movlw b'00001110'    ;writing seventh line of small rabbit 
+00086A EC?? F???      00813         call LCD_Send_Byte_D
+00086E 0E0A           00814         movlw   .10             
+000870 EC?? F???      00815         call    LCD_delay_x4us
+000874 0E57           00816         movlw b'0001010111'    ;setting CGRAM address of eigth line 
+000876 EC?? F???      00817         call LCD_Send_Byte_I
+00087A 0E0A           00818         movlw   .10             
+00087C EC?? F???      00819         call    LCD_delay_x4us
+000880 0E0E           00820         movlw b'00001110'    ;writing eigth line of small rabbit 
+000882 EC?? F???      00821         call LCD_Send_Byte_D
+000886 0E0A           00822         movlw   .10             
+000888 EC?? F???      00823         call    LCD_delay_x4us
+                      00824          
+00088C 0012           00825         return
+                      00826 
+                      00827   ;GHOST 0X00,  HEART 0X01,  MEDIUM_RABBIT 0X02, SUN 0X03, MOON 0X04, SMILEY 0X05, NEUTRAL 0X06, SAD 0X0
                             7
-                      00827         
-00088E                00828 MEDIUM_RABBIT
-00088E 0E50           00829         movlw b'0001010000'   ;setting CGRAM address of first line 
-000890 EC?? F???      00830         call LCD_Send_Byte_I
-000894 0E0A           00831         movlw   .10             
-000896 EC?? F???      00832         call    LCD_delay_x4us
-00089A 0E00           00833         movlw b'00000000'    ;writing first line of rabbit
-00089C EC?? F???      00834         call LCD_Send_Byte_D
-0008A0 0E0A           00835         movlw   .10             
-0008A2 EC?? F???      00836         call    LCD_delay_x4us
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 17
+                      00828         
+00088E                00829 MEDIUM_RABBIT
+00088E 0E50           00830         movlw b'0001010000'   ;setting CGRAM address of first line 
+000890 EC?? F???      00831         call LCD_Send_Byte_I
+000894 0E0A           00832         movlw   .10             
+000896 EC?? F???      00833         call    LCD_delay_x4us
+00089A 0E00           00834         movlw b'00000000'    ;writing first line of rabbit
+00089C EC?? F???      00835         call LCD_Send_Byte_D
+0008A0 0E0A           00836         movlw   .10             
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 17
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0008A6 0E51           00837         movlw b'0001010001'    ;setting CGRAM address of second line 
-0008A8 EC?? F???      00838         call LCD_Send_Byte_I
-0008AC 0E0A           00839         movlw   .10             
-0008AE EC?? F???      00840         call    LCD_delay_x4us
-0008B2 0E0A           00841         movlw b'00001010'    ;writing second line of rabbit 
-0008B4 EC?? F???      00842         call LCD_Send_Byte_D
-0008B8 0E0A           00843         movlw   .10             
-0008BA EC?? F???      00844         call    LCD_delay_x4us
-0008BE 0E52           00845         movlw b'0001010010'    ;setting CGRAM address of third line 
-0008C0 EC?? F???      00846         call LCD_Send_Byte_I
-0008C4 0E0A           00847         movlw   .10             
-0008C6 EC?? F???      00848         call    LCD_delay_x4us
-0008CA 0E0A           00849         movlw b'00001010'    ;writing third line of rabbit 
-0008CC EC?? F???      00850         call LCD_Send_Byte_D
-0008D0 0E0A           00851         movlw   .10             
-0008D2 EC?? F???      00852         call    LCD_delay_x4us
-0008D6 0E53           00853         movlw b'0001010011'    ;setting CGRAM address of fourth line 
-0008D8 EC?? F???      00854         call LCD_Send_Byte_I
-0008DC 0E0A           00855         movlw   .10             
-0008DE EC?? F???      00856         call    LCD_delay_x4us
-0008E2 0E1F           00857         movlw b'00011111'    ;writing fourth line of rabbit 
-0008E4 EC?? F???      00858         call LCD_Send_Byte_D
-0008E8 0E0A           00859         movlw   .10             
-0008EA EC?? F???      00860         call    LCD_delay_x4us
-0008EE 0E54           00861         movlw b'0001010100'    ;setting CGRAM address of fifth line 
-0008F0 EC?? F???      00862         call LCD_Send_Byte_I
-0008F4 0E0A           00863         movlw   .10             
-0008F6 EC?? F???      00864         call    LCD_delay_x4us
-0008FA 0E15           00865         movlw b'00010101'    ;writing fifth line of rabbit 
-0008FC EC?? F???      00866         call LCD_Send_Byte_D
-000900 0E0A           00867         movlw   .10             
-000902 EC?? F???      00868         call    LCD_delay_x4us
-000906 0E55           00869         movlw b'0001010101'    ;setting CGRAM address of sixth line 
-000908 EC?? F???      00870         call LCD_Send_Byte_I
-00090C 0E0A           00871         movlw   .10             
-00090E EC?? F???      00872         call    LCD_delay_x4us
-000912 0E1B           00873         movlw b'00011011'    ;writing sixth line of rabbit 
-000914 EC?? F???      00874         call LCD_Send_Byte_D
-000918 0E0A           00875         movlw   .10             
-00091A EC?? F???      00876         call    LCD_delay_x4us
-00091E 0E56           00877         movlw b'0001010110'    ;setting CGRAM address of seventh line 
-000920 EC?? F???      00878         call LCD_Send_Byte_I
-000924 0E0A           00879         movlw   .10             
-000926 EC?? F???      00880         call    LCD_delay_x4us
-00092A 0E1F           00881         movlw b'00011111'    ;writing seventh line of rabbit 
-00092C EC?? F???      00882         call LCD_Send_Byte_D
-000930 0E0A           00883         movlw   .10             
-000932 EC?? F???      00884         call    LCD_delay_x4us
-000936 0E57           00885         movlw b'0001010111'    ;setting CGRAM address of eigth line 
-000938 EC?? F???      00886         call LCD_Send_Byte_I
-00093C 0E0A           00887         movlw   .10             
-00093E EC?? F???      00888         call    LCD_delay_x4us
-000942 0E0E           00889         movlw b'00001110'    ;writing eigth line of rabbit 
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 18
+0008A2 EC?? F???      00837         call    LCD_delay_x4us
+0008A6 0E51           00838         movlw b'0001010001'    ;setting CGRAM address of second line 
+0008A8 EC?? F???      00839         call LCD_Send_Byte_I
+0008AC 0E0A           00840         movlw   .10             
+0008AE EC?? F???      00841         call    LCD_delay_x4us
+0008B2 0E0A           00842         movlw b'00001010'    ;writing second line of rabbit 
+0008B4 EC?? F???      00843         call LCD_Send_Byte_D
+0008B8 0E0A           00844         movlw   .10             
+0008BA EC?? F???      00845         call    LCD_delay_x4us
+0008BE 0E52           00846         movlw b'0001010010'    ;setting CGRAM address of third line 
+0008C0 EC?? F???      00847         call LCD_Send_Byte_I
+0008C4 0E0A           00848         movlw   .10             
+0008C6 EC?? F???      00849         call    LCD_delay_x4us
+0008CA 0E0A           00850         movlw b'00001010'    ;writing third line of rabbit 
+0008CC EC?? F???      00851         call LCD_Send_Byte_D
+0008D0 0E0A           00852         movlw   .10             
+0008D2 EC?? F???      00853         call    LCD_delay_x4us
+0008D6 0E53           00854         movlw b'0001010011'    ;setting CGRAM address of fourth line 
+0008D8 EC?? F???      00855         call LCD_Send_Byte_I
+0008DC 0E0A           00856         movlw   .10             
+0008DE EC?? F???      00857         call    LCD_delay_x4us
+0008E2 0E1F           00858         movlw b'00011111'    ;writing fourth line of rabbit 
+0008E4 EC?? F???      00859         call LCD_Send_Byte_D
+0008E8 0E0A           00860         movlw   .10             
+0008EA EC?? F???      00861         call    LCD_delay_x4us
+0008EE 0E54           00862         movlw b'0001010100'    ;setting CGRAM address of fifth line 
+0008F0 EC?? F???      00863         call LCD_Send_Byte_I
+0008F4 0E0A           00864         movlw   .10             
+0008F6 EC?? F???      00865         call    LCD_delay_x4us
+0008FA 0E15           00866         movlw b'00010101'    ;writing fifth line of rabbit 
+0008FC EC?? F???      00867         call LCD_Send_Byte_D
+000900 0E0A           00868         movlw   .10             
+000902 EC?? F???      00869         call    LCD_delay_x4us
+000906 0E55           00870         movlw b'0001010101'    ;setting CGRAM address of sixth line 
+000908 EC?? F???      00871         call LCD_Send_Byte_I
+00090C 0E0A           00872         movlw   .10             
+00090E EC?? F???      00873         call    LCD_delay_x4us
+000912 0E1B           00874         movlw b'00011011'    ;writing sixth line of rabbit 
+000914 EC?? F???      00875         call LCD_Send_Byte_D
+000918 0E0A           00876         movlw   .10             
+00091A EC?? F???      00877         call    LCD_delay_x4us
+00091E 0E56           00878         movlw b'0001010110'    ;setting CGRAM address of seventh line 
+000920 EC?? F???      00879         call LCD_Send_Byte_I
+000924 0E0A           00880         movlw   .10             
+000926 EC?? F???      00881         call    LCD_delay_x4us
+00092A 0E1F           00882         movlw b'00011111'    ;writing seventh line of rabbit 
+00092C EC?? F???      00883         call LCD_Send_Byte_D
+000930 0E0A           00884         movlw   .10             
+000932 EC?? F???      00885         call    LCD_delay_x4us
+000936 0E57           00886         movlw b'0001010111'    ;setting CGRAM address of eigth line 
+000938 EC?? F???      00887         call LCD_Send_Byte_I
+00093C 0E0A           00888         movlw   .10             
+00093E EC?? F???      00889         call    LCD_delay_x4us
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 18
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000944 EC?? F???      00890         call LCD_Send_Byte_D
-000948 0E0A           00891         movlw   .10             
-00094A EC?? F???      00892         call    LCD_delay_x4us  
-                      00893 
-00094E 0012           00894         return
-                      00895 
-                      00896  ;GHOST 0X00,  HEART 0X01,  LARGE_RABBIT 0X02, SUN 0X03, MOON 0X04, SMILEY 0X05, NEUTRAL 0X06, SAD 0X07
-                      00897         
-000950                00898 LARGE_RABBIT
-000950 0E50           00899         movlw b'0001010000'   ;setting CGRAM address of first line 
-000952 EC?? F???      00900         call LCD_Send_Byte_I
-000956 0E0A           00901         movlw   .10             
-000958 EC?? F???      00902         call    LCD_delay_x4us
-00095C 0E1B           00903         movlw b'00011011'    ;writing first line of rabbit
-00095E EC?? F???      00904         call LCD_Send_Byte_D
-000962 0E0A           00905         movlw   .10             
-000964 EC?? F???      00906         call    LCD_delay_x4us
-000968 0E51           00907         movlw b'0001010001'    ;setting CGRAM address of second line 
-00096A EC?? F???      00908         call LCD_Send_Byte_I
-00096E 0E0A           00909         movlw   .10             
-000970 EC?? F???      00910         call    LCD_delay_x4us
-000974 0E0A           00911         movlw b'00001010'    ;writing second line of rabbit 
-000976 EC?? F???      00912         call LCD_Send_Byte_D
-00097A 0E0A           00913         movlw   .10             
-00097C EC?? F???      00914         call    LCD_delay_x4us
-000980 0E52           00915         movlw b'0001010010'    ;setting CGRAM address of third line 
-000982 EC?? F???      00916         call LCD_Send_Byte_I
-000986 0E0A           00917         movlw   .10             
-000988 EC?? F???      00918         call    LCD_delay_x4us
-00098C 0E1F           00919         movlw b'00011111'    ;writing third line of rabbit 
-00098E EC?? F???      00920         call LCD_Send_Byte_D
-000992 0E0A           00921         movlw   .10             
-000994 EC?? F???      00922         call    LCD_delay_x4us
-000998 0E53           00923         movlw b'0001010011'    ;setting CGRAM address of fourth line 
-00099A EC?? F???      00924         call LCD_Send_Byte_I
-00099E 0E0A           00925         movlw   .10             
-0009A0 EC?? F???      00926         call    LCD_delay_x4us
-0009A4 0E15           00927         movlw b'00010101'    ;writing fourth line of rabbit 
-0009A6 EC?? F???      00928         call LCD_Send_Byte_D
-0009AA 0E0A           00929         movlw   .10             
-0009AC EC?? F???      00930         call    LCD_delay_x4us
-0009B0 0E54           00931         movlw b'0001010100'    ;setting CGRAM address of fifth line 
-0009B2 EC?? F???      00932         call LCD_Send_Byte_I
-0009B6 0E0A           00933         movlw   .10             
-0009B8 EC?? F???      00934         call    LCD_delay_x4us
-0009BC 0E1B           00935         movlw b'00011011'    ;writing fifth line of rabbit 
-0009BE EC?? F???      00936         call LCD_Send_Byte_D
-0009C2 0E0A           00937         movlw   .10             
-0009C4 EC?? F???      00938         call    LCD_delay_x4us
-0009C8 0E55           00939         movlw b'0001010101'    ;setting CGRAM address of sixth line 
-0009CA EC?? F???      00940         call LCD_Send_Byte_I
-0009CE 0E0A           00941         movlw   .10             
-0009D0 EC?? F???      00942         call    LCD_delay_x4us
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 19
+000942 0E0E           00890         movlw b'00001110'    ;writing eigth line of rabbit 
+000944 EC?? F???      00891         call LCD_Send_Byte_D
+000948 0E0A           00892         movlw   .10             
+00094A EC?? F???      00893         call    LCD_delay_x4us  
+                      00894 
+00094E 0012           00895         return
+                      00896 
+                      00897  ;GHOST 0X00,  HEART 0X01,  LARGE_RABBIT 0X02, SUN 0X03, MOON 0X04, SMILEY 0X05, NEUTRAL 0X06, SAD 0X07
+                      00898         
+000950                00899 LARGE_RABBIT
+000950 0E50           00900         movlw b'0001010000'   ;setting CGRAM address of first line 
+000952 EC?? F???      00901         call LCD_Send_Byte_I
+000956 0E0A           00902         movlw   .10             
+000958 EC?? F???      00903         call    LCD_delay_x4us
+00095C 0E1B           00904         movlw b'00011011'    ;writing first line of rabbit
+00095E EC?? F???      00905         call LCD_Send_Byte_D
+000962 0E0A           00906         movlw   .10             
+000964 EC?? F???      00907         call    LCD_delay_x4us
+000968 0E51           00908         movlw b'0001010001'    ;setting CGRAM address of second line 
+00096A EC?? F???      00909         call LCD_Send_Byte_I
+00096E 0E0A           00910         movlw   .10             
+000970 EC?? F???      00911         call    LCD_delay_x4us
+000974 0E0A           00912         movlw b'00001010'    ;writing second line of rabbit 
+000976 EC?? F???      00913         call LCD_Send_Byte_D
+00097A 0E0A           00914         movlw   .10             
+00097C EC?? F???      00915         call    LCD_delay_x4us
+000980 0E52           00916         movlw b'0001010010'    ;setting CGRAM address of third line 
+000982 EC?? F???      00917         call LCD_Send_Byte_I
+000986 0E0A           00918         movlw   .10             
+000988 EC?? F???      00919         call    LCD_delay_x4us
+00098C 0E1F           00920         movlw b'00011111'    ;writing third line of rabbit 
+00098E EC?? F???      00921         call LCD_Send_Byte_D
+000992 0E0A           00922         movlw   .10             
+000994 EC?? F???      00923         call    LCD_delay_x4us
+000998 0E53           00924         movlw b'0001010011'    ;setting CGRAM address of fourth line 
+00099A EC?? F???      00925         call LCD_Send_Byte_I
+00099E 0E0A           00926         movlw   .10             
+0009A0 EC?? F???      00927         call    LCD_delay_x4us
+0009A4 0E15           00928         movlw b'00010101'    ;writing fourth line of rabbit 
+0009A6 EC?? F???      00929         call LCD_Send_Byte_D
+0009AA 0E0A           00930         movlw   .10             
+0009AC EC?? F???      00931         call    LCD_delay_x4us
+0009B0 0E54           00932         movlw b'0001010100'    ;setting CGRAM address of fifth line 
+0009B2 EC?? F???      00933         call LCD_Send_Byte_I
+0009B6 0E0A           00934         movlw   .10             
+0009B8 EC?? F???      00935         call    LCD_delay_x4us
+0009BC 0E1B           00936         movlw b'00011011'    ;writing fifth line of rabbit 
+0009BE EC?? F???      00937         call LCD_Send_Byte_D
+0009C2 0E0A           00938         movlw   .10             
+0009C4 EC?? F???      00939         call    LCD_delay_x4us
+0009C8 0E55           00940         movlw b'0001010101'    ;setting CGRAM address of sixth line 
+0009CA EC?? F???      00941         call LCD_Send_Byte_I
+0009CE 0E0A           00942         movlw   .10             
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 19
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0009D4 0E1F           00943         movlw b'00011111'    ;writing sixth line of rabbit 
-0009D6 EC?? F???      00944         call LCD_Send_Byte_D
-0009DA 0E0A           00945         movlw   .10             
-0009DC EC?? F???      00946         call    LCD_delay_x4us
-0009E0 0E56           00947         movlw b'0001010110'    ;setting CGRAM address of seventh line 
-0009E2 EC?? F???      00948         call LCD_Send_Byte_I
-0009E6 0E0A           00949         movlw   .10             
-0009E8 EC?? F???      00950         call    LCD_delay_x4us
-0009EC 0E0E           00951         movlw b'00001110'    ;writing seventh line of rabbit 
-0009EE EC?? F???      00952         call LCD_Send_Byte_D
-0009F2 0E0A           00953         movlw   .10             
-0009F4 EC?? F???      00954         call    LCD_delay_x4us
-0009F8 0E57           00955         movlw b'0001010111'    ;setting CGRAM address of eigth line 
-0009FA EC?? F???      00956         call LCD_Send_Byte_I
-0009FE 0E0A           00957         movlw   .10             
-000A00 EC?? F???      00958         call    LCD_delay_x4us
-000A04 0E1F           00959         movlw b'00011111'    ;writing eigth line of rabbit 
-000A06 EC?? F???      00960         call LCD_Send_Byte_D
-000A0A 0E0A           00961         movlw   .10             
-000A0C EC?? F???      00962         call    LCD_delay_x4us
-                      00963         
-000A10 0012           00964         return 
-                      00965         
-000A12                00966 DISCO_1
-                      00967         
-000A12 0E40           00968         movlw b'0001000000'   ;setting CGRAM address of first line 
-000A14 EC?? F???      00969         call LCD_Send_Byte_I
-000A18 0E0A           00970         movlw   .10             
-000A1A EC?? F???      00971         call    LCD_delay_x4us
-000A1E 0E04           00972         movlw b'00000100'    ;writing first line 
-000A20 EC?? F???      00973         call LCD_Send_Byte_D
-000A24 0E0A           00974         movlw   .10             
-000A26 EC?? F???      00975         call    LCD_delay_x4us
-000A2A 0E41           00976         movlw b'0001000001'    ;setting CGRAM address of second line 
-000A2C EC?? F???      00977         call LCD_Send_Byte_I
-000A30 0E0A           00978         movlw   .10             
-000A32 EC?? F???      00979         call    LCD_delay_x4us
-000A36 0E04           00980         movlw b'00000100'    ;writing second line 
-000A38 EC?? F???      00981         call LCD_Send_Byte_D
-000A3C 0E0A           00982         movlw   .10             
-000A3E EC?? F???      00983         call    LCD_delay_x4us
-000A42 0E42           00984         movlw b'0001000010'    ;setting CGRAM address of third line 
-000A44 EC?? F???      00985         call LCD_Send_Byte_I
-000A48 0E0A           00986         movlw   .10             
-000A4A EC?? F???      00987         call    LCD_delay_x4us
-000A4E 0E0E           00988         movlw b'00001110'    ;writing third line 
-000A50 EC?? F???      00989         call LCD_Send_Byte_D
-000A54 0E0A           00990         movlw   .10             
-000A56 EC?? F???      00991         call    LCD_delay_x4us
-000A5A 0E43           00992         movlw b'0001000011'    ;setting CGRAM address of fourth line 
-000A5C EC?? F???      00993         call LCD_Send_Byte_I
-000A60 0E0A           00994         movlw   .10             
-000A62 EC?? F???      00995         call    LCD_delay_x4us
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 20
+0009D0 EC?? F???      00943         call    LCD_delay_x4us
+0009D4 0E1F           00944         movlw b'00011111'    ;writing sixth line of rabbit 
+0009D6 EC?? F???      00945         call LCD_Send_Byte_D
+0009DA 0E0A           00946         movlw   .10             
+0009DC EC?? F???      00947         call    LCD_delay_x4us
+0009E0 0E56           00948         movlw b'0001010110'    ;setting CGRAM address of seventh line 
+0009E2 EC?? F???      00949         call LCD_Send_Byte_I
+0009E6 0E0A           00950         movlw   .10             
+0009E8 EC?? F???      00951         call    LCD_delay_x4us
+0009EC 0E0E           00952         movlw b'00001110'    ;writing seventh line of rabbit 
+0009EE EC?? F???      00953         call LCD_Send_Byte_D
+0009F2 0E0A           00954         movlw   .10             
+0009F4 EC?? F???      00955         call    LCD_delay_x4us
+0009F8 0E57           00956         movlw b'0001010111'    ;setting CGRAM address of eigth line 
+0009FA EC?? F???      00957         call LCD_Send_Byte_I
+0009FE 0E0A           00958         movlw   .10             
+000A00 EC?? F???      00959         call    LCD_delay_x4us
+000A04 0E1F           00960         movlw b'00011111'    ;writing eigth line of rabbit 
+000A06 EC?? F???      00961         call LCD_Send_Byte_D
+000A0A 0E0A           00962         movlw   .10             
+000A0C EC?? F???      00963         call    LCD_delay_x4us
+                      00964         
+000A10 0012           00965         return 
+                      00966         
+000A12                00967 DISCO_1
+                      00968         
+000A12 0E40           00969         movlw b'0001000000'   ;setting CGRAM address of first line 
+000A14 EC?? F???      00970         call LCD_Send_Byte_I
+000A18 0E0A           00971         movlw   .10             
+000A1A EC?? F???      00972         call    LCD_delay_x4us
+000A1E 0E04           00973         movlw b'00000100'    ;writing first line 
+000A20 EC?? F???      00974         call LCD_Send_Byte_D
+000A24 0E0A           00975         movlw   .10             
+000A26 EC?? F???      00976         call    LCD_delay_x4us
+000A2A 0E41           00977         movlw b'0001000001'    ;setting CGRAM address of second line 
+000A2C EC?? F???      00978         call LCD_Send_Byte_I
+000A30 0E0A           00979         movlw   .10             
+000A32 EC?? F???      00980         call    LCD_delay_x4us
+000A36 0E04           00981         movlw b'00000100'    ;writing second line 
+000A38 EC?? F???      00982         call LCD_Send_Byte_D
+000A3C 0E0A           00983         movlw   .10             
+000A3E EC?? F???      00984         call    LCD_delay_x4us
+000A42 0E42           00985         movlw b'0001000010'    ;setting CGRAM address of third line 
+000A44 EC?? F???      00986         call LCD_Send_Byte_I
+000A48 0E0A           00987         movlw   .10             
+000A4A EC?? F???      00988         call    LCD_delay_x4us
+000A4E 0E0E           00989         movlw b'00001110'    ;writing third line 
+000A50 EC?? F???      00990         call LCD_Send_Byte_D
+000A54 0E0A           00991         movlw   .10             
+000A56 EC?? F???      00992         call    LCD_delay_x4us
+000A5A 0E43           00993         movlw b'0001000011'    ;setting CGRAM address of fourth line 
+000A5C EC?? F???      00994         call LCD_Send_Byte_I
+000A60 0E0A           00995         movlw   .10             
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 20
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000A66 0E15           00996         movlw b'00010101'    ;writing fourth line 
-000A68 EC?? F???      00997         call LCD_Send_Byte_D
-000A6C 0E0A           00998         movlw   .10             
-000A6E EC?? F???      00999         call    LCD_delay_x4us
-000A72 0E44           01000         movlw b'0001000100'    ;setting CGRAM address of fifth line 
-000A74 EC?? F???      01001         call LCD_Send_Byte_I
-000A78 0E0A           01002         movlw   .10             
-000A7A EC?? F???      01003         call    LCD_delay_x4us
-000A7E 0E1B           01004         movlw b'00011011'    ;writing fifth line 
-000A80 EC?? F???      01005         call LCD_Send_Byte_D
-000A84 0E0A           01006         movlw   .10             
-000A86 EC?? F???      01007         call    LCD_delay_x4us
-000A8A 0E45           01008         movlw b'0001000101'    ;setting CGRAM address of sixth line 
-000A8C EC?? F???      01009         call LCD_Send_Byte_I
-000A90 0E0A           01010         movlw   .10             
-000A92 EC?? F???      01011         call    LCD_delay_x4us
-000A96 0E15           01012         movlw b'00010101'    ;writing sixth line 
-000A98 EC?? F???      01013         call LCD_Send_Byte_D
-000A9C 0E0A           01014         movlw   .10             
-000A9E EC?? F???      01015         call    LCD_delay_x4us
-000AA2 0E46           01016         movlw b'0001000110'    ;setting CGRAM address of seventh line 
-000AA4 EC?? F???      01017         call LCD_Send_Byte_I
-000AA8 0E0A           01018         movlw   .10             
-000AAA EC?? F???      01019         call    LCD_delay_x4us
-000AAE 0E0E           01020         movlw b'00001110'    ;writing seventh line 
-000AB0 EC?? F???      01021         call LCD_Send_Byte_D
-000AB4 0E0A           01022         movlw   .10             
-000AB6 EC?? F???      01023         call    LCD_delay_x4us
-000ABA 0E47           01024         movlw b'0001000111'    ;setting CGRAM address of eigth line 
-000ABC EC?? F???      01025         call LCD_Send_Byte_I
-000AC0 0E0A           01026         movlw   .10             
-000AC2 EC?? F???      01027         call    LCD_delay_x4us
-000AC6 0E00           01028         movlw b'00000000'    ;writing eigth line 
-000AC8 EC?? F???      01029         call    LCD_Send_Byte_D
-000ACC 0E0A           01030         movlw   .10             
-000ACE EC?? F???      01031         call    LCD_delay_x4us 
-                      01032 
-000AD2 0012           01033         return
-                      01034         
-000AD4                01035 DISCO_2
-                      01036         
-000AD4 0E60           01037         movlw b'0001100000'   ;setting CGRAM address of first line 
-000AD6 EC?? F???      01038         call LCD_Send_Byte_I
-000ADA 0E0A           01039         movlw   .10             
-000ADC EC?? F???      01040         call    LCD_delay_x4us
-000AE0 0E04           01041         movlw b'00000100'    ;writing first line of rabbit
-000AE2 EC?? F???      01042         call LCD_Send_Byte_D
-000AE6 0E0A           01043         movlw   .10             
-000AE8 EC?? F???      01044         call    LCD_delay_x4us
-000AEC 0E61           01045         movlw b'0001100001'    ;setting CGRAM address of second line 
-000AEE EC?? F???      01046         call LCD_Send_Byte_I
-000AF2 0E0A           01047         movlw   .10             
-000AF4 EC?? F???      01048         call    LCD_delay_x4us
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 21
+000A62 EC?? F???      00996         call    LCD_delay_x4us
+000A66 0E15           00997         movlw b'00010101'    ;writing fourth line 
+000A68 EC?? F???      00998         call LCD_Send_Byte_D
+000A6C 0E0A           00999         movlw   .10             
+000A6E EC?? F???      01000         call    LCD_delay_x4us
+000A72 0E44           01001         movlw b'0001000100'    ;setting CGRAM address of fifth line 
+000A74 EC?? F???      01002         call LCD_Send_Byte_I
+000A78 0E0A           01003         movlw   .10             
+000A7A EC?? F???      01004         call    LCD_delay_x4us
+000A7E 0E1B           01005         movlw b'00011011'    ;writing fifth line 
+000A80 EC?? F???      01006         call LCD_Send_Byte_D
+000A84 0E0A           01007         movlw   .10             
+000A86 EC?? F???      01008         call    LCD_delay_x4us
+000A8A 0E45           01009         movlw b'0001000101'    ;setting CGRAM address of sixth line 
+000A8C EC?? F???      01010         call LCD_Send_Byte_I
+000A90 0E0A           01011         movlw   .10             
+000A92 EC?? F???      01012         call    LCD_delay_x4us
+000A96 0E15           01013         movlw b'00010101'    ;writing sixth line 
+000A98 EC?? F???      01014         call LCD_Send_Byte_D
+000A9C 0E0A           01015         movlw   .10             
+000A9E EC?? F???      01016         call    LCD_delay_x4us
+000AA2 0E46           01017         movlw b'0001000110'    ;setting CGRAM address of seventh line 
+000AA4 EC?? F???      01018         call LCD_Send_Byte_I
+000AA8 0E0A           01019         movlw   .10             
+000AAA EC?? F???      01020         call    LCD_delay_x4us
+000AAE 0E0E           01021         movlw b'00001110'    ;writing seventh line 
+000AB0 EC?? F???      01022         call LCD_Send_Byte_D
+000AB4 0E0A           01023         movlw   .10             
+000AB6 EC?? F???      01024         call    LCD_delay_x4us
+000ABA 0E47           01025         movlw b'0001000111'    ;setting CGRAM address of eigth line 
+000ABC EC?? F???      01026         call LCD_Send_Byte_I
+000AC0 0E0A           01027         movlw   .10             
+000AC2 EC?? F???      01028         call    LCD_delay_x4us
+000AC6 0E00           01029         movlw b'00000000'    ;writing eigth line 
+000AC8 EC?? F???      01030         call    LCD_Send_Byte_D
+000ACC 0E0A           01031         movlw   .10             
+000ACE EC?? F???      01032         call    LCD_delay_x4us 
+                      01033 
+000AD2 0012           01034         return
+                      01035         
+000AD4                01036 DISCO_2
+                      01037         
+000AD4 0E60           01038         movlw b'0001100000'   ;setting CGRAM address of first line 
+000AD6 EC?? F???      01039         call LCD_Send_Byte_I
+000ADA 0E0A           01040         movlw   .10             
+000ADC EC?? F???      01041         call    LCD_delay_x4us
+000AE0 0E04           01042         movlw b'00000100'    ;writing first line of rabbit
+000AE2 EC?? F???      01043         call LCD_Send_Byte_D
+000AE6 0E0A           01044         movlw   .10             
+000AE8 EC?? F???      01045         call    LCD_delay_x4us
+000AEC 0E61           01046         movlw b'0001100001'    ;setting CGRAM address of second line 
+000AEE EC?? F???      01047         call LCD_Send_Byte_I
+000AF2 0E0A           01048         movlw   .10             
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 21
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000AF8 0E04           01049         movlw b'00000100'    ;writing second line of rabbit 
-000AFA EC?? F???      01050         call LCD_Send_Byte_D
-000AFE 0E0A           01051         movlw   .10             
-000B00 EC?? F???      01052         call    LCD_delay_x4us
-000B04 0E62           01053         movlw b'0001100010'    ;setting CGRAM address of third line 
-000B06 EC?? F???      01054         call LCD_Send_Byte_I
-000B0A 0E0A           01055         movlw   .10             
-000B0C EC?? F???      01056         call    LCD_delay_x4us
-000B10 0E0E           01057         movlw b'00001110'    ;writing third line of rabbit 
-000B12 EC?? F???      01058         call LCD_Send_Byte_D
-000B16 0E0A           01059         movlw   .10             
-000B18 EC?? F???      01060         call    LCD_delay_x4us
-000B1C 0E63           01061         movlw b'0001100011'    ;setting CGRAM address of fourth line 
-000B1E EC?? F???      01062         call LCD_Send_Byte_I
-000B22 0E0A           01063         movlw   .10             
-000B24 EC?? F???      01064         call    LCD_delay_x4us
-000B28 0E1B           01065         movlw b'00011011'    ;writing fourth line of rabbit 
-000B2A EC?? F???      01066         call LCD_Send_Byte_D
-000B2E 0E0A           01067         movlw   .10             
-000B30 EC?? F???      01068         call    LCD_delay_x4us
-000B34 0E64           01069         movlw b'0001100100'    ;setting CGRAM address of fifth line 
-000B36 EC?? F???      01070         call LCD_Send_Byte_I
-000B3A 0E0A           01071         movlw   .10             
-000B3C EC?? F???      01072         call    LCD_delay_x4us
-000B40 0E15           01073         movlw b'00010101'    ;writing fifth line of rabbit 
-000B42 EC?? F???      01074         call LCD_Send_Byte_D
-000B46 0E0A           01075         movlw   .10             
-000B48 EC?? F???      01076         call    LCD_delay_x4us
-000B4C 0E65           01077         movlw b'0001100101'    ;setting CGRAM address of sixth line 
-000B4E EC?? F???      01078         call LCD_Send_Byte_I
-000B52 0E0A           01079         movlw   .10             
-000B54 EC?? F???      01080         call    LCD_delay_x4us
-000B58 0E1B           01081         movlw b'00011011'    ;writing sixth line of rabbit 
-000B5A EC?? F???      01082         call LCD_Send_Byte_D
-000B5E 0E0A           01083         movlw   .10             
-000B60 EC?? F???      01084         call    LCD_delay_x4us
-000B64 0E66           01085         movlw b'0001100110'    ;setting CGRAM address of seventh line 
-000B66 EC?? F???      01086         call LCD_Send_Byte_I
-000B6A 0E0A           01087         movlw   .10             
-000B6C EC?? F???      01088         call    LCD_delay_x4us
-000B70 0E0E           01089         movlw b'00001110'    ;writing seventh line of rabbit 
-000B72 EC?? F???      01090         call LCD_Send_Byte_D
-000B76 0E0A           01091         movlw   .10             
-000B78 EC?? F???      01092         call    LCD_delay_x4us
-000B7C 0E67           01093         movlw b'0001100111'    ;setting CGRAM address of eigth line 
-000B7E EC?? F???      01094         call LCD_Send_Byte_I
-000B82 0E0A           01095         movlw   .10             
-000B84 EC?? F???      01096         call    LCD_delay_x4us
-000B88 0E00           01097         movlw b'00000000'    ;writing eigth line of rabbit 
-000B8A EC?? F???      01098         call LCD_Send_Byte_D
-000B8E 0E0A           01099         movlw   .10             
-000B90 EC?? F???      01100         call    LCD_delay_x4us
-                      01101         
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 22
+000AF4 EC?? F???      01049         call    LCD_delay_x4us
+000AF8 0E04           01050         movlw b'00000100'    ;writing second line of rabbit 
+000AFA EC?? F???      01051         call LCD_Send_Byte_D
+000AFE 0E0A           01052         movlw   .10             
+000B00 EC?? F???      01053         call    LCD_delay_x4us
+000B04 0E62           01054         movlw b'0001100010'    ;setting CGRAM address of third line 
+000B06 EC?? F???      01055         call LCD_Send_Byte_I
+000B0A 0E0A           01056         movlw   .10             
+000B0C EC?? F???      01057         call    LCD_delay_x4us
+000B10 0E0E           01058         movlw b'00001110'    ;writing third line of rabbit 
+000B12 EC?? F???      01059         call LCD_Send_Byte_D
+000B16 0E0A           01060         movlw   .10             
+000B18 EC?? F???      01061         call    LCD_delay_x4us
+000B1C 0E63           01062         movlw b'0001100011'    ;setting CGRAM address of fourth line 
+000B1E EC?? F???      01063         call LCD_Send_Byte_I
+000B22 0E0A           01064         movlw   .10             
+000B24 EC?? F???      01065         call    LCD_delay_x4us
+000B28 0E1B           01066         movlw b'00011011'    ;writing fourth line of rabbit 
+000B2A EC?? F???      01067         call LCD_Send_Byte_D
+000B2E 0E0A           01068         movlw   .10             
+000B30 EC?? F???      01069         call    LCD_delay_x4us
+000B34 0E64           01070         movlw b'0001100100'    ;setting CGRAM address of fifth line 
+000B36 EC?? F???      01071         call LCD_Send_Byte_I
+000B3A 0E0A           01072         movlw   .10             
+000B3C EC?? F???      01073         call    LCD_delay_x4us
+000B40 0E15           01074         movlw b'00010101'    ;writing fifth line of rabbit 
+000B42 EC?? F???      01075         call LCD_Send_Byte_D
+000B46 0E0A           01076         movlw   .10             
+000B48 EC?? F???      01077         call    LCD_delay_x4us
+000B4C 0E65           01078         movlw b'0001100101'    ;setting CGRAM address of sixth line 
+000B4E EC?? F???      01079         call LCD_Send_Byte_I
+000B52 0E0A           01080         movlw   .10             
+000B54 EC?? F???      01081         call    LCD_delay_x4us
+000B58 0E1B           01082         movlw b'00011011'    ;writing sixth line of rabbit 
+000B5A EC?? F???      01083         call LCD_Send_Byte_D
+000B5E 0E0A           01084         movlw   .10             
+000B60 EC?? F???      01085         call    LCD_delay_x4us
+000B64 0E66           01086         movlw b'0001100110'    ;setting CGRAM address of seventh line 
+000B66 EC?? F???      01087         call LCD_Send_Byte_I
+000B6A 0E0A           01088         movlw   .10             
+000B6C EC?? F???      01089         call    LCD_delay_x4us
+000B70 0E0E           01090         movlw b'00001110'    ;writing seventh line of rabbit 
+000B72 EC?? F???      01091         call LCD_Send_Byte_D
+000B76 0E0A           01092         movlw   .10             
+000B78 EC?? F???      01093         call    LCD_delay_x4us
+000B7C 0E67           01094         movlw b'0001100111'    ;setting CGRAM address of eigth line 
+000B7E EC?? F???      01095         call LCD_Send_Byte_I
+000B82 0E0A           01096         movlw   .10             
+000B84 EC?? F???      01097         call    LCD_delay_x4us
+000B88 0E00           01098         movlw b'00000000'    ;writing eigth line of rabbit 
+000B8A EC?? F???      01099         call LCD_Send_Byte_D
+000B8E 0E0A           01100         movlw   .10             
+000B90 EC?? F???      01101         call    LCD_delay_x4us
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 22
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000B94 0012           01102         return
-                      01103         
-                      01104         end
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 23
+                      01102         
+000B94 0012           01103         return
+                      01104         
+                      01105         end
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 23
 
 
 SYMBOL TABLE
@@ -1305,7 +1306,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 24
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 24
 
 
 SYMBOL TABLE
@@ -1364,7 +1365,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 25
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 25
 
 
 SYMBOL TABLE
@@ -1423,7 +1424,7 @@ C1OUT                             00000002
 C1TSEL0                           00000000
 C1TSEL1                           00000001
 C1TSEL2                           00000002
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 26
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 26
 
 
 SYMBOL TABLE
@@ -1482,7 +1483,7 @@ CCP1IF                            00000001
 CCP1IP                            00000001
 CCP1M0                            00000000
 CCP1M1                            00000001
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 27
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 27
 
 
 SYMBOL TABLE
@@ -1541,7 +1542,7 @@ CCP5IP                            00000002
 CCP5M0                            00000000
 CCP5M1                            00000001
 CCP5M2                            00000002
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 28
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 28
 
 
 SYMBOL TABLE
@@ -1600,7 +1601,7 @@ CCP9IF                            00000006
 CCP9IP                            00000006
 CCP9M0                            00000000
 CCP9M1                            00000001
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 29
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 29
 
 
 SYMBOL TABLE
@@ -1659,7 +1660,7 @@ CHSN0                             00000000
 CHSN1                             00000001
 CHSN2                             00000002
 CK1                               00000006
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 30
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 30
 
 
 SYMBOL TABLE
@@ -1718,7 +1719,7 @@ CTMUICON                          00000F55
 CTMUIE                            00000003
 CTMUIF                            00000003
 CTMUIP                            00000003
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 31
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 31
 
 
 SYMBOL TABLE
@@ -1777,7 +1778,7 @@ EBDIS                             00000007
 ECCP1AS                           00000FBF
 ECCP1AS0                          00000004
 ECCP1AS1                          00000005
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 32
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 32
 
 
 SYMBOL TABLE
@@ -1836,7 +1837,7 @@ FSR1                              00000001
 FSR1H                             00000FE2
 FSR1L                             00000FE1
 FSR2                              00000002
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 33
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 33
 
 
 SYMBOL TABLE
@@ -1895,7 +1896,7 @@ INT2IE                            00000004
 INT2IF                            00000001
 INT2IP                            00000007
 INT2P                             00000007
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 34
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 34
 
 
 SYMBOL TABLE
@@ -1954,7 +1955,7 @@ LATB0                             00000000
 LATB1                             00000001
 LATB2                             00000002
 LATB3                             00000003
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 35
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 35
 
 
 SYMBOL TABLE
@@ -2013,7 +2014,7 @@ LATH3                             00000003
 LATH4                             00000004
 LATH5                             00000005
 LATH6                             00000006
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 36
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 36
 
 
 SYMBOL TABLE
@@ -2072,7 +2073,7 @@ NOT_ADDRESS                       00000005
 NOT_BOR                           00000000
 NOT_CM                            00000005
 NOT_CS                            00000002
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 37
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 37
 
 
 SYMBOL TABLE
@@ -2131,7 +2132,7 @@ P1DC6                             00000006
 P1M0                              00000006
 P1M1                              00000007
 P1RSEN                            00000007
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 38
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 38
 
 
 SYMBOL TABLE
@@ -2190,7 +2191,7 @@ PIE4                              00000FB6
 PIE5                              00000FB9
 PIE6                              00000F60
 PIR1                              00000F9E
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 39
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 39
 
 
 SYMBOL TABLE
@@ -2249,7 +2250,7 @@ PSP7                              00000007
 PSPCON                            00000FA7
 PSPIE                             00000007
 PSPIF                             00000007
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 40
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 40
 
 
 SYMBOL TABLE
@@ -2308,7 +2309,7 @@ RC2IP                             00000005
 RC3                               00000003
 RC4                               00000004
 RC5                               00000005
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 41
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 41
 
 
 SYMBOL TABLE
@@ -2367,7 +2368,7 @@ RG1                               00000001
 RG2                               00000002
 RG3                               00000003
 RG4                               00000004
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 42
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 42
 
 
 SYMBOL TABLE
@@ -2426,7 +2427,7 @@ RX92                              00000006
 RX9D                              00000000
 RX9D1                             00000000
 RX9D2                             00000000
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 43
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 43
 
 
 SYMBOL TABLE
@@ -2485,7 +2486,7 @@ SRETEN                            00000004
 SS1                               00000007
 SSP1ADD                           00000FC8
 SSP1BUF                           00000FC9
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 44
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 44
 
 
 SYMBOL TABLE
@@ -2544,7 +2545,7 @@ T0CKI                             00000004
 T0CON                             00000FD5
 T0CS                              00000005
 T0IE                              00000005
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 45
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 45
 
 
 SYMBOL TABLE
@@ -2603,7 +2604,7 @@ T3GPOL                            00000006
 T3GSPM                            00000004
 T3GSS0                            00000000
 T3GSS1                            00000001
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 46
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 46
 
 
 SYMBOL TABLE
@@ -2662,7 +2663,7 @@ T8OUTPS2                          00000005
 T8OUTPS3                          00000006
 TABLAT                            00000FF5
 TBLPTR                            00000FF6
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 47
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 47
 
 
 SYMBOL TABLE
@@ -2721,7 +2722,7 @@ TMR3GIP                           00000000
 TMR3H                             00000FB3
 TMR3IE                            00000001
 TMR3IF                            00000001
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 48
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 48
 
 
 SYMBOL TABLE
@@ -2780,7 +2781,7 @@ TMR8ON                            00000002
 TO                                00000003
 TOS                               00000FFD
 TOSH                              00000FFE
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 49
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 49
 
 
 SYMBOL TABLE
@@ -2839,7 +2840,7 @@ TRISF                             00000F97
 TRISF1                            00000001
 TRISF2                            00000002
 TRISF3                            00000003
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 50
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 50
 
 
 SYMBOL TABLE
@@ -2898,7 +2899,7 @@ TX9D                              00000000
 TX9D1                             00000000
 TX9D2                             00000000
 TXCKP                             00000004
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 51
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 51
 
 
 SYMBOL TABLE
@@ -2957,7 +2958,7 @@ _BBSIZ_BB2K_4L                    000000FF
 _BOREN_NOSLP_2L                   000000FD
 _BOREN_OFF_2L                     000000F9
 _BOREN_ON_2L                      000000FB
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 52
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 52
 
 
 SYMBOL TABLE
@@ -3016,7 +3017,7 @@ _DEVID2                           003FFFFF
 _EASHFT_OFF_3L                    000000F7
 _EASHFT_ON_3L                     000000FF
 _EBRT0_OFF_7L                     000000FF
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 53
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 53
 
 
 SYMBOL TABLE
@@ -3075,7 +3076,7 @@ _MSSPMSK_MSK5_3H                  000000F7
 _MSSPMSK_MSK7_3H                  000000FF
 _PLLCFG_OFF_1H                    000000EF
 _PLLCFG_ON_1H                     000000FF
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 54
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 54
 
 
 SYMBOL TABLE
@@ -3134,7 +3135,7 @@ _WRT5_ON_6L                       000000DF
 _WRT6_OFF_6L                      000000FF
 _WRT6_ON_6L                       000000BF
 _WRT7_OFF_6L                      000000FF
-MPASM 5.81                           LCD.ASM   2-19-2020  13:14:13         PAGE 55
+MPASM 5.81                           LCD.ASM   2-20-2020  17:17:15         PAGE 55
 
 
 SYMBOL TABLE
