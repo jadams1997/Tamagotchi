@@ -49,7 +49,7 @@ z   movlw  b'10001010'
     return 
     
     
-sleep_delay
+sleepy_delay
 	movlw   0x90
 	movwf   delay_count_s1
 delay_1       
@@ -60,7 +60,7 @@ delay_1
 nested_2
 	movlw   0x90
 	movwf   delay_count_s2
-delay_2	decfsz  delay_count_l2
+delay_2	decfsz  delay_count_s2
 	bra     nested_3
 	bra     delay_1
 

@@ -1,4 +1,4 @@
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE  1
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -32,525 +32,727 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000009                00016 integer                res 1
 00000A                00017 string                  res 1
 00000B                00018 result                 res 1 
-00000C                00019 output_1                res 1
-00000D                00020 output_2                res 1
-00000E                00021 count        res 1
-                      00022 
-                      00023 learn code
-                      00024     
-                      00025     
-000000                00026 LEARN
-000000 0E88           00027     movlw   b'10001000'
-000002 EC?? F???      00028     call    LCD_shift 
-000006 0E3F           00029     movlw   0x3F
-000008 EC?? F???      00030     call    LCD_Send_Byte_D
-00000C 0E2B           00031     movlw   0x2B
-00000E EC?? F???      00032     call    LCD_Send_Byte_D
-000012 0E3F           00033     movlw   0x3F
-000014 EC?? F???      00034     call    LCD_Send_Byte_D
-000018 0E3D           00035     movlw   0x3D
-00001A EC?? F???      00036     call    LCD_Send_Byte_D
-00001E 0E3F           00037     movlw   0x3F
-000020 EC?? F???      00038     call    LCD_Send_Byte_D
-000024                00039 learn
-000024 0E00           00040     movlw   0x00
-000026 6E??           00041     movwf   result 
-000028 0E00           00042     movlw   0x00
-00002A 6E??           00043     movwf   Number_pressed_1_int
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE  2
+00000C                00019 random_number   res 1
+00000D                00020 guess       res 1
+00000E                00021 guess_1  res 1 
+00000F                00022 guess_2   res 1 
+000010                00023 output_1   res 1 
+000011                00024 output_2   res 1
+000012                00025 guess_1_str res 1
+000013                00026 guess_2_str  res 1
+000014                00027 count  res 1
+                      00028 
+                      00029 learn code
+                      00030     
+                      00031     
+000000                00032 LEARN
+000000 0E88           00033     movlw   b'10001000'
+000002 EC?? F???      00034     call    LCD_shift 
+000006 0E3F           00035     movlw   0x3F
+000008 EC?? F???      00036     call    LCD_Send_Byte_D
+00000C 0E2B           00037     movlw   0x2B
+00000E EC?? F???      00038     call    LCD_Send_Byte_D
+000012 0E3F           00039     movlw   0x3F
+000014 EC?? F???      00040     call    LCD_Send_Byte_D
+000018 0E3D           00041     movlw   0x3D
+00001A EC?? F???      00042     call    LCD_Send_Byte_D
+00001E 0E3F           00043     movlw   0x3F
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00002C 0E00           00044     movlw   0x00
-00002E 6E??           00045     movwf   Number_pressed_2_int
-000030 0E20           00046     movlw   ' '
-000032 6E??           00047     movwf   Number_pressed_1_string
-000034 0E20           00048     movlw   ' '
-000036 6E??           00049     movwf   Number_pressed_2_string
-000038 0E0F           00050     movlw   0x0F
-00003A 6E??           00051     movwf   integer 
-00003C 0E20           00052     movlw   ' '
-00003E 6E??           00053     movwf   output_2
-000040 EC?? F???      00054     call    Numberpad 
-000044 C??? F???      00055     movff   integer, Number_pressed_1_int
-000048 C??? F???      00056     movff   string, Number_pressed_1_string
-00004C EC?? F???      00057     call    learn_delay
-000050 EC?? F???      00058     call    Numberpad 
-000054 C??? F???      00059     movff   integer,  Number_pressed_2_int
-000058 C??? F???      00060     movff   string, Number_pressed_2_string
-00005C 0E0F           00061     movlw   0x0F
-00005E 62??           00062     cpfseq  Number_pressed_1_int
-000060 D???           00063     bra     c
-000062 D???           00064     bra     learn 
-000064 0E0F           00065 c   movlw   0X0F
-000066 62??           00066     cpfseq  Number_pressed_2_int
-000068 D???           00067     bra     calculate
-00006A D???           00068     bra     learn 
-00006C                00069 calculate
-00006C 0E88           00070     movlw   b'10001000'
-00006E EC?? F???      00071     call    LCD_shift 
-000072 50??           00072     movf    Number_pressed_1_string, w
-000074 EC?? F???      00073     call    LCD_Send_Byte_D
-000078 0E8A           00074     movlw   b'10001010'
-00007A EC?? F???      00075     call    LCD_shift 
-00007E 50??           00076     movf    Number_pressed_2_string, w 
-000080 EC?? F???      00077     call    LCD_Send_Byte_D 
-000084 EC?? F???      00078     call    learn_delay 
-000088 EC?? F???      00079     call    learn_delay 
-00008C 50??           00080     movf    Number_pressed_1_int, w
-00008E 2600           00081     addwf   result, 1
-000090 50??           00082     movf    Number_pressed_2_int, w
-000092 2600           00083     addwf   result, 1
-000094 0E00           00084     movlw   0x00
-000096                00085 checked
-000096 62??           00086     cpfseq  result 
-000098 D???           00087     bra     c_1
-00009A 0E30           00088     movlw   '0'
-00009C 6E??           00089     movwf   output_1
-00009E D???           00090     bra     output 
-0000A0 0E01           00091 c_1 movlw   0x01
-0000A2 62??           00092     cpfseq  result 
-0000A4 D???           00093     bra     c_2
-0000A6 0E31           00094     movlw   '1'
-0000A8 6E??           00095     movwf   output_1
-0000AA D???           00096     bra     output 
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE  3
+000020 EC?? F???      00044     call    LCD_Send_Byte_D
+000024                00045 learn
+000024 0E00           00046     movlw   0x00
+000026 6E??           00047     movwf   result 
+000028 0E00           00048     movlw   0x00
+00002A 6E??           00049     movwf   Number_pressed_1_int
+00002C 0E00           00050     movlw   0x00
+00002E 6E??           00051     movwf   Number_pressed_2_int
+000030 0E20           00052     movlw   ' '
+000032 6E??           00053     movwf   Number_pressed_1_string
+000034 0E20           00054     movlw   ' '
+000036 6E??           00055     movwf   Number_pressed_2_string
+000038 0E01           00056     movlw   0x01
+00003A 6E??           00057     movwf   random_number
+00003C 0E20           00058     movlw   ' '
+00003E 6E??           00059     movwf   output_2
+000040 EC?? F???      00060     call    Numberpad 
+000044 C??? F???      00061     movff   random_number, Number_pressed_1_int
+000048 EC?? F???      00062     call    learn_delay 
+00004C EC?? F???      00063     call    Numberpad 
+000050 C??? F???      00064     movff   random_number, Number_pressed_2_int 
+000054 0E00           00065 cr0 movlw   0x00
+000056 62??           00066     cpfseq  Number_pressed_1_int
+000058 D???           00067     bra     cr1
+00005A 0E30           00068     movlw   '0'
+00005C 6E??           00069     movwf   Number_pressed_1_string 
+00005E D???           00070     bra     cr20
+000060 0E01           00071 cr1 movlw   0x01
+000062 62??           00072     cpfseq  Number_pressed_1_int
+000064 D???           00073     bra     cr2
+000066 0E31           00074     movlw   '1'
+000068 6E??           00075     movwf   Number_pressed_1_string
+00006A D???           00076     bra     cr20
+00006C 0E02           00077 cr2 movlw   0x02
+00006E 62??           00078     cpfseq  Number_pressed_1_int
+000070 D???           00079     bra     cr3
+000072 0E32           00080     movlw   '2'
+000074 6E??           00081     movwf   Number_pressed_1_string 
+000076 D???           00082     bra     cr20
+000078 0E03           00083 cr3 movlw   0x03
+00007A 62??           00084     cpfseq  Number_pressed_1_int
+00007C D???           00085     bra     cr4
+00007E 0E33           00086     movlw   '3'
+000080 6E??           00087     movwf   Number_pressed_1_string 
+000082 D???           00088     bra     cr20
+000084 0E04           00089 cr4 movlw   0x04
+000086 62??           00090     cpfseq  Number_pressed_1_int
+000088 D???           00091     bra     cr5
+00008A 0E34           00092     movlw   '4'
+00008C 6E??           00093     movwf   Number_pressed_1_string 
+00008E D???           00094     bra     cr20
+000090 0E05           00095 cr5 movlw   0x05
+000092 62??           00096     cpfseq  Number_pressed_1_int
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0000AC 0E02           00097 c_2 movlw   0x02
-0000AE 62??           00098     cpfseq  result 
-0000B0 D???           00099     bra     c_3
-0000B2 0E32           00100     movlw   '2'
-0000B4 6E??           00101     movwf   output_1
-0000B6 D???           00102     bra     output 
-0000B8 0E03           00103 c_3 movlw   0x03
-0000BA 62??           00104     cpfseq  result 
-0000BC D???           00105     bra     c_4
-0000BE 0E33           00106     movlw   '3'
-0000C0 6E??           00107     movwf   output_1
-0000C2 D???           00108     bra     output 
-0000C4 0E04           00109 c_4 movlw   0x04
-0000C6 62??           00110     cpfseq  result 
-0000C8 D???           00111     bra     c_5
-0000CA 0E34           00112     movlw   '4'
-0000CC 6E??           00113     movwf   output_1
-0000CE D???           00114     bra     output 
-0000D0 0E05           00115 c_5 movlw   0x05
-0000D2 62??           00116     cpfseq  result 
-0000D4 D???           00117     bra     c_6
-0000D6 0E35           00118     movlw   '5'
-0000D8 6E??           00119     movwf   output_1
-0000DA D???           00120     bra     output 
-0000DC 0E06           00121 c_6 movlw   0x06
-0000DE 62??           00122     cpfseq  result 
-0000E0 D???           00123     bra     c_7
-0000E2 0E36           00124     movlw   '6'
-0000E4 6E??           00125     movwf   output_1
-0000E6 D???           00126     bra     output 
-0000E8 0E07           00127 c_7 movlw   0x07
-0000EA 62??           00128     cpfseq  result 
-0000EC D???           00129     bra     c_8
-0000EE 0E37           00130     movlw   '7'
-0000F0 6E??           00131     movwf   output_1
-0000F2 D???           00132     bra     output 
-0000F4 0E08           00133 c_8 movlw   0x08
-0000F6 62??           00134     cpfseq  result 
-0000F8 D???           00135     bra     c_9
-0000FA 0E38           00136     movlw   '8'
-0000FC 6E??           00137     movwf   output_1
-0000FE D???           00138     bra     output 
-000100 0E09           00139 c_9 movlw   0x09
-000102 62??           00140     cpfseq  result 
-000104 D???           00141     bra     c_10
-000106 0E39           00142     movlw   '9'
-000108 6E??           00143     movwf   output_1
-00010A D???           00144     bra     output 
-00010C                00145 c_10
-00010C 0E0A           00146     movlw   0x0A
-00010E 62??           00147     cpfseq  result 
-000110 D???           00148     bra     c_11
-000112 0E31           00149     movlw   '1'
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE  4
+000094 D???           00097     bra     cr6
+000096 0E35           00098     movlw   '5'
+000098 6E??           00099     movwf   Number_pressed_1_string 
+00009A D???           00100     bra     cr20
+00009C 0E06           00101 cr6 movlw   0x06
+00009E 62??           00102     cpfseq  Number_pressed_1_int
+0000A0 D???           00103     bra     cr7
+0000A2 0E36           00104     movlw   '6'
+0000A4 6E??           00105     movwf   Number_pressed_1_string 
+0000A6 D???           00106     bra     cr20
+0000A8 0E07           00107 cr7 movlw   0x07
+0000AA 62??           00108     cpfseq  Number_pressed_1_int
+0000AC D???           00109     bra     cr8
+0000AE 0E37           00110     movlw   '7'
+0000B0 6E??           00111     movwf   Number_pressed_1_string 
+0000B2 D???           00112     bra     cr20
+0000B4 0E08           00113 cr8 movlw   0x08
+0000B6 62??           00114     cpfseq  Number_pressed_1_int
+0000B8 D???           00115     bra     cr9
+0000BA 0E38           00116     movlw   '8'
+0000BC 6E??           00117     movwf   Number_pressed_1_string 
+0000BE D???           00118     bra     cr20
+0000C0 0E39           00119 cr9 movlw   '9'
+0000C2 6E??           00120     movwf   Number_pressed_1_string 
+0000C4 D???           00121     bra     cr20
+0000C6 0E00           00122 cr20 movlw   0x00
+0000C8 62??           00123     cpfseq  Number_pressed_2_int
+0000CA D???           00124     bra     cr21
+0000CC 0E30           00125     movlw   '0'
+0000CE 6E??           00126     movwf   Number_pressed_2_string 
+0000D0 D???           00127     bra     calculate
+0000D2 0E01           00128 cr21 movlw   0x01
+0000D4 62??           00129     cpfseq  Number_pressed_2_int
+0000D6 D???           00130     bra     cr22
+0000D8 0E31           00131     movlw   '1'
+0000DA 6E??           00132     movwf   Number_pressed_2_string 
+0000DC D???           00133     bra     calculate
+0000DE 0E02           00134 cr22 movlw   0x02
+0000E0 62??           00135     cpfseq  Number_pressed_2_int
+0000E2 D???           00136     bra     cr23
+0000E4 0E32           00137     movlw   '2'
+0000E6 6E??           00138     movwf   Number_pressed_2_string 
+0000E8 D???           00139     bra     calculate
+0000EA 0E03           00140 cr23 movlw   0x03
+0000EC 62??           00141     cpfseq  Number_pressed_2_int
+0000EE D???           00142     bra     cr24
+0000F0 0E33           00143     movlw   '3'
+0000F2 6E??           00144     movwf   Number_pressed_2_string 
+0000F4 D???           00145     bra     calculate
+0000F6 0E04           00146 cr24 movlw   0x04
+0000F8 62??           00147     cpfseq  Number_pressed_2_int
+0000FA D???           00148     bra     cr25
+0000FC 0E34           00149     movlw   '4'
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000114 6E??           00150     movwf   output_1
-000116 0E30           00151     movlw   '0'
-000118 6E??           00152     movwf   output_2
-00011A D???           00153     bra     output 
-00011C 0E0B           00154 c_11 movlw   0x0B
-00011E 62??           00155     cpfseq  result 
-000120 D???           00156     bra     c_12
-000122 0E31           00157     movlw   '1'
-000124 6E??           00158     movwf   output_1
-000126 0E31           00159     movlw   '1'
-000128 6E??           00160     movwf   output_2
-00012A D???           00161     bra     output 
-00012C                00162 c_12
-00012C 0E0C           00163     movlw   0x0C
-00012E 62??           00164     cpfseq  result 
-000130 D???           00165     bra     c_13
-000132 0E31           00166     movlw   '1'
-000134 6E??           00167     movwf   output_1
-000136 0E32           00168     movlw   '2'
-000138 6E??           00169     movwf   output_2
-00013A D???           00170     bra     output 
-00013C 0E0D           00171 c_13 movlw   0x0D
-00013E 62??           00172     cpfseq  result 
-000140 D???           00173     bra     c_14
-000142 0E31           00174     movlw   '1'
-000144 6E??           00175     movwf   output_1
-000146 0E33           00176     movlw   '3'
-000148 6E??           00177     movwf   output_2
-00014A D???           00178     bra     output 
-00014C 0E0E           00179 c_14 movlw   0x0E
-00014E 62??           00180     cpfseq  result 
-000150 D???           00181     bra     c_15
-000152 0E31           00182     movlw   '1'
-000154 6E??           00183     movwf   output_1
-000156 0E34           00184     movlw   '4'
-000158 6E??           00185     movwf   output_2
-00015A D???           00186     bra     output 
-00015C 0E0F           00187 c_15 movlw   0x0F
-00015E 62??           00188     cpfseq  result 
-000160 D???           00189     bra     c_16
-000162 0E31           00190     movlw   '1'
-000164 6E??           00191     movwf   output_1
-000166 0E35           00192     movlw   '5'
-000168 6E??           00193     movwf   output_2
-00016A D???           00194     bra     output 
-00016C 0E10           00195 c_16 movlw   0x10
-00016E 62??           00196     cpfseq  result 
-000170 D???           00197     bra     c_17
-000172 0E31           00198     movlw   '1'
-000174 6E??           00199     movwf   output_1
-000176 0E36           00200     movlw   '6'
-000178 6E??           00201     movwf   output_2
-00017A D???           00202     bra     output 
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE  5
+0000FE 6E??           00150     movwf   Number_pressed_2_string 
+000100 D???           00151     bra     calculate
+000102 0E05           00152 cr25 movlw   0x05
+000104 62??           00153     cpfseq  Number_pressed_2_int
+000106 D???           00154     bra     cr26
+000108 0E35           00155     movlw   '5'
+00010A 6E??           00156     movwf   Number_pressed_2_string 
+00010C D???           00157     bra     calculate
+00010E 0E06           00158 cr26 movlw   0x06
+000110 62??           00159     cpfseq  Number_pressed_2_int
+000112 D???           00160     bra     cr27
+000114 0E36           00161     movlw   '6'
+000116 6E??           00162     movwf   Number_pressed_2_string 
+000118 D???           00163     bra     calculate
+00011A 0E07           00164 cr27 movlw   0x07
+00011C 62??           00165     cpfseq  Number_pressed_2_int
+00011E D???           00166     bra     cr28
+000120 0E37           00167     movlw   '7'
+000122 6E??           00168     movwf   Number_pressed_2_string 
+000124 D???           00169     bra     calculate
+000126 0E08           00170 cr28 movlw   0x08
+000128 62??           00171     cpfseq  Number_pressed_2_int
+00012A D???           00172     bra     cr29
+00012C 0E38           00173     movlw   '8'
+00012E 6E??           00174     movwf   Number_pressed_2_string 
+000130 D???           00175     bra     calculate
+000132 0E39           00176 cr29 movlw   '9'
+000134 6E??           00177     movwf   Number_pressed_2_string 
+000136 D???           00178     bra     calculate
+000138                00179 calculate
+000138 0E88           00180     movlw   b'10001000'
+00013A EC?? F???      00181     call    LCD_shift 
+00013E 50??           00182     movf    Number_pressed_1_string, w
+000140 EC?? F???      00183     call    LCD_Send_Byte_D
+000144 0E8A           00184     movlw   b'10001010'
+000146 EC?? F???      00185     call    LCD_shift 
+00014A 50??           00186     movf    Number_pressed_2_string, w 
+00014C EC?? F???      00187     call    LCD_Send_Byte_D      ;send two random numbers to screen
+000150 50??           00188     movf    Number_pressed_1_int, w
+000152 2600           00189     addwf   result, 1
+000154 50??           00190     movf    Number_pressed_2_int, w
+000156 2600           00191     addwf   result, 1
+000158                00192 guessed    
+000158 0E09           00193     movlw   0x09
+00015A 64??           00194     cpfsgt  result 
+00015C D???           00195     bra     single_input
+00015E D???           00196     bra     double_input 
+000160                00197 double_input
+000160 EC?? F???      00198     call    learn_delay
+000164 EC?? F???      00199     call    learn_delay
+000168 EC?? F???      00200     call    Numberpad
+00016C C??? F???      00201     movff   string,  guess_1_str
+000170 0E8C           00202     movlw   b'10001100'
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00017C 0E11           00203 c_17 movlw   0x11
-00017E 62??           00204     cpfseq  result 
-000180 D???           00205     bra     c_18
-000182 0E31           00206     movlw   '1'
-000184 6E??           00207     movwf   output_1
-000186 0E37           00208     movlw   '7'
-000188 6E??           00209     movwf   output_2
-00018A D???           00210     bra     output 
-00018C                00211 c_18 
-00018C 0E31           00212     movlw   '1'
-00018E 6E??           00213     movwf   output_1
-000190 0E38           00214     movlw   '8'
-000192 6E??           00215     movwf   output_2
-000194 D???           00216     bra     output 
-000196                00217 output 
-000196 0E8C           00218     movlw   b'10001100'
-000198 EC?? F???      00219     call    LCD_shift 
-00019C 50??           00220     movf    output_1, w
-00019E EC?? F???      00221     call    LCD_Send_Byte_D 
-0001A2 50??           00222     movf    output_2, w
-0001A4 EC?? F???      00223     call    LCD_Send_Byte_D
-0001A8 EC?? F???      00224     call    learn_delay 
-0001AC EC?? F???      00225     call    learn_delay
-0001B0 0E88           00226     movlw   b'10001000'
-0001B2 EC?? F???      00227     call    LCD_shift 
-0001B6 0E20           00228     movlw   ' '
-0001B8 EC?? F???      00229     call    LCD_Send_Byte_D
-0001BC 0E20           00230     movlw   ' '
-0001BE EC?? F???      00231     call    LCD_Send_Byte_D
-0001C2 0E20           00232     movlw   ' '
-0001C4 EC?? F???      00233     call    LCD_Send_Byte_D
-0001C8 0E20           00234     movlw   ' '
-0001CA EC?? F???      00235     call    LCD_Send_Byte_D
-0001CE 0E20           00236     movlw   ' '
-0001D0 EC?? F???      00237     call    LCD_Send_Byte_D
-0001D4 0E20           00238     movlw   ' '
-0001D6 EC?? F???      00239     call    LCD_Send_Byte_D
-0001DA 0012           00240     return
-                      00241     
-                      00242  
-                      00243     
-0001DC                00244 Numberpad
-0001DC 0EFF           00245     movlw 0xFF
-0001DE 6E??           00246     movwf  count
-0001E0 EC?? F???      00247     call setup_row
-0001E4 D???           00248     bra read_row
-0001E6                00249 column
-0001E6 EC?? F???      00250     call setup_column
-0001EA D???           00251     bra read_column
-                      00252     
-                      00253     
-0001EC                00254 setup_row 
-0001EC 0EF0           00255     movlw 0xF0
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE  6
+000172 EC?? F???      00203     call    LCD_shift
+000176 50??           00204     movf    guess_1_str, w
+000178 EC?? F???      00205     call    LCD_Send_Byte_D
+00017C EC?? F???      00206     call    learn_delay
+000180 EC?? F???      00207     call    Numberpad
+000184 C??? F???      00208     movff   string, guess_2_str
+000188 EC?? F???      00209     call    learn_delay
+00018C 50??           00210     movf    guess_2_str, w 
+00018E EC?? F???      00211     call    LCD_Send_Byte_D
+000192                00212 check_double_result
+000192 0E0A           00213     movlw   0x0A
+000194 62??           00214     cpfseq  result
+000196 D???           00215     bra     c_11
+000198 0E31           00216     movlw   '1'
+00019A 6E??           00217     movwf   output_1
+00019C 0E30           00218     movlw   '0'
+00019E 6E??           00219     movwf   output_2
+0001A0 D???           00220     bra     output_double 
+0001A2 0E0B           00221 c_11 movlw   0x0B
+0001A4 62??           00222     cpfseq  result
+0001A6 D???           00223     bra     c_12
+0001A8 0E31           00224     movlw   '1'
+0001AA 6E??           00225     movwf   output_1
+0001AC 0E31           00226     movlw   '1'
+0001AE 6E??           00227     movwf   output_2
+0001B0 D???           00228     bra     output_double
+0001B2                00229 c_12
+0001B2 0E0C           00230     movlw   0x0C
+0001B4 62??           00231     cpfseq  result
+0001B6 D???           00232     bra     c_13
+0001B8 0E31           00233     movlw   '1'
+0001BA 6E??           00234     movwf   output_1
+0001BC 0E32           00235     movlw   '2'
+0001BE 6E??           00236     movwf   output_2
+0001C0 D???           00237     bra     output_double
+0001C2 0E0D           00238 c_13 movlw   0x0D
+0001C4 62??           00239     cpfseq  result
+0001C6 D???           00240     bra     c_14
+0001C8 0E31           00241     movlw   '1'
+0001CA 6E??           00242     movwf   output_1
+0001CC 0E33           00243     movlw   '3'
+0001CE 6E??           00244     movwf   output_2
+0001D0 D???           00245     bra     output_double 
+0001D2 0E0E           00246 c_14 movlw   0x0E
+0001D4 62??           00247     cpfseq  result
+0001D6 D???           00248     bra     c_15
+0001D8 0E31           00249     movlw   '1'
+0001DA 6E??           00250     movwf   output_1
+0001DC 0E34           00251     movlw   '4'
+0001DE 6E??           00252     movwf   output_2
+0001E0 D???           00253     bra     output_double 
+0001E2 0E0F           00254 c_15 movlw   0x0F
+0001E4 62??           00255     cpfseq  result
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0001EE 6E96           00256     movwf TRISE, ACCESS  
-0001F0 8D53           00257     bsf PADCFG1, REPU, BANKED
-0001F2 0E0F           00258     movlw 0x0F
-0001F4 6E84           00259     movwf PORTE, ACCESS
-0001F6 0EFF           00260     movlw 0xFF
-0001F8 6E??           00261     movwf  count
-0001FA EC?? F???      00262     call   delay
-0001FE 0012           00263     return 
-                      00264    
-000200                00265 read_row   
-000200 A884           00266     btfss PORTE, RE4
-000202 D???           00267     bra check_1
-000204 0E00           00268     movlw 0x0
-000206 6E??           00269     movwf counter_row
-000208 D???           00270     bra column
-00020A                00271 check_1
-00020A AA84           00272     btfss PORTE, RE5
-00020C D???           00273     bra check_2
-00020E 0E01           00274     movlw 0x01
-000210 6E??           00275     movwf counter_row
-000212 D???           00276     bra column
-000214                00277 check_2
-000214 AC84           00278     btfss PORTE, RE6
-000216 D???           00279     bra check_3
-000218 0E02           00280     movlw 0x02
-00021A 6E??           00281     movwf counter_row
-00021C D???           00282     bra column
-00021E                00283 check_3
-00021E AE84           00284     btfss PORTE, RE7
-000220 D???           00285     bra read_row
-000222 0E03           00286     movlw 0x03
-000224 6E??           00287     movwf counter_row
-000226 D???           00288     bra column
-                      00289     
-000228                00290 setup_column
-000228 0E0F           00291     movlw 0x0F
-00022A 6E96           00292     movwf TRISE, ACCESS 
-00022C 8D53           00293     bsf PADCFG1, REPU, BANKED
-00022E 0EF0           00294     movlw 0xF0
-000230 6E84           00295     movwf PORTE, ACCESS
-000232 0EFF           00296     movlw 0xFF
-000234 6E??           00297     movwf  count
-000236 EC?? F???      00298     call   delay
-00023A 0012           00299     return 
-                      00300 
-00023C                00301 read_column   
-00023C A084           00302     btfss PORTE, RE0
-00023E D???           00303     bra check_5
-000240 0E04           00304     movlw 0x04
-000242 6E??           00305     movwf counter_column
-000244 D???           00306     bra decode
-000246                00307 check_5
-000246 A284           00308     btfss PORTE, RE1
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE  7
+0001E6 D???           00256     bra     c_16
+0001E8 0E31           00257     movlw   '1'
+0001EA 6E??           00258     movwf   output_1
+0001EC 0E35           00259     movlw   '5'
+0001EE 6E??           00260     movwf   output_2
+0001F0 D???           00261     bra     output_double
+0001F2 0E10           00262 c_16 movlw   0x10
+0001F4 62??           00263     cpfseq  result
+0001F6 D???           00264     bra     c_17
+0001F8 0E31           00265     movlw   '1'
+0001FA 6E??           00266     movwf   output_1
+0001FC 0E36           00267     movlw   '6'
+0001FE 6E??           00268     movwf   output_2
+000200 D???           00269     bra     output_double
+000202 0E11           00270 c_17 movlw   0x11
+000204 62??           00271     cpfseq  result
+000206 D???           00272     bra     c_18
+000208 0E31           00273     movlw   '1'
+00020A 6E??           00274     movwf   output_1
+00020C 0E37           00275     movlw   '7'
+00020E 6E??           00276     movwf   output_2
+000210 D???           00277     bra     output_double
+000212                00278 c_18 
+000212 0E31           00279     movlw   '1'
+000214 6E??           00280     movwf   output_1
+000216 0E38           00281     movlw   '8'
+000218 6E??           00282     movwf   output_2
+00021A D???           00283     bra     output_double
+00021C                00284 output_double
+00021C 50??           00285     movf    output_1,w
+00021E 62??           00286     cpfseq  guess_1_str
+000220 D???           00287     bra     wrong
+000222 50??           00288     movf    output_2,w
+000224 62??           00289     cpfseq  guess_2_str
+000226 D???           00290     bra     wrong 
+000228 D???           00291     bra     right 
+                      00292  
+                      00293    
+00022A                00294 single_input
+00022A EC?? F???      00295     call    learn_delay
+00022E EC?? F???      00296     call    learn_delay
+000232 EC?? F???      00297     call    Numberpad
+000236 C??? F???      00298     movff   string,  guess_1_str
+00023A 0E8C           00299     movlw   b'10001100'
+00023C EC?? F???      00300     call    LCD_shift
+000240 50??           00301     movf    guess_1_str, w
+000242 EC?? F???      00302     call    LCD_Send_Byte_D
+000246                00303 check_single_result
+000246 0E00           00304     movlw   0x00
+000248 62??           00305     cpfseq  result
+00024A D???           00306     bra     c_1s
+00024C 0E30           00307     movlw   '0'
+00024E 6E??           00308     movwf   output_1
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE  7
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000248 D???           00309     bra check_6
-00024A 0E05           00310     movlw 0x05
-00024C 6E??           00311     movwf counter_column
-00024E D???           00312     bra decode
-000250                00313 check_6
-000250 A484           00314     btfss PORTE, RE2
-000252 D???           00315     bra check_7
-000254 0E06           00316     movlw 0x06
-000256 6E??           00317     movwf counter_column
-000258 D???           00318     bra decode
-00025A                00319 check_7
-00025A A684           00320     btfss PORTE, RE3
-00025C D???           00321     bra read_row
-00025E 0E07           00322     movlw 0x07
-000260 6E??           00323     movwf counter_column
-000262 D???           00324     bra decode
-                      00325   
-000264                00326 delay 
-000264 2E??           00327     decfsz count
-000266 D???           00328     bra delay
-000268 0012           00329     return 
-                      00330 
-00026A                00331 decode
-00026A 0E00           00332     movlw 0x00
-00026C 62??           00333     cpfseq counter_row
-00026E D???           00334     bra row_1
-000270 D???           00335     bra column_11
-000272 0012           00336     return 
-000274                00337 column_11
-000274 0E04           00338     movlw 0x04
-000276 62??           00339     cpfseq counter_column
-000278 D???           00340     bra column_12
-00027A 0E01           00341     movlw  0x01
-00027C 6E??           00342     movwf integer 
-00027E 0E31           00343     movlw  '1'
-000280 6E??           00344     movwf string 
-000282 0012           00345     return 
-000284                00346 column_12
-000284 0E05           00347     movlw 0x05
-000286 62??           00348     cpfseq counter_column
-000288 D???           00349     bra column_13
-00028A 0E02           00350     movlw  0x02
-00028C 6E??           00351     movwf integer 
-00028E 0E32           00352     movlw  '2'
-000290 6E??           00353     movwf string 
-000292 0012           00354     return 
-000294                00355 column_13
-000294 0E06           00356     movlw 0x06
-000296 62??           00357     cpfseq counter_column
-000298 D???           00358     bra column_14
-00029A 0E03           00359     movlw  0x03
-00029C 6E??           00360     movwf integer 
-00029E 0E33           00361     movlw  '3'
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE  8
+000250 D???           00309     bra     output_single 
+000252 0E01           00310 c_1s movlw   0x01
+000254 62??           00311     cpfseq  result
+000256 D???           00312     bra     c_2s
+000258 0E31           00313     movlw   '1'
+00025A 6E??           00314     movwf   output_1
+00025C D???           00315     bra     output_single 
+00025E 0E02           00316 c_2s movlw   0x02
+000260 62??           00317     cpfseq  result
+000262 D???           00318     bra     c_3s
+000264 0E32           00319     movlw   '2'
+000266 6E??           00320     movwf   output_1
+000268 D???           00321     bra     output_single 
+00026A 0E03           00322 c_3s movlw   0x03
+00026C 62??           00323     cpfseq  result
+00026E D???           00324     bra     c_4s
+000270 0E33           00325     movlw   '3'
+000272 6E??           00326     movwf   output_1
+000274 D???           00327     bra     output_single 
+000276 0E04           00328 c_4s movlw   0x04
+000278 62??           00329     cpfseq  result
+00027A D???           00330     bra     c_5s
+00027C 0E34           00331     movlw   '4'
+00027E 6E??           00332     movwf   output_1
+000280 D???           00333     bra     output_single 
+000282 0E05           00334 c_5s movlw   0x05
+000284 62??           00335     cpfseq  result
+000286 D???           00336     bra     c_6s
+000288 0E35           00337     movlw   '5'
+00028A 6E??           00338     movwf   output_1
+00028C D???           00339     bra     output_single 
+00028E 0E06           00340 c_6s movlw   0x06
+000290 62??           00341     cpfseq  result
+000292 D???           00342     bra     c_7s
+000294 0E36           00343     movlw   '6'
+000296 6E??           00344     movwf   output_1
+000298 D???           00345     bra     output_single 
+00029A 0E07           00346 c_7s movlw   0x07
+00029C 62??           00347     cpfseq  result
+00029E D???           00348     bra     c_8s
+0002A0 0E37           00349     movlw   '7'
+0002A2 6E??           00350     movwf   output_1
+0002A4 D???           00351     bra     output_single 
+0002A6 0E08           00352 c_8s movlw   0x08
+0002A8 62??           00353     cpfseq  result
+0002AA D???           00354     bra     c_9s
+0002AC 0E38           00355     movlw   '8'
+0002AE 6E??           00356     movwf   output_1
+0002B0 D???           00357     bra     output_single 
+0002B2                00358 c_9s 
+0002B2 0E39           00359     movlw   '9'
+0002B4 6E??           00360     movwf   output_1
+0002B6 D???           00361     bra     output_single   
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE  8
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0002A0 6E??           00362     movwf string 
-0002A2                00363 column_14
-0002A2 0012           00364     return 
-0002A4                00365 row_1 
-0002A4 0E01           00366     movlw 0x01
-0002A6 62??           00367     cpfseq counter_row
-0002A8 D???           00368     bra row_2
-0002AA D???           00369     bra column_21
-0002AC                00370 column_21
-0002AC 0E04           00371     movlw 0x04
-0002AE 62??           00372     cpfseq counter_column
-0002B0 D???           00373     bra column_22
-0002B2 0E04           00374     movlw  0x04
-0002B4 6E??           00375     movwf integer 
-0002B6 0E34           00376     movlw  '4'
-0002B8 6E??           00377     movwf string 
-0002BA 0012           00378     return 
-0002BC                00379 column_22
-0002BC 0E05           00380     movlw 0x05
-0002BE 62??           00381     cpfseq counter_column
-0002C0 D???           00382     bra column_23
-0002C2 0E05           00383     movlw  0x05
-0002C4 6E??           00384     movwf integer
-0002C6 0E35           00385     movlw  '5'
-0002C8 6E??           00386     movwf string 
-0002CA 0012           00387     return 
-0002CC                00388 column_23
-0002CC 0E06           00389     movlw 0x06
-0002CE 62??           00390     cpfseq counter_column
-0002D0 D???           00391     bra column_24
-0002D2 0E06           00392     movlw  0x06
-0002D4 6E??           00393     movwf integer
-0002D6 0E36           00394     movlw  '6'
-0002D8 6E??           00395     movwf string 
-0002DA 0012           00396     return 
-0002DC                00397 column_24
-0002DC 0012           00398     return 
-0002DE                00399 row_2
-0002DE 0E02           00400     movlw 0x02
-0002E0 62??           00401     cpfseq counter_row
-0002E2 D???           00402     bra row_3
-0002E4 D???           00403     bra column_31
-0002E6                00404 column_31
-0002E6 0E04           00405     movlw 0x04
-0002E8 62??           00406     cpfseq counter_column
-0002EA D???           00407     bra column_32
-0002EC 0E07           00408     movlw  0x07
-0002EE 6E??           00409     movwf integer
-0002F0 0E37           00410     movlw  '7'
-0002F2 6E??           00411     movwf string 
-0002F4 0012           00412     return 
-0002F6                00413 column_32
-0002F6 0E05           00414     movlw 0x05
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE  9
+0002B8                00362 output_single
+0002B8 50??           00363     movf    output_1,w
+0002BA 62??           00364     cpfseq  guess_1_str
+0002BC D???           00365     bra     wrong 
+0002BE D???           00366     bra     right 
+                      00367     
+0002C0                00368 wrong 
+0002C0 0E8F           00369     movlw   b'10001111'
+0002C2 EC?? F???      00370     call    LCD_shift 
+0002C6 0E07           00371     movlw   0x07
+0002C8 EC?? F???      00372     call    LCD_Send_Byte_D
+0002CC EC?? F???      00373     call    learn_delay 
+0002D0 0E8C           00374     movlw   b'10001100'
+0002D2 EC?? F???      00375     call    LCD_shift
+0002D6 0E20           00376     movlw   ' '
+0002D8 EC?? F???      00377     call    LCD_Send_Byte_D
+0002DC 0E20           00378     movlw   ' '
+0002DE EC?? F???      00379     call    LCD_Send_Byte_D
+0002E2 0E20           00380     movlw   ' '
+0002E4 EC?? F???      00381     call    LCD_Send_Byte_D
+0002E8 0E8F           00382     movlw   b'10001111'
+0002EA EC?? F???      00383     call    LCD_shift
+0002EE 0E20           00384     movlw   ' '
+0002F0 EC?? F???      00385     call    LCD_Send_Byte_D
+0002F4 D???           00386     bra     guessed
+0002F6                00387 right 
+0002F6 0E8F           00388     movlw   b'10001111'
+0002F8 EC?? F???      00389     call    LCD_shift 
+0002FC 0E05           00390     movlw   0x05
+0002FE EC?? F???      00391     call    LCD_Send_Byte_D
+000302 EC?? F???      00392     call    learn_delay 
+000306 0E88           00393     movlw   b'10001000'
+000308 EC?? F???      00394     call    LCD_shift 
+00030C 0E20           00395     movlw   ' ' 
+00030E EC?? F???      00396     call    LCD_Send_Byte_D
+000312 0E20           00397     movlw   ' ' 
+000314 EC?? F???      00398     call    LCD_Send_Byte_D
+000318 0E20           00399     movlw   ' ' 
+00031A EC?? F???      00400     call    LCD_Send_Byte_D
+00031E 0E20           00401     movlw   ' ' 
+000320 EC?? F???      00402     call    LCD_Send_Byte_D
+000324 0E20           00403     movlw   ' ' 
+000326 EC?? F???      00404     call    LCD_Send_Byte_D
+00032A 0E20           00405     movlw   ' ' 
+00032C EC?? F???      00406     call    LCD_Send_Byte_D
+000330 0E20           00407     movlw   ' ' 
+000332 EC?? F???      00408     call    LCD_Send_Byte_D
+000336 0E20           00409     movlw   ' ' 
+000338 EC?? F???      00410     call    LCD_Send_Byte_D
+00033C 0012           00411     return
+                      00412  
+                      00413     
+00033E                00414 Numberpad
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE  9
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0002F8 62??           00415     cpfseq counter_column
-0002FA D???           00416     bra column_33 
-0002FC 0E08           00417     movlw  0x08
-0002FE 6E??           00418     movwf integer
-000300 0E38           00419     movlw  '8'
-000302 6E??           00420     movwf string 
-000304 0012           00421     return 
-000306                00422 column_33
-000306 0E06           00423     movlw 0x06
-000308 62??           00424     cpfseq counter_column
-00030A D???           00425     bra column_34
-00030C 0E09           00426     movlw  0x09
-00030E 6E??           00427     movwf integer
-000310 0E39           00428     movlw  '9'
-000312 6E??           00429     movwf string 
-000314 0012           00430     return 
-000316                00431 column_34
-000316 0012           00432     return 
-000318                00433 row_3
-000318 D???           00434     bra column_41
-00031A                00435 column_41
-00031A 0E04           00436     movlw 0x04
-00031C 62??           00437     cpfseq counter_column
-00031E D???           00438     bra column_42
-000320 0012           00439     return 
-000322                00440 column_42
-000322 0E05           00441     movlw 0x05
-000324 62??           00442     cpfseq counter_column
-000326 D???           00443     bra column_43
-000328 0E00           00444     movlw  0x0
-00032A 6E??           00445     movwf integer
-00032C 0E30           00446     movlw  '0'
-00032E 6E??           00447     movwf string 
-000330 0012           00448     return 
-000332                00449 column_43
-000332 0E06           00450     movlw 0x06
-000334 62??           00451     cpfseq counter_column
-000336 D???           00452     bra column_44
-000338 0012           00453     return 
-00033A                00454 column_44
-00033A 0012           00455     return 
-                      00456     
-                      00457     
-                      00458     
-                      00459 
-00033C                00460 learn_delay
-00033C 0E90           00461         movlw   0x90
-00033E 6E??           00462         movwf   delay_count_l1
-000340                00463 delay_1       
-000340 2E??           00464         decfsz  delay_count_l1
-000342 D???           00465         bra     nested_2
-000344 0012           00466         return
-                      00467         
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 10
+00033E 0EFF           00415     movlw 0xFF
+000340 6E??           00416     movwf  count
+000342 EC?? F???      00417     call setup_row
+000346 D???           00418     bra read_row
+000348                00419 column
+000348 EC?? F???      00420     call setup_column
+00034C D???           00421     bra read_column
+                      00422     
+                      00423     
+00034E                00424 setup_row 
+00034E 0EF0           00425     movlw 0xF0
+000350 6E96           00426     movwf TRISE, ACCESS  
+000352 8D53           00427     bsf PADCFG1, REPU, BANKED
+000354 0E0F           00428     movlw 0x0F
+000356 6E84           00429     movwf PORTE, ACCESS
+000358 0EFF           00430     movlw 0xFF
+00035A 6E??           00431     movwf  count
+00035C EC?? F???      00432     call   delay
+000360 0012           00433     return 
+                      00434    
+000362                00435 read_row     
+000362 0E01           00436     movlw 0x01
+000364 2600           00437     addwf random_number, 1
+000366 0E0A           00438     movlw 0xA
+000368 62??           00439     cpfseq random_number
+00036A D???           00440     bra    continue
+00036C D???           00441     bra    rst 
+00036E                00442 rst
+00036E 0E01           00443     movlw 0x01
+000370 6E??           00444     movwf random_number
+000372 D???           00445     bra   continue 
+000374                00446 continue
+000374 A884           00447     btfss PORTE, RE4
+000376 D???           00448     bra check_1
+000378 0E00           00449     movlw 0x0
+00037A 6E??           00450     movwf counter_row
+00037C D???           00451     bra column
+00037E                00452 check_1
+00037E AA84           00453     btfss PORTE, RE5
+000380 D???           00454     bra check_2
+000382 0E01           00455     movlw 0x01
+000384 6E??           00456     movwf counter_row
+000386 D???           00457     bra column
+000388                00458 check_2
+000388 AC84           00459     btfss PORTE, RE6
+00038A D???           00460     bra check_3
+00038C 0E02           00461     movlw 0x02
+00038E 6E??           00462     movwf counter_row
+000390 D???           00463     bra column
+000392                00464 check_3
+000392 AE84           00465     btfss PORTE, RE7
+000394 D???           00466     bra read_row
+000396 0E03           00467     movlw 0x03
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 10
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000346                00468 nested_2
-000346 0E90           00469         movlw   0x90
-000348 6E??           00470         movwf   delay_count_l2
-00034A 2E??           00471 delay_2 decfsz  delay_count_l2
-00034C D???           00472         bra     nested_3
-00034E D???           00473         bra     delay_1
-                      00474 
-000350                00475 nested_3
-000350 0E90           00476         movlw   0x90
-000352 6E??           00477         movwf   delay_count_l3
-000354                00478 delay_3
-000354 2E??           00479         decfsz  delay_count_l3
-000356 D???           00480         bra     delay_3
-000358 D???           00481         bra     delay_2
-                      00482     end
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 11
+000398 6E??           00468     movwf counter_row
+00039A D???           00469     bra column
+                      00470     
+00039C                00471 setup_column
+00039C 0E0F           00472     movlw 0x0F
+00039E 6E96           00473     movwf TRISE, ACCESS 
+0003A0 8D53           00474     bsf PADCFG1, REPU, BANKED
+0003A2 0EF0           00475     movlw 0xF0
+0003A4 6E84           00476     movwf PORTE, ACCESS
+0003A6 0EFF           00477     movlw 0xFF
+0003A8 6E??           00478     movwf  count
+0003AA EC?? F???      00479     call   delay
+0003AE 0012           00480     return 
+                      00481 
+0003B0                00482 read_column   
+0003B0 A084           00483     btfss PORTE, RE0
+0003B2 D???           00484     bra check_5
+0003B4 0E04           00485     movlw 0x04
+0003B6 6E??           00486     movwf counter_column
+0003B8 D???           00487     bra decode
+0003BA                00488 check_5
+0003BA A284           00489     btfss PORTE, RE1
+0003BC D???           00490     bra check_6
+0003BE 0E05           00491     movlw 0x05
+0003C0 6E??           00492     movwf counter_column
+0003C2 D???           00493     bra decode
+0003C4                00494 check_6
+0003C4 A484           00495     btfss PORTE, RE2
+0003C6 D???           00496     bra check_7
+0003C8 0E06           00497     movlw 0x06
+0003CA 6E??           00498     movwf counter_column
+0003CC D???           00499     bra decode
+0003CE                00500 check_7
+0003CE A684           00501     btfss PORTE, RE3
+0003D0 D???           00502     bra read_row
+0003D2 0E07           00503     movlw 0x07
+0003D4 6E??           00504     movwf counter_column
+0003D6 D???           00505     bra decode
+                      00506   
+0003D8                00507 delay 
+0003D8 2E??           00508     decfsz count
+0003DA D???           00509     bra delay
+0003DC 0012           00510     return 
+                      00511 
+0003DE                00512 decode
+0003DE 0E00           00513     movlw 0x00
+0003E0 62??           00514     cpfseq counter_row
+0003E2 D???           00515     bra row_1
+0003E4 D???           00516     bra column_11
+0003E6 0012           00517     return 
+0003E8                00518 column_11
+0003E8 0E04           00519     movlw 0x04
+0003EA 62??           00520     cpfseq counter_column
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 11
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0003EC D???           00521     bra column_12
+0003EE 0E01           00522     movlw  0x01
+0003F0 6E??           00523     movwf integer 
+0003F2 0E31           00524     movlw  '1'
+0003F4 6E??           00525     movwf string 
+0003F6 0012           00526     return 
+0003F8                00527 column_12
+0003F8 0E05           00528     movlw 0x05
+0003FA 62??           00529     cpfseq counter_column
+0003FC D???           00530     bra column_13
+0003FE 0E02           00531     movlw  0x02
+000400 6E??           00532     movwf integer 
+000402 0E32           00533     movlw  '2'
+000404 6E??           00534     movwf string 
+000406 0012           00535     return 
+000408                00536 column_13
+000408 0E06           00537     movlw 0x06
+00040A 62??           00538     cpfseq counter_column
+00040C D???           00539     bra column_14
+00040E 0E03           00540     movlw  0x03
+000410 6E??           00541     movwf integer 
+000412 0E33           00542     movlw  '3'
+000414 6E??           00543     movwf string 
+000416                00544 column_14
+000416 0012           00545     return 
+000418                00546 row_1 
+000418 0E01           00547     movlw 0x01
+00041A 62??           00548     cpfseq counter_row
+00041C D???           00549     bra row_2
+00041E D???           00550     bra column_21
+000420                00551 column_21
+000420 0E04           00552     movlw 0x04
+000422 62??           00553     cpfseq counter_column
+000424 D???           00554     bra column_22
+000426 0E04           00555     movlw  0x04
+000428 6E??           00556     movwf integer 
+00042A 0E34           00557     movlw  '4'
+00042C 6E??           00558     movwf string 
+00042E 0012           00559     return 
+000430                00560 column_22
+000430 0E05           00561     movlw 0x05
+000432 62??           00562     cpfseq counter_column
+000434 D???           00563     bra column_23
+000436 0E05           00564     movlw  0x05
+000438 6E??           00565     movwf integer
+00043A 0E35           00566     movlw  '5'
+00043C 6E??           00567     movwf string 
+00043E 0012           00568     return 
+000440                00569 column_23
+000440 0E06           00570     movlw 0x06
+000442 62??           00571     cpfseq counter_column
+000444 D???           00572     bra column_24
+000446 0E06           00573     movlw  0x06
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 12
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000448 6E??           00574     movwf integer
+00044A 0E36           00575     movlw  '6'
+00044C 6E??           00576     movwf string 
+00044E 0012           00577     return 
+000450                00578 column_24
+000450 0012           00579     return 
+000452                00580 row_2
+000452 0E02           00581     movlw 0x02
+000454 62??           00582     cpfseq counter_row
+000456 D???           00583     bra row_3
+000458 D???           00584     bra column_31
+00045A                00585 column_31
+00045A 0E04           00586     movlw 0x04
+00045C 62??           00587     cpfseq counter_column
+00045E D???           00588     bra column_32
+000460 0E07           00589     movlw  0x07
+000462 6E??           00590     movwf integer
+000464 0E37           00591     movlw  '7'
+000466 6E??           00592     movwf string 
+000468 0012           00593     return 
+00046A                00594 column_32
+00046A 0E05           00595     movlw 0x05
+00046C 62??           00596     cpfseq counter_column
+00046E D???           00597     bra column_33 
+000470 0E08           00598     movlw  0x08
+000472 6E??           00599     movwf integer
+000474 0E38           00600     movlw  '8'
+000476 6E??           00601     movwf string 
+000478 0012           00602     return 
+00047A                00603 column_33
+00047A 0E06           00604     movlw 0x06
+00047C 62??           00605     cpfseq counter_column
+00047E D???           00606     bra column_34
+000480 0E09           00607     movlw  0x09
+000482 6E??           00608     movwf integer
+000484 0E39           00609     movlw  '9'
+000486 6E??           00610     movwf string 
+000488 0012           00611     return 
+00048A                00612 column_34
+00048A 0012           00613     return 
+00048C                00614 row_3
+00048C D???           00615     bra column_41
+00048E                00616 column_41
+00048E 0E04           00617     movlw 0x04
+000490 62??           00618     cpfseq counter_column
+000492 D???           00619     bra column_42
+000494 0012           00620     return 
+000496                00621 column_42
+000496 0E05           00622     movlw 0x05
+000498 62??           00623     cpfseq counter_column
+00049A D???           00624     bra column_43
+00049C 0E00           00625     movlw  0x0
+00049E 6E??           00626     movwf integer
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 13
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0004A0 0E30           00627     movlw  '0'
+0004A2 6E??           00628     movwf string 
+0004A4 0012           00629     return 
+0004A6                00630 column_43
+0004A6 0E06           00631     movlw 0x06
+0004A8 62??           00632     cpfseq counter_column
+0004AA D???           00633     bra column_44
+0004AC 0012           00634     return 
+0004AE                00635 column_44
+0004AE 0012           00636     return 
+                      00637     
+                      00638     
+                      00639     
+                      00640 
+0004B0                00641 learn_delay
+0004B0 0E90           00642         movlw   0x90
+0004B2 6E??           00643         movwf   delay_count_l1
+0004B4                00644 delay_1       
+0004B4 2E??           00645         decfsz  delay_count_l1
+0004B6 D???           00646         bra     nested_2
+0004B8 0012           00647         return
+                      00648         
+0004BA                00649 nested_2
+0004BA 0E90           00650         movlw   0x90
+0004BC 6E??           00651         movwf   delay_count_l2
+0004BE 2E??           00652 delay_2 decfsz  delay_count_l2
+0004C0 D???           00653         bra     nested_3
+0004C2 D???           00654         bra     delay_1
+                      00655 
+0004C4                00656 nested_3
+0004C4 0E90           00657         movlw   0x90
+0004C6 6E??           00658         movwf   delay_count_l3
+0004C8                00659 delay_3
+0004C8 2E??           00660         decfsz  delay_count_l3
+0004CA D???           00661         bra     delay_3
+0004CC D???           00662         bra     delay_2
+                      00663         
+                      00664         
+                      00665         
+                      00666     end
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 14
 
 
 SYMBOL TABLE
@@ -609,7 +811,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 12
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 15
 
 
 SYMBOL TABLE
@@ -668,7 +870,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 13
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 16
 
 
 SYMBOL TABLE
@@ -727,7 +929,7 @@ C1TSEL0                           00000000
 C1TSEL1                           00000001
 C1TSEL2                           00000002
 C2INA                             00000004
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 14
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 17
 
 
 SYMBOL TABLE
@@ -786,7 +988,7 @@ CCP1IP                            00000001
 CCP1M0                            00000000
 CCP1M1                            00000001
 CCP1M2                            00000002
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 15
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 18
 
 
 SYMBOL TABLE
@@ -845,7 +1047,7 @@ CCP5M0                            00000000
 CCP5M1                            00000001
 CCP5M2                            00000002
 CCP5M3                            00000003
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 16
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 19
 
 
 SYMBOL TABLE
@@ -904,7 +1106,7 @@ CCP9IP                            00000006
 CCP9M0                            00000000
 CCP9M1                            00000001
 CCP9M2                            00000002
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 17
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 20
 
 
 SYMBOL TABLE
@@ -963,7 +1165,7 @@ CHSN1                             00000001
 CHSN2                             00000002
 CK1                               00000006
 CK2                               00000001
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 18
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 21
 
 
 SYMBOL TABLE
@@ -1022,7 +1224,7 @@ CTMUIE                            00000003
 CTMUIF                            00000003
 CTMUIP                            00000003
 CTMUMD                            00000006
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 19
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 22
 
 
 SYMBOL TABLE
@@ -1081,7 +1283,7 @@ ECCP1AS1                          00000005
 ECCP1AS2                          00000006
 ECCP1ASE                          00000007
 ECCP1CON                          00000FBB
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 20
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 23
 
 
 SYMBOL TABLE
@@ -1140,7 +1342,7 @@ FSR2H                             00000FDA
 FSR2L                             00000FD9
 GCEN                              00000007
 GIE                               00000007
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 21
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 24
 
 
 SYMBOL TABLE
@@ -1199,7 +1401,7 @@ INT3F                             00000002
 INT3IE                            00000005
 INT3IF                            00000002
 INT3IP                            00000001
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 22
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 25
 
 
 SYMBOL TABLE
@@ -1258,7 +1460,7 @@ LATB7                             00000007
 LATC                              00000F8B
 LATC0                             00000000
 LATC1                             00000001
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 23
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 26
 
 
 SYMBOL TABLE
@@ -1317,7 +1519,7 @@ LATJ1                             00000001
 LATJ2                             00000002
 LATJ3                             00000003
 LATJ4                             00000004
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 24
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 27
 
 
 SYMBOL TABLE
@@ -1376,13 +1578,13 @@ Number_pressed_1_int              00000005
 Number_pressed_1_string           00000007
 Number_pressed_2_int              00000006
 Number_pressed_2_string           00000008
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 25
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 28
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-Numberpad                         000001DC
+Numberpad                         0000033E
 OBF                               00000006
 ODCON1                            00000F29
 ODCON2                            00000F28
@@ -1435,7 +1637,7 @@ P3C                               00000003
 P3DC0                             00000000
 P3DC1                             00000001
 P3DC2                             00000002
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 26
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 29
 
 
 SYMBOL TABLE
@@ -1494,7 +1696,7 @@ PORTC                             00000F82
 PORTD                             00000F83
 PORTE                             00000F84
 PORTF                             00000F85
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 27
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 30
 
 
 SYMBOL TABLE
@@ -1553,7 +1755,7 @@ PSTR2CON                          00000F1B
 PSTR3CON                          00000F1A
 PWM1CON                           00000FBE
 PWM2CON                           00000F51
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 28
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 31
 
 
 SYMBOL TABLE
@@ -1612,7 +1814,7 @@ RCSTA2                            00000F22
 RD                                00000000
 RD0                               00000000
 RD1                               00000001
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 29
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 32
 
 
 SYMBOL TABLE
@@ -1671,7 +1873,7 @@ RJ6                               00000006
 RJ7                               00000007
 RJPU                              00000005
 RODIV0                            00000000
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 30
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 33
 
 
 SYMBOL TABLE
@@ -1730,7 +1932,7 @@ SDO1                              00000005
 SDO2                              00000004
 SEN                               00000000
 SENDB                             00000003
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 31
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 34
 
 
 SYMBOL TABLE
@@ -1789,7 +1991,7 @@ SSPBUF                            00000FC9
 SSPCON1                           00000FC6
 SSPCON2                           00000FC5
 SSPEN                             00000005
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 32
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 35
 
 
 SYMBOL TABLE
@@ -1848,7 +2050,7 @@ T1CKI                             00000005
 T1CKPS0                           00000004
 T1CKPS1                           00000005
 T1CON                             00000FCD
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 33
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 36
 
 
 SYMBOL TABLE
@@ -1907,7 +2109,7 @@ T5GSS1                            00000001
 T5GTM                             00000005
 T5GVAL                            00000002
 T6CKPS0                           00000000
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 34
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 37
 
 
 SYMBOL TABLE
@@ -1966,7 +2168,7 @@ TMR12IF                           00000006
 TMR12IP                           00000006
 TMR12MD                           00000000
 TMR12ON                           00000002
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 35
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 38
 
 
 SYMBOL TABLE
@@ -2025,7 +2227,7 @@ TMR5IP                            00000001
 TMR5L                             00000F7C
 TMR5MD                            00000003
 TMR5ON                            00000000
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 36
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 39
 
 
 SYMBOL TABLE
@@ -2084,7 +2286,7 @@ TRISB6                            00000006
 TRISB7                            00000007
 TRISC                             00000F94
 TRISC0                            00000000
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 37
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 40
 
 
 SYMBOL TABLE
@@ -2143,7 +2345,7 @@ TRISJ0                            00000000
 TRISJ1                            00000001
 TRISJ2                            00000002
 TRISJ3                            00000003
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 38
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 41
 
 
 SYMBOL TABLE
@@ -2202,7 +2404,7 @@ ULPLVL                            00000005
 ULPSINK                           00000001
 ULPWU                             00000000
 VCFG0                             00000004
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 39
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 42
 
 
 SYMBOL TABLE
@@ -2261,7 +2463,7 @@ _CONFIG5H                         00300009
 _CONFIG5L                         00300008
 _CONFIG6H                         0030000B
 _CONFIG6L                         0030000A
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 40
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 43
 
 
 SYMBOL TABLE
@@ -2320,7 +2522,7 @@ _FCMEN_ON_1H                      000000FF
 _FOSC_EC1IO_1H                    000000FC
 _FOSC_EC1_1H                      000000FD
 _FOSC_EC2IO_1H                    000000FA
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 41
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 44
 
 
 SYMBOL TABLE
@@ -2379,7 +2581,7 @@ _WDTPS_131072_2H                  000000C7
 _WDTPS_16384_2H                   000000BB
 _WDTPS_16_2H                      00000093
 _WDTPS_1_2H                       00000083
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 42
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 45
 
 
 SYMBOL TABLE
@@ -2424,90 +2626,123 @@ _WRTD_ON_6H                       0000007F
 _XINST_OFF_1L                     000000BF
 _XINST_ON_1L                      000000FF
 __18F87K22                        00000001
-c                                 00000064
-c_1                               000000A0
-c_10                              0000010C
-c_11                              0000011C
-c_12                              0000012C
-c_13                              0000013C
-c_14                              0000014C
-c_15                              0000015C
-c_16                              0000016C
-c_17                              0000017C
-c_18                              0000018C
-c_2                               000000AC
-c_3                               000000B8
-c_4                               000000C4
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 43
+c_11                              000001A2
+c_12                              000001B2
+c_13                              000001C2
+c_14                              000001D2
+c_15                              000001E2
+c_16                              000001F2
+c_17                              00000202
+c_18                              00000212
+c_1s                              00000252
+c_2s                              0000025E
+c_3s                              0000026A
+c_4s                              00000276
+c_5s                              00000282
+c_6s                              0000028E
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 46
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-c_5                               000000D0
-c_6                               000000DC
-c_7                               000000E8
-c_8                               000000F4
-c_9                               00000100
-calculate                         0000006C
-check_1                           0000020A
-check_2                           00000214
-check_3                           0000021E
-check_5                           00000246
-check_6                           00000250
-check_7                           0000025A
-checked                           00000096
-column                            000001E6
-column_11                         00000274
-column_12                         00000284
-column_13                         00000294
-column_14                         000002A2
-column_21                         000002AC
-column_22                         000002BC
-column_23                         000002CC
-column_24                         000002DC
-column_31                         000002E6
-column_32                         000002F6
-column_33                         00000306
-column_34                         00000316
-column_41                         0000031A
-column_42                         00000322
-column_43                         00000332
-column_44                         0000033A
-count                             0000000E
+c_7s                              0000029A
+c_8s                              000002A6
+c_9s                              000002B2
+calculate                         00000138
+check_1                           0000037E
+check_2                           00000388
+check_3                           00000392
+check_5                           000003BA
+check_6                           000003C4
+check_7                           000003CE
+check_double_result               00000192
+check_single_result               00000246
+column                            00000348
+column_11                         000003E8
+column_12                         000003F8
+column_13                         00000408
+column_14                         00000416
+column_21                         00000420
+column_22                         00000430
+column_23                         00000440
+column_24                         00000450
+column_31                         0000045A
+column_32                         0000046A
+column_33                         0000047A
+column_34                         0000048A
+column_41                         0000048E
+column_42                         00000496
+column_43                         000004A6
+column_44                         000004AE
+continue                          00000374
+count                             00000014
 counter_column                    00000001
 counter_row                       00000000
-decode                            0000026A
-delay                             00000264
-delay_1                           00000340
-delay_2                           0000034A
-delay_3                           00000354
+cr0                               00000054
+cr1                               00000060
+cr2                               0000006C
+cr20                              000000C6
+cr21                              000000D2
+cr22                              000000DE
+cr23                              000000EA
+cr24                              000000F6
+cr25                              00000102
+cr26                              0000010E
+cr27                              0000011A
+cr28                              00000126
+cr29                              00000132
+cr3                               00000078
+cr4                               00000084
+cr5                               00000090
+cr6                               0000009C
+cr7                               000000A8
+cr8                               000000B4
+cr9                               000000C0
+MPASM 5.81                         LEARN.ASM   2-20-2020  11:38:06         PAGE 47
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+decode                            000003DE
+delay                             000003D8
+delay_1                           000004B4
+delay_2                           000004BE
+delay_3                           000004C8
 delay_count_l1                    00000002
 delay_count_l2                    00000003
 delay_count_l3                    00000004
+double_input                      00000160
+guess                             0000000D
+guess_1                           0000000E
+guess_1_str                       00000012
+guess_2                           0000000F
+guess_2_str                       00000013
+guessed                           00000158
 integer                           00000009
 learn                             00000024
-learn_delay                       0000033C
-nested_2                          00000346
-nested_3                          00000350
-output                            00000196
-output_1                          0000000C
-output_2                          0000000D
-read_column                       0000023C
-read_row                          00000200
+learn_delay                       000004B0
+nested_2                          000004BA
+nested_3                          000004C4
+output_1                          00000010
+output_2                          00000011
+output_double                     0000021C
+output_single                     000002B8
+random_number                     0000000C
+read_column                       000003B0
+read_row                          00000362
 result                            0000000B
-row_1                             000002A4
-MPASM 5.81                         LEARN.ASM   2-19-2020  13:55:32         PAGE 44
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
-row_2                             000002DE
-row_3                             00000318
-setup_column                      00000228
-setup_row                         000001EC
+right                             000002F6
+row_1                             00000418
+row_2                             00000452
+row_3                             0000048C
+rst                               0000036E
+setup_column                      0000039C
+setup_row                         0000034E
+single_input                      0000022A
 string                            0000000A
+wrong                             000002C0
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed

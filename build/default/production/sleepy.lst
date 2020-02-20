@@ -1,4 +1,4 @@
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE  1
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -16,20 +16,85 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00009 
                       02986         LIST
                       00002 
-  0000                00003     extern LCD_Send_Byte_D,LCD_shift, LCD_clear
+  0000                00003     extern LCD_Send_Byte_D,LCD_shift, LCD_clear, MOON
   0000                00004     global SLEEPY
                       00005     
-                      00006 sleepy code
-                      00007     
-                      00008     
-000000                00009 SLEEPY
-000000 0012           00010     return
-                      00011     
-                      00012     
-                      00013     
-                      00014     
-                      00015     end 
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE  2
+                      00006     
+                      00007 acs5  udata_acs
+                      00008   
+000000                00009 loop  res 1 
+000001                00010 delay_count_s1   res 1
+000002                00011 delay_count_s2   res 1 
+000003                00012 delay_count_s3   res 1
+                      00013 
+                      00014 
+                      00015   
+                      00016 sleepy code
+                      00017     
+                      00018     
+000000                00019 SLEEPY
+000000 0E10           00020     movlw  0x10
+000002 6E??           00021     movwf  loop
+000004 0EC1           00022     movlw  b'11000001'
+000006 EC?? F???      00023     call   LCD_shift 
+00000A 0E04           00024     movlw  0x04
+00000C EC?? F???      00025     call   LCD_Send_Byte_D
+000010 0E8A           00026 z   movlw  b'10001010'
+000012 EC?? F???      00027     call   LCD_shift 
+000016 0EA5           00028     movlw  0xA5
+000018 EC?? F???      00029     call   LCD_Send_Byte_D
+00001C 0EA5           00030     movlw  0xA5
+00001E EC?? F???      00031     call   LCD_Send_Byte_D
+000022 0EA5           00032     movlw  0xA5
+000024 EC?? F???      00033     call   LCD_Send_Byte_D
+000028 EC?? F???      00034     call   sleepy_delay 
+00002C 0E8A           00035     movlw  b'10001010'
+00002E EC?? F???      00036     call   LCD_shift 
+000032 0E20           00037     movlw  ' '
+000034 EC?? F???      00038     call   LCD_Send_Byte_D
+000038 0E20           00039     movlw  ' '
+00003A EC?? F???      00040     call   LCD_Send_Byte_D
+00003E 0E20           00041     movlw  ' '
+000040 EC?? F???      00042     call   LCD_Send_Byte_D
+000044 2E??           00043     decfsz loop 
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000046 D???           00044     bra    z
+000048 0EC1           00045     movlw   b'11000001'
+00004A EC?? F???      00046     call    LCD_shift
+00004E 0E03           00047     movlw   0x03
+000050 EC?? F???      00048     call    LCD_Send_Byte_D
+000054 0012           00049     return 
+                      00050     
+                      00051     
+000056                00052 sleepy_delay
+000056 0E90           00053         movlw   0x90
+000058 6E??           00054         movwf   delay_count_s1
+00005A                00055 delay_1       
+00005A 2E??           00056         decfsz  delay_count_s1
+00005C D???           00057         bra     nested_2
+00005E 0012           00058         return
+                      00059         
+000060                00060 nested_2
+000060 0E90           00061         movlw   0x90
+000062 6E??           00062         movwf   delay_count_s2
+000064 2E??           00063 delay_2 decfsz  delay_count_s2
+000066 D???           00064         bra     nested_3
+000068 D???           00065         bra     delay_1
+                      00066 
+00006A                00067 nested_3
+00006A 0E90           00068         movlw   0x90
+00006C 6E??           00069         movwf   delay_count_s3
+00006E                00070 delay_3
+00006E 2E??           00071         decfsz  delay_count_s3
+000070 D???           00072         bra     delay_3
+000072 D???           00073         bra     delay_2
+                      00074     end 
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE  3
 
 
 SYMBOL TABLE
@@ -88,7 +153,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE  3
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE  4
 
 
 SYMBOL TABLE
@@ -147,7 +212,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE  4
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE  5
 
 
 SYMBOL TABLE
@@ -206,7 +271,7 @@ C1TSEL0                           00000000
 C1TSEL1                           00000001
 C1TSEL2                           00000002
 C2INA                             00000004
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE  5
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE  6
 
 
 SYMBOL TABLE
@@ -265,7 +330,7 @@ CCP1IP                            00000001
 CCP1M0                            00000000
 CCP1M1                            00000001
 CCP1M2                            00000002
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE  6
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE  7
 
 
 SYMBOL TABLE
@@ -324,7 +389,7 @@ CCP5M0                            00000000
 CCP5M1                            00000001
 CCP5M2                            00000002
 CCP5M3                            00000003
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE  7
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE  8
 
 
 SYMBOL TABLE
@@ -383,7 +448,7 @@ CCP9IP                            00000006
 CCP9M0                            00000000
 CCP9M1                            00000001
 CCP9M2                            00000002
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE  8
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE  9
 
 
 SYMBOL TABLE
@@ -442,7 +507,7 @@ CHSN1                             00000001
 CHSN2                             00000002
 CK1                               00000006
 CK2                               00000001
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE  9
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 10
 
 
 SYMBOL TABLE
@@ -501,7 +566,7 @@ CTMUIE                            00000003
 CTMUIF                            00000003
 CTMUIP                            00000003
 CTMUMD                            00000006
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 10
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 11
 
 
 SYMBOL TABLE
@@ -560,7 +625,7 @@ ECCP1AS1                          00000005
 ECCP1AS2                          00000006
 ECCP1ASE                          00000007
 ECCP1CON                          00000FBB
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 11
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 12
 
 
 SYMBOL TABLE
@@ -619,7 +684,7 @@ FSR2H                             00000FDA
 FSR2L                             00000FD9
 GCEN                              00000007
 GIE                               00000007
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 12
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 13
 
 
 SYMBOL TABLE
@@ -678,7 +743,7 @@ INT3F                             00000002
 INT3IE                            00000005
 INT3IF                            00000002
 INT3IP                            00000001
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 13
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 14
 
 
 SYMBOL TABLE
@@ -737,7 +802,7 @@ LATB7                             00000007
 LATC                              00000F8B
 LATC0                             00000000
 LATC1                             00000001
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 14
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 15
 
 
 SYMBOL TABLE
@@ -796,7 +861,7 @@ LATJ1                             00000001
 LATJ2                             00000002
 LATJ3                             00000003
 LATJ4                             00000004
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 15
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 16
 
 
 SYMBOL TABLE
@@ -815,6 +880,7 @@ LVDIP                             00000002
 MEMCON                            00000F26
 MFIOFS                            00000001
 MFIOSEL                           00000000
+MOON                              00000000
 MSK0                              00000000
 MSK1                              00000001
 MSK2                              00000002
@@ -854,13 +920,13 @@ OBF                               00000006
 ODCON1                            00000F29
 ODCON2                            00000F28
 ODCON3                            00000F27
-OE                                00000001
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 16
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 17
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+OE                                00000001
 OERR                              00000001
 OERR1                             00000001
 OERR2                             00000001
@@ -913,13 +979,13 @@ P3DC4                             00000004
 P3DC5                             00000005
 P3DC6                             00000006
 P3M0                              00000006
-P3M1                              00000007
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 17
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 18
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+P3M1                              00000007
 P3RSEN                            00000007
 PA3                               00000000
 PADCFG1                           00000F53
@@ -972,13 +1038,13 @@ PORTH                             00000F87
 PORTJ                             00000F88
 POSTDEC0                          00000FED
 POSTDEC1                          00000FE5
-POSTDEC2                          00000FDD
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 18
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 19
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+POSTDEC2                          00000FDD
 POSTINC0                          00000FEE
 POSTINC1                          00000FE6
 POSTINC2                          00000FDE
@@ -1031,13 +1097,13 @@ RA0                               00000000
 RA1                               00000001
 RA2                               00000002
 RA3                               00000003
-RA4                               00000004
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 19
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 20
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+RA4                               00000004
 RA5                               00000005
 RA6                               00000006
 RA7                               00000007
@@ -1090,13 +1156,13 @@ RD2                               00000002
 RD3                               00000003
 RD4                               00000004
 RD5                               00000005
-RD6                               00000006
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 20
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 21
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+RD6                               00000006
 RD7                               00000007
 RDPU                              00000007
 RE0                               00000000
@@ -1149,13 +1215,13 @@ RODIV2                            00000002
 RODIV3                            00000003
 ROON                              00000007
 ROSEL                             00000004
-ROSSLP                            00000005
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 21
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 22
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+ROSSLP                            00000005
 RSEN                              00000001
 RTCC                              00000004
 RTCCAL                            00000F5E
@@ -1208,13 +1274,13 @@ SENDB2                            00000003
 SLEEPY                            00000000
 SMP                               00000007
 SOSCEN                            00000003
-SOSCGO                            00000003
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 22
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 23
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+SOSCGO                            00000003
 SOSCI                             00000001
 SOSCO                             00000000
 SOSCRUN                           00000006
@@ -1267,13 +1333,13 @@ SSPIE                             00000003
 SSPIF                             00000003
 SSPIP                             00000003
 SSPM0                             00000000
-SSPM1                             00000001
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 23
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 24
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+SSPM1                             00000001
 SSPM2                             00000002
 SSPM3                             00000003
 SSPOV                             00000006
@@ -1326,13 +1392,13 @@ T1G                               00000005
 T1GCON                            00000FAA
 T1GGO                             00000003
 T1GGO_NOT_T1DONE                  00000003
-T1GPOL                            00000006
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 24
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 25
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+T1GPOL                            00000006
 T1GSPM                            00000004
 T1GSS0                            00000000
 T1GSS1                            00000001
@@ -1385,13 +1451,13 @@ T6CKPS1                           00000001
 T6CON                             00000F39
 T6OUTPS0                          00000003
 T6OUTPS1                          00000004
-T6OUTPS2                          00000005
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 25
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 26
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+T6OUTPS2                          00000005
 T6OUTPS3                          00000006
 T7CKI                             00000004
 T7CKPS0                           00000004
@@ -1444,13 +1510,13 @@ TMR1CS0                           00000006
 TMR1CS1                           00000007
 TMR1GE                            00000007
 TMR1GIE                           00000002
-TMR1GIF                           00000002
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 26
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 27
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TMR1GIF                           00000002
 TMR1GIP                           00000002
 TMR1H                             00000FCF
 TMR1IE                            00000000
@@ -1503,13 +1569,13 @@ TMR6                              00000F3B
 TMR6IE                            00000002
 TMR6IF                            00000002
 TMR6IP                            00000002
-TMR6MD                            00000004
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 27
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 28
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TMR6MD                            00000004
 TMR6ON                            00000002
 TMR7                              00000F3E
 TMR7CS0                           00000006
@@ -1562,13 +1628,13 @@ TRISC1                            00000001
 TRISC2                            00000002
 TRISC3                            00000003
 TRISC4                            00000004
-TRISC5                            00000005
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 28
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 29
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TRISC5                            00000005
 TRISC6                            00000006
 TRISC7                            00000007
 TRISD                             00000F95
@@ -1621,13 +1687,13 @@ TRISJ4                            00000004
 TRISJ5                            00000005
 TRISJ6                            00000006
 TRISJ7                            00000007
-TRMT                              00000001
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 29
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 30
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TRMT                              00000001
 TRMT1                             00000001
 TRMT2                             00000001
 TUN0                              00000000
@@ -1680,13 +1746,13 @@ VCFG1                             00000005
 VDIRMAG                           00000007
 VNCFG                             00000003
 VREF_MINUS                        00000002
-VREF_PLUS                         00000003
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 30
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 31
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+VREF_PLUS                         00000003
 W                                 00000000
 WAIT0                             00000004
 WAIT1                             00000005
@@ -1739,13 +1805,13 @@ _CONFIG7H                         0030000D
 _CONFIG7L                         0030000C
 _CP0_OFF_5L                       000000FF
 _CP0_ON_5L                        000000FE
-_CP1_OFF_5L                       000000FF
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 31
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 32
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+_CP1_OFF_5L                       000000FF
 _CP1_ON_5L                        000000FD
 _CP2_OFF_5L                       000000FF
 _CP2_ON_5L                        000000FB
@@ -1798,13 +1864,13 @@ _FOSC_EC2_1H                      000000FB
 _FOSC_EC3IO_1H                    000000F4
 _FOSC_EC3_1H                      000000F5
 _FOSC_HS1_1H                      000000F3
-_FOSC_HS2_1H                      000000F2
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 32
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 33
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+_FOSC_HS2_1H                      000000F2
 _FOSC_INTIO1_1H                   000000F9
 _FOSC_INTIO2_1H                   000000F8
 _FOSC_LP_1H                       000000F0
@@ -1857,13 +1923,13 @@ _WDTPS_2048_2H                    000000AF
 _WDTPS_256_2H                     000000A3
 _WDTPS_262144_2H                  000000CB
 _WDTPS_2_2H                       00000087
-_WDTPS_32768_2H                   000000BF
-MPASM 5.81                        SLEEPY.ASM   2-19-2020  13:10:52         PAGE 33
+MPASM 5.81                        SLEEPY.ASM   2-20-2020  9:57:24         PAGE 34
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+_WDTPS_32768_2H                   000000BF
 _WDTPS_32_2H                      00000097
 _WDTPS_4096_2H                    000000B3
 _WDTPS_4_2H                       0000008B
@@ -1898,6 +1964,17 @@ _WRTD_ON_6H                       0000007F
 _XINST_OFF_1L                     000000BF
 _XINST_ON_1L                      000000FF
 __18F87K22                        00000001
+delay_1                           0000005A
+delay_2                           00000064
+delay_3                           0000006E
+delay_count_s1                    00000001
+delay_count_s2                    00000002
+delay_count_s3                    00000003
+loop                              00000000
+nested_2                          00000060
+nested_3                          0000006A
+sleepy_delay                      00000056
+z                                 00000010
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed
