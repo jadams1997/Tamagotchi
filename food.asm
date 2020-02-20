@@ -86,11 +86,9 @@ loopb 	tblrd*+			; one byte from PM to TABLAT, increment TBLPRT
 	
 	
 FOOD 
-	;movff	0x99, food_counter
 	movwf   lifemode_food
 	movlw   0x01
 	addwf   food_counter, 1
-	;movff   food_counter, 0x99
 FOOD_ANIMATE
 	movlw   b'10000101'
 	call    LCD_shift 
@@ -211,7 +209,6 @@ GROWTH_ANIMATE
 	movlw   0x2A  ;star
 	call    LCD_Send_Byte_D
 	call    food_delay
-	call    food_delay
 	movlw   b'11001010';0x4A
 	call    LCD_shift 
 	movlw   0x2A
@@ -224,7 +221,6 @@ GROWTH_ANIMATE
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
-	call    food_delay
 	call    food_delay
 	movlw   b'11001011';0x4B
 	call    LCD_shift 
@@ -243,7 +239,6 @@ GROWTH_ANIMATE
 	movlw   0x2A
 	call    LCD_Send_Byte_D
 	call    food_delay
-	call    food_delay
 	movlw   b'11001100';0x4C
 	call    LCD_shift 
 	movlw   0x2A
@@ -260,7 +255,6 @@ GROWTH_ANIMATE
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
-	call    food_delay
 	call    food_delay
 	movlw   b'11001101';0x4D
 	call    LCD_shift 
@@ -279,7 +273,6 @@ GROWTH_ANIMATE
 	movlw   0x2A
 	call    LCD_Send_Byte_D
 	call    food_delay
-	call    food_delay
 	movlw   b'11001110';0x4E
 	call    LCD_shift 
 	movlw   0x2A
@@ -296,7 +289,6 @@ GROWTH_ANIMATE
 	call    LCD_shift 
 	movlw   0x2A
 	call    LCD_Send_Byte_D
-	call    food_delay
 	call    food_delay
 	movlw   b'11001111';0x4F
 	call    LCD_shift 
@@ -315,7 +307,6 @@ GROWTH_ANIMATE
 	movlw   0x2A
 	call    LCD_Send_Byte_D
 	call    food_delay
-	call    food_delay
 	movlw   b'10001111';0x0F
 	call    LCD_shift 
 	movlw   0x2A
@@ -328,14 +319,12 @@ GROWTH_ANIMATE
 	movwf   flash_counter
 flashes	
 	call    food_delay
-	call    food_delay
 	movlw	b'10000011';0x03
 	call	LCD_shift 
 	call	output_flash_1
 	movlw	b'11000011';0x43
 	call	LCD_shift 
 	call    output_flash_2
-	call	food_delay
 	call	food_delay
 	movlw	b'10000011'
 	call	LCD_shift 

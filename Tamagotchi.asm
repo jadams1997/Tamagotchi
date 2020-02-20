@@ -83,6 +83,9 @@ CHECK_B_PRESSED
 	bra     CHECK_C_PRESSED
 	movf    life_mode, W    ;save the life_mode for the game to use
 	call    BALL_GAME
+	movlw	0xf4
+	movwf	counter_happiness
+	call	HAPPINESS
 	bra     GAME_MODE
 CHECK_C_PRESSED
 	movlw   0x43

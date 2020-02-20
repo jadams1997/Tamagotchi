@@ -17,7 +17,7 @@ sleepy code
     
     
 SLEEPY
-    movlw  0x10
+    movlw  0x5
     movwf  loop
     movlw  b'11000001'
     call   LCD_shift 
@@ -25,21 +25,26 @@ SLEEPY
     call   LCD_Send_Byte_D
 z   movlw  b'10001010'
     call   LCD_shift 
-    movlw  0xA5
+    movlw  0x5A
     call   LCD_Send_Byte_D
-    movlw  0xA5
+    call   sleepy_delay
+    movlw  0x5A
     call   LCD_Send_Byte_D
-    movlw  0xA5
+    call   sleepy_delay
+    movlw  0x5A
     call   LCD_Send_Byte_D
     call   sleepy_delay 
     movlw  b'10001010'
     call   LCD_shift 
     movlw  ' '
     call   LCD_Send_Byte_D
+    call   sleepy_delay
     movlw  ' '
     call   LCD_Send_Byte_D
+    call   sleepy_delay
     movlw  ' '
     call   LCD_Send_Byte_D
+    call   sleepy_delay
     decfsz loop 
     bra    z
     movlw   b'11000001'

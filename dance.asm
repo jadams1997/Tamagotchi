@@ -397,7 +397,7 @@ LARGE
     
     
 dance_delay
-	movlw   0x90
+	movlw   0x70
 	movwf   delay_counter_d1
 delay_1       
 	decfsz  delay_counter_d1
@@ -405,14 +405,14 @@ delay_1
 	return
 	
 nested_2
-	movlw   0x90
+	movlw   0x70
 	movwf   delay_counter_d2
 delay_2	decfsz  delay_counter_d2
 	bra     nested_3
 	bra     delay_1
 
 nested_3
-	movlw   0x90
+	movlw   0x60
 	movwf   delay_counter_d3
 delay_3
 	decfsz  delay_counter_d3
