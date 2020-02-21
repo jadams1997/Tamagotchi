@@ -159,7 +159,6 @@ jump
     call   LCD_shift 
     movlw  0x02
     call   LCD_Send_Byte_D  
-    call   ball_delay
     movff  timer_1_remaining, timer_1
 t_1     decfsz  timer_1_remaining 
 	bra     n_2
@@ -179,6 +178,8 @@ move_ghost
     call  LCD_Send_Byte_D
     movlw 0x00
     call  LCD_Send_Byte_D 
+    call  ball_delay
+    call  ball_delay
     call  ball_delay
     movlw b'11001111'
     call  LCD_shift 
@@ -296,7 +297,7 @@ t1
 	
 n2      movlw   0x01
 	subwf   timer_1_remaining, 1
-	movlw   0x40
+	movlw   0x35
 	movwf   timer_2
 t2	decfsz  timer_2
 	bra     n3
@@ -304,7 +305,7 @@ t2	decfsz  timer_2
 
 n3      movlw   0x01
 	subwf   timer_2_remaining, 1
-	movlw   0x40
+	movlw   0x30
 	movwf   timer_3
 t3
 	movlw   0x01
@@ -344,7 +345,7 @@ delay_k
   
     
 ball_delay
-	movlw   0x80
+	movlw   0x90
 	movwf   delay_count_b1
 delay_1       
 	decfsz  delay_count_b1
@@ -352,14 +353,14 @@ delay_1
 	return
 	
 nested_2
-	movlw   0x80
+	movlw   0x90
 	movwf   delay_count_b2
 delay_2	decfsz  delay_count_b2
 	bra     nested_3
 	bra     delay_1
 
 nested_3
-	movlw   0x80
+	movlw   0x90
 	movwf   delay_count_b3
 delay_3
 	decfsz  delay_count_b3

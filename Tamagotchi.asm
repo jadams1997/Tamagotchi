@@ -20,6 +20,7 @@ myArray                          res 0x80
 counter_row	                 res 1
 counter_column	                 res 1
 Key_Pressed                      res 0x40
+sound_buuzz                      res 1
  
 
 tamagotchi code
@@ -363,10 +364,40 @@ dch5	movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter ha
 	movwf	counter_happiness_decrement_3
 	bra	read_row
 	
+    
+	
+TEMP
+	call    TEMPERATURE 
+	movlw   0xDB
+	cpfsgt  Temperature_hex_1
+	bra     cold_check 
+	bra     hot 
+cold_check
+	movlw   0xC8
+	cpfslt	Temperature_hex_1
+	bra	normal_temp
+	bra	snowflake
+snowflake 
+	movlw   b'11000010'
+	call    LCD_shift 
+	movlw   0x2A
+	call    LCD_Send_Byte_D
+	return 
+hot 
+	movlw   b'11000010'
+	call    LCD_shift 
+	movlw   0xD7
+	call    LCD_Send_Byte_D
+	return 
+normal_temp
+	movlw   b'11000010'
+	call    LCD_shift 
+	movlw   ' '
+	call    LCD_Send_Byte_D
+	return 
 	
 HAPPINESS	
-	call    TEMPERATURE 
-	movf    Temperature_hex_1, w
+	call    TEMP 
 	movlw   b'11000000'
 	call    LCD_shift   ;shifting where the LCD writes to ammend happiness character
 	movlw   0x96
