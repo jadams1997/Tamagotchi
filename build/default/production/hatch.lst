@@ -1,4 +1,4 @@
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE  1
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -17,158 +17,185 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       02986         LIST
                       00002 
   0000                00003     extern LCD_clear, LCD_Send_Byte_D, LCD_shift
-  0000                00004     global output_starting_screen, output_hatching_sequence, output_PRESS_A_TO_HATCH
-                      00005 
-                      00006 acs0                udata_acs   
-000000                00007 delay_counter_h1    res 1   
-000001                00008 delay_counter_h2    res 1   
-000002                00009 delay_counter_h3    res 1   
-000003                00010 counter_output      res 1  
-000004                00011 repeats             res 1
-                      00012 
-                      00013 pdata code
-000000 5250 5345 2053 00014 Line_0          data "PRESS A TO HATCH"
-       2041 4F54 4820 
-       5441 4843 
-  0010                00015                 variable Line_Bytes_0= .16
-                      00016                 
-                      00017 Hatch   code    
-                      00018 
-000000                00019 output_PRESS_A_TO_HATCH
-000000 EC?? F???      00020         call    LCD_clear 
-000004 0E??           00021         movlw   upper(Line_0)   ; address of data in PM
-000006 6EF8           00022         movwf   TBLPTRU         ; load upper bits to TBLPTRU
-000008 0E??           00023         movlw   high(Line_0)    ; address of data in PM
-00000A 6EF7           00024         movwf   TBLPTRH         ; load high byte to TBLPTRH
-00000C 0E??           00025         movlw   low(Line_0)     ; address of data in PM
-00000E 6EF6           00026         movwf   TBLPTRL         ; load low byte to TBLPTRL
-000010 0E10           00027         movlw   Line_Bytes_0    ; bytes to read
-000012 6E??           00028         movwf   counter_output  ; our counter register
-000014 0009           00029 loop    tblrd*+                 ; one byte from PM to TABLAT, increment TBLPRT
-000016 50F5           00030         movf    TABLAT, w
-000018 EC?? F???      00031         call    LCD_Send_Byte_D
-00001C 2E??           00032         decfsz  counter_output  ; count down to zero
-00001E D???           00033         bra     loop
-000020 0012           00034         return  
-                      00035         
-000022                00036 output_starting_screen
-000022 EC?? F???      00037         call    LCD_clear
-000026 0E01           00038         movlw   0x01
-000028 EC?? F???      00039         call    LCD_Send_Byte_D
-00002C 0E01           00040         movlw   0x01
-00002E EC?? F???      00041         call    LCD_Send_Byte_D
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE  2
+  0000                00004     global output_starting_screen, output_hatching_sequence, output_PRESS_A_TO_START
+  0000                00005     global output_HEAT_TO_HATCH
+                      00006 
+                      00007 acs0                udata_acs   
+000000                00008 delay_counter_h1    res 1   
+000001                00009 delay_counter_h2    res 1   
+000002                00010 delay_counter_h3    res 1   
+000003                00011 counter_output      res 1  
+000004                00012 repeats             res 1
+                      00013 
+                      00014 pdata code
+000000 5250 5345 2053 00015 Line_0          data "PRESS A TO START"
+       2041 4F54 5320 
+       4154 5452 
+  0010                00016                 variable Line_Bytes_0= .16
+000010 2020 4548 5441 00017 Line_1          data "  HEAT TO HATCH"
+       5420 204F 4148 
+       4354 0048 
+  000F                00018                 variable Line_Bytes_1= .15
+                      00019 Hatch   code    
+                      00020 
+000000                00021 output_PRESS_A_TO_START
+000000 EC?? F???      00022         call    LCD_clear 
+000004 0E??           00023         movlw   upper(Line_0)   ; address of data in PM
+000006 6EF8           00024         movwf   TBLPTRU         ; load upper bits to TBLPTRU
+000008 0E??           00025         movlw   high(Line_0)    ; address of data in PM
+00000A 6EF7           00026         movwf   TBLPTRH         ; load high byte to TBLPTRH
+00000C 0E??           00027         movlw   low(Line_0)     ; address of data in PM
+00000E 6EF6           00028         movwf   TBLPTRL         ; load low byte to TBLPTRL
+000010 0E10           00029         movlw   Line_Bytes_0    ; bytes to read
+000012 6E??           00030         movwf   counter_output  ; our counter register
+000014 0009           00031 loop    tblrd*+                 ; one byte from PM to TABLAT, increment TBLPRT
+000016 50F5           00032         movf    TABLAT, w
+000018 EC?? F???      00033         call    LCD_Send_Byte_D
+00001C 2E??           00034         decfsz  counter_output  ; count down to zero
+00001E D???           00035         bra     loop
+000020 0012           00036         return  
+                      00037 
+000022                00038 output_HEAT_TO_HATCH
+000022 EC?? F???      00039         call    LCD_clear 
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000032 0E01           00042         movlw   0x01
-000034 EC?? F???      00043         call    LCD_Send_Byte_D
-000038 0EC0           00044         movlw   b'11000000'
-00003A EC?? F???      00045         call    LCD_shift 
-00003E 0E05           00046         movlw   0x05
-000040 EC?? F???      00047         call    LCD_Send_Byte_D  ;display smiley face for starting happiness 
-000044 0E03           00048         movlw   0x03
-000046 EC?? F???      00049         call    LCD_Send_Byte_D  ;display sun
-00004A 0EC9           00050         movlw   b'11001001'
-00004C EC?? F???      00051         call    LCD_shift 
-000050 0E00           00052         movlw   0x00   
-000052 EC?? F???      00053         call    LCD_Send_Byte_D   ;output egg in middle of bottom line
-000056 0012           00054         return  
-                      00055         
-000058                00056 output_hatching_sequence
-000058 0E05           00057         movlw   0x05
-00005A 6E??           00058         movwf   repeats ; register to hold the number of times the egg will vibrate 
-00005C 0EC8           00059 dynamic movlw   b'11001000'     ;dynamic sequence shows the egg vibrating before it hatches 
-00005E EC?? F???      00060         call    LCD_shift 
-000062 0EB2           00061         movlw   0xb2   ;move bracket " to left of egg
-000064 EC?? F???      00062         call    LCD_Send_Byte_D
-000068 0ECA           00063         movlw   b'11001010'
-00006A EC?? F???      00064         call    LCD_shift 
-00006E 0EB2           00065         movlw   0xb2   ;move bracket " to right of egg
-000070 EC?? F???      00066         call    LCD_Send_Byte_D 
-000074 EC?? F???      00067         call    hatch_delay 
-000078 0EC8           00068         movlw   b'11001000'
-00007A EC?? F???      00069         call    LCD_shift 
-00007E 0E20           00070         movlw   ' ' 
-000080 EC?? F???      00071         call    LCD_Send_Byte_D
-000084 0ECA           00072         movlw   b'11001010'
-000086 EC?? F???      00073         call    LCD_shift 
-00008A 0E20           00074         movlw   ' '    ;make brackets disappear again
-00008C EC?? F???      00075         call    LCD_Send_Byte_D 
-000090 EC?? F???      00076         call    hatch_delay 
-000094 2E??           00077         decfsz  repeats  ;repeat blinking 0x020 times
-000096 D???           00078         bra     dynamic 
-000098 0E05           00079         movlw   0x05
-00009A 6E??           00080         movwf   repeats   ; register to hold the number of times the egg will blink in and out 
-00009C                00081 egg_blink
-00009C 0EC9           00082         movlw   b'11001001'
-00009E EC?? F???      00083         call    LCD_shift 
-0000A2 0E00           00084         movlw   0x00   
-0000A4 EC?? F???      00085         call    LCD_Send_Byte_D 
-0000A8 EC?? F???      00086         call    hatch_delay
-0000AC 0EC9           00087         movlw   b'11001001'
-0000AE EC?? F???      00088         call    LCD_shift 
-0000B2 0E20           00089         movlw   ' '
-0000B4 EC?? F???      00090         call    LCD_Send_Byte_D 
-0000B8 EC?? F???      00091         call    hatch_delay 
-0000BC 2E??           00092         decfsz  repeats
-0000BE D???           00093         bra     egg_blink 
-0000C0 0EC9           00094 crack   movlw   b'11001001'
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE  3
+000026 0E??           00040         movlw   upper(Line_1)   ; address of data in PM
+000028 6EF8           00041         movwf   TBLPTRU         ; load upper bits to TBLPTRU
+00002A 0E??           00042         movlw   high(Line_1)    ; address of data in PM
+00002C 6EF7           00043         movwf   TBLPTRH         ; load high byte to TBLPTRH
+00002E 0E??           00044         movlw   low(Line_1)     ; address of data in PM
+000030 6EF6           00045         movwf   TBLPTRL         ; load low byte to TBLPTRL
+000032 0E0F           00046         movlw   Line_Bytes_1    ; bytes to read
+000034 6E??           00047         movwf   counter_output  ; our counter register
+000036 0009           00048 looph   tblrd*+                 ; one byte from PM to TABLAT, increment TBLPRT
+000038 50F5           00049         movf    TABLAT, w
+00003A EC?? F???      00050         call    LCD_Send_Byte_D
+00003E 2E??           00051         decfsz  counter_output  ; count down to zero
+000040 D???           00052         bra     looph
+000042 0012           00053         return  
+                      00054         
+000044                00055 output_starting_screen
+000044 EC?? F???      00056         call    LCD_clear
+000048 0E01           00057         movlw   0x01
+00004A EC?? F???      00058         call    LCD_Send_Byte_D
+00004E 0E01           00059         movlw   0x01
+000050 EC?? F???      00060         call    LCD_Send_Byte_D
+000054 0E01           00061         movlw   0x01
+000056 EC?? F???      00062         call    LCD_Send_Byte_D
+00005A 0EC0           00063         movlw   b'11000000'
+00005C EC?? F???      00064         call    LCD_shift 
+000060 0E05           00065         movlw   0x05
+000062 EC?? F???      00066         call    LCD_Send_Byte_D  ;display smiley face for starting happiness 
+000066 0E03           00067         movlw   0x03
+000068 EC?? F???      00068         call    LCD_Send_Byte_D  ;display sun
+00006C 0EC9           00069         movlw   b'11001001'
+00006E EC?? F???      00070         call    LCD_shift 
+000072 0E00           00071         movlw   0x00   
+000074 EC?? F???      00072         call    LCD_Send_Byte_D   ;output egg in middle of bottom line
+000078 0012           00073         return  
+                      00074         
+00007A                00075 output_hatching_sequence
+00007A 0E05           00076         movlw   0x05
+00007C 6E??           00077         movwf   repeats ; register to hold the number of times the egg will vibrate 
+00007E 0EC8           00078 dynamic movlw   b'11001000'     ;dynamic sequence shows the egg vibrating before it hatches 
+000080 EC?? F???      00079         call    LCD_shift 
+000084 0EB2           00080         movlw   0xb2   ;move bracket " to left of egg
+000086 EC?? F???      00081         call    LCD_Send_Byte_D
+00008A 0ECA           00082         movlw   b'11001010'
+00008C EC?? F???      00083         call    LCD_shift 
+000090 0EB2           00084         movlw   0xb2   ;move bracket " to right of egg
+000092 EC?? F???      00085         call    LCD_Send_Byte_D 
+000096 EC?? F???      00086         call    hatch_delay 
+00009A 0EC8           00087         movlw   b'11001000'
+00009C EC?? F???      00088         call    LCD_shift 
+0000A0 0E20           00089         movlw   ' ' 
+0000A2 EC?? F???      00090         call    LCD_Send_Byte_D
+0000A6 0ECA           00091         movlw   b'11001010'
+0000A8 EC?? F???      00092         call    LCD_shift 
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0000C2 EC?? F???      00095         call    LCD_shift 
-0000C6 0E02           00096         movlw   0x02   ; dot / tiny rabbit
-0000C8 EC?? F???      00097         call    LCD_Send_Byte_D   ;Output 
-0000CC 0EC8           00098         movlw   b'11001000'
-0000CE EC?? F???      00099         call    LCD_shift 
-0000D2 0E28           00100         movlw   0x28  ;(
-0000D4 EC?? F???      00101         call    LCD_Send_Byte_D
-0000D8 0ECA           00102         movlw   b'11001010'
-0000DA EC?? F???      00103         call    LCD_shift 
-0000DE 0E29           00104         movlw   0x29  ;)
-0000E0 EC?? F???      00105         call    LCD_Send_Byte_D 
-0000E4 EC?? F???      00106         call    hatch_delay  
-0000E8 0EC8           00107         movlw   b'11001000'
-0000EA EC?? F???      00108         call    LCD_shift 
-0000EE 0E20           00109         movlw   ' '
-0000F0 EC?? F???      00110         call    LCD_Send_Byte_D
-0000F4 0ECA           00111         movlw   b'11001010'
-0000F6 EC?? F???      00112         call    LCD_shift 
-0000FA 0E20           00113         movlw   ' '
-0000FC EC?? F???      00114         call    LCD_Send_Byte_D 
-000100 0012           00115         return 
-                      00116 
-000102                00117 hatch_delay
-000102 0E90           00118         movlw   0x90
-000104 6E??           00119         movwf   delay_counter_h1
-000106                00120 delay_1       
-000106 2E??           00121         decfsz  delay_counter_h1
-000108 D???           00122         bra     nested_2
-00010A 0012           00123         return
-                      00124         
-00010C                00125 nested_2
-00010C 0E90           00126         movlw   0x90
-00010E 6E??           00127         movwf   delay_counter_h2
-000110 2E??           00128 delay_2 decfsz  delay_counter_h2
-000112 D???           00129         bra     nested_3
-000114 D???           00130         bra     delay_1
-                      00131 
-000116                00132 nested_3
-000116 0E90           00133         movlw   0x90
-000118 6E??           00134         movwf   delay_counter_h3
-00011A                00135 delay_3
-00011A 2E??           00136         decfsz  delay_counter_h3
-00011C D???           00137         bra     delay_3
-00011E D???           00138         bra     delay_2
-                      00139   
-                      00140         end
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE  4
+0000AC 0E20           00093         movlw   ' '    ;make brackets disappear again
+0000AE EC?? F???      00094         call    LCD_Send_Byte_D 
+0000B2 EC?? F???      00095         call    hatch_delay 
+0000B6 2E??           00096         decfsz  repeats  ;repeat blinking 0x020 times
+0000B8 D???           00097         bra     dynamic 
+0000BA 0E05           00098         movlw   0x05
+0000BC 6E??           00099         movwf   repeats   ; register to hold the number of times the egg will blink in and out 
+0000BE                00100 egg_blink
+0000BE 0EC9           00101         movlw   b'11001001'
+0000C0 EC?? F???      00102         call    LCD_shift 
+0000C4 0E00           00103         movlw   0x00   
+0000C6 EC?? F???      00104         call    LCD_Send_Byte_D 
+0000CA EC?? F???      00105         call    hatch_delay
+0000CE 0EC9           00106         movlw   b'11001001'
+0000D0 EC?? F???      00107         call    LCD_shift 
+0000D4 0E20           00108         movlw   ' '
+0000D6 EC?? F???      00109         call    LCD_Send_Byte_D 
+0000DA EC?? F???      00110         call    hatch_delay 
+0000DE 2E??           00111         decfsz  repeats
+0000E0 D???           00112         bra     egg_blink 
+0000E2 0EC9           00113 crack   movlw   b'11001001'
+0000E4 EC?? F???      00114         call    LCD_shift 
+0000E8 0E02           00115         movlw   0x02   ; dot / tiny rabbit
+0000EA EC?? F???      00116         call    LCD_Send_Byte_D   ;Output 
+0000EE 0EC8           00117         movlw   b'11001000'
+0000F0 EC?? F???      00118         call    LCD_shift 
+0000F4 0E28           00119         movlw   0x28  ;(
+0000F6 EC?? F???      00120         call    LCD_Send_Byte_D
+0000FA 0ECA           00121         movlw   b'11001010'
+0000FC EC?? F???      00122         call    LCD_shift 
+000100 0E29           00123         movlw   0x29  ;)
+000102 EC?? F???      00124         call    LCD_Send_Byte_D 
+000106 EC?? F???      00125         call    hatch_delay  
+00010A 0EC8           00126         movlw   b'11001000'
+00010C EC?? F???      00127         call    LCD_shift 
+000110 0E20           00128         movlw   ' '
+000112 EC?? F???      00129         call    LCD_Send_Byte_D
+000116 0ECA           00130         movlw   b'11001010'
+000118 EC?? F???      00131         call    LCD_shift 
+00011C 0E20           00132         movlw   ' '
+00011E EC?? F???      00133         call    LCD_Send_Byte_D 
+000122 0012           00134         return 
+                      00135 
+000124                00136 hatch_delay
+000124 0E90           00137         movlw   0x90
+000126 6E??           00138         movwf   delay_counter_h1
+000128                00139 delay_1       
+000128 2E??           00140         decfsz  delay_counter_h1
+00012A D???           00141         bra     nested_2
+00012C 0012           00142         return
+                      00143         
+00012E                00144 nested_2
+00012E 0E90           00145         movlw   0x90
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000130 6E??           00146         movwf   delay_counter_h2
+000132 2E??           00147 delay_2 decfsz  delay_counter_h2
+000134 D???           00148         bra     nested_3
+000136 D???           00149         bra     delay_1
+                      00150 
+000138                00151 nested_3
+000138 0E90           00152         movlw   0x90
+00013A 6E??           00153         movwf   delay_counter_h3
+00013C                00154 delay_3
+00013C 2E??           00155         decfsz  delay_counter_h3
+00013E D???           00156         bra     delay_3
+000140 D???           00157         bra     delay_2
+                      00158   
+                      00159         end
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE  5
 
 
 SYMBOL TABLE
@@ -227,7 +254,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE  5
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE  6
 
 
 SYMBOL TABLE
@@ -286,7 +313,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE  6
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE  7
 
 
 SYMBOL TABLE
@@ -345,7 +372,7 @@ C1TSEL0                           00000000
 C1TSEL1                           00000001
 C1TSEL2                           00000002
 C2INA                             00000004
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE  7
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE  8
 
 
 SYMBOL TABLE
@@ -404,7 +431,7 @@ CCP1IP                            00000001
 CCP1M0                            00000000
 CCP1M1                            00000001
 CCP1M2                            00000002
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE  8
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE  9
 
 
 SYMBOL TABLE
@@ -463,7 +490,7 @@ CCP5M0                            00000000
 CCP5M1                            00000001
 CCP5M2                            00000002
 CCP5M3                            00000003
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE  9
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 10
 
 
 SYMBOL TABLE
@@ -522,7 +549,7 @@ CCP9IP                            00000006
 CCP9M0                            00000000
 CCP9M1                            00000001
 CCP9M2                            00000002
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 10
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 11
 
 
 SYMBOL TABLE
@@ -581,7 +608,7 @@ CHSN1                             00000001
 CHSN2                             00000002
 CK1                               00000006
 CK2                               00000001
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 11
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 12
 
 
 SYMBOL TABLE
@@ -640,7 +667,7 @@ CTMUIE                            00000003
 CTMUIF                            00000003
 CTMUIP                            00000003
 CTMUMD                            00000006
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 12
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 13
 
 
 SYMBOL TABLE
@@ -699,7 +726,7 @@ ECCP1AS1                          00000005
 ECCP1AS2                          00000006
 ECCP1ASE                          00000007
 ECCP1CON                          00000FBB
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 13
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 14
 
 
 SYMBOL TABLE
@@ -758,7 +785,7 @@ FSR2H                             00000FDA
 FSR2L                             00000FD9
 GCEN                              00000007
 GIE                               00000007
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 14
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 15
 
 
 SYMBOL TABLE
@@ -817,7 +844,7 @@ INT3F                             00000002
 INT3IE                            00000005
 INT3IF                            00000002
 INT3IP                            00000001
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 15
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 16
 
 
 SYMBOL TABLE
@@ -876,7 +903,7 @@ LATB7                             00000007
 LATC                              00000F8B
 LATC0                             00000000
 LATC1                             00000001
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 16
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 17
 
 
 SYMBOL TABLE
@@ -935,7 +962,7 @@ LATJ1                             00000001
 LATJ2                             00000002
 LATJ3                             00000003
 LATJ4                             00000004
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 17
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 18
 
 
 SYMBOL TABLE
@@ -952,7 +979,9 @@ LVDIE                             00000002
 LVDIF                             00000002
 LVDIP                             00000002
 Line_0                            00000000
+Line_1                            00000010
 Line_Bytes_0                      00000010
+Line_Bytes_1                      0000000F
 MEMCON                            00000F26
 MFIOFS                            00000001
 MFIOSEL                           00000000
@@ -992,14 +1021,14 @@ NOT_W                             00000002
 NOT_WR                            00000001
 NOT_WRITE                         00000002
 OBF                               00000006
-ODCON1                            00000F29
-ODCON2                            00000F28
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 18
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 19
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+ODCON1                            00000F29
+ODCON2                            00000F28
 ODCON3                            00000F27
 OE                                00000001
 OERR                              00000001
@@ -1051,14 +1080,14 @@ P3DC1                             00000001
 P3DC2                             00000002
 P3DC3                             00000003
 P3DC4                             00000004
-P3DC5                             00000005
-P3DC6                             00000006
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 19
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 20
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+P3DC5                             00000005
+P3DC6                             00000006
 P3M0                              00000006
 P3M1                              00000007
 P3RSEN                            00000007
@@ -1110,14 +1139,14 @@ PORTE                             00000F84
 PORTF                             00000F85
 PORTG                             00000F86
 PORTH                             00000F87
-PORTJ                             00000F88
-POSTDEC0                          00000FED
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 20
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 21
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+PORTJ                             00000F88
+POSTDEC0                          00000FED
 POSTDEC1                          00000FE5
 POSTDEC2                          00000FDD
 POSTINC0                          00000FEE
@@ -1169,14 +1198,14 @@ PWM1CON                           00000FBE
 PWM2CON                           00000F51
 R                                 00000002
 RA0                               00000000
-RA1                               00000001
-RA2                               00000002
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 21
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 22
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+RA1                               00000001
+RA2                               00000002
 RA3                               00000003
 RA4                               00000004
 RA5                               00000005
@@ -1228,14 +1257,14 @@ RD0                               00000000
 RD1                               00000001
 RD16                              00000001
 RD2                               00000002
-RD3                               00000003
-RD4                               00000004
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 22
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 23
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+RD3                               00000003
+RD4                               00000004
 RD5                               00000005
 RD6                               00000006
 RD7                               00000007
@@ -1287,14 +1316,14 @@ RJPU                              00000005
 RODIV0                            00000000
 RODIV1                            00000001
 RODIV2                            00000002
-RODIV3                            00000003
-ROON                              00000007
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 23
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 24
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+RODIV3                            00000003
+ROON                              00000007
 ROSEL                             00000004
 ROSSLP                            00000005
 RSEN                              00000001
@@ -1346,14 +1375,14 @@ SEN                               00000000
 SENDB                             00000003
 SENDB1                            00000003
 SENDB2                            00000003
-SMP                               00000007
-SOSCEN                            00000003
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 24
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 25
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+SMP                               00000007
+SOSCEN                            00000003
 SOSCGO                            00000003
 SOSCI                             00000001
 SOSCO                             00000000
@@ -1405,14 +1434,14 @@ SSPCON2                           00000FC5
 SSPEN                             00000005
 SSPIE                             00000003
 SSPIF                             00000003
-SSPIP                             00000003
-SSPM0                             00000000
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 25
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 26
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+SSPIP                             00000003
+SSPM0                             00000000
 SSPM1                             00000001
 SSPM2                             00000002
 SSPM3                             00000003
@@ -1464,14 +1493,14 @@ T1CKPS1                           00000005
 T1CON                             00000FCD
 T1G                               00000005
 T1GCON                            00000FAA
-T1GGO                             00000003
-T1GGO_NOT_T1DONE                  00000003
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 26
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 27
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+T1GGO                             00000003
+T1GGO_NOT_T1DONE                  00000003
 T1GPOL                            00000006
 T1GSPM                            00000004
 T1GSS0                            00000000
@@ -1523,14 +1552,14 @@ T5GVAL                            00000002
 T6CKPS0                           00000000
 T6CKPS1                           00000001
 T6CON                             00000F39
-T6OUTPS0                          00000003
-T6OUTPS1                          00000004
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 27
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 28
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+T6OUTPS0                          00000003
+T6OUTPS1                          00000004
 T6OUTPS2                          00000005
 T6OUTPS3                          00000006
 T7CKI                             00000004
@@ -1582,14 +1611,14 @@ TMR12MD                           00000000
 TMR12ON                           00000002
 TMR1CS0                           00000006
 TMR1CS1                           00000007
-TMR1GE                            00000007
-TMR1GIE                           00000002
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 28
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 29
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TMR1GE                            00000007
+TMR1GIE                           00000002
 TMR1GIF                           00000002
 TMR1GIP                           00000002
 TMR1H                             00000FCF
@@ -1641,14 +1670,14 @@ TMR5MD                            00000003
 TMR5ON                            00000000
 TMR6                              00000F3B
 TMR6IE                            00000002
-TMR6IF                            00000002
-TMR6IP                            00000002
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 29
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 30
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TMR6IF                            00000002
+TMR6IP                            00000002
 TMR6MD                            00000004
 TMR6ON                            00000002
 TMR7                              00000F3E
@@ -1700,14 +1729,14 @@ TRISC                             00000F94
 TRISC0                            00000000
 TRISC1                            00000001
 TRISC2                            00000002
-TRISC3                            00000003
-TRISC4                            00000004
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 30
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 31
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TRISC3                            00000003
+TRISC4                            00000004
 TRISC5                            00000005
 TRISC6                            00000006
 TRISC7                            00000007
@@ -1759,14 +1788,14 @@ TRISJ2                            00000002
 TRISJ3                            00000003
 TRISJ4                            00000004
 TRISJ5                            00000005
-TRISJ6                            00000006
-TRISJ7                            00000007
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 31
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 32
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TRISJ6                            00000006
+TRISJ7                            00000007
 TRMT                              00000001
 TRMT1                             00000001
 TRMT2                             00000001
@@ -1818,14 +1847,14 @@ ULPWU                             00000000
 VCFG0                             00000004
 VCFG1                             00000005
 VDIRMAG                           00000007
-VNCFG                             00000003
-VREF_MINUS                        00000002
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 32
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 33
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+VNCFG                             00000003
+VREF_MINUS                        00000002
 VREF_PLUS                         00000003
 W                                 00000000
 WAIT0                             00000004
@@ -1877,14 +1906,14 @@ _CONFIG6H                         0030000B
 _CONFIG6L                         0030000A
 _CONFIG7H                         0030000D
 _CONFIG7L                         0030000C
-_CP0_OFF_5L                       000000FF
-_CP0_ON_5L                        000000FE
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 33
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 34
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+_CP0_OFF_5L                       000000FF
+_CP0_ON_5L                        000000FE
 _CP1_OFF_5L                       000000FF
 _CP1_ON_5L                        000000FD
 _CP2_OFF_5L                       000000FF
@@ -1936,14 +1965,14 @@ _FOSC_EC1_1H                      000000FD
 _FOSC_EC2IO_1H                    000000FA
 _FOSC_EC2_1H                      000000FB
 _FOSC_EC3IO_1H                    000000F4
-_FOSC_EC3_1H                      000000F5
-_FOSC_HS1_1H                      000000F3
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 34
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 35
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+_FOSC_EC3_1H                      000000F5
+_FOSC_HS1_1H                      000000F3
 _FOSC_HS2_1H                      000000F2
 _FOSC_INTIO1_1H                   000000F9
 _FOSC_INTIO2_1H                   000000F8
@@ -1995,14 +2024,14 @@ _WDTPS_16_2H                      00000093
 _WDTPS_1_2H                       00000083
 _WDTPS_2048_2H                    000000AF
 _WDTPS_256_2H                     000000A3
-_WDTPS_262144_2H                  000000CB
-_WDTPS_2_2H                       00000087
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 35
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 36
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+_WDTPS_262144_2H                  000000CB
+_WDTPS_2_2H                       00000087
 _WDTPS_32768_2H                   000000BF
 _WDTPS_32_2H                      00000097
 _WDTPS_4096_2H                    000000B3
@@ -2039,29 +2068,31 @@ _XINST_OFF_1L                     000000BF
 _XINST_ON_1L                      000000FF
 __18F87K22                        00000001
 counter_output                    00000003
-crack                             000000C0
-delay_1                           00000106
-delay_2                           00000110
-delay_3                           0000011A
+crack                             000000E2
+delay_1                           00000128
+delay_2                           00000132
+delay_3                           0000013C
 delay_counter_h1                  00000000
 delay_counter_h2                  00000001
 delay_counter_h3                  00000002
-dynamic                           0000005C
-egg_blink                         0000009C
-hatch_delay                       00000102
+dynamic                           0000007E
+egg_blink                         000000BE
+hatch_delay                       00000124
 loop                              00000014
-nested_2                          0000010C
-nested_3                          00000116
-output_PRESS_A_TO_HATCH           00000000
-output_hatching_sequence          00000058
-output_starting_screen            00000022
+looph                             00000036
+nested_2                          0000012E
+nested_3                          00000138
+output_HEAT_TO_HATCH              00000022
+MPASM 5.81                         HATCH.ASM   2-24-2020  10:40:16         PAGE 37
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+output_PRESS_A_TO_START           00000000
+output_hatching_sequence          0000007A
+output_starting_screen            00000044
 repeats                           00000004
-MPASM 5.81                         HATCH.ASM   2-21-2020  14:10:48         PAGE 36
-
-
-
-
-
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed

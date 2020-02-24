@@ -20,12 +20,6 @@ ball code
     
     
 BALL_GAME
-    movlw  0x10
-    movwf  timer_1_remaining 
-    movlw  0x10
-    movwf  timer_2_remaining
-    movlw  0x10
-    movwf  timer_2_remaining 
     movlw  b'11001001'
     call   LCD_shift 
     movlw  ' '
@@ -70,6 +64,12 @@ BALL_GAME
     ;move rabbit to the end of the screen 
     call   ball_delay
 ball 
+    movlw  0xA
+    movwf  timer_1_remaining 
+    movlw  0xA
+    movwf  timer_2_remaining
+    movlw  0xA
+    movwf  timer_2_remaining 
     movlw b'11000011'
     call  LCD_shift 
     movlw ' '
@@ -167,7 +167,7 @@ n_2     movff   timer_2_remaining, timer_2
 t_2	decfsz  timer_2
 	bra     n_3
 	bra     t_1
-n_3      movff  timer_3_remaining, timer_3
+n_3     movff  timer_3_remaining, timer_3
 t_3	decfsz  timer_3
 	bra     t_3
 	bra     t_2
@@ -288,7 +288,7 @@ setup_row
    
 	
 timer
-        movlw   0x40
+        movlw   0x30
 	movwf   timer_1
 t1       
 	decfsz  timer_1

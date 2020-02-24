@@ -1,7 +1,8 @@
 #include p18f87k22.inc
 
     extern LCD_clear, LCD_Send_Byte_D, LCD_shift
-    global output_starting_screen, output_hatching_sequence, output_PRESS_A_TO_HATCH
+    global output_starting_screen, output_hatching_sequence, output_PRESS_A_TO_START
+    global output_HEAT_TO_HATCH
 
 acs0		    udata_acs   
 delay_counter_h1    res 1   
@@ -11,12 +12,13 @@ counter_output	    res 1
 repeats             res 1
 
 pdata code
-Line_0          data "PRESS A TO HATCH"
+Line_0          data "PRESS A TO START"
 	        variable Line_Bytes_0= .16
-		
+Line_1		data "  HEAT TO HATCH"
+		variable Line_Bytes_1= .15
 Hatch	code	
 
-output_PRESS_A_TO_HATCH
+output_PRESS_A_TO_START
 	call    LCD_clear 
 	movlw	upper(Line_0)	; address of data in PM
 	movwf	TBLPTRU		; load upper bits to TBLPTRU
@@ -31,6 +33,23 @@ loop 	tblrd*+			; one byte from PM to TABLAT, increment TBLPRT
         call    LCD_Send_Byte_D
 	decfsz	counter_output	; count down to zero
 	bra     loop
+	return 	
+
+output_HEAT_TO_HATCH
+	call    LCD_clear 
+	movlw	upper(Line_1)	; address of data in PM
+	movwf	TBLPTRU		; load upper bits to TBLPTRU
+	movlw	high(Line_1)	; address of data in PM
+	movwf	TBLPTRH		; load high byte to TBLPTRH
+	movlw	low(Line_1)	; address of data in PM
+	movwf	TBLPTRL		; load low byte to TBLPTRL
+	movlw	Line_Bytes_1	; bytes to read
+	movwf 	counter_output	; our counter register
+looph 	tblrd*+			; one byte from PM to TABLAT, increment TBLPRT
+	movf    TABLAT, w
+        call    LCD_Send_Byte_D
+	decfsz	counter_output	; count down to zero
+	bra     looph
 	return 	
 	
 output_starting_screen

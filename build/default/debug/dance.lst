@@ -1,4 +1,4 @@
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE  1
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -57,7 +57,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 00002A                00041 BOUNCE
 00002A EC?? F???      00042         call    DBALL_1
 00002E 0EC9           00043         movlw   b'11001001'
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE  2
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -116,7 +116,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0000C8 EC?? F???      00094         call    dance_delay
 0000CC EC?? F???      00095         call    DBALL_2
 0000D0 0E86           00096         movlw   b'10000110'
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE  3
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -175,7 +175,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000172 EC?? F???      00147         call    LCD_shift
 000176 0E20           00148         movlw   ' '
 000178 EC?? F???      00149         call    LCD_Send_Byte_D
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE  4
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -234,7 +234,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 00021C 0ECB           00200         movlw   b'11001011'
 00021E EC?? F???      00201         call    LCD_shift
 000222 0E02           00202         movlw   0x02
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE  5
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -293,7 +293,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0002BA 0E88           00253         movlw   b'10001000'
 0002BC EC?? F???      00254         call    LCD_shift
 0002C0 0E2E           00255         movlw   0x2E
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE  6
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -352,7 +352,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 00034A D???           00306         bra     check_2
 00034C D???           00307         bra     SMALL
 00034E 0E02           00308 check_2 movlw   0x02
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE  7
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE  7
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -411,7 +411,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0003E6 EC?? F???      00359         call    dance_delay
 0003EA EC?? F???      00360         call    WAVE
 0003EE EC?? F???      00361         call    HOPS
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE  8
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE  8
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -470,7 +470,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000488 D???           00412         bra     delay_1
                       00413 
 00048A                00414 nested_3
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE  9
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE  9
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -485,7 +485,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00421     
                       00422     
                       00423     end 
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 10
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 10
 
 
 SYMBOL TABLE
@@ -544,7 +544,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 11
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 11
 
 
 SYMBOL TABLE
@@ -603,7 +603,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 12
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 12
 
 
 SYMBOL TABLE
@@ -662,7 +662,7 @@ C1INC                             00000006
 C1OUT                             00000002
 C1TSEL0                           00000000
 C1TSEL1                           00000001
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 13
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 13
 
 
 SYMBOL TABLE
@@ -721,7 +721,7 @@ CCP1IE                            00000001
 CCP1IF                            00000001
 CCP1IP                            00000001
 CCP1M0                            00000000
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 14
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 14
 
 
 SYMBOL TABLE
@@ -780,7 +780,7 @@ CCP5IF                            00000002
 CCP5IP                            00000002
 CCP5M0                            00000000
 CCP5M1                            00000001
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 15
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 15
 
 
 SYMBOL TABLE
@@ -839,7 +839,7 @@ CCP9IE                            00000006
 CCP9IF                            00000006
 CCP9IP                            00000006
 CCP9M0                            00000000
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 16
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 16
 
 
 SYMBOL TABLE
@@ -898,7 +898,7 @@ CHS4                              00000006
 CHSN0                             00000000
 CHSN1                             00000001
 CHSN2                             00000002
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 17
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 17
 
 
 SYMBOL TABLE
@@ -957,7 +957,7 @@ CTMUI                             00000003
 CTMUICON                          00000F55
 CTMUIE                            00000003
 CTMUIF                            00000003
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 18
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 18
 
 
 SYMBOL TABLE
@@ -1016,7 +1016,7 @@ DONE                              00000001
 DT1                               00000007
 DT2                               00000002
 D_A                               00000005
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 19
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 19
 
 
 SYMBOL TABLE
@@ -1075,7 +1075,7 @@ FREE                              00000004
 FSR0                              00000000
 FSR0H                             00000FEA
 FSR0L                             00000FE9
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 20
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 20
 
 
 SYMBOL TABLE
@@ -1134,7 +1134,7 @@ INT1P                             00000006
 INT2                              00000002
 INT2E                             00000004
 INT2F                             00000001
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 21
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 21
 
 
 SYMBOL TABLE
@@ -1193,7 +1193,7 @@ LATA5                             00000005
 LATA6                             00000006
 LATA7                             00000007
 LATB                              00000F8A
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 22
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 22
 
 
 SYMBOL TABLE
@@ -1252,7 +1252,7 @@ LATH                              00000F90
 LATH0                             00000000
 LATH1                             00000001
 LATH2                             00000002
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 23
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 23
 
 
 SYMBOL TABLE
@@ -1311,7 +1311,7 @@ NOT_T1SYNC                        00000002
 NOT_T3DONE                        00000003
 NOT_T3SYNC                        00000002
 NOT_T5DONE                        00000003
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 24
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 24
 
 
 SYMBOL TABLE
@@ -1370,7 +1370,7 @@ P2DC4                             00000004
 P2DC5                             00000005
 P2DC6                             00000006
 P2M0                              00000006
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 25
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 25
 
 
 SYMBOL TABLE
@@ -1429,7 +1429,7 @@ PMD0                              00000F19
 PMD1                              00000F18
 PMD2                              00000F17
 PMD3                              00000F16
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 26
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 26
 
 
 SYMBOL TABLE
@@ -1488,7 +1488,7 @@ PSS2BD0                           00000000
 PSS2BD1                           00000001
 PSS3AC0                           00000002
 PSS3AC1                           00000003
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 27
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 27
 
 
 SYMBOL TABLE
@@ -1547,7 +1547,7 @@ RCIP                              00000005
 RCON                              00000FD0
 RCREG                             00000FAE
 RCREG1                            00000FAE
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 28
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 28
 
 
 SYMBOL TABLE
@@ -1606,7 +1606,7 @@ RI                                00000004
 RJ0                               00000000
 RJ1                               00000001
 RJ2                               00000002
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 29
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 29
 
 
 SYMBOL TABLE
@@ -1665,7 +1665,7 @@ SCL2                              00000006
 SCS0                              00000000
 SCS1                              00000001
 SDA1                              00000004
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 30
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 30
 
 
 SYMBOL TABLE
@@ -1724,7 +1724,7 @@ SSP2CON2                          00000F66
 SSP2IE                            00000005
 SSP2IF                            00000005
 SSP2IP                            00000005
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 31
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 31
 
 
 SYMBOL TABLE
@@ -1783,7 +1783,7 @@ T10OUTPS3                         00000006
 T12CKPS0                          00000000
 T12CKPS1                          00000001
 T12CON                            00000F30
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 32
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 32
 
 
 SYMBOL TABLE
@@ -1842,7 +1842,7 @@ T5CON                             00000F7B
 T5G                               00000004
 T5GCON                            00000F7A
 T5GGO                             00000003
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 33
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 33
 
 
 SYMBOL TABLE
@@ -1901,7 +1901,7 @@ TMR10                             00000F35
 TMR10IE                           00000005
 TMR10IF                           00000005
 TMR10IP                           00000005
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 34
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 34
 
 
 SYMBOL TABLE
@@ -1960,7 +1960,7 @@ TMR5CS1                           00000007
 TMR5GE                            00000007
 TMR5GIE                           00000007
 TMR5GIF                           00000007
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 35
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 35
 
 
 SYMBOL TABLE
@@ -2019,7 +2019,7 @@ TRISA7                            00000007
 TRISB                             00000F93
 TRISB0                            00000000
 TRISB1                            00000001
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 36
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 36
 
 
 SYMBOL TABLE
@@ -2078,7 +2078,7 @@ TRISH1                            00000001
 TRISH2                            00000002
 TRISH3                            00000003
 TRISH4                            00000004
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 37
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 37
 
 
 SYMBOL TABLE
@@ -2137,7 +2137,7 @@ TXSTA2                            00000F21
 U1OD                              00000006
 U2OD                              00000007
 UA                                00000001
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 38
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 38
 
 
 SYMBOL TABLE
@@ -2196,7 +2196,7 @@ _CCP2MX_PORTBE_3H                 000000FE
 _CCP2MX_PORTC_3H                  000000FF
 _CONFIG1H                         00300001
 _CONFIG1L                         00300000
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 39
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 39
 
 
 SYMBOL TABLE
@@ -2255,7 +2255,7 @@ _EBRT6_OFF_7L                     000000FF
 _EBRT6_ON_7L                      000000BF
 _EBRT7_OFF_7L                     000000FF
 _EBRT7_ON_7L                      0000007F
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 40
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 40
 
 
 SYMBOL TABLE
@@ -2314,7 +2314,7 @@ _WAIT_OFF_3L                      000000FF
 _WAIT_ON_3L                       0000007F
 _WDTEN_NOSLP_2H                   000000FD
 _WDTEN_OFF_2H                     000000FC
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 41
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 41
 
 
 SYMBOL TABLE
@@ -2373,7 +2373,7 @@ __MPLAB_DEBUGGER_ICD3             1
 check_1                           00000346
 check_2                           0000034E
 dance_counter_baby                00000004
-MPASM 5.81                         DANCE.ASM   2-20-2020  16:53:48         PAGE 42
+MPASM 5.81                         DANCE.ASM   2-24-2020  10:10:09         PAGE 42
 
 
 SYMBOL TABLE

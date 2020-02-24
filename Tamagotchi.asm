@@ -1,8 +1,8 @@
 #include p18f87k22.inc
 
-    extern LCD_Setup, LCD_Send_Byte_D, LCD_shift, LCD_clear
+    extern LCD_Setup, LCD_Send_Byte_D, LCD_shift, LCD_clear, output_HEAT_TO_HATCH
     extern FOOD, LEARN, DANCE, SLEEPY, BALL_GAME, output_starting_screen
-    extern output_hatching_sequence, output_PRESS_A_TO_HATCH, FOOD_Setup
+    extern output_hatching_sequence, output_PRESS_A_TO_START, FOOD_Setup
     extern BABY, GHOST, ADC_Setup, TEMPERATURE, Temperature_hex_1, Temperature_hex_2
 	
 acs0                             udata_acs
@@ -41,8 +41,8 @@ MAIN
 	nop
 	nop
 	nop
-	call    output_PRESS_A_TO_HATCH   ;output "PRESS_A_TO_HATCH"
-PRESS_A_TO_HATCH
+	call    output_PRESS_A_TO_START   ;output "PRESS_A_TO_HATCH"
+PRESS_A_TO_START
 	movlw   0xFF
 	movwf	counter_happiness_decrement
 	movlw   0x00
@@ -51,9 +51,26 @@ PRESS_A_TO_HATCH
 	movwf   Key_Pressed   ;waits for input
 	movlw   0x41          
 	cpfseq  Key_Pressed   ;is the key pressed A?
-	bra     PRESS_A_TO_HATCH          ;if not, got back to start
+	bra     PRESS_A_TO_START         ;if not, got back to start
+	call	output_HEAT_TO_HATCH
+	call	delay
 	call    output_starting_screen   ;if A is pressed, output starting screen 
-	call    delay
+hatch_temp
+	call	delay
+	call    TEMPERATURE 
+	movlw   0xDC
+	cpfsgt  Temperature_hex_1
+	bra     coldh
+	bra	hoth
+coldh	movlw   b'11000010'
+	call    LCD_shift 
+	movlw   0x2A
+	call    LCD_Send_Byte_D	
+	bra     hatch_temp
+hoth	movlw   b'11000010'
+	call    LCD_shift 
+	movlw   0xD7
+	call    LCD_Send_Byte_D
 	call    output_hatching_sequence ;carry out hatching sequence 	
 	movlw   0xFE
 	movwf   counter_happiness_decrement ;set the counter_happiness_decrement to 255
