@@ -1,4 +1,4 @@
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE  1
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -57,7 +57,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000118 0000           00041         nop
 00011A 0000           00042         nop
 00011C 0000           00043         nop
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE  2
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -80,7 +80,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000142                00058 hatch_temp
 000142 EC?? F???      00059         call    delay
 000146 EC?? F???      00060         call    TEMPERATURE 
-00014A 0EDC           00061         movlw   0xDC
+00014A 0EC8           00061         movlw   0xC8
 00014C 64??           00062         cpfsgt  Temperature_hex_1
 00014E D???           00063         bra     coldh
 000150 D???           00064         bra     hoth
@@ -116,7 +116,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 00019A                00094 CHECK_A_PRESSED
 00019A 0E41           00095         movlw   0x41      ;is the key pressed A?
 00019C 62??           00096         cpfseq  Key_Pressed 
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE  3
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -175,7 +175,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 00020A 6E??           00147         movwf   counter_happiness
 00020C EC?? F???      00148         call    HAPPINESS
 000210 D???           00149         bra     GAME_MODE
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE  4
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -234,7 +234,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 00025C AE84           00200         btfss PORTE, RE7
 00025E D???           00201         bra   dch
 000260 0E03           00202         movlw 0x03
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE  5
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -293,7 +293,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0002B0 0012           00253         return 
 0002B2                00254 column_11
 0002B2 0E04           00255         movlw 0x04
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE  6
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -352,7 +352,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000306                00306 column_31
 000306 0E04           00307         movlw 0x04
 000308 62??           00308         cpfseq counter_column
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE  7
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE  7
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -411,7 +411,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 00035A D???           00359         bra     dch2
 00035C D???           00360         bra     dch3
 00035E 0EFE           00361 dch2    movlw   0xFE
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE  8
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE  8
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -470,7 +470,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0003C4 0E20           00412         movlw   ' '
 0003C6 EC?? F???      00413         call    LCD_Send_Byte_D
 0003CA 0012           00414         return 
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE  9
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE  9
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -529,7 +529,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 00042E 0EF4           00465         movlw   0xF4
 000430 6E??           00466         movwf   counter_happiness
 000432 0EC0           00467         movlw   b'11000000'
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 10
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 10
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -588,7 +588,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0004C8 EC?? F???      00518         call    LCD_Send_Byte_D
 0004CC 0E00           00519         movlw   0x00
 0004CE EC?? F???      00520         call    LCD_Send_Byte_D
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 11
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 11
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -643,7 +643,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 00052E                00567 finished
                       00568         
                       00569         end
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 12
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 12
 
 
 SYMBOL TABLE
@@ -702,7 +702,7 @@ ADMSK4                            00000004
 ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 13
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 13
 
 
 SYMBOL TABLE
@@ -761,7 +761,7 @@ ANSEL15                           00000007
 ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 14
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 14
 
 
 SYMBOL TABLE
@@ -820,7 +820,7 @@ C1INB                             00000005
 C1INC                             00000006
 C1OUT                             00000002
 C1TSEL0                           00000000
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 15
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 15
 
 
 SYMBOL TABLE
@@ -879,7 +879,7 @@ CCP1CON                           00000FBB
 CCP1IE                            00000001
 CCP1IF                            00000001
 CCP1IP                            00000001
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 16
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 16
 
 
 SYMBOL TABLE
@@ -938,7 +938,7 @@ CCP5IE                            00000002
 CCP5IF                            00000002
 CCP5IP                            00000002
 CCP5M0                            00000000
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 17
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 17
 
 
 SYMBOL TABLE
@@ -997,7 +997,7 @@ CCP9CON                           00000F43
 CCP9IE                            00000006
 CCP9IF                            00000006
 CCP9IP                            00000006
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 18
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 18
 
 
 SYMBOL TABLE
@@ -1056,7 +1056,7 @@ CHECK_E_PRESSED                   000001E4
 CHECK_F_PRESSED                   000001FA
 CHECK_LAST_LIFE                   0000041A
 CHIME                             00000006
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 19
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 19
 
 
 SYMBOL TABLE
@@ -1115,7 +1115,7 @@ CSRC2                             00000007
 CTDIN                             00000001
 CTED1                             00000002
 CTED2                             00000003
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 20
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 20
 
 
 SYMBOL TABLE
@@ -1174,7 +1174,7 @@ DDRC                              TRISC
 DDRD                              TRISD
 DDRE                              TRISE
 DEATH                             0000045E
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 21
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 21
 
 
 SYMBOL TABLE
@@ -1233,7 +1233,7 @@ FERR                              00000002
 FERR1                             00000002
 FERR2                             00000002
 FLT0                              00000000
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 22
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 22
 
 
 SYMBOL TABLE
@@ -1292,7 +1292,7 @@ INT0IE                            00000004
 INT0IF                            00000001
 INT1                              00000001
 INT1E                             00000003
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 23
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 23
 
 
 SYMBOL TABLE
@@ -1351,7 +1351,7 @@ KBI3                              00000007
 Key_Pressed                       00000482
 Keyboard                          0000021E
 Keyboard_Setup                    00000212
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 24
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 24
 
 
 SYMBOL TABLE
@@ -1410,7 +1410,7 @@ LATF4                             00000004
 LATF5                             00000005
 LATF6                             00000006
 LATF7                             00000007
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 25
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 25
 
 
 SYMBOL TABLE
@@ -1469,7 +1469,7 @@ NOT_ADDRESS                       00000005
 NOT_BOR                           00000000
 NOT_CM                            00000005
 NOT_CS                            00000002
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 26
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 26
 
 
 SYMBOL TABLE
@@ -1528,7 +1528,7 @@ P1DC5                             00000005
 P1DC6                             00000006
 P1M0                              00000006
 P1M1                              00000007
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 27
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 27
 
 
 SYMBOL TABLE
@@ -1587,7 +1587,7 @@ PIE3                              00000FA3
 PIE4                              00000FB6
 PIE5                              00000FB9
 PIE6                              00000F60
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 28
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 28
 
 
 SYMBOL TABLE
@@ -1646,7 +1646,7 @@ PSP5                              00000005
 PSP6                              00000006
 PSP7                              00000007
 PSPCON                            00000FA7
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 29
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 29
 
 
 SYMBOL TABLE
@@ -1705,7 +1705,7 @@ RC2IE                             00000005
 RC2IF                             00000005
 RC2IP                             00000005
 RC3                               00000003
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 30
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 30
 
 
 SYMBOL TABLE
@@ -1764,7 +1764,7 @@ RF7                               00000007
 RG0                               00000000
 RG1                               00000001
 RG2                               00000002
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 31
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 31
 
 
 SYMBOL TABLE
@@ -1823,7 +1823,7 @@ RX9                               00000006
 RX91                              00000006
 RX92                              00000006
 RX9D                              00000000
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 32
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 32
 
 
 SYMBOL TABLE
@@ -1882,7 +1882,7 @@ SREN2                             00000005
 SRETEN                            00000004
 SS1                               00000007
 SSP1ADD                           00000FC8
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 33
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 33
 
 
 SYMBOL TABLE
@@ -1941,7 +1941,7 @@ T0CKI                             00000004
 T0CON                             00000FD5
 T0CS                              00000005
 T0IE                              00000005
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 34
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 34
 
 
 SYMBOL TABLE
@@ -2000,7 +2000,7 @@ T3GPOL                            00000006
 T3GSPM                            00000004
 T3GSS0                            00000000
 T3GSS1                            00000001
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 35
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 35
 
 
 SYMBOL TABLE
@@ -2059,7 +2059,7 @@ T8OUTPS2                          00000005
 T8OUTPS3                          00000006
 TABLAT                            00000FF5
 TBLPTR                            00000FF6
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 36
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 36
 
 
 SYMBOL TABLE
@@ -2118,7 +2118,7 @@ TMR3GIE                           00000000
 TMR3GIF                           00000000
 TMR3GIP                           00000000
 TMR3H                             00000FB3
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 37
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 37
 
 
 SYMBOL TABLE
@@ -2177,7 +2177,7 @@ TMR8IP                            00000004
 TMR8MD                            00000006
 TMR8ON                            00000002
 TO                                00000003
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 38
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 38
 
 
 SYMBOL TABLE
@@ -2236,7 +2236,7 @@ TRISE6                            00000006
 TRISE7                            00000007
 TRISF                             00000F97
 TRISF1                            00000001
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 39
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 39
 
 
 SYMBOL TABLE
@@ -2295,7 +2295,7 @@ TX9                               00000006
 TX91                              00000006
 TX92                              00000006
 TX9D                              00000000
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 40
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 40
 
 
 SYMBOL TABLE
@@ -2354,7 +2354,7 @@ _ABW_MM_3L                        000000FF
 _ABW_XM12_3L                      000000EF
 _ABW_XM16_3L                      000000DF
 _ABW_XM20_3L                      000000CF
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 41
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 41
 
 
 SYMBOL TABLE
@@ -2413,7 +2413,7 @@ _CPD_OFF_5H                       000000FF
 _CPD_ON_5H                        0000007F
 _DEBUG_OFF_4L                     000000FF
 _DEBUG_ON_4L                      0000007F
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 42
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 42
 
 
 SYMBOL TABLE
@@ -2472,7 +2472,7 @@ _IESO_ON_1H                       000000FF
 _INTOSCSEL_HIGH_1L                000000FF
 _INTOSCSEL_LOW_1L                 000000FB
 _MCLRE_OFF_3H                     0000007F
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 43
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 43
 
 
 SYMBOL TABLE
@@ -2531,7 +2531,7 @@ _WRT3_OFF_6L                      000000FF
 _WRT3_ON_6L                       000000F7
 _WRT4_OFF_6L                      000000FF
 _WRT4_ON_6L                       000000EF
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 44
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 44
 
 
 SYMBOL TABLE
@@ -2590,7 +2590,7 @@ dch2                              0000035E
 dch3                              00000364
 dch4                              0000036A
 dch5                              00000370
-MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  10:57:00         PAGE 45
+MPASM 5.81                    TAMAGOTCHI.ASM   2-24-2020  14:05:03         PAGE 45
 
 
 SYMBOL TABLE

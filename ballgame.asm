@@ -297,7 +297,7 @@ t1
 	
 n2      movlw   0x01
 	subwf   timer_1_remaining, 1
-	movlw   0x35
+	movlw   0x30
 	movwf   timer_2
 t2	decfsz  timer_2
 	bra     n3

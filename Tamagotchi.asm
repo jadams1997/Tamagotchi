@@ -58,7 +58,7 @@ PRESS_A_TO_START
 hatch_temp
 	call	delay
 	call    TEMPERATURE 
-	movlw   0xDC
+	movlw   0xC8
 	cpfsgt  Temperature_hex_1
 	bra     coldh
 	bra	hoth
