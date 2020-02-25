@@ -21,7 +21,7 @@ counter_row	                 res 1
 counter_column	                 res 1
 Key_Pressed                      res 0x40
 sound_buuzz                      res 1
- 
+
 
 tamagotchi code
  
@@ -35,6 +35,8 @@ setup	bcf	EECON1, CFGS	; point to Flash program memory
 	call    Keyboard_Setup  ; setup keyboard 
 	call    FOOD_Setup 
 	call    ADC_Setup
+	movlw   0x00
+	movwf   TRISF
 	goto    MAIN
 	
 MAIN 
@@ -76,7 +78,7 @@ hoth	movlw   b'11000010'
 	movwf   counter_happiness_decrement ;set the counter_happiness_decrement to 255
 	movlw   0xFE
 	movwf	counter_happiness_decrement_2
-	movlw   0x01
+	movlw   0x05
 	movwf   counter_happiness_decrement_3
 	movlw   0xF4
 	movwf   counter_happiness  ;counter_happiness to 100
@@ -179,6 +181,7 @@ setup_row
         return 
    
 read_row   
+	;dc
 	btfss PORTE, RE4
 	bra check_1
 	movlw 0x0
@@ -358,17 +361,22 @@ dch1	decfsz  counter_happiness_decrement
 	decfsz  counter_happiness_decrement_2
 	bra	dch2
 	bra     dch3
-dch2    movlw	0xFE
+dch2    ;for d2
+	movlw	0xFE
 	movwf	counter_happiness_decrement
 	bra	read_row
-dch3	decfsz  counter_happiness_decrement_3
+dch3    decfsz  counter_happiness_decrement_3
 	bra	dch4
 	bra     dch5
-dch4	movlw	0xFE
+dch4    ;for d3
+	movlw	0xFE
+	movwf	counter_happiness_decrement
+	movlw	0xFE
 	movwf	counter_happiness_decrement_2
 	bra	read_row	
 dch5	movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter happiness by 1
 	subwf   counter_happiness, 1
+	movff   counter_happiness, PORTF
 	call    HAPPINESS  ;call happiness, to update smiley, keep track of happiness, lives and death 
 	movlw   0x00
 	cpfsgt  counter_happiness
@@ -377,7 +385,7 @@ dch5	movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter ha
 	movwf	counter_happiness_decrement ;reset counter_happiness_decrement to 100
 	movlw	0xFE
 	movwf	counter_happiness_decrement_2
-	movlw	0x01
+	movlw	0x05
 	movwf	counter_happiness_decrement_3
 	bra	read_row
 	
@@ -482,7 +490,9 @@ ONE_LIFE_LEFT
 	call    LCD_Send_Byte_D
 	return 
 DEATH   ;for death, clear the LCD, send ghost 
-	call    LCD_clear
+	bra	setup
+
+DEATH1	call    LCD_clear
 	movlw   b'11001001'
 	call    LCD_shift 
 	movlw   0x00   ; DDRAM location of ghost
