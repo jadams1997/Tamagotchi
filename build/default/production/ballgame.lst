@@ -1,4 +1,4 @@
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE  1
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -32,404 +32,417 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000006                00016 timer_1_remaining res 1
 000007                00017 timer_2_remaining res 1
 000008                00018 timer_3_remaining res 1
-                      00019 ball code
-                      00020     
-                      00021     
-000000                00022 BALL_GAME
-000000 0EC9           00023     movlw  b'11001001'
-000002 EC?? F???      00024     call   LCD_shift 
-000006 0E20           00025     movlw  ' '
-000008 EC?? F???      00026     call   LCD_Send_Byte_D
-00000C 0E02           00027     movlw  0x02
-00000E EC?? F???      00028     call   LCD_Send_Byte_D
-000012 EC?? F???      00029     call   ball_delay
-000016 0ECA           00030     movlw  b'11001010'
-000018 EC?? F???      00031     call   LCD_shift 
-00001C 0E20           00032     movlw  ' '
-00001E EC?? F???      00033     call   LCD_Send_Byte_D
-000022 0E02           00034     movlw  0x02
-000024 EC?? F???      00035     call   LCD_Send_Byte_D
-000028 EC?? F???      00036     call   ball_delay
-00002C 0ECB           00037     movlw  b'11001011'
-00002E EC?? F???      00038     call   LCD_shift 
-000032 0E20           00039     movlw  ' '
-000034 EC?? F???      00040     call   LCD_Send_Byte_D
-000038 0E02           00041     movlw  0x02
-00003A EC?? F???      00042     call   LCD_Send_Byte_D
-00003E EC?? F???      00043     call   ball_delay
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE  2
+000009                00019 flash res 1
+00000A                00020 clear res 1
+                      00021 ball code
+                      00022     
+                      00023     
+000000                00024 BALL_GAME
+000000 0EFF           00025     movlw   0xff 
+000002 6E??           00026     movwf   flash
+000004 0E00           00027     movlw   0x00
+000006 6E??           00028     movwf   clear
+000008 0E00           00029     movlw   0x00
+00000A 6E99           00030     movwf   TRISH
+00000C C??? FF87      00031     movff   clear, PORTH 
+000010 0EC9           00032     movlw  b'11001001'
+000012 EC?? F???      00033     call   LCD_shift 
+000016 0E20           00034     movlw  ' '
+000018 EC?? F???      00035     call   LCD_Send_Byte_D
+00001C 0E02           00036     movlw  0x02
+00001E EC?? F???      00037     call   LCD_Send_Byte_D
+000022 EC?? F???      00038     call   ball_delay
+000026 0ECA           00039     movlw  b'11001010'
+000028 EC?? F???      00040     call   LCD_shift 
+00002C 0E20           00041     movlw  ' '
+00002E EC?? F???      00042     call   LCD_Send_Byte_D
+000032 0E02           00043     movlw  0x02
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000042 0ECC           00044     movlw  b'11001100'
-000044 EC?? F???      00045     call   LCD_shift 
-000048 0E20           00046     movlw  ' '
-00004A EC?? F???      00047     call   LCD_Send_Byte_D
-00004E 0E02           00048     movlw  0x02
-000050 EC?? F???      00049     call   LCD_Send_Byte_D
-000054 EC?? F???      00050     call   ball_delay
-000058 0ECD           00051     movlw  b'11001101'
-00005A EC?? F???      00052     call   LCD_shift 
-00005E 0E20           00053     movlw  ' '
-000060 EC?? F???      00054     call   LCD_Send_Byte_D
-000064 0E02           00055     movlw  0x02
-000066 EC?? F???      00056     call   LCD_Send_Byte_D
-00006A EC?? F???      00057     call   ball_delay
-00006E 0ECE           00058     movlw  b'11001110'
-000070 EC?? F???      00059     call   LCD_shift 
-000074 0E20           00060     movlw  ' '
-000076 EC?? F???      00061     call   LCD_Send_Byte_D
-00007A 0E02           00062     movlw  0x02
-00007C EC?? F???      00063     call   LCD_Send_Byte_D
-                      00064     ;move rabbit to the end of the screen 
-000080 EC?? F???      00065     call   ball_delay
-000084                00066 ball 
-000084 0E0A           00067     movlw  0xA
-000086 6E??           00068     movwf  timer_1_remaining 
-000088 0E0A           00069     movlw  0xA
-00008A 6E??           00070     movwf  timer_2_remaining
-00008C 0E0A           00071     movlw  0xA
-00008E 6E??           00072     movwf  timer_2_remaining 
-000090 0EC3           00073     movlw b'11000011'
-000092 EC?? F???      00074     call  LCD_shift 
-000096 0E20           00075     movlw ' '
-000098 EC?? F???      00076     call  LCD_Send_Byte_D
-00009C 0E00           00077     movlw 0x00
-00009E EC?? F???      00078     call  LCD_Send_Byte_D
-0000A2 EC?? F???      00079     call   ball_delay
-0000A6 0EC4           00080     movlw b'11000100'
-0000A8 EC?? F???      00081     call  LCD_shift 
-0000AC 0E20           00082     movlw ' '
-0000AE EC?? F???      00083     call  LCD_Send_Byte_D
-0000B2 0E00           00084     movlw 0x00
-0000B4 EC?? F???      00085     call  LCD_Send_Byte_D
-0000B8 EC?? F???      00086     call   ball_delay
-0000BC 0EC5           00087     movlw b'11000101'
-0000BE EC?? F???      00088     call  LCD_shift 
-0000C2 0E20           00089     movlw ' '
-0000C4 EC?? F???      00090     call  LCD_Send_Byte_D
-0000C8 0E00           00091     movlw 0x00
-0000CA EC?? F???      00092     call  LCD_Send_Byte_D
-0000CE EC?? F???      00093     call   ball_delay
-0000D2 0EC6           00094     movlw b'11000110'
-0000D4 EC?? F???      00095     call  LCD_shift 
-0000D8 0E20           00096     movlw ' '
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE  3
+000034 EC?? F???      00044     call   LCD_Send_Byte_D
+000038 EC?? F???      00045     call   ball_delay
+00003C 0ECB           00046     movlw  b'11001011'
+00003E EC?? F???      00047     call   LCD_shift 
+000042 0E20           00048     movlw  ' '
+000044 EC?? F???      00049     call   LCD_Send_Byte_D
+000048 0E02           00050     movlw  0x02
+00004A EC?? F???      00051     call   LCD_Send_Byte_D
+00004E EC?? F???      00052     call   ball_delay
+000052 0ECC           00053     movlw  b'11001100'
+000054 EC?? F???      00054     call   LCD_shift 
+000058 0E20           00055     movlw  ' '
+00005A EC?? F???      00056     call   LCD_Send_Byte_D
+00005E 0E02           00057     movlw  0x02
+000060 EC?? F???      00058     call   LCD_Send_Byte_D
+000064 EC?? F???      00059     call   ball_delay
+000068 0ECD           00060     movlw  b'11001101'
+00006A EC?? F???      00061     call   LCD_shift 
+00006E 0E20           00062     movlw  ' '
+000070 EC?? F???      00063     call   LCD_Send_Byte_D
+000074 0E02           00064     movlw  0x02
+000076 EC?? F???      00065     call   LCD_Send_Byte_D
+00007A EC?? F???      00066     call   ball_delay
+00007E 0ECE           00067     movlw  b'11001110'
+000080 EC?? F???      00068     call   LCD_shift 
+000084 0E20           00069     movlw  ' '
+000086 EC?? F???      00070     call   LCD_Send_Byte_D
+00008A 0E02           00071     movlw  0x02
+00008C EC?? F???      00072     call   LCD_Send_Byte_D
+                      00073     ;move rabbit to the end of the screen 
+000090 EC?? F???      00074     call   ball_delay
+000094                00075 ball 
+000094 0E70           00076     movlw  0x70
+000096 6E??           00077     movwf  timer_1_remaining 
+000098 0E70           00078     movlw  0x70
+00009A 6E??           00079     movwf  timer_2_remaining
+00009C 0E70           00080     movlw  0x70
+00009E 6E??           00081     movwf  timer_2_remaining 
+0000A0 0EC3           00082     movlw b'11000011'
+0000A2 EC?? F???      00083     call  LCD_shift 
+0000A6 0E20           00084     movlw ' '
+0000A8 EC?? F???      00085     call  LCD_Send_Byte_D
+0000AC 0E00           00086     movlw 0x00
+0000AE EC?? F???      00087     call  LCD_Send_Byte_D
+0000B2 EC?? F???      00088     call   ball_delay
+0000B6 0EC4           00089     movlw b'11000100'
+0000B8 EC?? F???      00090     call  LCD_shift 
+0000BC 0E20           00091     movlw ' '
+0000BE EC?? F???      00092     call  LCD_Send_Byte_D
+0000C2 0E00           00093     movlw 0x00
+0000C4 EC?? F???      00094     call  LCD_Send_Byte_D
+0000C8 EC?? F???      00095     call   ball_delay
+0000CC 0EC5           00096     movlw b'11000101'
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0000DA EC?? F???      00097     call  LCD_Send_Byte_D
-0000DE 0E00           00098     movlw 0x00
-0000E0 EC?? F???      00099     call  LCD_Send_Byte_D
-0000E4 EC?? F???      00100     call   ball_delay
-0000E8 0EC7           00101     movlw b'11000111'
-0000EA EC?? F???      00102     call  LCD_shift 
-0000EE 0E20           00103     movlw ' '
-0000F0 EC?? F???      00104     call  LCD_Send_Byte_D
-0000F4 0E00           00105     movlw 0x00
-0000F6 EC?? F???      00106     call  LCD_Send_Byte_D
-0000FA EC?? F???      00107     call   ball_delay
-0000FE 0EC8           00108     movlw b'11001000'
-000100 EC?? F???      00109     call  LCD_shift 
-000104 0E20           00110     movlw ' '
-000106 EC?? F???      00111     call  LCD_Send_Byte_D
-00010A 0E00           00112     movlw 0x00
-00010C EC?? F???      00113     call  LCD_Send_Byte_D
-000110 EC?? F???      00114     call   ball_delay
-000114 0EC9           00115     movlw b'11001001'
-000116 EC?? F???      00116     call  LCD_shift 
-00011A 0E20           00117     movlw ' '
-00011C EC?? F???      00118     call  LCD_Send_Byte_D
-000120 0E00           00119     movlw 0x00
-000122 EC?? F???      00120     call  LCD_Send_Byte_D
-000126 EC?? F???      00121     call   ball_delay
-00012A 0ECA           00122     movlw b'11001010'
-00012C EC?? F???      00123     call  LCD_shift 
-000130 0E20           00124     movlw ' '
-000132 EC?? F???      00125     call  LCD_Send_Byte_D
-000136 0E00           00126     movlw 0x00
-000138 EC?? F???      00127     call  LCD_Send_Byte_D
-00013C EC?? F???      00128     call   ball_delay
-000140 0ECB           00129     movlw b'11001011'
-000142 EC?? F???      00130     call  LCD_shift 
-000146 0E20           00131     movlw ' '
-000148 EC?? F???      00132     call  LCD_Send_Byte_D
-00014C 0E00           00133     movlw 0x00
-00014E EC?? F???      00134     call  LCD_Send_Byte_D
-000152 EC?? F???      00135     call   ball_delay
-000156 0ECC           00136     movlw b'11001100'
-000158 EC?? F???      00137     call  LCD_shift 
-00015C 0E20           00138     movlw ' '
-00015E EC?? F???      00139     call  LCD_Send_Byte_D
-000162 0E00           00140     movlw 0x00
-000164 EC?? F???      00141     call  LCD_Send_Byte_D
-000168 EC?? F???      00142     call   ball_delay
-00016C 0ECD           00143     movlw b'11001101'
-00016E EC?? F???      00144     call  LCD_shift 
-000172 0E20           00145     movlw ' '
-000174 EC?? F???      00146     call  LCD_Send_Byte_D
-000178 0E00           00147     movlw 0x00
-00017A EC?? F???      00148     call  LCD_Send_Byte_D 
-00017E EC?? F???      00149     call   ball_delay
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE  4
+0000CE EC?? F???      00097     call  LCD_shift 
+0000D2 0E20           00098     movlw ' '
+0000D4 EC?? F???      00099     call  LCD_Send_Byte_D
+0000D8 0E00           00100     movlw 0x00
+0000DA EC?? F???      00101     call  LCD_Send_Byte_D
+0000DE EC?? F???      00102     call   ball_delay
+0000E2 0EC6           00103     movlw b'11000110'
+0000E4 EC?? F???      00104     call  LCD_shift 
+0000E8 0E20           00105     movlw ' '
+0000EA EC?? F???      00106     call  LCD_Send_Byte_D
+0000EE 0E00           00107     movlw 0x00
+0000F0 EC?? F???      00108     call  LCD_Send_Byte_D
+0000F4 EC?? F???      00109     call   ball_delay
+0000F8 0EC7           00110     movlw b'11000111'
+0000FA EC?? F???      00111     call  LCD_shift 
+0000FE 0E20           00112     movlw ' '
+000100 EC?? F???      00113     call  LCD_Send_Byte_D
+000104 0E00           00114     movlw 0x00
+000106 EC?? F???      00115     call  LCD_Send_Byte_D
+00010A EC?? F???      00116     call   ball_delay
+00010E 0EC8           00117     movlw b'11001000'
+000110 EC?? F???      00118     call  LCD_shift 
+000114 0E20           00119     movlw ' '
+000116 EC?? F???      00120     call  LCD_Send_Byte_D
+00011A 0E00           00121     movlw 0x00
+00011C EC?? F???      00122     call  LCD_Send_Byte_D
+000120 EC?? F???      00123     call   ball_delay
+000124 0EC9           00124     movlw b'11001001'
+000126 EC?? F???      00125     call  LCD_shift 
+00012A 0E20           00126     movlw ' '
+00012C EC?? F???      00127     call  LCD_Send_Byte_D
+000130 0E00           00128     movlw 0x00
+000132 EC?? F???      00129     call  LCD_Send_Byte_D
+000136 EC?? F???      00130     call   ball_delay
+00013A 0ECA           00131     movlw b'11001010'
+00013C EC?? F???      00132     call  LCD_shift 
+000140 0E20           00133     movlw ' '
+000142 EC?? F???      00134     call  LCD_Send_Byte_D
+000146 0E00           00135     movlw 0x00
+000148 EC?? F???      00136     call  LCD_Send_Byte_D
+00014C EC?? F???      00137     call   ball_delay
+000150 0ECB           00138     movlw b'11001011'
+000152 EC?? F???      00139     call  LCD_shift 
+000156 0E20           00140     movlw ' '
+000158 EC?? F???      00141     call  LCD_Send_Byte_D
+00015C 0E00           00142     movlw 0x00
+00015E EC?? F???      00143     call  LCD_Send_Byte_D
+000162 C??? FF87      00144     movff flash, PORTH
+000166 EC?? F???      00145     call   ball_delay
+                      00146     ;start ball game timer
+00016A 0ECC           00147     movlw b'11001100'
+00016C EC?? F???      00148     call  LCD_shift 
+000170 0E20           00149     movlw ' '
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00150     ;ball has gotten to the space before the pet 
-                      00151     ;call keypad to see if pressed in correct time 
-000182 D???           00152     bra  React 
-000184                00153 jump
-000184 0ECF           00154     movlw  b'11001111'
-000186 EC?? F???      00155     call   LCD_shift 
-00018A 0E20           00156     movlw  ' ' 
-00018C EC?? F???      00157     call   LCD_Send_Byte_D
-000190 0E8F           00158     movlw  b'10001111'
-000192 EC?? F???      00159     call   LCD_shift 
-000196 0E02           00160     movlw  0x02
-000198 EC?? F???      00161     call   LCD_Send_Byte_D  
-00019C C??? F???      00162     movff  timer_1_remaining, timer_1
-0001A0 2E??           00163 t_1     decfsz  timer_1_remaining 
-0001A2 D???           00164         bra     n_2
-0001A4 D???           00165         bra     move_ghost 
-0001A6 C??? F???      00166 n_2     movff   timer_2_remaining, timer_2
-0001AA 2E??           00167 t_2     decfsz  timer_2
-0001AC D???           00168         bra     n_3
-0001AE D???           00169         bra     t_1
-0001B0 C??? F???      00170 n_3     movff  timer_3_remaining, timer_3
-0001B4 2E??           00171 t_3     decfsz  timer_3
-0001B6 D???           00172         bra     t_3
-0001B8 D???           00173         bra     t_2
-0001BA                00174 move_ghost
-0001BA 0ECE           00175     movlw b'11001110'
-0001BC EC?? F???      00176     call  LCD_shift 
-0001C0 0E20           00177     movlw ' '
-0001C2 EC?? F???      00178     call  LCD_Send_Byte_D
-0001C6 0E00           00179     movlw 0x00
-0001C8 EC?? F???      00180     call  LCD_Send_Byte_D 
-0001CC EC?? F???      00181     call  ball_delay
-0001D0 EC?? F???      00182     call  ball_delay
-0001D4 EC?? F???      00183     call  ball_delay
-0001D8 0ECF           00184     movlw b'11001111'
-0001DA EC?? F???      00185     call  LCD_shift 
-0001DE 0E20           00186     movlw ' '
-0001E0 EC?? F???      00187     call  LCD_Send_Byte_D
-0001E4 0E8F           00188     movlw b'10001111'
-0001E6 EC?? F???      00189     call  LCD_shift
-0001EA 0E20           00190     movlw ' '
-0001EC EC?? F???      00191     call  LCD_Send_Byte_D
-0001F0 0ECF           00192     movlw b'11001111'
-0001F2 EC?? F???      00193     call  LCD_shift 
-0001F6 0E02           00194     movlw 0x02
-0001F8 EC?? F???      00195     call  LCD_Send_Byte_D 
-0001FC D???           00196     bra   ball
-0001FE                00197 die 
-0001FE 0ECE           00198     movlw b'11001110'
-000200 EC?? F???      00199     call  LCD_shift 
-000204 0E20           00200     movlw ' '
-000206 EC?? F???      00201     call  LCD_Send_Byte_D
-00020A 0E00           00202     movlw 0x00
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE  5
+000172 EC?? F???      00150     call  LCD_Send_Byte_D
+000176 0E00           00151     movlw 0x00
+000178 EC?? F???      00152     call  LCD_Send_Byte_D
+00017C C??? FF87      00153     movff clear, PORTH
+000180 EC?? F???      00154     call   ball_delay
+                      00155     ;end ball game timer
+000184 0ECD           00156     movlw b'11001101'
+000186 EC?? F???      00157     call  LCD_shift 
+00018A 0E20           00158     movlw ' '
+00018C EC?? F???      00159     call  LCD_Send_Byte_D
+000190 0E00           00160     movlw 0x00
+000192 EC?? F???      00161     call  LCD_Send_Byte_D 
+                      00162     ;ball has gotten to the space before the pet 
+                      00163     ;call keypad to see if pressed in correct time 
+000196 D???           00164     bra  React 
+000198                00165 jump
+000198 0ECF           00166     movlw  b'11001111'
+00019A EC?? F???      00167     call   LCD_shift 
+00019E 0E20           00168     movlw  ' ' 
+0001A0 EC?? F???      00169     call   LCD_Send_Byte_D
+0001A4 0E8F           00170     movlw  b'10001111'
+0001A6 EC?? F???      00171     call   LCD_shift 
+0001AA 0E02           00172     movlw  0x02
+0001AC EC?? F???      00173     call   LCD_Send_Byte_D  
+0001B0 C??? F???      00174     movff  timer_1_remaining, timer_1
+0001B4 2E??           00175 t_1     decfsz  timer_1_remaining 
+0001B6 D???           00176         bra     n_2
+0001B8 D???           00177         bra     move_ghost 
+0001BA C??? F???      00178 n_2     movff   timer_2_remaining, timer_2
+0001BE 2E??           00179 t_2     decfsz  timer_2
+0001C0 D???           00180         bra     n_3
+0001C2 D???           00181         bra     t_1
+0001C4 C??? F???      00182 n_3     movff  timer_3_remaining, timer_3
+0001C8 2E??           00183 t_3     decfsz  timer_3
+0001CA D???           00184         bra     t_3
+0001CC D???           00185         bra     t_2
+0001CE                00186 move_ghost
+0001CE 0ECE           00187     movlw b'11001110'
+0001D0 EC?? F???      00188     call  LCD_shift 
+0001D4 0E20           00189     movlw ' '
+0001D6 EC?? F???      00190     call  LCD_Send_Byte_D
+0001DA 0E00           00191     movlw 0x00
+0001DC EC?? F???      00192     call  LCD_Send_Byte_D 
+0001E0 C??? FF87      00193     movff clear, PORTH
+0001E4 EC?? F???      00194     call  ball_delay
+0001E8 0ECF           00195     movlw b'11001111'
+0001EA EC?? F???      00196     call  LCD_shift 
+0001EE 0E20           00197     movlw ' '
+0001F0 EC?? F???      00198     call  LCD_Send_Byte_D
+0001F4 0E8F           00199     movlw b'10001111'
+0001F6 EC?? F???      00200     call  LCD_shift
+0001FA 0E20           00201     movlw ' '
+0001FC EC?? F???      00202     call  LCD_Send_Byte_D
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00020C EC?? F???      00203     call  LCD_Send_Byte_D 
-000210 EC?? F???      00204     call  ball_delay
-000214 0ECF           00205     movlw b'11001111'
-000216 EC?? F???      00206     call  LCD_shift 
-00021A 0E20           00207     movlw ' '
-00021C EC?? F???      00208     call  LCD_Send_Byte_D
-000220 EC?? F???      00209     call  ball_delay 
-000224 EC?? F???      00210     call  ball_delay 
-000228 0ECF           00211     movlw b'11001111'
-00022A EC?? F???      00212     call  LCD_shift 
-00022E 0E02           00213     movlw 0x02 
-000230 EC?? F???      00214     call  LCD_Send_Byte_D
-000234 EC?? F???      00215     call  ball_delay 
-000238 0ECF           00216     movlw b'11001111'
-00023A EC?? F???      00217     call  LCD_shift  
-00023E 0E20           00218     movlw ' '
-000240 EC?? F???      00219     call  LCD_Send_Byte_D
-000244 0ECE           00220     movlw b'11001110'
-000246 EC?? F???      00221     call  LCD_shift 
-00024A 0E02           00222     movlw 0x02 
-00024C EC?? F???      00223     call  LCD_Send_Byte_D
-000250 EC?? F???      00224     call  ball_delay 
-000254 0ECE           00225     movlw b'11001110'
-000256 EC?? F???      00226     call  LCD_shift  
-00025A 0E20           00227     movlw ' '
-00025C EC?? F???      00228     call  LCD_Send_Byte_D
-000260 0ECD           00229     movlw b'11001101'
-000262 EC?? F???      00230     call  LCD_shift 
-000266 0E02           00231     movlw 0x02 
-000268 EC?? F???      00232     call  LCD_Send_Byte_D
-00026C EC?? F???      00233     call  ball_delay 
-000270 0ECD           00234     movlw b'11001101'
-000272 EC?? F???      00235     call  LCD_shift  
-000276 0E20           00236     movlw ' '
-000278 EC?? F???      00237     call  LCD_Send_Byte_D
-00027C 0ECC           00238     movlw b'11001100'
-00027E EC?? F???      00239     call  LCD_shift 
-000282 0E02           00240     movlw 0x02 
-000284 EC?? F???      00241     call  LCD_Send_Byte_D
-000288 EC?? F???      00242     call  ball_delay 
-00028C 0ECC           00243     movlw b'11001100'
-00028E EC?? F???      00244     call  LCD_shift  
-000292 0E20           00245     movlw ' '
-000294 EC?? F???      00246     call  LCD_Send_Byte_D
-000298 0ECB           00247     movlw b'11001011'
-00029A EC?? F???      00248     call  LCD_shift 
-00029E 0E02           00249     movlw 0x02 
-0002A0 EC?? F???      00250     call  LCD_Send_Byte_D
-0002A4 EC?? F???      00251     call  ball_delay 
-0002A8 0ECB           00252     movlw b'11001011'
-0002AA EC?? F???      00253     call  LCD_shift  
-0002AE 0E20           00254     movlw ' '
-0002B0 EC?? F???      00255     call  LCD_Send_Byte_D
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE  6
+000200 0ECF           00203     movlw b'11001111'
+000202 EC?? F???      00204     call  LCD_shift 
+000206 0E02           00205     movlw 0x02
+000208 EC?? F???      00206     call  LCD_Send_Byte_D 
+00020C D???           00207     bra   ball
+00020E                00208 die 
+00020E 0ECE           00209     movlw b'11001110'
+000210 EC?? F???      00210     call  LCD_shift 
+000214 0E20           00211     movlw ' '
+000216 EC?? F???      00212     call  LCD_Send_Byte_D
+00021A 0E00           00213     movlw 0x00
+00021C EC?? F???      00214     call  LCD_Send_Byte_D 
+000220 C??? FF87      00215     movff clear, PORTH
+000224 EC?? F???      00216     call  ball_delay
+000228 0ECF           00217     movlw b'11001111'
+00022A EC?? F???      00218     call  LCD_shift 
+00022E 0E20           00219     movlw ' '
+000230 EC?? F???      00220     call  LCD_Send_Byte_D
+000234 EC?? F???      00221     call  ball_delay 
+000238 EC?? F???      00222     call  ball_delay 
+00023C 0ECF           00223     movlw b'11001111'
+00023E EC?? F???      00224     call  LCD_shift 
+000242 0E02           00225     movlw 0x02 
+000244 EC?? F???      00226     call  LCD_Send_Byte_D
+000248 EC?? F???      00227     call  ball_delay 
+00024C 0ECF           00228     movlw b'11001111'
+00024E EC?? F???      00229     call  LCD_shift  
+000252 0E20           00230     movlw ' '
+000254 EC?? F???      00231     call  LCD_Send_Byte_D
+000258 0ECE           00232     movlw b'11001110'
+00025A EC?? F???      00233     call  LCD_shift 
+00025E 0E02           00234     movlw 0x02 
+000260 EC?? F???      00235     call  LCD_Send_Byte_D
+000264 EC?? F???      00236     call  ball_delay 
+000268 0ECE           00237     movlw b'11001110'
+00026A EC?? F???      00238     call  LCD_shift  
+00026E 0E20           00239     movlw ' '
+000270 EC?? F???      00240     call  LCD_Send_Byte_D
+000274 0ECD           00241     movlw b'11001101'
+000276 EC?? F???      00242     call  LCD_shift 
+00027A 0E02           00243     movlw 0x02 
+00027C EC?? F???      00244     call  LCD_Send_Byte_D
+000280 EC?? F???      00245     call  ball_delay 
+000284 0ECD           00246     movlw b'11001101'
+000286 EC?? F???      00247     call  LCD_shift  
+00028A 0E20           00248     movlw ' '
+00028C EC?? F???      00249     call  LCD_Send_Byte_D
+000290 0ECC           00250     movlw b'11001100'
+000292 EC?? F???      00251     call  LCD_shift 
+000296 0E02           00252     movlw 0x02 
+000298 EC?? F???      00253     call  LCD_Send_Byte_D
+00029C EC?? F???      00254     call  ball_delay 
+0002A0 0ECC           00255     movlw b'11001100'
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0002B4 0ECA           00256     movlw b'11001010'
-0002B6 EC?? F???      00257     call  LCD_shift 
-0002BA 0E02           00258     movlw 0x02 
-0002BC EC?? F???      00259     call  LCD_Send_Byte_D
-0002C0 EC?? F???      00260     call  ball_delay 
-0002C4 0ECA           00261     movlw b'11001010'
-0002C6 EC?? F???      00262     call  LCD_shift  
-0002CA 0E20           00263     movlw ' '
-0002CC EC?? F???      00264     call  LCD_Send_Byte_D
-0002D0 0EC9           00265     movlw b'11001001'
-0002D2 EC?? F???      00266     call  LCD_shift 
-0002D6 0E02           00267     movlw 0x02 
-0002D8 EC?? F???      00268     call  LCD_Send_Byte_D
-0002DC EC?? F???      00269     call  ball_delay 
-0002E0 0012           00270     return 
-                      00271 
-                      00272   
-0002E2                00273 React
-0002E2 EC?? F???      00274         call setup_row
-0002E6 D???           00275         bra  timer 
-                      00276     
-                      00277     
-0002E8                00278 setup_row 
-0002E8 0EF0           00279         movlw 0xF0
-0002EA 6E96           00280         movwf TRISE, ACCESS  
-0002EC 8D53           00281         bsf PADCFG1, REPU, BANKED
-0002EE 0E0F           00282         movlw 0x0F
-0002F0 6E84           00283         movwf PORTE, ACCESS
-0002F2 0EFF           00284         movlw 0xFF
-0002F4 6E20           00285         movwf 0x20
-0002F6 EC?? F???      00286         call delay_k
-0002FA 0012           00287         return 
-                      00288    
-                      00289         
-0002FC                00290 timer
-0002FC 0E30           00291         movlw   0x30
-0002FE 6E??           00292         movwf   timer_1
-000300                00293 t1       
-000300 2E??           00294         decfsz  timer_1
-000302 D???           00295         bra     n2
-000304 D???           00296         bra     die 
-                      00297         
-000306 0E01           00298 n2      movlw   0x01
-000308 5E00           00299         subwf   timer_1_remaining, 1
-00030A 0E30           00300         movlw   0x30
-00030C 6E??           00301         movwf   timer_2
-00030E 2E??           00302 t2      decfsz  timer_2
-000310 D???           00303         bra     n3
-000312 D???           00304         bra     t1
-                      00305 
-000314 0E01           00306 n3      movlw   0x01
-000316 5E00           00307         subwf   timer_2_remaining, 1
-000318 0E30           00308         movlw   0x30
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE  7
+0002A2 EC?? F???      00256     call  LCD_shift  
+0002A6 0E20           00257     movlw ' '
+0002A8 EC?? F???      00258     call  LCD_Send_Byte_D
+0002AC 0ECB           00259     movlw b'11001011'
+0002AE EC?? F???      00260     call  LCD_shift 
+0002B2 0E02           00261     movlw 0x02 
+0002B4 EC?? F???      00262     call  LCD_Send_Byte_D
+0002B8 EC?? F???      00263     call  ball_delay 
+0002BC 0ECB           00264     movlw b'11001011'
+0002BE EC?? F???      00265     call  LCD_shift  
+0002C2 0E20           00266     movlw ' '
+0002C4 EC?? F???      00267     call  LCD_Send_Byte_D
+0002C8 0ECA           00268     movlw b'11001010'
+0002CA EC?? F???      00269     call  LCD_shift 
+0002CE 0E02           00270     movlw 0x02 
+0002D0 EC?? F???      00271     call  LCD_Send_Byte_D
+0002D4 EC?? F???      00272     call  ball_delay 
+0002D8 0ECA           00273     movlw b'11001010'
+0002DA EC?? F???      00274     call  LCD_shift  
+0002DE 0E20           00275     movlw ' '
+0002E0 EC?? F???      00276     call  LCD_Send_Byte_D
+0002E4 0EC9           00277     movlw b'11001001'
+0002E6 EC?? F???      00278     call  LCD_shift 
+0002EA 0E02           00279     movlw 0x02 
+0002EC EC?? F???      00280     call  LCD_Send_Byte_D
+0002F0 EC?? F???      00281     call  ball_delay 
+0002F4 0012           00282     return 
+                      00283 
+                      00284   
+0002F6                00285 React
+0002F6 C??? FF87      00286         movff flash, PORTH
+0002FA EC?? F???      00287         call setup_row
+0002FE D???           00288         bra  timer 
+                      00289     
+                      00290     
+000300                00291 setup_row 
+000300 0EF0           00292         movlw 0xF0
+000302 6E96           00293         movwf TRISE, ACCESS  
+000304 8D53           00294         bsf PADCFG1, REPU, BANKED
+000306 0E0F           00295         movlw 0x0F
+000308 6E84           00296         movwf PORTE, ACCESS
+00030A 0EFF           00297         movlw 0xFF
+00030C 6E20           00298         movwf 0x20
+00030E EC?? F???      00299         call delay_k
+000312 0012           00300         return 
+                      00301    
+                      00302         
+000314                00303 timer
+000314 0E50           00304         movlw   0x50
+000316 6E??           00305         movwf   timer_1
+000318                00306 t1       
+000318 2E??           00307         decfsz  timer_1
+00031A D???           00308         bra     n2
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE  7
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00031A 6E??           00309         movwf   timer_3
-00031C                00310 t3
-00031C 0E01           00311         movlw   0x01
-00031E 5E00           00312         subwf   timer_3_remaining, 1
-000320 D???           00313         bra     read_row
-000322                00314 no_press
-000322 2E??           00315         decfsz  timer_3
-000324 D???           00316         bra     t3
-000326 D???           00317         bra     t2
-                      00318         
-                      00319         
-                      00320         
-                      00321         
-000328                00322 read_row   
-000328 A884           00323         btfss PORTE, RE4
-00032A D???           00324         bra check_1
-00032C D???           00325         bra jump
-00032E                00326 check_1
-00032E AA84           00327         btfss PORTE, RE5
-000330 D???           00328         bra check_2
-000332 D???           00329         bra jump
-000334                00330 check_2
-000334 AC84           00331         btfss PORTE, RE6
-000336 D???           00332         bra check_3
-000338 D???           00333         bra  jump
-00033A                00334 check_3
-00033A AE84           00335         btfss PORTE, RE7
-00033C D???           00336         bra   no_press
-00033E D???           00337         bra   jump
-                      00338         
-                      00339 
-000340                00340 delay_k 
-000340 2E20           00341         decfsz 0x20
-000342 D???           00342         bra delay_k
-000344 0012           00343         return 
-                      00344 
-                      00345   
-                      00346     
-000346                00347 ball_delay
-000346 0E90           00348         movlw   0x90
-000348 6E??           00349         movwf   delay_count_b1
-00034A                00350 delay_1       
-00034A 2E??           00351         decfsz  delay_count_b1
-00034C D???           00352         bra     nested_2
-00034E 0012           00353         return
-                      00354         
-000350                00355 nested_2
-000350 0E90           00356         movlw   0x90
-000352 6E??           00357         movwf   delay_count_b2
-000354 2E??           00358 delay_2 decfsz  delay_count_b2
-000356 D???           00359         bra     nested_3
-000358 D???           00360         bra     delay_1
-                      00361 
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE  8
+00031C D???           00309         bra     die 
+                      00310         
+00031E 0E01           00311 n2      movlw   0x01
+000320 5E00           00312         subwf   timer_1_remaining, 1
+000322 0E50           00313         movlw   0x50
+000324 6E??           00314         movwf   timer_2
+000326 2E??           00315 t2      decfsz  timer_2
+000328 D???           00316         bra     n3
+00032A D???           00317         bra     t1
+                      00318 
+00032C 0E01           00319 n3      movlw   0x01
+00032E 5E00           00320         subwf   timer_2_remaining, 1
+000330 0E50           00321         movlw   0x50
+000332 6E??           00322         movwf   timer_3
+000334                00323 t3
+000334 0E01           00324         movlw   0x01
+000336 5E00           00325         subwf   timer_3_remaining, 1
+000338 D???           00326         bra     read_row
+00033A                00327 no_press
+00033A 2E??           00328         decfsz  timer_3
+00033C D???           00329         bra     t3
+00033E D???           00330         bra     t2
+                      00331         
+                      00332         
+                      00333         
+                      00334         
+000340                00335 read_row   
+000340 A884           00336         btfss PORTE, RE4
+000342 D???           00337         bra check_1
+000344 D???           00338         bra jump
+000346                00339 check_1
+000346 AA84           00340         btfss PORTE, RE5
+000348 D???           00341         bra check_2
+00034A D???           00342         bra jump
+00034C                00343 check_2
+00034C AC84           00344         btfss PORTE, RE6
+00034E D???           00345         bra check_3
+000350 D???           00346         bra  jump
+000352                00347 check_3
+000352 AE84           00348         btfss PORTE, RE7
+000354 D???           00349         bra   no_press
+000356 D???           00350         bra   jump
+                      00351         
+                      00352 
+000358                00353 delay_k 
+000358 2E20           00354         decfsz 0x20
+00035A D???           00355         bra delay_k
+00035C 0012           00356         return 
+                      00357 
+                      00358   
+                      00359     
+00035E                00360 ball_delay
+00035E 0E90           00361         movlw   0x90
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE  8
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00035A                00362 nested_3
-00035A 0E90           00363         movlw   0x90
-00035C 6E??           00364         movwf   delay_count_b3
-00035E                00365 delay_3
-00035E 2E??           00366         decfsz  delay_count_b3
-000360 D???           00367         bra     delay_3
-000362 D???           00368         bra     delay_2
-                      00369 
-                      00370     
-                      00371     
-                      00372     
-                      00373     end 
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE  9
+000360 6E??           00362         movwf   delay_count_b1
+000362                00363 delay_1       
+000362 2E??           00364         decfsz  delay_count_b1
+000364 D???           00365         bra     nested_2
+000366 0012           00366         return
+                      00367         
+000368                00368 nested_2
+000368 0E90           00369         movlw   0x90
+00036A 6E??           00370         movwf   delay_count_b2
+00036C 2E??           00371 delay_2 decfsz  delay_count_b2
+00036E D???           00372         bra     nested_3
+000370 D???           00373         bra     delay_1
+                      00374 
+000372                00375 nested_3
+000372 0E90           00376         movlw   0x90
+000374 6E??           00377         movwf   delay_count_b3
+000376                00378 delay_3
+000376 2E??           00379         decfsz  delay_count_b3
+000378 D???           00380         bra     delay_3
+00037A D???           00381         bra     delay_2
+                      00382 
+                      00383     
+                      00384     
+                      00385     
+                      00386     end 
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE  9
 
 
 SYMBOL TABLE
@@ -488,7 +501,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 10
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 10
 
 
 SYMBOL TABLE
@@ -547,7 +560,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 11
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 11
 
 
 SYMBOL TABLE
@@ -606,7 +619,7 @@ C1OUT                             00000002
 C1TSEL0                           00000000
 C1TSEL1                           00000001
 C1TSEL2                           00000002
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 12
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 12
 
 
 SYMBOL TABLE
@@ -665,7 +678,7 @@ CCP1IF                            00000001
 CCP1IP                            00000001
 CCP1M0                            00000000
 CCP1M1                            00000001
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 13
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 13
 
 
 SYMBOL TABLE
@@ -724,7 +737,7 @@ CCP5IP                            00000002
 CCP5M0                            00000000
 CCP5M1                            00000001
 CCP5M2                            00000002
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 14
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 14
 
 
 SYMBOL TABLE
@@ -783,7 +796,7 @@ CCP9IF                            00000006
 CCP9IP                            00000006
 CCP9M0                            00000000
 CCP9M1                            00000001
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 15
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 15
 
 
 SYMBOL TABLE
@@ -842,7 +855,7 @@ CHSN0                             00000000
 CHSN1                             00000001
 CHSN2                             00000002
 CK1                               00000006
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 16
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 16
 
 
 SYMBOL TABLE
@@ -901,7 +914,7 @@ CTMUICON                          00000F55
 CTMUIE                            00000003
 CTMUIF                            00000003
 CTMUIP                            00000003
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 17
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 17
 
 
 SYMBOL TABLE
@@ -960,7 +973,7 @@ ECCP1AS0                          00000004
 ECCP1AS1                          00000005
 ECCP1AS2                          00000006
 ECCP1ASE                          00000007
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 18
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 18
 
 
 SYMBOL TABLE
@@ -1019,7 +1032,7 @@ FSR2                              00000002
 FSR2H                             00000FDA
 FSR2L                             00000FD9
 GCEN                              00000007
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 19
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 19
 
 
 SYMBOL TABLE
@@ -1078,7 +1091,7 @@ INT3E                             00000005
 INT3F                             00000002
 INT3IE                            00000005
 INT3IF                            00000002
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 20
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 20
 
 
 SYMBOL TABLE
@@ -1137,7 +1150,7 @@ LATB6                             00000006
 LATB7                             00000007
 LATC                              00000F8B
 LATC0                             00000000
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 21
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 21
 
 
 SYMBOL TABLE
@@ -1196,7 +1209,7 @@ LATJ0                             00000000
 LATJ1                             00000001
 LATJ2                             00000002
 LATJ3                             00000003
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 22
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 22
 
 
 SYMBOL TABLE
@@ -1255,7 +1268,7 @@ OBF                               00000006
 ODCON1                            00000F29
 ODCON2                            00000F28
 ODCON3                            00000F27
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 23
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 23
 
 
 SYMBOL TABLE
@@ -1314,7 +1327,7 @@ P3DC4                             00000004
 P3DC5                             00000005
 P3DC6                             00000006
 P3M0                              00000006
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 24
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 24
 
 
 SYMBOL TABLE
@@ -1373,7 +1386,7 @@ PORTH                             00000F87
 PORTJ                             00000F88
 POSTDEC0                          00000FED
 POSTDEC1                          00000FE5
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 25
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 25
 
 
 SYMBOL TABLE
@@ -1432,7 +1445,7 @@ RA0                               00000000
 RA1                               00000001
 RA2                               00000002
 RA3                               00000003
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 26
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 26
 
 
 SYMBOL TABLE
@@ -1491,7 +1504,7 @@ RD2                               00000002
 RD3                               00000003
 RD4                               00000004
 RD5                               00000005
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 27
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 27
 
 
 SYMBOL TABLE
@@ -1550,7 +1563,7 @@ RODIV2                            00000002
 RODIV3                            00000003
 ROON                              00000007
 ROSEL                             00000004
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 28
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 28
 
 
 SYMBOL TABLE
@@ -1587,7 +1600,7 @@ RX9D2                             00000000
 RXDTP                             00000005
 R_NOT_W                           00000002
 R_W                               00000002
-React                             000002E2
+React                             000002F6
 S                                 00000003
 SBOREN                            00000006
 SCK1                              00000003
@@ -1609,7 +1622,7 @@ SENDB1                            00000003
 SENDB2                            00000003
 SMP                               00000007
 SOSCEN                            00000003
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 29
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 29
 
 
 SYMBOL TABLE
@@ -1668,7 +1681,7 @@ SSPIE                             00000003
 SSPIF                             00000003
 SSPIP                             00000003
 SSPM0                             00000000
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 30
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 30
 
 
 SYMBOL TABLE
@@ -1727,7 +1740,7 @@ T1G                               00000005
 T1GCON                            00000FAA
 T1GGO                             00000003
 T1GGO_NOT_T1DONE                  00000003
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 31
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 31
 
 
 SYMBOL TABLE
@@ -1786,7 +1799,7 @@ T6CKPS1                           00000001
 T6CON                             00000F39
 T6OUTPS0                          00000003
 T6OUTPS1                          00000004
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 32
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 32
 
 
 SYMBOL TABLE
@@ -1845,7 +1858,7 @@ TMR1CS0                           00000006
 TMR1CS1                           00000007
 TMR1GE                            00000007
 TMR1GIE                           00000002
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 33
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 33
 
 
 SYMBOL TABLE
@@ -1904,7 +1917,7 @@ TMR6                              00000F3B
 TMR6IE                            00000002
 TMR6IF                            00000002
 TMR6IP                            00000002
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 34
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 34
 
 
 SYMBOL TABLE
@@ -1963,7 +1976,7 @@ TRISC1                            00000001
 TRISC2                            00000002
 TRISC3                            00000003
 TRISC4                            00000004
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 35
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 35
 
 
 SYMBOL TABLE
@@ -2022,7 +2035,7 @@ TRISJ4                            00000004
 TRISJ5                            00000005
 TRISJ6                            00000006
 TRISJ7                            00000007
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 36
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 36
 
 
 SYMBOL TABLE
@@ -2081,7 +2094,7 @@ VCFG1                             00000005
 VDIRMAG                           00000007
 VNCFG                             00000003
 VREF_MINUS                        00000002
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 37
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 37
 
 
 SYMBOL TABLE
@@ -2140,7 +2153,7 @@ _CONFIG7H                         0030000D
 _CONFIG7L                         0030000C
 _CP0_OFF_5L                       000000FF
 _CP0_ON_5L                        000000FE
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 38
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 38
 
 
 SYMBOL TABLE
@@ -2199,7 +2212,7 @@ _FOSC_EC2_1H                      000000FB
 _FOSC_EC3IO_1H                    000000F4
 _FOSC_EC3_1H                      000000F5
 _FOSC_HS1_1H                      000000F3
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 39
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 39
 
 
 SYMBOL TABLE
@@ -2258,7 +2271,7 @@ _WDTPS_2048_2H                    000000AF
 _WDTPS_256_2H                     000000A3
 _WDTPS_262144_2H                  000000CB
 _WDTPS_2_2H                       00000087
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 40
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 40
 
 
 SYMBOL TABLE
@@ -2299,43 +2312,45 @@ _WRTD_ON_6H                       0000007F
 _XINST_OFF_1L                     000000BF
 _XINST_ON_1L                      000000FF
 __18F87K22                        00000001
-ball                              00000084
-ball_delay                        00000346
-check_1                           0000032E
-check_2                           00000334
-check_3                           0000033A
-delay_1                           0000034A
-delay_2                           00000354
-delay_3                           0000035E
+ball                              00000094
+ball_delay                        0000035E
+check_1                           00000346
+check_2                           0000034C
+check_3                           00000352
+clear                             0000000A
+delay_1                           00000362
+delay_2                           0000036C
+delay_3                           00000376
 delay_count_b1                    00000000
 delay_count_b2                    00000001
 delay_count_b3                    00000002
-delay_k                           00000340
-die                               000001FE
-jump                              00000184
-move_ghost                        000001BA
-n2                                00000306
-n3                                00000314
-n_2                               000001A6
-MPASM 5.81                      BALLGAME.ASM   2-24-2020  14:07:44         PAGE 41
+delay_k                           00000358
+die                               0000020E
+flash                             00000009
+jump                              00000198
+move_ghost                        000001CE
+n2                                0000031E
+MPASM 5.81                      BALLGAME.ASM   2-26-2020  13:02:50         PAGE 41
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-n_3                               000001B0
-nested_2                          00000350
-nested_3                          0000035A
-no_press                          00000322
-read_row                          00000328
-setup_row                         000002E8
-t1                                00000300
-t2                                0000030E
-t3                                0000031C
-t_1                               000001A0
-t_2                               000001AA
-t_3                               000001B4
-timer                             000002FC
+n3                                0000032C
+n_2                               000001BA
+n_3                               000001C4
+nested_2                          00000368
+nested_3                          00000372
+no_press                          0000033A
+read_row                          00000340
+setup_row                         00000300
+t1                                00000318
+t2                                00000326
+t3                                00000334
+t_1                               000001B4
+t_2                               000001BE
+t_3                               000001C8
+timer                             00000314
 timer_1                           00000003
 timer_1_remaining                 00000006
 timer_2                           00000004

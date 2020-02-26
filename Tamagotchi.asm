@@ -36,7 +36,7 @@ setup	bcf	EECON1, CFGS	; point to Flash program memory
 	call    FOOD_Setup 
 	call    ADC_Setup
 	movlw   0x00
-	movwf   TRISF
+	movwf   TRISH
 	goto    MAIN
 	
 MAIN 
@@ -361,14 +361,14 @@ dch1	decfsz  counter_happiness_decrement
 	decfsz  counter_happiness_decrement_2
 	bra	dch2
 	bra     dch3
-dch2    ;for d2
+dch2    ;dc2
 	movlw	0xFE
 	movwf	counter_happiness_decrement
 	bra	read_row
 dch3    decfsz  counter_happiness_decrement_3
 	bra	dch4
 	bra     dch5
-dch4    ;for d3
+dch4    ;dc3
 	movlw	0xFE
 	movwf	counter_happiness_decrement
 	movlw	0xFE
@@ -376,7 +376,6 @@ dch4    ;for d3
 	bra	read_row	
 dch5	movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter happiness by 1
 	subwf   counter_happiness, 1
-	movff   counter_happiness, PORTF
 	call    HAPPINESS  ;call happiness, to update smiley, keep track of happiness, lives and death 
 	movlw   0x00
 	cpfsgt  counter_happiness

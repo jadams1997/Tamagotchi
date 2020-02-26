@@ -16,10 +16,19 @@ timer_3  res 1
 timer_1_remaining res 1
 timer_2_remaining res 1
 timer_3_remaining res 1
+flash res 1
+clear res 1
 ball code
     
     
 BALL_GAME
+    movlw   0xff 
+    movwf   flash
+    movlw   0x00
+    movwf   clear
+    movlw   0x00
+    movwf   TRISH
+    movff   clear, PORTH 
     movlw  b'11001001'
     call   LCD_shift 
     movlw  ' '
@@ -64,11 +73,11 @@ BALL_GAME
     ;move rabbit to the end of the screen 
     call   ball_delay
 ball 
-    movlw  0xA
+    movlw  0x70
     movwf  timer_1_remaining 
-    movlw  0xA
+    movlw  0x70
     movwf  timer_2_remaining
-    movlw  0xA
+    movlw  0x70
     movwf  timer_2_remaining 
     movlw b'11000011'
     call  LCD_shift 
@@ -132,21 +141,24 @@ ball
     call  LCD_Send_Byte_D
     movlw 0x00
     call  LCD_Send_Byte_D
+    movff flash, PORTH
     call   ball_delay
+    ;start ball game timer
     movlw b'11001100'
     call  LCD_shift 
     movlw ' '
     call  LCD_Send_Byte_D
     movlw 0x00
     call  LCD_Send_Byte_D
+    movff clear, PORTH
     call   ball_delay
+    ;end ball game timer
     movlw b'11001101'
     call  LCD_shift 
     movlw ' '
     call  LCD_Send_Byte_D
     movlw 0x00
     call  LCD_Send_Byte_D 
-    call   ball_delay
     ;ball has gotten to the space before the pet 
     ;call keypad to see if pressed in correct time 
     bra  React 
@@ -178,8 +190,7 @@ move_ghost
     call  LCD_Send_Byte_D
     movlw 0x00
     call  LCD_Send_Byte_D 
-    call  ball_delay
-    call  ball_delay
+    movff clear, PORTH
     call  ball_delay
     movlw b'11001111'
     call  LCD_shift 
@@ -201,6 +212,7 @@ die
     call  LCD_Send_Byte_D
     movlw 0x00
     call  LCD_Send_Byte_D 
+    movff clear, PORTH
     call  ball_delay
     movlw b'11001111'
     call  LCD_shift 
@@ -271,6 +283,7 @@ die
 
   
 React
+	movff flash, PORTH
         call setup_row
         bra  timer 
     
@@ -288,7 +301,7 @@ setup_row
    
 	
 timer
-        movlw   0x30
+        movlw   0x50
 	movwf   timer_1
 t1       
 	decfsz  timer_1
@@ -297,7 +310,7 @@ t1
 	
 n2      movlw   0x01
 	subwf   timer_1_remaining, 1
-	movlw   0x30
+	movlw   0x50
 	movwf   timer_2
 t2	decfsz  timer_2
 	bra     n3
@@ -305,7 +318,7 @@ t2	decfsz  timer_2
 
 n3      movlw   0x01
 	subwf   timer_2_remaining, 1
-	movlw   0x30
+	movlw   0x50
 	movwf   timer_3
 t3
 	movlw   0x01
