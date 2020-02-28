@@ -6,7 +6,7 @@
     global FOOD, FOOD_Setup
 
 
-acs1		    udata_acs
+acs5		    udata_acs
 lifemode_food	    res 1
 delay_counter_f1    res 1
 delay_counter_f2    res 1

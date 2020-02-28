@@ -5,7 +5,7 @@
     
    
     
-acs9 udata_acs
+acs7 udata_acs
  
 Temperature_hex_1 res 1
 Temperature_hex_2 res 1 

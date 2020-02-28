@@ -4,7 +4,7 @@
     global output_starting_screen, output_hatching_sequence, output_PRESS_A_TO_START
     global output_HEAT_TO_HATCH
 
-acs0		    udata_acs   
+acs6		    udata_acs   
 delay_counter_h1    res 1   
 delay_counter_h2    res 1   
 delay_counter_h3    res 1   

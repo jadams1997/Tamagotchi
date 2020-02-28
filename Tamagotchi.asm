@@ -20,7 +20,6 @@ myArray                          res 0x80
 counter_row	                 res 1
 counter_column	                 res 1
 Key_Pressed                      res 0x40
-sound_buuzz                      res 1
 
 
 tamagotchi code
@@ -78,11 +77,11 @@ hoth	movlw   b'11000010'
 	movwf   counter_happiness_decrement ;set the counter_happiness_decrement to 255
 	movlw   0xFE
 	movwf	counter_happiness_decrement_2
-	movlw   0x05
+	movlw   0x02
 	movwf   counter_happiness_decrement_3
 	movlw   0xF4
 	movwf   counter_happiness  ;counter_happiness to 100
-	movlw   0x03          
+	movlw   0x03         
 	movwf   counter_life ;counter_life to 3
 	movlw	0x0
 	movwf   life_mode ;initialise the life mode at 0 for baby rabbit
@@ -181,7 +180,6 @@ setup_row
         return 
    
 read_row   
-	;dc
 	btfss PORTE, RE4
 	bra check_1
 	movlw 0x0
@@ -361,22 +359,23 @@ dch1	decfsz  counter_happiness_decrement
 	decfsz  counter_happiness_decrement_2
 	bra	dch2
 	bra     dch3
-dch2    ;dc2
-	movlw	0xFE
+dch2    movlw	0xFE
 	movwf	counter_happiness_decrement
 	bra	read_row
 dch3    decfsz  counter_happiness_decrement_3
 	bra	dch4
 	bra     dch5
-dch4    ;dc3
-	movlw	0xFE
+dch4    movlw	0xFE
 	movwf	counter_happiness_decrement
 	movlw	0xFE
 	movwf	counter_happiness_decrement_2
 	bra	read_row	
-dch5	movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter happiness by 1
+dch5	movff	counter_happiness, PORTH
+	movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter happiness by 1
 	subwf   counter_happiness, 1
 	call    HAPPINESS  ;call happiness, to update smiley, keep track of happiness, lives and death 
+	call    TEMP 
+	call    HAPPINESS 
 	movlw   0x00
 	cpfsgt  counter_happiness
 	call    LIFE  ;if counter_happiness is zero, go to decrease a life 
@@ -384,7 +383,7 @@ dch5	movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter ha
 	movwf	counter_happiness_decrement ;reset counter_happiness_decrement to 100
 	movlw	0xFE
 	movwf	counter_happiness_decrement_2
-	movlw	0x05
+	movlw	0x02
 	movwf	counter_happiness_decrement_3
 	bra	read_row
 	
@@ -392,7 +391,7 @@ dch5	movlw   0x01   ;If counter_happiness_decrement is zero, subtract counter ha
 	
 TEMP
 	call    TEMPERATURE 
-	movlw   0xDB
+	movlw   0xD8
 	cpfsgt  Temperature_hex_1
 	bra     cold_check 
 	bra     hot 
@@ -402,6 +401,8 @@ cold_check
 	bra	normal_temp
 	bra	snowflake
 snowflake 
+	movlw   0x01
+	subwf   counter_happiness, 1
 	movlw   b'11000010'
 	call    LCD_shift 
 	movlw   0x2A
@@ -421,7 +422,6 @@ normal_temp
 	return 
 	
 HAPPINESS	
-	call    TEMP 
 	movlw   b'11000000'
 	call    LCD_shift   ;shifting where the LCD writes to ammend happiness character
 	movlw   0x96
@@ -488,10 +488,8 @@ ONE_LIFE_LEFT
 	movlw   0x05
 	call    LCD_Send_Byte_D
 	return 
-DEATH   ;for death, clear the LCD, send ghost 
-	bra	setup
-
-DEATH1	call    LCD_clear
+	;for death, clear the LCD, send ghost 
+DEATH	call    LCD_clear
 	movlw   b'11001001'
 	call    LCD_shift 
 	movlw   0x00   ; DDRAM location of ghost

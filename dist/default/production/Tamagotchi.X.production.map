@@ -1,5 +1,5 @@
 MPLINK 5.09, LINKER
-Linker Map File - Created Wed Feb 26 13:02:52 2020
+Linker Map File - Created Fri Feb 28 14:50:26 2020
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
@@ -9,14 +9,14 @@ Linker Map File - Created Wed Feb 26 13:02:52 2020
                    sleepy       code   0x000006    program   0x000088
                      temp       code   0x00008e    program   0x000048
                     fdata       code   0x0000d6    program   0x00002a
-                   .org_1       code   0x000100    program   0x000438
-                      LCD       code   0x000538    program   0x000b96
-                    learn       code   0x0010ce    program   0x0004ce
-                    dance       code   0x00159c    program   0x000494
-                     Food       code   0x001a30    program   0x0003ae
-                     ball       code   0x001dde    program   0x00037c
-                    Hatch       code   0x00215a    program   0x000142
-                    pdata       code   0x00229c    program   0x000020
+                   .org_1       code   0x000100    program   0x000442
+                      LCD       code   0x000542    program   0x000b96
+                    learn       code   0x0010d8    program   0x0004ce
+                    dance       code   0x0015a6    program   0x000494
+                     Food       code   0x001a3a    program   0x0003ae
+                     ball       code   0x001de8    program   0x00037c
+                    Hatch       code   0x002164    program   0x000142
+                    pdata       code   0x0022a6    program   0x000020
 .config_300000_BUILD/DEFAULT/PRODUCTION/CONFIG.    romdata   0x300000    program   0x000001
 .config_300001_BUILD/DEFAULT/PRODUCTION/CONFIG.    romdata   0x300001    program   0x000001
 .config_300002_BUILD/DEFAULT/PRODUCTION/CONFIG.    romdata   0x300002    program   0x000001
@@ -30,23 +30,26 @@ Linker Map File - Created Wed Feb 26 13:02:52 2020
 .config_30000B_BUILD/DEFAULT/PRODUCTION/CONFIG.    romdata   0x30000b    program   0x000001
 .config_30000C_BUILD/DEFAULT/PRODUCTION/CONFIG.    romdata   0x30000c    program   0x000001
 .config_30000D_BUILD/DEFAULT/PRODUCTION/CONFIG.    romdata   0x30000d    program   0x000001
-                     acs0      udata   0x000000       data   0x00001b
-                     acs3      udata   0x00001b       data   0x000015
-                     acs8      udata   0x000030       data   0x00000b
-                     acs1      udata   0x00003b       data   0x000009
-                     acs9      udata   0x000044       data   0x000004
-                     acs5      udata   0x000048       data   0x000004
-                   tables      udata   0x000400       data   0x0000c3
+                     acs3      udata   0x000000       data   0x000015
+                     acs8      udata   0x000015       data   0x00000b
+                     acs5      udata   0x000020       data   0x000009
+                     acs0      udata   0x000029       data   0x000009
+                     acs2      udata   0x000032       data   0x000008
+                     acs6      udata   0x00003a       data   0x000005
+                     acs1      udata   0x00003f       data   0x000005
+                     acs7      udata   0x000044       data   0x000004
+                     acs4      udata   0x000048       data   0x000004
+                   tables      udata   0x000400       data   0x0000c2
 
 
 
                               Program Memory Usage 
                                Start         End      
                            ---------   ---------      
-                            0x000000    0x0022bb      
+                            0x000000    0x0022c5      
                             0x300000    0x300006      
                             0x300008    0x30000d      
-            8905 out of 132120 program addresses used, program memory utilization is 6%
+            8915 out of 132120 program addresses used, program memory utilization is 6%
 
 
 
@@ -55,392 +58,390 @@ Linker Map File - Created Wed Feb 26 13:02:52 2020
                 ---------  ---------  ---------  --------- ---------                
                  ADC_Read   0x0000a6    program     static H:\Tamagotchi\Tamagotchi.X\temperature.asm
                 ADC_Setup   0x000094    program     extern H:\Tamagotchi\Tamagotchi.X\temperature.asm
-                     BABY   0x0018f2    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                     BABY   0x0007c0    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                BALL_GAME   0x001dde    program     extern H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                   BOUNCE   0x0015c6    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                     BABY   0x0007ca    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                     BABY   0x0018fc    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                BALL_GAME   0x001de8    program     extern H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                   BOUNCE   0x0015d0    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
           CHECK_A_PRESSED   0x00019e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
           CHECK_B_PRESSED   0x0001a6    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
           CHECK_C_PRESSED   0x0001bc    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
           CHECK_D_PRESSED   0x0001d2    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
           CHECK_E_PRESSED   0x0001e8    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
           CHECK_F_PRESSED   0x0001fe    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-             CHECK_GROWTH   0x001ba6    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-          CHECK_LAST_LIFE   0x000422    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                    DANCE   0x0018c4    program     extern H:\Tamagotchi\Tamagotchi.X\dance.asm
-                  DBALL_1   0x00159c    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                  DBALL_2   0x0015aa    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-              DBALL_CLEAR   0x0015b8    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                    DEATH   0x000466    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                   DEATH1   0x000468    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  DISCO_1   0x000f4a    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                  DISCO_2   0x00100c    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                      EGG   0x000640    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                     FOOD   0x001a90    program     extern H:\Tamagotchi\Tamagotchi.X\food.asm
-             FOOD_ANIMATE   0x001a96    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-               FOOD_Setup   0x001a30    program     extern H:\Tamagotchi\Tamagotchi.X\food.asm
+             CHECK_GROWTH   0x001bb0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+          CHECK_LAST_LIFE   0x00042e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                    DANCE   0x0018ce    program     extern H:\Tamagotchi\Tamagotchi.X\dance.asm
+                  DBALL_1   0x0015a6    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                  DBALL_2   0x0015b4    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+              DBALL_CLEAR   0x0015c2    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                    DEATH   0x000472    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  DISCO_1   0x000f54    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                  DISCO_2   0x001016    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                      EGG   0x00064a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                     FOOD   0x001a9a    program     extern H:\Tamagotchi\Tamagotchi.X\food.asm
+             FOOD_ANIMATE   0x001aa0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+               FOOD_Setup   0x001a3a    program     extern H:\Tamagotchi\Tamagotchi.X\food.asm
                 GAME_MODE   0x000194    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                    GHOST   0x000c42    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                   GROWTH   0x001bc4    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-           GROWTH_ANIMATE   0x001bc8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                HAPPINESS   0x0003d4    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                    HAPPY   0x0003ec    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                    HEART   0x000700    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                     HOPS   0x001608    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                    GHOST   0x000c4c    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                   GROWTH   0x001bce    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+           GROWTH_ANIMATE   0x001bd2    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                HAPPINESS   0x0003e4    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                    HAPPY   0x0003f8    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                    HEART   0x00070a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                     HOPS   0x001612    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
                  Keyboard   0x000222    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
            Keyboard_Setup   0x000216    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                    LARGE   0x0019b8    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-             LARGE_RABBIT   0x000e88    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-               LCD_Enable   0x0005d6    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                    LARGE   0x0019c2    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+             LARGE_RABBIT   0x000e92    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+               LCD_Enable   0x0005e0    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
               LCD_Hex_Nib   0x0000c6    program     static H:\Tamagotchi\Tamagotchi.X\temperature.asm
-         LCD_Loop_message   0x00058c    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-          LCD_Send_Byte_D   0x0005b4    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-          LCD_Send_Byte_I   0x000598    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                LCD_Setup   0x000538    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+         LCD_Loop_message   0x000596    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+          LCD_Send_Byte_D   0x0005be    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+          LCD_Send_Byte_I   0x0005a2    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                LCD_Setup   0x000542    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
             LCD_Write_Hex   0x0000bc    program     static H:\Tamagotchi\Tamagotchi.X\temperature.asm
-        LCD_Write_Message   0x00058a    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                LCD_clear   0x000626    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-LCD_custom_character_set_EGG   0x000640    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                LCD_delay   0x00061c    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-             LCD_delay_ms   0x0005fa    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-           LCD_delay_x4us   0x000608    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                LCD_shift   0x000634    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                    LEARN   0x0010ce    program     extern H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     LIFE   0x000416    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                   Line_0   0x00229c    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                   Line_1   0x0022ac    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+        LCD_Write_Message   0x000594    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                LCD_clear   0x000630    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+LCD_custom_character_set_EGG   0x00064a    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                LCD_delay   0x000626    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+             LCD_delay_ms   0x000604    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+           LCD_delay_x4us   0x000612    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                LCD_shift   0x00063e    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                    LEARN   0x0010d8    program     extern H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     LIFE   0x000422    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                   Line_0   0x0022a6    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                   Line_1   0x0022b6    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
                      MAIN   0x00011c    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                   MEDIUM   0x001976    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-            MEDIUM_RABBIT   0x000dc6    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                     MOON   0x000940    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                  NEUTRAL   0x0003fa    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  NEUTRAL   0x000ac0    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                 NEW_FORM   0x001d74    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                Numberpad   0x00140c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-            ONE_LIFE_LEFT   0x000448    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                   MEDIUM   0x001980    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+            MEDIUM_RABBIT   0x000dd0    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                     MOON   0x00094a    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                  NEUTRAL   0x000406    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  NEUTRAL   0x000aca    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                 NEW_FORM   0x001d7e    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                Numberpad   0x001416    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+            ONE_LIFE_LEFT   0x000454    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
          PRESS_A_TO_START   0x000126    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                    React   0x0020d4    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                      SAD   0x000408    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                      SAD   0x000b80    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                    React   0x0020de    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                      SAD   0x000414    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                      SAD   0x000b8a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
                    SLEEPY   0x000006    program     extern H:\Tamagotchi\Tamagotchi.X\sleepy.asm
-                    SMALL   0x001928    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-             SMALL_RABBIT   0x000d04    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                   SMILEY   0x000a00    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                      SUN   0x000880    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                     TEMP   0x000396    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                    SMALL   0x001932    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+             SMALL_RABBIT   0x000d0e    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                   SMILEY   0x000a0a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                      SUN   0x00088a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                     TEMP   0x0003a2    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
               TEMPERATURE   0x00008e    program     extern H:\Tamagotchi\Tamagotchi.X\temperature.asm
-           TWO_LIVES_LEFT   0x00042a    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                     WAVE   0x00180a    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+           TWO_LIVES_LEFT   0x000436    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                     WAVE   0x001814    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
                  adc_loop   0x0000a8    program     static H:\Tamagotchi\Tamagotchi.X\temperature.asm
-                     back   0x001bc0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                     ball   0x001e72    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-               ball_delay   0x00213c    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                     back   0x001bca    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                     ball   0x001e7c    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+               ball_delay   0x002146    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
                blank_line   0x0000f2    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                     c_11   0x001270    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_12   0x001280    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_13   0x001290    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_14   0x0012a0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_15   0x0012b0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_16   0x0012c0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_17   0x0012d0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_18   0x0012e0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_1s   0x001320    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_2s   0x00132c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_3s   0x001338    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_4s   0x001344    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_5s   0x001350    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_6s   0x00135c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_7s   0x001368    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_8s   0x001374    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_9s   0x001380    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                calculate   0x001206    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_11   0x00127a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_12   0x00128a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_13   0x00129a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_14   0x0012aa    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_15   0x0012ba    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_16   0x0012ca    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_17   0x0012da    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_18   0x0012ea    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_1s   0x00132a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_2s   0x001336    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_3s   0x001342    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_4s   0x00134e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_5s   0x00135a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_6s   0x001366    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_7s   0x001372    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_8s   0x00137e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_9s   0x00138a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                calculate   0x001210    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  check_1   0x00212e    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                  check_1   0x0018ec    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
                   check_1   0x00024c    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  check_1   0x002124    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                  check_1   0x0018e2    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                  check_1   0x00144c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  check_1   0x001456    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  check_2   0x001460    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  check_2   0x002134    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                  check_2   0x0018f4    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
                   check_2   0x000256    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  check_2   0x00212a    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                  check_2   0x001456    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  check_2   0x0018ea    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                  check_2   0x001ba6    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  check_2   0x001bb0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  check_3   0x00146a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                   check_3   0x000260    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  check_3   0x002130    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                  check_3   0x001460    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  check_4   0x001bb0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  check_3   0x00213a    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                  check_4   0x001bba    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
                   check_5   0x000288    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  check_5   0x001488    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  check_6   0x001bb8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  check_5   0x001492    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  check_6   0x001bc2    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
                   check_6   0x000292    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  check_6   0x001492    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  check_6   0x00149c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                   check_7   0x00029c    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  check_7   0x00149c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-      check_double_result   0x001260    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-             check_medium   0x001d7c    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-      check_single_result   0x001314    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-               cold_check   0x0003a2    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  check_7   0x0014a6    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+      check_double_result   0x00126a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+             check_medium   0x001d86    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+      check_single_result   0x00131e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+               cold_check   0x0003ae    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
                     coldh   0x000156    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                   column   0x001416    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                    column   0x000228    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                column_11   0x0014b6    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                   column   0x001420    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_11   0x0014c0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                 column_11   0x0002b6    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                column_12   0x0014c6    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_12   0x0014d0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                 column_12   0x0002c0    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                column_13   0x0014d6    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_13   0x0014e0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                 column_13   0x0002ca    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                column_14   0x0014e4    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                 column_14   0x0002d4    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                column_21   0x0014ee    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_14   0x0014ee    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_21   0x0014f8    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                 column_21   0x0002e0    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                column_22   0x0014fe    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_22   0x001508    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                 column_22   0x0002ea    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                column_23   0x001518    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                 column_23   0x0002f4    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                column_23   0x00150e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_24   0x001528    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                 column_24   0x0002fe    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                column_24   0x00151e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                column_31   0x001528    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                 column_31   0x00030a    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                column_31   0x001532    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                 column_32   0x000314    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                column_32   0x001538    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                column_33   0x001548    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_32   0x001542    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                 column_33   0x00031e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                column_33   0x001552    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                 column_34   0x000328    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                column_34   0x001558    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_34   0x001562    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_41   0x001566    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                 column_41   0x00032e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                column_41   0x00155c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_42   0x00156e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                 column_42   0x000338    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                column_42   0x001564    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                 column_43   0x000342    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                column_43   0x001574    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                column_44   0x00157c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_43   0x00157e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                 column_44   0x00034c    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                 continue   0x001442    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      cr0   0x001122    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      cr1   0x00112e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      cr2   0x00113a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     cr20   0x001194    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     cr21   0x0011a0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     cr22   0x0011ac    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     cr23   0x0011b8    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     cr24   0x0011c4    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     cr25   0x0011d0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     cr26   0x0011dc    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     cr27   0x0011e8    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     cr28   0x0011f4    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     cr29   0x001200    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      cr3   0x001146    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      cr4   0x001152    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      cr5   0x00115e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      cr6   0x00116a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      cr7   0x001176    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      cr8   0x001182    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      cr9   0x00118e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                    crack   0x00223c    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-              dance_delay   0x001a12    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                column_44   0x001586    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                 continue   0x00144c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      cr0   0x00112c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      cr1   0x001138    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      cr2   0x001144    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     cr20   0x00119e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     cr21   0x0011aa    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     cr22   0x0011b6    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     cr23   0x0011c2    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     cr24   0x0011ce    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     cr25   0x0011da    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     cr26   0x0011e6    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     cr27   0x0011f2    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     cr28   0x0011fe    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     cr29   0x00120a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      cr3   0x001150    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      cr4   0x00115c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      cr5   0x001168    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      cr6   0x001174    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      cr7   0x001180    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      cr8   0x00118c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      cr9   0x001198    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                    crack   0x002246    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+              dance_delay   0x001a1c    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
                       dch   0x000350    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
                      dch1   0x000358    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
                      dch2   0x000362    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
                      dch3   0x000368    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
                      dch4   0x00036e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
                      dch5   0x000378    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                   decode   0x0014ac    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                    decode   0x0002ac    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                    delay   0x0014a6    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                    delay   0x00051a    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  delay_1   0x001dc4    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  delay_1   0x001a16    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                   decode   0x0014b6    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                    delay   0x0014b0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                    delay   0x000524    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  delay_1   0x00214a    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
                   delay_1   0x000074    program     static H:\Tamagotchi\Tamagotchi.X\sleepy.asm
-                  delay_1   0x002282    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                  delay_1   0x00051e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  delay_1   0x001582    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  delay_1   0x002140    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                  delay_2   0x001a20    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                  delay_2   0x000528    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  delay_2   0x001dce    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  delay_2   0x00228c    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                  delay_1   0x000528    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  delay_1   0x001dce    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  delay_1   0x001a20    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                  delay_1   0x00158c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  delay_1   0x00228c    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                  delay_2   0x001dd8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  delay_2   0x001a2a    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                  delay_2   0x001596    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  delay_2   0x002296    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                  delay_2   0x002154    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
                   delay_2   0x00007e    program     static H:\Tamagotchi\Tamagotchi.X\sleepy.asm
-                  delay_2   0x00158c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  delay_2   0x00214a    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                  delay_3   0x001596    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  delay_2   0x000532    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  delay_3   0x0015a0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  delay_3   0x00053c    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  delay_3   0x001de2    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  delay_3   0x0022a0    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                  delay_3   0x00215e    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                  delay_3   0x001a34    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
                   delay_3   0x000088    program     static H:\Tamagotchi\Tamagotchi.X\sleepy.asm
-                  delay_3   0x001dd8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  delay_3   0x001a2a    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                  delay_3   0x002296    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                  delay_3   0x002154    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                  delay_3   0x000532    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
                   delay_k   0x0002a6    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  delay_k   0x002136    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                      die   0x001fec    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-             double_input   0x00122e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  dynamic   0x0021d8    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                egg_blink   0x002218    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                 finished   0x000538    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  delay_k   0x002140    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                      die   0x001ff6    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+             double_input   0x001238    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  dynamic   0x0021e2    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                egg_blink   0x002222    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                 finished   0x000542    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
              flash_line_1   0x0000d6    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
              flash_line_2   0x0000e4    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  flashes   0x001d2c    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-               food_delay   0x001dc0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  guessed   0x001226    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-              hatch_delay   0x00227e    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                  flashes   0x001d36    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+               food_delay   0x001dca    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  guessed   0x001230    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+              hatch_delay   0x002288    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
                hatch_temp   0x000146    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                     hops   0x001950    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                      hot   0x0003b8    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                     hops   0x00195a    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                      hot   0x0003c8    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
                      hoth   0x000164    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                     jump   0x001f76    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                    large   0x001dac    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                   lcdlp1   0x00061e    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                   lcdlp2   0x0005fc    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                    learn   0x0010f2    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-              learn_delay   0x00157e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     loop   0x00216e    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                    loopb   0x001a82    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                   loopf1   0x001a46    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                   loopf2   0x001a64    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                    looph   0x002190    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                     jump   0x001f80    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                    large   0x001db6    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                   lcdlp1   0x000628    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                   lcdlp2   0x000606    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                    learn   0x0010fc    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+              learn_delay   0x001588    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     loop   0x002178    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                    loopb   0x001a8c    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                   loopf1   0x001a50    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                   loopf2   0x001a6e    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                    looph   0x00219a    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
                   measure   0x0000ae    program     static H:\Tamagotchi\Tamagotchi.X\temperature.asm
-                   medium   0x001d98    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-               move_ghost   0x001fac    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                       n2   0x0020fc    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                       n3   0x00210a    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                      n_2   0x001f98    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                      n_3   0x001fa2    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                 nested_2   0x002288    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                 nested_2   0x002146    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                 nested_2   0x001a1c    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                 nested_2   0x000524    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                   medium   0x001da2    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+               move_ghost   0x001fb6    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                       n2   0x002106    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                       n3   0x002114    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                      n_2   0x001fa2    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                      n_3   0x001fac    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                 nested_2   0x002150    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                 nested_2   0x001a26    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
                  nested_2   0x00007a    program     static H:\Tamagotchi\Tamagotchi.X\sleepy.asm
-                 nested_2   0x001588    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                 nested_2   0x001dca    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                 nested_3   0x001592    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                 nested_3   0x00052e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                 nested_3   0x002150    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                 nested_2   0x00052e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                 nested_2   0x002292    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                 nested_2   0x001592    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                 nested_2   0x001dd4    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                 nested_3   0x001a30    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                 nested_3   0x00159c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                  nested_3   0x000084    program     static H:\Tamagotchi\Tamagotchi.X\sleepy.asm
-                 nested_3   0x002292    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                 nested_3   0x001a26    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                 nested_3   0x001dd4    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                 no_press   0x002118    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-              normal_temp   0x0003c6    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-     output_HEAT_TO_HATCH   0x00217c    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
-  output_PRESS_A_TO_START   0x00215a    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
-             output_blank   0x001a72    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-            output_double   0x0012ea    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-           output_flash_1   0x001a36    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-           output_flash_2   0x001a54    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
- output_hatching_sequence   0x0021d4    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
-            output_single   0x001386    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-   output_starting_screen   0x00219e    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                 nested_3   0x000538    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                 nested_3   0x00215a    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                 nested_3   0x00229c    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                 nested_3   0x001dde    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                 no_press   0x002122    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+              normal_temp   0x0003d6    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+     output_HEAT_TO_HATCH   0x002186    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
+  output_PRESS_A_TO_START   0x002164    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
+             output_blank   0x001a7c    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+            output_double   0x0012f4    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+           output_flash_1   0x001a40    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+           output_flash_2   0x001a5e    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+ output_hatching_sequence   0x0021de    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
+            output_single   0x001390    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+   output_starting_screen   0x0021a8    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
               read_column   0x00027e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-              read_column   0x00147e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                 read_row   0x001430    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                 read_row   0x00211e    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+              read_column   0x001488    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                 read_row   0x00143a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                 read_row   0x002128    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
                  read_row   0x000242    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                    right   0x0013c4    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                    right   0x0013ce    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                     row_1   0x0002d8    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                    row_1   0x0014e6    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                    row_2   0x001520    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                    row_1   0x0014f0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                    row_2   0x00152a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                     row_2   0x000302    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                    row_3   0x001564    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                     row_3   0x00032c    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                    row_3   0x00155a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      rst   0x00143c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      rst   0x001446    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                     setup   0x000100    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-             setup_column   0x00146a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
              setup_column   0x00026a    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+             setup_column   0x001474    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                setup_row   0x001426    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                 setup_row   0x00022e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                setup_row   0x00141c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                setup_row   0x0020de    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-             single_input   0x0012f8    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                setup_row   0x0020e8    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+             single_input   0x001302    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
              sleepy_delay   0x000070    program     static H:\Tamagotchi\Tamagotchi.X\sleepy.asm
-                    small   0x001d84    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                snowflake   0x0003aa    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                       t1   0x0020f6    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                       t2   0x002104    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                       t3   0x002112    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                      t_1   0x001f92    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                      t_2   0x001f9c    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                      t_3   0x001fa6    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                    timer   0x0020f2    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                     wave   0x00180e    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                    wrong   0x00138e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                    small   0x001d8e    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                snowflake   0x0003b6    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                       t1   0x002100    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                       t2   0x00210e    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                       t3   0x00211c    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                      t_1   0x001f9c    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                      t_2   0x001fa6    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                      t_3   0x001fb0    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                    timer   0x0020fc    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                     wave   0x001818    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                    wrong   0x001398    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
                         z   0x000016    program     static H:\Tamagotchi\Tamagotchi.X\sleepy.asm
               Key_Pressed   0x000482       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                LCD_cnt_h   0x000001       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                LCD_cnt_l   0x000000       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-               LCD_cnt_ms   0x000002       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-              LCD_counter   0x000004       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                LCD_cnt_h   0x000040       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                LCD_cnt_l   0x00003f       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+               LCD_cnt_ms   0x000041       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+              LCD_counter   0x000043       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
               LCD_hex_tmp   0x000046       data     static H:\Tamagotchi\Tamagotchi.X\temperature.asm
                   LCD_tmp   0x000047       data     static H:\Tamagotchi\Tamagotchi.X\temperature.asm
-                  LCD_tmp   0x000003       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-     Number_pressed_1_int   0x000020       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-  Number_pressed_1_string   0x000022       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-     Number_pressed_2_int   0x000021       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-  Number_pressed_2_string   0x000023       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  LCD_tmp   0x000042       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+     Number_pressed_1_int   0x000005       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+  Number_pressed_1_string   0x000007       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+     Number_pressed_2_int   0x000006       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+  Number_pressed_2_string   0x000008       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
         Temperature_hex_1   0x000044       data     extern H:\Tamagotchi\Tamagotchi.X\temperature.asm
         Temperature_hex_2   0x000045       data     extern H:\Tamagotchi\Tamagotchi.X\temperature.asm
-                    clear   0x00003a       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                    count   0x00002f       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-            counter_blank   0x000042       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                    clear   0x00001f       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                    count   0x000014       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+            counter_blank   0x000027       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
            counter_column   0x000481       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-           counter_column   0x00001c       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-          counter_flash_1   0x000040       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
-          counter_flash_2   0x000041       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
-        counter_happiness   0x000005       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-counter_happiness_decrement   0x000006       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-counter_happiness_decrement_2   0x000007       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-counter_happiness_decrement_3   0x000008       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-             counter_life   0x00000a       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-           counter_output   0x000019       data     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-              counter_row   0x00001b       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+           counter_column   0x000001       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+          counter_flash_1   0x000025       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
+          counter_flash_2   0x000026       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
+        counter_happiness   0x000029       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+counter_happiness_decrement   0x00002a       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+counter_happiness_decrement_2   0x00002b       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+counter_happiness_decrement_3   0x00002c       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+             counter_life   0x00002e       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+           counter_output   0x00003d       data     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
               counter_row   0x000480       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-       dance_counter_baby   0x000012       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-    dance_counter_small_1   0x000013       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-    dance_counter_small_2   0x000014       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-            delay_count_1   0x00000b       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-            delay_count_2   0x00000c       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-            delay_count_3   0x00000d       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-           delay_count_b1   0x000030       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-           delay_count_b2   0x000031       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-           delay_count_b3   0x000032       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-           delay_count_l1   0x00001d       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-           delay_count_l2   0x00001e       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-           delay_count_l3   0x00001f       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+              counter_row   0x000000       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+       dance_counter_baby   0x000036       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+    dance_counter_small_1   0x000037       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+    dance_counter_small_2   0x000038       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+            delay_count_1   0x00002f       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+            delay_count_2   0x000030       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+            delay_count_3   0x000031       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+           delay_count_b1   0x000015       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+           delay_count_b2   0x000016       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+           delay_count_b3   0x000017       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+           delay_count_l1   0x000002       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+           delay_count_l2   0x000003       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+           delay_count_l3   0x000004       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
            delay_count_s1   0x000049       data     static H:\Tamagotchi\Tamagotchi.X\sleepy.asm
            delay_count_s2   0x00004a       data     static H:\Tamagotchi\Tamagotchi.X\sleepy.asm
            delay_count_s3   0x00004b       data     static H:\Tamagotchi\Tamagotchi.X\sleepy.asm
-         delay_counter_d1   0x00000f       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-         delay_counter_d2   0x000010       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-         delay_counter_d3   0x000011       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-         delay_counter_f1   0x00003c       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
-         delay_counter_f2   0x00003d       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
-         delay_counter_f3   0x00003e       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
-         delay_counter_h1   0x000016       data     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-         delay_counter_h2   0x000017       data     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-         delay_counter_h3   0x000018       data     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                    flash   0x000039       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-            flash_counter   0x00003f       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
-             food_counter   0x000043       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                    guess   0x000028       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  guess_1   0x000029       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-              guess_1_str   0x00002d       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  guess_2   0x00002a       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-              guess_2_str   0x00002e       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  integer   0x000024       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                life_mode   0x000009       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-           lifemode_dance   0x00000e       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-            lifemode_food   0x00003b       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
+         delay_counter_d1   0x000033       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+         delay_counter_d2   0x000034       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+         delay_counter_d3   0x000035       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+         delay_counter_f1   0x000021       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
+         delay_counter_f2   0x000022       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
+         delay_counter_f3   0x000023       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
+         delay_counter_h1   0x00003a       data     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+         delay_counter_h2   0x00003b       data     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+         delay_counter_h3   0x00003c       data     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                    flash   0x00001e       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+            flash_counter   0x000024       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
+             food_counter   0x000028       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                    guess   0x00000d       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  guess_1   0x00000e       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+              guess_1_str   0x000012       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  guess_2   0x00000f       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+              guess_2_str   0x000013       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  integer   0x000009       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                life_mode   0x00002d       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+           lifemode_dance   0x000032       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+            lifemode_food   0x000020       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
                      loop   0x000048       data     static H:\Tamagotchi\Tamagotchi.X\sleepy.asm
                   myArray   0x000400       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                 output_1   0x00002b       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                 output_2   0x00002c       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-            random_number   0x000027       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  repeats   0x00001a       data     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                   result   0x000026       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-              sound_buuzz   0x0004c2       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                   string   0x000025       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  timer_1   0x000033       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-        timer_1_remaining   0x000036       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                  timer_2   0x000034       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-        timer_2_remaining   0x000037       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                  timer_3   0x000035       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-        timer_3_remaining   0x000038       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-             wave_counter   0x000015       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                 output_1   0x000010       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                 output_2   0x000011       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+            random_number   0x00000c       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  repeats   0x00003e       data     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                   result   0x00000b       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                   string   0x00000a       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  timer_1   0x000018       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+        timer_1_remaining   0x00001b       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                  timer_2   0x000019       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+        timer_2_remaining   0x00001c       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                  timer_3   0x00001a       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+        timer_3_remaining   0x00001d       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+             wave_counter   0x000039       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
 
 
 
@@ -518,310 +519,309 @@ counter_happiness_decrement_3   0x000008       data     static H:\Tamagotchi\Tam
                      dch3   0x000368    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
                      dch4   0x00036e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
                      dch5   0x000378    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                     TEMP   0x000396    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-               cold_check   0x0003a2    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                snowflake   0x0003aa    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                      hot   0x0003b8    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-              normal_temp   0x0003c6    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                HAPPINESS   0x0003d4    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                    HAPPY   0x0003ec    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  NEUTRAL   0x0003fa    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                      SAD   0x000408    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                     LIFE   0x000416    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-          CHECK_LAST_LIFE   0x000422    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-           TWO_LIVES_LEFT   0x00042a    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-            ONE_LIFE_LEFT   0x000448    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                    DEATH   0x000466    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                   DEATH1   0x000468    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                    delay   0x00051a    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  delay_1   0x00051e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                 nested_2   0x000524    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  delay_2   0x000528    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                 nested_3   0x00052e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                  delay_3   0x000532    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                 finished   0x000538    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                LCD_Setup   0x000538    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-        LCD_Write_Message   0x00058a    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-         LCD_Loop_message   0x00058c    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-          LCD_Send_Byte_I   0x000598    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-          LCD_Send_Byte_D   0x0005b4    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-               LCD_Enable   0x0005d6    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-             LCD_delay_ms   0x0005fa    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                   lcdlp2   0x0005fc    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-           LCD_delay_x4us   0x000608    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                LCD_delay   0x00061c    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                   lcdlp1   0x00061e    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                LCD_clear   0x000626    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                LCD_shift   0x000634    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                      EGG   0x000640    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-LCD_custom_character_set_EGG   0x000640    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                    HEART   0x000700    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                     BABY   0x0007c0    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                      SUN   0x000880    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                     MOON   0x000940    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                   SMILEY   0x000a00    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                  NEUTRAL   0x000ac0    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                      SAD   0x000b80    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                    GHOST   0x000c42    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-             SMALL_RABBIT   0x000d04    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-            MEDIUM_RABBIT   0x000dc6    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-             LARGE_RABBIT   0x000e88    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                  DISCO_1   0x000f4a    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                  DISCO_2   0x00100c    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                    LEARN   0x0010ce    program     extern H:\Tamagotchi\Tamagotchi.X\learn.asm
-                    learn   0x0010f2    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      cr0   0x001122    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      cr1   0x00112e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      cr2   0x00113a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      cr3   0x001146    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      cr4   0x001152    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      cr5   0x00115e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      cr6   0x00116a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      cr7   0x001176    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      cr8   0x001182    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      cr9   0x00118e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     cr20   0x001194    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     cr21   0x0011a0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     cr22   0x0011ac    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     cr23   0x0011b8    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     cr24   0x0011c4    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     cr25   0x0011d0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     cr26   0x0011dc    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     cr27   0x0011e8    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     cr28   0x0011f4    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     cr29   0x001200    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                calculate   0x001206    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  guessed   0x001226    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-             double_input   0x00122e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-      check_double_result   0x001260    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_11   0x001270    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_12   0x001280    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_13   0x001290    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_14   0x0012a0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_15   0x0012b0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_16   0x0012c0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_17   0x0012d0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_18   0x0012e0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-            output_double   0x0012ea    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-             single_input   0x0012f8    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-      check_single_result   0x001314    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_1s   0x001320    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_2s   0x00132c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_3s   0x001338    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_4s   0x001344    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_5s   0x001350    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_6s   0x00135c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_7s   0x001368    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_8s   0x001374    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                     c_9s   0x001380    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-            output_single   0x001386    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                    wrong   0x00138e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                    right   0x0013c4    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                Numberpad   0x00140c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                   column   0x001416    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                setup_row   0x00141c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                 read_row   0x001430    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                      rst   0x00143c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                 continue   0x001442    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  check_1   0x00144c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  check_2   0x001456    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  check_3   0x001460    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-             setup_column   0x00146a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-              read_column   0x00147e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  check_5   0x001488    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  check_6   0x001492    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  check_7   0x00149c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                    delay   0x0014a6    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                   decode   0x0014ac    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                column_11   0x0014b6    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                column_12   0x0014c6    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                column_13   0x0014d6    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                column_14   0x0014e4    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                    row_1   0x0014e6    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                column_21   0x0014ee    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                column_22   0x0014fe    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                column_23   0x00150e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                column_24   0x00151e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                    row_2   0x001520    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                column_31   0x001528    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                column_32   0x001538    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                column_33   0x001548    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                column_34   0x001558    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                    row_3   0x00155a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                column_41   0x00155c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                column_42   0x001564    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                column_43   0x001574    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                column_44   0x00157c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-              learn_delay   0x00157e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  delay_1   0x001582    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                 nested_2   0x001588    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  delay_2   0x00158c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                 nested_3   0x001592    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  delay_3   0x001596    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  DBALL_1   0x00159c    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                  DBALL_2   0x0015aa    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-              DBALL_CLEAR   0x0015b8    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                   BOUNCE   0x0015c6    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                     HOPS   0x001608    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                     WAVE   0x00180a    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                     wave   0x00180e    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                    DANCE   0x0018c4    program     extern H:\Tamagotchi\Tamagotchi.X\dance.asm
-                  check_1   0x0018e2    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                  check_2   0x0018ea    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                     BABY   0x0018f2    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                    SMALL   0x001928    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                     hops   0x001950    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                   MEDIUM   0x001976    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                    LARGE   0x0019b8    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-              dance_delay   0x001a12    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                  delay_1   0x001a16    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                 nested_2   0x001a1c    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                  delay_2   0x001a20    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                 nested_3   0x001a26    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-                  delay_3   0x001a2a    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-               FOOD_Setup   0x001a30    program     extern H:\Tamagotchi\Tamagotchi.X\food.asm
-           output_flash_1   0x001a36    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                   loopf1   0x001a46    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-           output_flash_2   0x001a54    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                   loopf2   0x001a64    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-             output_blank   0x001a72    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                    loopb   0x001a82    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                     FOOD   0x001a90    program     extern H:\Tamagotchi\Tamagotchi.X\food.asm
-             FOOD_ANIMATE   0x001a96    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  check_2   0x001ba6    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-             CHECK_GROWTH   0x001ba6    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  check_4   0x001bb0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  check_6   0x001bb8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                     back   0x001bc0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                   GROWTH   0x001bc4    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-           GROWTH_ANIMATE   0x001bc8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  flashes   0x001d2c    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                 NEW_FORM   0x001d74    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-             check_medium   0x001d7c    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                    small   0x001d84    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                   medium   0x001d98    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                    large   0x001dac    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-               food_delay   0x001dc0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  delay_1   0x001dc4    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                 nested_2   0x001dca    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  delay_2   0x001dce    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                 nested_3   0x001dd4    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                  delay_3   0x001dd8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
-                BALL_GAME   0x001dde    program     extern H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                     ball   0x001e72    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                     jump   0x001f76    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                      t_1   0x001f92    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                      n_2   0x001f98    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                      t_2   0x001f9c    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                      n_3   0x001fa2    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                      t_3   0x001fa6    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-               move_ghost   0x001fac    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                      die   0x001fec    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                    React   0x0020d4    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                setup_row   0x0020de    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                    timer   0x0020f2    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                       t1   0x0020f6    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                       n2   0x0020fc    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                       t2   0x002104    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                       n3   0x00210a    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                       t3   0x002112    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                 no_press   0x002118    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                 read_row   0x00211e    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                  check_1   0x002124    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                  check_2   0x00212a    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                  check_3   0x002130    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                  delay_k   0x002136    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-               ball_delay   0x00213c    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                  delay_1   0x002140    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                 nested_2   0x002146    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                  delay_2   0x00214a    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                 nested_3   0x002150    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                  delay_3   0x002154    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-  output_PRESS_A_TO_START   0x00215a    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                     loop   0x00216e    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-     output_HEAT_TO_HATCH   0x00217c    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                    looph   0x002190    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-   output_starting_screen   0x00219e    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
- output_hatching_sequence   0x0021d4    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                  dynamic   0x0021d8    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                egg_blink   0x002218    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                    crack   0x00223c    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-              hatch_delay   0x00227e    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                  delay_1   0x002282    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                 nested_2   0x002288    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                  delay_2   0x00228c    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                 nested_3   0x002292    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                  delay_3   0x002296    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                   Line_0   0x00229c    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                   Line_1   0x0022ac    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                LCD_cnt_l   0x000000       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                LCD_cnt_h   0x000001       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-               LCD_cnt_ms   0x000002       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-                  LCD_tmp   0x000003       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-              LCD_counter   0x000004       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
-        counter_happiness   0x000005       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-counter_happiness_decrement   0x000006       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-counter_happiness_decrement_2   0x000007       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-counter_happiness_decrement_3   0x000008       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-                life_mode   0x000009       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-             counter_life   0x00000a       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-            delay_count_1   0x00000b       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-            delay_count_2   0x00000c       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-            delay_count_3   0x00000d       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-           lifemode_dance   0x00000e       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-         delay_counter_d1   0x00000f       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-         delay_counter_d2   0x000010       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-         delay_counter_d3   0x000011       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-       dance_counter_baby   0x000012       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-    dance_counter_small_1   0x000013       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-    dance_counter_small_2   0x000014       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-             wave_counter   0x000015       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
-         delay_counter_h1   0x000016       data     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-         delay_counter_h2   0x000017       data     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-         delay_counter_h3   0x000018       data     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-           counter_output   0x000019       data     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-                  repeats   0x00001a       data     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
-              counter_row   0x00001b       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-           counter_column   0x00001c       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-           delay_count_l1   0x00001d       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-           delay_count_l2   0x00001e       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-           delay_count_l3   0x00001f       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-     Number_pressed_1_int   0x000020       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-     Number_pressed_2_int   0x000021       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-  Number_pressed_1_string   0x000022       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-  Number_pressed_2_string   0x000023       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  integer   0x000024       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                   string   0x000025       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                   result   0x000026       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-            random_number   0x000027       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                    guess   0x000028       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  guess_1   0x000029       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                  guess_2   0x00002a       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                 output_1   0x00002b       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                 output_2   0x00002c       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-              guess_1_str   0x00002d       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-              guess_2_str   0x00002e       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-                    count   0x00002f       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
-           delay_count_b1   0x000030       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-           delay_count_b2   0x000031       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-           delay_count_b3   0x000032       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                  timer_1   0x000033       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                  timer_2   0x000034       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                  timer_3   0x000035       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-        timer_1_remaining   0x000036       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-        timer_2_remaining   0x000037       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-        timer_3_remaining   0x000038       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                    flash   0x000039       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-                    clear   0x00003a       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
-            lifemode_food   0x00003b       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
-         delay_counter_f1   0x00003c       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
-         delay_counter_f2   0x00003d       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
-         delay_counter_f3   0x00003e       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
-            flash_counter   0x00003f       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
-          counter_flash_1   0x000040       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
-          counter_flash_2   0x000041       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
-            counter_blank   0x000042       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
-             food_counter   0x000043       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                     TEMP   0x0003a2    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+               cold_check   0x0003ae    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                snowflake   0x0003b6    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                      hot   0x0003c8    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+              normal_temp   0x0003d6    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                HAPPINESS   0x0003e4    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                    HAPPY   0x0003f8    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  NEUTRAL   0x000406    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                      SAD   0x000414    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                     LIFE   0x000422    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+          CHECK_LAST_LIFE   0x00042e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+           TWO_LIVES_LEFT   0x000436    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+            ONE_LIFE_LEFT   0x000454    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                    DEATH   0x000472    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                    delay   0x000524    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  delay_1   0x000528    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                 nested_2   0x00052e    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  delay_2   0x000532    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                 nested_3   0x000538    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                  delay_3   0x00053c    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                 finished   0x000542    program     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                LCD_Setup   0x000542    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+        LCD_Write_Message   0x000594    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+         LCD_Loop_message   0x000596    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+          LCD_Send_Byte_I   0x0005a2    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+          LCD_Send_Byte_D   0x0005be    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+               LCD_Enable   0x0005e0    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+             LCD_delay_ms   0x000604    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                   lcdlp2   0x000606    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+           LCD_delay_x4us   0x000612    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                LCD_delay   0x000626    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                   lcdlp1   0x000628    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                LCD_clear   0x000630    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                LCD_shift   0x00063e    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+LCD_custom_character_set_EGG   0x00064a    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                      EGG   0x00064a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                    HEART   0x00070a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                     BABY   0x0007ca    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                      SUN   0x00088a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                     MOON   0x00094a    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                   SMILEY   0x000a0a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                  NEUTRAL   0x000aca    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                      SAD   0x000b8a    program     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                    GHOST   0x000c4c    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+             SMALL_RABBIT   0x000d0e    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+            MEDIUM_RABBIT   0x000dd0    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+             LARGE_RABBIT   0x000e92    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                  DISCO_1   0x000f54    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                  DISCO_2   0x001016    program     extern H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                    LEARN   0x0010d8    program     extern H:\Tamagotchi\Tamagotchi.X\learn.asm
+                    learn   0x0010fc    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      cr0   0x00112c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      cr1   0x001138    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      cr2   0x001144    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      cr3   0x001150    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      cr4   0x00115c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      cr5   0x001168    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      cr6   0x001174    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      cr7   0x001180    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      cr8   0x00118c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      cr9   0x001198    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     cr20   0x00119e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     cr21   0x0011aa    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     cr22   0x0011b6    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     cr23   0x0011c2    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     cr24   0x0011ce    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     cr25   0x0011da    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     cr26   0x0011e6    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     cr27   0x0011f2    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     cr28   0x0011fe    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     cr29   0x00120a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                calculate   0x001210    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  guessed   0x001230    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+             double_input   0x001238    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+      check_double_result   0x00126a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_11   0x00127a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_12   0x00128a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_13   0x00129a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_14   0x0012aa    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_15   0x0012ba    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_16   0x0012ca    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_17   0x0012da    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_18   0x0012ea    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+            output_double   0x0012f4    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+             single_input   0x001302    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+      check_single_result   0x00131e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_1s   0x00132a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_2s   0x001336    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_3s   0x001342    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_4s   0x00134e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_5s   0x00135a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_6s   0x001366    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_7s   0x001372    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_8s   0x00137e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                     c_9s   0x00138a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+            output_single   0x001390    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                    wrong   0x001398    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                    right   0x0013ce    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                Numberpad   0x001416    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                   column   0x001420    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                setup_row   0x001426    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                 read_row   0x00143a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                      rst   0x001446    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                 continue   0x00144c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  check_1   0x001456    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  check_2   0x001460    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  check_3   0x00146a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+             setup_column   0x001474    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+              read_column   0x001488    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  check_5   0x001492    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  check_6   0x00149c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  check_7   0x0014a6    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                    delay   0x0014b0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                   decode   0x0014b6    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_11   0x0014c0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_12   0x0014d0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_13   0x0014e0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_14   0x0014ee    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                    row_1   0x0014f0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_21   0x0014f8    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_22   0x001508    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_23   0x001518    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_24   0x001528    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                    row_2   0x00152a    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_31   0x001532    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_32   0x001542    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_33   0x001552    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_34   0x001562    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                    row_3   0x001564    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_41   0x001566    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_42   0x00156e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_43   0x00157e    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                column_44   0x001586    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+              learn_delay   0x001588    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  delay_1   0x00158c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                 nested_2   0x001592    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  delay_2   0x001596    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                 nested_3   0x00159c    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  delay_3   0x0015a0    program     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  DBALL_1   0x0015a6    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                  DBALL_2   0x0015b4    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+              DBALL_CLEAR   0x0015c2    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                   BOUNCE   0x0015d0    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                     HOPS   0x001612    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                     WAVE   0x001814    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                     wave   0x001818    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                    DANCE   0x0018ce    program     extern H:\Tamagotchi\Tamagotchi.X\dance.asm
+                  check_1   0x0018ec    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                  check_2   0x0018f4    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                     BABY   0x0018fc    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                    SMALL   0x001932    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                     hops   0x00195a    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                   MEDIUM   0x001980    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                    LARGE   0x0019c2    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+              dance_delay   0x001a1c    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                  delay_1   0x001a20    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                 nested_2   0x001a26    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                  delay_2   0x001a2a    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                 nested_3   0x001a30    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+                  delay_3   0x001a34    program     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+               FOOD_Setup   0x001a3a    program     extern H:\Tamagotchi\Tamagotchi.X\food.asm
+           output_flash_1   0x001a40    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                   loopf1   0x001a50    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+           output_flash_2   0x001a5e    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                   loopf2   0x001a6e    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+             output_blank   0x001a7c    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                    loopb   0x001a8c    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                     FOOD   0x001a9a    program     extern H:\Tamagotchi\Tamagotchi.X\food.asm
+             FOOD_ANIMATE   0x001aa0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  check_2   0x001bb0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+             CHECK_GROWTH   0x001bb0    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  check_4   0x001bba    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  check_6   0x001bc2    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                     back   0x001bca    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                   GROWTH   0x001bce    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+           GROWTH_ANIMATE   0x001bd2    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  flashes   0x001d36    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                 NEW_FORM   0x001d7e    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+             check_medium   0x001d86    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                    small   0x001d8e    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                   medium   0x001da2    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                    large   0x001db6    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+               food_delay   0x001dca    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  delay_1   0x001dce    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                 nested_2   0x001dd4    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  delay_2   0x001dd8    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                 nested_3   0x001dde    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                  delay_3   0x001de2    program     static H:\Tamagotchi\Tamagotchi.X\food.asm
+                BALL_GAME   0x001de8    program     extern H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                     ball   0x001e7c    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                     jump   0x001f80    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                      t_1   0x001f9c    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                      n_2   0x001fa2    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                      t_2   0x001fa6    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                      n_3   0x001fac    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                      t_3   0x001fb0    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+               move_ghost   0x001fb6    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                      die   0x001ff6    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                    React   0x0020de    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                setup_row   0x0020e8    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                    timer   0x0020fc    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                       t1   0x002100    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                       n2   0x002106    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                       t2   0x00210e    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                       n3   0x002114    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                       t3   0x00211c    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                 no_press   0x002122    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                 read_row   0x002128    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                  check_1   0x00212e    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                  check_2   0x002134    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                  check_3   0x00213a    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                  delay_k   0x002140    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+               ball_delay   0x002146    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                  delay_1   0x00214a    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                 nested_2   0x002150    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                  delay_2   0x002154    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                 nested_3   0x00215a    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                  delay_3   0x00215e    program     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+  output_PRESS_A_TO_START   0x002164    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                     loop   0x002178    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+     output_HEAT_TO_HATCH   0x002186    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                    looph   0x00219a    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+   output_starting_screen   0x0021a8    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
+ output_hatching_sequence   0x0021de    program     extern H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                  dynamic   0x0021e2    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                egg_blink   0x002222    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                    crack   0x002246    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+              hatch_delay   0x002288    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                  delay_1   0x00228c    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                 nested_2   0x002292    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                  delay_2   0x002296    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                 nested_3   0x00229c    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                  delay_3   0x0022a0    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                   Line_0   0x0022a6    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                   Line_1   0x0022b6    program     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+              counter_row   0x000000       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+           counter_column   0x000001       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+           delay_count_l1   0x000002       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+           delay_count_l2   0x000003       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+           delay_count_l3   0x000004       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+     Number_pressed_1_int   0x000005       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+     Number_pressed_2_int   0x000006       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+  Number_pressed_1_string   0x000007       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+  Number_pressed_2_string   0x000008       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  integer   0x000009       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                   string   0x00000a       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                   result   0x00000b       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+            random_number   0x00000c       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                    guess   0x00000d       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  guess_1   0x00000e       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                  guess_2   0x00000f       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                 output_1   0x000010       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                 output_2   0x000011       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+              guess_1_str   0x000012       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+              guess_2_str   0x000013       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+                    count   0x000014       data     static H:\Tamagotchi\Tamagotchi.X\learn.asm
+           delay_count_b1   0x000015       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+           delay_count_b2   0x000016       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+           delay_count_b3   0x000017       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                  timer_1   0x000018       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                  timer_2   0x000019       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                  timer_3   0x00001a       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+        timer_1_remaining   0x00001b       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+        timer_2_remaining   0x00001c       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+        timer_3_remaining   0x00001d       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                    flash   0x00001e       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+                    clear   0x00001f       data     static H:\Tamagotchi\Tamagotchi.X\ballgame.asm
+            lifemode_food   0x000020       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
+         delay_counter_f1   0x000021       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
+         delay_counter_f2   0x000022       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
+         delay_counter_f3   0x000023       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
+            flash_counter   0x000024       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
+          counter_flash_1   0x000025       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
+          counter_flash_2   0x000026       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
+            counter_blank   0x000027       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
+             food_counter   0x000028       data     static H:\Tamagotchi\Tamagotchi.X\food.asm
+        counter_happiness   0x000029       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+counter_happiness_decrement   0x00002a       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+counter_happiness_decrement_2   0x00002b       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+counter_happiness_decrement_3   0x00002c       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+                life_mode   0x00002d       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+             counter_life   0x00002e       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+            delay_count_1   0x00002f       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+            delay_count_2   0x000030       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+            delay_count_3   0x000031       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
+           lifemode_dance   0x000032       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+         delay_counter_d1   0x000033       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+         delay_counter_d2   0x000034       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+         delay_counter_d3   0x000035       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+       dance_counter_baby   0x000036       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+    dance_counter_small_1   0x000037       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+    dance_counter_small_2   0x000038       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+             wave_counter   0x000039       data     static H:\Tamagotchi\Tamagotchi.X\dance.asm
+         delay_counter_h1   0x00003a       data     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+         delay_counter_h2   0x00003b       data     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+         delay_counter_h3   0x00003c       data     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+           counter_output   0x00003d       data     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                  repeats   0x00003e       data     static H:\Tamagotchi\Tamagotchi.X\hatch.asm
+                LCD_cnt_l   0x00003f       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                LCD_cnt_h   0x000040       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+               LCD_cnt_ms   0x000041       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+                  LCD_tmp   0x000042       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
+              LCD_counter   0x000043       data     static H:\Tamagotchi\Tamagotchi.X\LCD.asm
         Temperature_hex_1   0x000044       data     extern H:\Tamagotchi\Tamagotchi.X\temperature.asm
         Temperature_hex_2   0x000045       data     extern H:\Tamagotchi\Tamagotchi.X\temperature.asm
               LCD_hex_tmp   0x000046       data     static H:\Tamagotchi\Tamagotchi.X\temperature.asm
@@ -834,6 +834,5 @@ counter_happiness_decrement_3   0x000008       data     static H:\Tamagotchi\Tam
               counter_row   0x000480       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
            counter_column   0x000481       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
               Key_Pressed   0x000482       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
-              sound_buuzz   0x0004c2       data     static H:\Tamagotchi\Tamagotchi.X\Tamagotchi.asm
 
 

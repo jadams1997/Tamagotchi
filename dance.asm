@@ -5,7 +5,7 @@
     
 
     
-acs0		    	udata_acs
+acs2		    	udata_acs
 lifemode_dance 	    	res 1
 delay_counter_d1    	res 1
 delay_counter_d2    	res 1

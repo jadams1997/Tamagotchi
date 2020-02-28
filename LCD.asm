@@ -5,7 +5,7 @@
     global  MEDIUM_RABBIT, LARGE_RABBIT, GHOST, MOON, DISCO_1, DISCO_2
     global  LCD_custom_character_set_EGG
 
-acs0    udata_acs   ; named variables in access ram
+acs1    udata_acs   ; named variables in access ram
 LCD_cnt_l   res 1   ; reserve 1 byte for variable LCD_cnt_l
 LCD_cnt_h   res 1   ; reserve 1 byte for variable LCD_cnt_h
 LCD_cnt_ms  res 1   ; reserve 1 byte for ms counter
